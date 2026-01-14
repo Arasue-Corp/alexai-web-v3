@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Alex AI Insurtech</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+
+    <style>
+        /* Ajustes específicos para el tema Sketch Blue */
+        .site-footer {
+            background-color: #009cff;
+            border-top: 3px solid var(--alex-ink);
+        }
+        .top-header {
+            border-bottom: 3px solid var(--alex-ink);
+            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+        }
+
+        /* Estilos de Paginación Personalizados */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 60px;
+        }
+        .page-numbers {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 18px;
+            border: 2px solid var(--alex-ink);
+            border-radius: 12px;
+            font-weight: 700;
+            color: var(--alex-ink);
+            background: white;
+            transition: all 0.2s;
+        }
+        .page-numbers:hover {
+            background: var(--bg-off-white);
+            transform: translateY(-3px);
+            box-shadow: 3px 3px 0 var(--alex-ink);
+            color: var(--alex-blue-accent);
+            border-color: var(--alex-blue-accent);
+        }
+        .page-numbers.current {
+            background: var(--alex-blue-accent);
+            color: white;
+            border-color: var(--alex-ink);
+            box-shadow: 3px 3px 0 var(--alex-ink);
+        }
+        
+        /* Ajuste de imagen en tarjeta de blog para que sea clicable */
+        .blog-img a { display: block; height: 100%; width: 100%; }
+        
+        /* Ajuste para que el título del blog sea un enlace limpio */
+        .blog-content h4 a { color: inherit; text-decoration: none; }
+        .blog-content h4 a:hover { color: var(--alex-blue-accent); text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-3"></div>
+    <div id="transition-overlay"></div>
+
+    <div class="top-header">
+        <div class="container top-header-flex">
+            <div class="top-contact">
+                <a href="tel:+1800555ALEX"><i class="fa-solid fa-phone"></i> +1 480 630 9630</a>
+                <a href="mailto:hello@alexai.com"><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</a>
+                <span><i class="fa-solid fa-location-dot"></i> 3101 N Central Ave ste 1174, Phoenix, AZ</span>
+            </div>
+            <div class="top-social">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <div class="container header-wrapper">
+            <a href="../index.html" class="logo-container">
+                <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="site-logo">
+            </a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../quote/quote.html">Quote</a></li>
+                    <li class="has-dropdown">
+                        <a href="#">Products <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu organic-box">
+                            <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                            <li><a href="../index.html#products">Insurance</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#carriers">Carriers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="../quote/quote.html" class="btn btn-solid btn-sm">Get a Quote</a>
+            </div>
+            
+             <button class="mobile-menu-toggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+    </header>
+
+    <main>
+        
+        <section class="section-padding" style="padding-bottom: 40px;">
+            <div class="container text-center">
+                <h1 class="sketch-headline">Our Blog</h1>
+                <p class="hero-subtitle" style="margin: 0 auto; max-width: 600px;">
+                    News, tips, and updates from the world of insurance and technology.
+                </p>
+            </div>
+        </section>
+
+        <section class="section-padding bg-off-white" style="padding-top: 40px;">
+            <div class="container">
+                
+                <div class="grid-3">
+                    
+                    <article class="blog-card organic-box">
+                        <div class="blog-img">
+                            <a href="../5-common-myths-about-car-insurance-you-should-know/index.html">
+                                <img src="../assets/img/article-12.jpg" alt="A white car" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Auto+Insurance'">
+                            </a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="meta-row" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span class="blog-cat">Auto Insurance</span>
+                                <span class="blog-date" style="font-size:0.75rem; color:#94A3B8; font-weight:600;">July 28, 2025</span>
+                            </div>
+                            <h4><a href="../5-common-myths-about-car-insurance-you-should-know/index.html">5 common myths about car insurance you should know</a></h4>
+                            <p>We debunk the most popular beliefs about auto policies so you can make informed decisions and save money.</p>
+                            <a href="../5-common-myths-about-car-insurance-you-should-know/index.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card organic-box">
+                        <div class="blog-img">
+                            <a href="../how-ai-is-revolutionizing-the-insurance-industry/index.html">
+                                <img src="../assets/img/article-11.jpg" alt="Business woman" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Technology'">
+                            </a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="meta-row" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span class="blog-cat">Technology</span>
+                                <span class="blog-date" style="font-size:0.75rem; color:#94A3B8; font-weight:600;">July 22, 2025</span>
+                            </div>
+                            <h4><a href="../how-ai-is-revolutionizing-the-insurance-industry/index.html">How AI is revolutionizing the insurance industry</a></h4>
+                            <p>Discover how artificial intelligence personalizes your coverage, speeds up claims, and makes insurance fairer for everyone.</p>
+                            <a href="../how-ai-is-revolutionizing-the-insurance-industry/index.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card organic-box">
+                        <div class="blog-img">
+                            <a href="../a-beginners-guide-what-does-renters-insurance-cover/index.html">
+                                <img src="../assets/img/article-10.jpg" alt="House for rent" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Home+Insurance'">
+                            </a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="meta-row" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span class="blog-cat">Home Insurance</span>
+                                <span class="blog-date" style="font-size:0.75rem; color:#94A3B8; font-weight:600;">July 15, 2025</span>
+                            </div>
+                            <h4><a href="../a-beginners-guide-what-does-renters-insurance-cover/index.html">A beginner's guide: what does renters insurance cover?</a></h4>
+                            <p>If you rent, this coverage is essential. We explain in simple terms what it protects and why you shouldn't go without it.</p>
+                            <a href="../a-beginners-guide-what-does-renters-insurance-cover/index.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card organic-box">
+                        <div class="blog-img">
+                            <a href="../how-much-life-insurance-do-you-really-need/index.html">
+                                <img src="../assets/img/article-9.jpg" alt="Family umbrella" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Financial+Planning'">
+                            </a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="meta-row" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span class="blog-cat">Financial Planning</span>
+                                <span class="blog-date" style="font-size:0.75rem; color:#94A3B8; font-weight:600;">July 10, 2025</span>
+                            </div>
+                            <h4><a href="../how-much-life-insurance-do-you-really-need/index.html">How much life insurance do you really need?</a></h4>
+                            <p>A simple guide to calculating the right amount of coverage for your family's needs, ensuring their financial security no matter what.</p>
+                            <a href="../how-much-life-insurance-do-you-really-need/index.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card organic-box">
+                        <div class="blog-img">
+                            <a href="../telematics-and-your-car-insurance-what-to-know/index.html">
+                                <img src="../assets/img/article-8.jpg" alt="Smartphone driving app" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Technology'">
+                            </a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="meta-row" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span class="blog-cat">Technology</span>
+                                <span class="blog-date" style="font-size:0.75rem; color:#94A3B8; font-weight:600;">July 05, 2025</span>
+                            </div>
+                            <h4><a href="../telematics-and-your-car-insurance-what-to-know/index.html">Telematics and your car insurance: what to know</a></h4>
+                            <p>Explaining how usage-based insurance monitors your driving habits through technology to potentially lower your monthly premium.</p>
+                            <a href="../telematics-and-your-car-insurance-what-to-know/index.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card organic-box">
+                        <div class="blog-img">
+                            <a href="../7-easy-ways-to-lower-your-homeowners-insurance-premium/index.html">
+                                <img src="../assets/img/article-7.jpg" alt="Piggy bank house" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Home+Insurance'">
+                            </a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="meta-row" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span class="blog-cat">Home Insurance</span>
+                                <span class="blog-date" style="font-size:0.75rem; color:#94A3B8; font-weight:600;">June 30, 2025</span>
+                            </div>
+                            <h4><a href="../7-easy-ways-to-lower-your-homeowners-insurance-premium/index.html">7 easy ways to lower your homeowners insurance premium</a></h4>
+                            <p>From installing security systems to bundling policies, these simple tips can lead to significant savings on your home coverage.</p>
+                            <a href="../7-easy-ways-to-lower-your-homeowners-insurance-premium/index.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card organic-box">
+                        <div class="blog-img">
+                            <a href="../first-time-renter-a-checklist-for-getting-started/index.html">
+                                <img src="../assets/img/article-6.jpg" alt="Apartment keys" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Lifestyle'">
+                            </a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="meta-row" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span class="blog-cat">Lifestyle</span>
+                                <span class="blog-date" style="font-size:0.75rem; color:#94A3B8; font-weight:600;">June 25, 2025</span>
+                            </div>
+                            <h4><a href="../first-time-renter-a-checklist-for-getting-started/index.html">First-time renter? a checklist for getting started</a></h4>
+                            <p>We cover everything from finding the perfect apartment to understanding your lease and getting the right renters insurance policy.</p>
+                            <a href="../first-time-renter-a-checklist-for-getting-started/index.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card organic-box">
+                        <div class="blog-img">
+                            <a href="../is-your-side-hustle-insured-why-you-might-need-business-insurance/index.html">
+                                <img src="../assets/img/article-5.jpg" alt="Side hustle laptop" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Small+Business'">
+                            </a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="meta-row" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span class="blog-cat">Small Business</span>
+                                <span class="blog-date" style="font-size:0.75rem; color:#94A3B8; font-weight:600;">June 18, 2025</span>
+                            </div>
+                            <h4><a href="../is-your-side-hustle-insured-why-you-might-need-business-insurance/index.html">Is your side hustle insured? why you might need business insurance</a></h4>
+                            <p>Exploring liability and property coverage for small entrepreneurs, freelancers, and anyone with a growing side business.</p>
+                            <a href="../is-your-side-hustle-insured-why-you-might-need-business-insurance/index.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card organic-box">
+                        <div class="blog-img">
+                            <a href="../understanding-your-deductible-a-simple-guide/index.html">
+                                <img src="../assets/img/article-4.jpg" alt="Car keys money" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Auto+Insurance'">
+                            </a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="meta-row" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span class="blog-cat">Auto Insurance</span>
+                                <span class="blog-date" style="font-size:0.75rem; color:#94A3B8; font-weight:600;">June 12, 2025</span>
+                            </div>
+                            <h4><a href="../understanding-your-deductible-a-simple-guide/index.html">Understanding your deductible: a simple guide</a></h4>
+                            <p>How choosing the right deductible can impact your premium and out-of-pocket costs in the event of a claim.</p>
+                            <a href="../understanding-your-deductible-a-simple-guide/index.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card organic-box">
+                        <div class="blog-img">
+                            <a href="../the-future-of-claims-how-ai-is-making-the-process-faster/index.html">
+                                <img src="../assets/img/article-3.jpg" alt="Futuristic AI claims" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Technology'">
+                            </a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="meta-row" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span class="blog-cat">Technology</span>
+                                <span class="blog-date" style="font-size:0.75rem; color:#94A3B8; font-weight:600;">June 05, 2025</span>
+                            </div>
+                            <h4><a href="../the-future-of-claims-how-ai-is-making-the-process-faster/index.html">The future of claims: how AI is making the process faster</a></h4>
+                            <p>A look at how technology is eliminating headaches after an incident, from photo estimates to instant payouts for simple claims.</p>
+                            <a href="../the-future-of-claims-how-ai-is-making-the-process-faster/index.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card organic-box">
+                        <div class="blog-img">
+                            <a href="../bundling-insurance-policies-the-smart-way-to-save/index.html">
+                                <img src="../assets/img/article-2.jpg" alt="Insurance bundling" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Financial+Planning'">
+                            </a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="meta-row" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span class="blog-cat">Financial Planning</span>
+                                <span class="blog-date" style="font-size:0.75rem; color:#94A3B8; font-weight:600;">May 28, 2025</span>
+                            </div>
+                            <h4><a href="../bundling-insurance-policies-the-smart-way-to-save/index.html">Bundling insurance policies: the smart way to save</a></h4>
+                            <p>The pros and cons of combining your auto, home, and other policies with a single provider to save money and simplify your life.</p>
+                            <a href="../bundling-insurance-policies-the-smart-way-to-save/index.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card organic-box">
+                        <div class="blog-img">
+                            <a href="../does-homeowners-insurance-cover-natural-disasters/index.html">
+                                <img src="../assets/img/article-1.jpg" alt="Home storm" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Home+Insurance'">
+                            </a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="meta-row" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span class="blog-cat">Home Insurance</span>
+                                <span class="blog-date" style="font-size:0.75rem; color:#94A3B8; font-weight:600;">May 21, 2025</span>
+                            </div>
+                            <h4><a href="../does-homeowners-insurance-cover-natural-disasters/index.html">Does homeowners insurance cover natural disasters?</a></h4>
+                            <p>What's typically included in a standard policy and what requires separate coverage, such as floods or earthquakes.</p>
+                            <a href="../does-homeowners-insurance-cover-natural-disasters/index.html" class="read-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                </div>
+
+                <nav class="pagination">
+                    <a href="#" class="page-numbers prev-page">&laquo;</a>
+                    <a href="#" class="page-numbers current">1</a>
+                    <a href="#" class="page-numbers">2</a>
+                    <a href="#" class="page-numbers">3</a>
+                    <a href="#" class="page-numbers next-page">&raquo;</a>
+                </nav>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="contact" class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <a href="index.html" style="display: block; margin-bottom: 20px;">
+                    <img src="../assets/img/Logo-alexai-main.png" 
+                        alt="Alex AI Insurtech Logo" 
+                        style="max-width: 160px; height: auto; filter: brightness(0) invert(1);">
+                </a>
+                <p style="color: rgba(255,255,255,0.9); font-weight: 500;">
+                    Smart insurance for modern life. Powered by intelligence, driven by humans.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Products</h5>
+                <ul class="footer-links">
+                    <li><a href="./quote/quote.html">Car Insurance</a></li>
+                    <li><a href="./homeowners/index.html">Home Insurance</a></li>
+                    <li><a href="./renters/index.html">Renters Insurance</a></li>
+                    <li><a href="./alex-sign/index.html">Alex Sign</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Company</h5>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Ambassadors</a></li>
+                    <li><a href="./blog/index.html">Blog</a></li>
+                    <li><a href="./contact/index.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Contact & Legal</h5>
+                <ul class="footer-links contact-links">
+                    <li><i class="fa-solid fa-phone"></i> +1 480-630-9630</li>
+                    <li><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container copyright-row">
+             <p>&copy; 2026 Alex AI Insurtech. All rights reserved.</p>
+             <div class="social-links">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Alex-AI-Insurtech" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="floating-menu-container">
+        <div class="floating-menu-list organic-box" id="megaMenu">
+            <h5>Quick Navigate</h5>
+            <ul>
+                <li><a href="./quote/quote.html"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
+                <li><a href="./homeowners/index.html"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
+                <li><a href="./renters/index.html"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
+                <li><a href="./alex-sign/index.html"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
+                <li class="divider"></li>
+                <li><a href="./blog/index.html"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
+                <li><a href="./contact/index.html"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
+            </ul>
+        </div>
+        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open quick menu">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+    </div>
+
+
+    <div id="floating-chat-container">
+        <div class="chat-bubble organic-box" id="chatGreeting">
+            <strong>Alex AI says:</strong><br> 👋 Explore our latest tips!
+        </div>
+        <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
+            <i class="fa-solid fa-robot"></i>
+        </button>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => { 
+                const bubble = document.getElementById('chatGreeting');
+                if(bubble) bubble.classList.add('is-visible'); 
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
