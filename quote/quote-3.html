@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex AI - Compare Quotes</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+    
+    <style>
+        /* =============================================
+           ESTILOS ESPECÍFICOS: MODAL "SKETCHPAD"
+        ============================================= */
+        
+        /* Ajuste del Modal para que parezca una hoja de papel */
+        .modal-wrapper.modal-sketchpad {
+            border-radius: 25px 22px 28px 20px; /* Borde orgánico */
+            border: 3px solid var(--alex-ink);
+            box-shadow: 10px 10px 0 rgba(44, 62, 80, 0.2);
+            padding: 0;
+            overflow: hidden;
+            background-image: radial-gradient(#E2E8F0 1px, transparent 1px);
+            background-size: 20px 20px; /* Fondo de puntos sutil */
+            background-color: #fff;
+        }
+
+        /* Header con Washi Tape */
+        .modal-header-sketch {
+            background: white;
+            padding: 30px 30px 10px 30px;
+            border-bottom: 2px dashed var(--alex-ink);
+            position: relative;
+        }
+        .modal-tape-deco {
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(1deg);
+            width: 140px; height: 35px;
+            background-color: rgba(95, 212, 244, 0.5); /* Cyan Tape */
+            mask-image: url("data:image/svg+xml,%3Csvg width='200' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 L5 0 L10 10 L15 0 L20 10 L25 0 L200 0 L200 60 L195 50 L190 60 L185 50 L0 60 Z' fill='black'/%3E%3C/svg%3E");
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='200' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 L5 0 L10 10 L15 0 L20 10 L25 0 L200 0 L200 60 L195 50 L190 60 L185 50 L0 60 Z' fill='black'/%3E%3C/svg%3E");
+            mask-size: 100% 100%;
+            opacity: 0.9;
+        }
+
+        /* Tabs tipo Sticker dentro del modal */
+        .modal-tabs-stickers {
+            display: flex; gap: 10px; justify-content: center; margin-top: 15px;
+        }
+        .m-sticker {
+            padding: 8px 20px; border: 2px solid var(--alex-ink); border-radius: 20px 5px 20px 5px;
+            font-weight: 800; font-size: 0.8rem; cursor: pointer; text-transform: uppercase;
+            background: white; transition: 0.2s;
+        }
+        .m-sticker.active {
+            background: var(--alex-blue-accent); color: white; border-color: var(--alex-blue-accent);
+            transform: rotate(-2deg) scale(1.05); box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+        }
+        .m-sticker:not(.active):hover { background: #F1F5F9; }
+
+        /* Tabla Estilo Cuaderno */
+        .sketch-table { width: 100%; border-collapse: collapse; }
+        .sketch-table th { 
+            text-align: center; padding: 20px; vertical-align: bottom; 
+            border-bottom: 3px solid var(--alex-ink);
+        }
+        .sketch-table td {
+            padding: 18px 20px; 
+            border-bottom: 1px dashed #94A3B8; /* Línea de cuaderno */
+            color: var(--alex-ink); vertical-align: middle; font-size: 0.95rem;
+        }
+        .sketch-table tr:last-child td { border-bottom: none; }
+        
+        /* Columnas */
+        .col-feature { text-align: left; font-weight: 700; color: #64748B; width: 30%; }
+        .col-plan { text-align: center; width: 35%; border-left: 2px dashed #E2E8F0; }
+        
+        /* Efecto Resaltador Amarillo en la Celda */
+        .highlight-cell-bg {
+            position: relative; z-index: 1;
+        }
+        .highlight-cell-bg::before {
+            content: ''; position: absolute; top: 10px; bottom: 10px; left: 10px; right: 10px;
+            background: rgba(250, 204, 21, 0.25); /* Amarillo suave */
+            z-index: -1; transform: rotate(-1deg); border-radius: 4px;
+        }
+
+        /* Footer */
+        .modal-footer-sketch {
+            padding: 20px; background: white; border-top: 2px solid var(--alex-ink);
+            display: flex; justify-content: flex-end; gap: 15px;
+        }
+
+        /* Botón Cerrar (Círculo rojo dibujado) */
+        .sketch-close-btn {
+            position: absolute; top: 15px; right: 15px;
+            width: 35px; height: 35px; border: 2px solid var(--alex-ink); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--alex-ink); cursor: pointer; transition: 0.2s; background: white;
+        }
+        .sketch-close-btn:hover { background: #EF4444; color: white; border-color: #EF4444; transform: rotate(90deg); }
+
+        /* Estilos heredados del fix anterior */
+        .sidebar-panel.organic-box { overflow: visible !important; position: relative; margin-top: 15px; }
+        .sidebar-badge-float { position: absolute; top: -18px; left: 20px; z-index: 50; background: var(--alex-blue-accent); color: white; font-weight: 800; font-size: 0.85rem; padding: 6px 18px; border-radius: 20px 6px 20px 6px; border: 4px solid #FFFFFF; box-shadow: 0 4px 6px rgba(44, 62, 80, 0.15); transform: rotate(-2deg); }
+        .carrier-logo-lg { width: 90px; height: auto; margin-bottom: 10px; mix-blend-mode: multiply; opacity: 0.9; filter: contrast(1.05); transition: all 0.3s ease; }
+        .quote-result-card:hover .carrier-logo-lg { transform: scale(1.05); opacity: 1; }
+        .btn-stack { width: 100%; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-purple { background-color: #8B5CF6; border: 2px solid #7C3AED; color: white; border-radius: 12px; font-weight: 700; padding: 12px; transition: 0.2s; }
+        .btn-purple:hover { background-color: #7C3AED; transform: translateY(-2px); }
+        .btn-blue-outline { background-color: white; border: 2px solid #3B82F6; color: #3B82F6; border-radius: 12px; font-weight: 700; padding: 12px; transition: 0.2s; }
+        .btn-blue-outline:hover { background-color: #EFF6FF; border-color: #2563EB; color: #2563EB; }
+        .btn-green-main { background: linear-gradient(135deg, #10B981, #059669); border: none; color: white; border-radius: 12px; font-weight: 800; padding: 14px; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); transition: 0.2s; }
+        .btn-green-main:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4); }
+    </style>
+</head>
+<body class="quote-page-body">
+
+    <nav class="quote-nav">
+        <a href="quote-step-2.html" class="nav-back-btn">
+            <div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div>
+            <span>Back to Vehicles</span>
+        </a>
+        <div class="nav-brand">
+            <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI" class="nav-mini-logo">
+        </div>
+        <div class="lang-switch-modern">
+            <span class="lang-opt">ES</span>
+            <span class="lang-opt active">EN</span>
+        </div>
+    </nav>
+
+    <main class="quote-main-content step-layout-wrapper">
+        <div class="ambient-glow glow-1"></div>
+        <div class="ambient-glow glow-2"></div>
+
+        <div class="container-fluid compare-grid-layout">
+            
+            <aside class="filters-col anim-entry">
+                <div class="organic-box sidebar-panel taped-note">
+                    <div class="sidebar-badge-float"><i class="fa-solid fa-sliders"></i> Fine Tune</div>
+                    <div class="washi-tape"></div>
+                    <div class="panel-header-clean">
+                        <div class="vehicle-switcher-modern">
+                            <button class="v-switch-btn prev"><i class="fa-solid fa-chevron-left"></i></button>
+                            <div class="v-info-center">
+                                <span class="v-tag">Editing Vehicle 1</span>
+                                <span class="v-name">2020 Nissan Titan</span>
+                            </div>
+                            <button class="v-switch-btn next"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="scrollable-filters-clean">
+                        <div class="filter-block">
+                            <label class="block-label">Coverage Mode</label>
+                            <div class="segment-control">
+                                <label><input type="radio" name="mode" onchange="updateFilters('basic')"><span class="segment-item">Basic</span></label>
+                                <label><input type="radio" name="mode" checked onchange="updateFilters('full')"><span class="segment-item active">Full Coverage</span></label>
+                            </div>
+                        </div>
+                        <div class="filter-block">
+                            <label class="block-label text-blue"><i class="fa-solid fa-scale-balanced"></i> Liability Limits</label>
+                            <div class="input-modern-wrapper mb-3">
+                                <label class="floating-label">Bodily Injury</label>
+                                <div class="select-wrapper"><select class="alex-select-clean"><option value="100/300" selected>$100k / $300k (Rec.)</option></select></div>
+                            </div>
+                            <div class="input-modern-wrapper">
+                                <label class="floating-label">Property Damage</label>
+                                <div class="select-wrapper"><select class="alex-select-clean"><option value="50" selected>$50k Limit</option></select></div>
+                            </div>
+                        </div>
+                        <div class="filter-highlight-box">
+                            <label class="block-label text-dark"><i class="fa-solid fa-car-burst"></i> Deductibles</label>
+                            <div class="split-inputs">
+                                <div class="input-col"><span class="tiny-label">Comp.</span><div class="select-wrapper white-bg"><select class="alex-select-clean small"><option>$500</option></select></div></div>
+                                <div class="input-col"><span class="tiny-label">Collision</span><div class="select-wrapper white-bg"><select class="alex-select-clean small"><option>$500</option></select></div></div>
+                            </div>
+                        </div>
+                        <div class="filter-block">
+                            <label class="block-label">Extras & Medical</label>
+                            <div class="extra-row"><span>Roadside</span><select class="alex-select-inline"><option>Yes</option></select></div>
+                            <div class="extra-row"><span>Rental</span><select class="alex-select-inline"><option>$30/day</option></select></div>
+                             <div class="extra-row"><span>Med Pay</span><select class="alex-select-inline"><option>$5k</option></select></div>
+                        </div>
+                    </div>
+                    <div class="sidebar-footer">
+                        <button class="btn-glow-anim small-glow"><i class="fa-solid fa-rotate"></i> Update Quotes</button>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="results-col">
+                <div class="section-header-left anim-entry" style="animation-delay: 0.1s;">
+                    <h2 class="sketch-headline">Great news! You saved money.</h2>
+                    <p>We found <strong>8 quotes</strong> matching your exact coverage needs.</p>
+                </div>
+
+                <div class="quote-result-card organic-box best-match anim-entry" style="animation-delay: 0.2s;">
+                    <div class="sticker-badge"><span class="sticker-text">ALEX'S CHOICE</span></div>
+                    <div class="result-content-modern">
+                        <div class="carrier-col">
+                            <img src="../assets/img/Carrier-aspire.jpg" alt="Aspire" class="carrier-logo-lg">
+                            <div class="rating-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i><span>(4.8)</span></div>
+                        </div>
+                        <div class="details-col">
+                            <h4 class="plan-title">Platinum Protection</h4>
+                            <div class="tags-container"><span class="spec-tag"><i class="fa-solid fa-shield-halved"></i> Full Coverage</span><span class="spec-tag"><i class="fa-solid fa-wrench"></i> Low Ded ($500)</span></div>
+                            <ul class="micro-benefits"><li><i class="fa-solid fa-check"></i> Includes Roadside & Rental</li><li><i class="fa-solid fa-check"></i> Paperless Discount Applied</li></ul>
+                        </div>
+                        <div class="price-col">
+                            <div class="price-group"><div class="highlighter-mark"></div> <span class="currency">$</span>79<span class="mo">/mo</span></div>
+                            <div class="pay-total">Total: $474 / 6mo</div>
+                            <button class="btn-green-sketch js-select-quote">Select Plan</button>
+                        </div>
+                    </div>
+                    <div class="ink-stamp-overlay"><div class="ink-stamp">SELECTED</div></div>
+                </div>
+
+                <div class="quote-result-card organic-box anim-entry" style="animation-delay: 0.3s;">
+                    <div class="result-content-modern">
+                        <div class="carrier-col">
+                            <img src="../assets/img/Carrier-chubb.jpg" alt="Chubb" class="carrier-logo-lg">
+                             <div class="rating-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+                        </div>
+                        <div class="details-col">
+                            <h4 class="plan-title">Gold Monthly</h4>
+                            <div class="tags-container"><span class="spec-tag">Higher Limits</span></div>
+                            <ul class="micro-benefits"><li><i class="fa-solid fa-check"></i> OEM Parts Guarantee</li><li><i class="fa-solid fa-check"></i> Accident Forgiveness</li></ul>
+                        </div>
+                        <div class="price-col">
+                            <div class="price-group"><span class="currency">$</span>128<span class="mo">/mo</span></div>
+                            <div class="pay-total">$160 Down Payment</div>
+                            <button class="btn-outline-sketch-sm js-select-quote">Select Plan</button>
+                        </div>
+                    </div>
+                    <div class="ink-stamp-overlay"><div class="ink-stamp">SELECTED</div></div>
+                </div>
+
+                 <div class="quote-result-card organic-box anim-entry" style="animation-delay: 0.4s;">
+                    <div class="result-content-modern">
+                        <div class="carrier-col">
+                            <img src="../assets/img/Carrier-kemper.jpg" alt="Kemper" class="carrier-logo-lg">
+                             <div class="rating-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+                        </div>
+                        <div class="details-col">
+                            <h4 class="plan-title">Budget Saver</h4>
+                             <div class="tags-container"><span class="spec-tag warning">Liability Only</span></div>
+                            <ul class="micro-benefits"><li><i class="fa-solid fa-check"></i> State Minimums</li><li><i class="fa-solid fa-xmark text-red"></i> No vehicle repairs</li></ul>
+                        </div>
+                        <div class="price-col">
+                            <div class="price-group"><span class="currency">$</span>55<span class="mo">/mo</span></div>
+                            <div class="pay-total">$100 Down Payment</div>
+                            <button class="btn-outline-sketch-sm js-select-quote">Select Plan</button>
+                        </div>
+                    </div>
+                    <div class="ink-stamp-overlay"><div class="ink-stamp">SELECTED</div></div>
+                </div>
+            </div>
+
+            <aside class="actions-col anim-entry" style="animation-delay: 0.5s;">
+                <div class="sticky-wrapper">
+                    
+                    <div class="sticky-note-yellow organic-box">
+                        <div class="pin-tack"></div>
+                        <h5>Quote Summary</h5>
+                        <ul class="handwritten-list">
+                            <li>2 Vehicles</li>
+                            <li>Full Coverage</li>
+                            <li>Discounts Applied <i class="fa-solid fa-check text-green"></i></li>
+                        </ul>
+                        <hr class="note-divider">
+                        <div class="note-total">
+                            <span>Selected:</span>
+                            <strong id="selected-price-display">--</strong>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 25px;">
+                        <button class="btn-purple btn-stack"><i class="fa-solid fa-pen-to-square"></i> Update Information</button>
+                        
+                        <button class="btn-blue-outline btn-stack js-open-compare">
+                            <i class="fa-solid fa-scale-balanced"></i> Compare Plans
+                        </button>
+                        
+                        <button class="btn-green-main btn-stack" onclick="alert('🎉 Proceeding to Checkout!')">
+                            Next Step <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="secure-badge mt-20"><i class="fa-solid fa-shield-cat"></i> Data Encrypted</div>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+    <div id="compareModal" class="modal-overlay">
+        <div class="modal-wrapper modal-wide modal-sketchpad">
+            
+            <button class="sketch-close-btn js-close-compare"><i class="fa-solid fa-xmark"></i></button>
+
+            <div class="modal-header-sketch">
+                <div class="modal-tape-deco"></div> <h3 class="modal-title text-center" style="color:var(--alex-ink);">Coverage Comparison</h3>
+                
+                <div class="modal-tabs-stickers">
+                    <div class="m-sticker active">2020 Nissan Titan</div>
+                    <div class="m-sticker">2018 Honda Civic</div>
+                </div>
+            </div>
+
+            <div class="modal-body-scroll" style="background: white;">
+                <table class="sketch-table">
+                    <thead>
+                        <tr>
+                            <th class="col-feature">Features</th>
+                            <th class="col-plan">
+                                <img src="../assets/img/Carrier-aspire.jpg" class="carrier-logo-lg" style="height:35px; width:auto;">
+                                <div class="comp-plan-name">Platinum</div>
+                            </th>
+                            <th class="col-plan">
+                                <img src="../assets/img/Carrier-chubb.jpg" class="carrier-logo-lg" style="height:35px; width:auto;">
+                                <div class="comp-plan-name">Gold</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="col-feature">Payment</td><td class="col-plan"><strong>Paid in Full</strong></td><td class="col-plan">Monthly</td></tr>
+                        
+                        <tr>
+                            <td class="col-feature">Total Premium</td>
+                            <td class="col-plan highlight-cell-bg">
+                                <span class="price-cell text-green">$474.00</span>
+                            </td>
+                            <td class="col-plan">
+                                <span class="price-cell">$768.00</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-feature">Monthly Avg.</td>
+                            <td class="col-plan"><strong>$79.00</strong></td>
+                            <td class="col-plan"><strong>$128.00</strong></td>
+                        </tr>
+
+                        <tr><td class="col-feature">Bodily Injury</td><td class="col-plan">100/300</td><td class="col-plan">100/300</td></tr>
+                        <tr><td class="col-feature">Prop. Damage</td><td class="col-plan">$50k</td><td class="col-plan">$50k</td></tr>
+                        <tr><td class="col-feature">Deductibles</td><td class="col-plan">$500 / $500</td><td class="col-plan">$500 / $500</td></tr>
+                        <tr>
+                            <td class="col-feature">Extras</td>
+                            <td class="col-plan"><i class="fa-solid fa-check text-green"></i> Roadside & Rental</td>
+                            <td class="col-plan"><i class="fa-solid fa-check text-green"></i> OEM Parts</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer-sketch">
+                <button class="btn-outline-sketch-sm js-close-compare" style="width: auto; padding: 10px 25px;">Close</button>
+                <button class="btn-green-sketch" style="width: auto; padding: 10px 30px;">Select Aspire</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script>
+        // 1. SELECCIÓN TOGGLE
+        const selectBtns = document.querySelectorAll('.js-select-quote');
+        const priceDisplay = document.getElementById('selected-price-display');
+
+        selectBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const card = this.closest('.quote-result-card');
+                const wasAlreadySelected = card.classList.contains('is-selected');
+
+                // Resetear todos
+                document.querySelectorAll('.quote-result-card').forEach(c => {
+                    c.classList.remove('is-selected');
+                    const b = c.querySelector('.js-select-quote');
+                    if(b) { b.innerHTML = 'Select Plan'; b.classList.remove('selected-state'); }
+                });
+
+                if (!wasAlreadySelected) {
+                    card.classList.add('is-selected');
+                    this.innerHTML = 'Selected';
+                    this.classList.add('selected-state');
+                    const price = card.querySelector('.price-group').textContent.replace('/mo','').trim();
+                    priceDisplay.innerHTML = '$' + price.match(/\d+/)[0] + '/mo';
+                    priceDisplay.style.color = 'var(--alex-ink)';
+                } else {
+                    priceDisplay.innerHTML = '--';
+                    priceDisplay.style.color = '#94A3B8';
+                }
+            });
+        });
+
+        // 2. MODAL LOGIC
+        const compareBtn = document.querySelector('.js-open-compare');
+        const compareModal = document.getElementById('compareModal');
+        const closeCompareBtns = document.querySelectorAll('.js-close-compare');
+
+        if (compareBtn && compareModal) {
+            compareBtn.addEventListener('click', () => {
+                compareModal.classList.add('is-active');
+            });
+        }
+
+        closeCompareBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                compareModal.classList.remove('is-active');
+            });
+        });
+
+        if (compareModal) {
+            compareModal.addEventListener('click', (e) => {
+                if (e.target === compareModal) {
+                    compareModal.classList.remove('is-active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

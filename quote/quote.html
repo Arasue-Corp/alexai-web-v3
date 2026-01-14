@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex AI - Smart Quote</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+</head>
+<body class="quote-page-body">
+
+    <nav class="quote-nav">
+        <a href="index.html" class="nav-back-btn">
+            <div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div>
+            <span>Back home</span>
+        </a>
+        <div class="nav-brand">
+            <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI" class="nav-mini-logo">
+        </div>
+        <div class="lang-switch-modern">
+            <span class="lang-opt">ES</span>
+            <span class="lang-opt active">EN</span>
+        </div>
+    </nav>
+
+    <main class="quote-main-content">
+        
+        <div class="ambient-glow glow-1"></div>
+        <div class="ambient-glow glow-2"></div>
+        <div class="ambient-glow glow-3"></div>
+
+        <div class="quote-tool-container">
+            
+            <div class="quote-badge-3d">
+                <i class="fa-solid fa-bolt"></i> Contact information
+            </div>
+        
+            <div class="quote-card-stacked">
+                
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 33%;"></div>
+                </div>
+                <div class="steps-indicator">Step 1 of 3: Basic Info</div>
+
+                <div class="quote-header text-center">
+                    <h3>Let's get you covered.</h3>
+                    <p>Smart protection starts with a few details.</p>
+                </div>
+        
+                <form id="quoteFormStart">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <div class="input-modern-wrapper">
+                                <i class="fa-regular fa-user input-icon"></i>
+                                <input type="text" id="firstName" class="alex-input-modern" placeholder="Your name" required>
+                                <div class="input-focus-border"></div>
+                            </div>
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="zipCode">Zip Code</label>
+                            <div class="input-modern-wrapper">
+                                <i class="fa-solid fa-map-pin input-icon"></i>
+                                <input type="tel" id="zipCode" class="alex-input-modern" placeholder="00000" pattern="[0-9]*" maxlength="5" required>
+                                <div class="input-focus-border"></div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-modern-wrapper">
+                            <i class="fa-regular fa-envelope input-icon"></i>
+                            <input type="email" id="email" class="alex-input-modern" placeholder="you@example.com" required>
+                            <div class="input-focus-border"></div>
+                        </div>
+                    </div>
+        
+                    <div class="form-check-modern">
+                        <label class="custom-check-container">
+                            <input type="checkbox" id="legalCheck" required>
+                            <span class="checkmark"></span>
+                        </label>
+                        <div class="legal-text-modern">
+                            By checking this box, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. You also consent to receive notifications, quotes, and marketing communications from Alex AI Insurtech LLC. 
+                            <span class="sub-legal">For SMS: Message frequency varies. Message and data rates may apply. Text HELP to (480) 630-9630 for assistance or STOP to cancel at any time. For Email: You can unsubscribe by clicking the 'Unsubscribe' link at the bottom of any email.</span>
+                        </div>
+                    </div>
+        
+                    <div class="form-action">
+                        <button type="submit" class="btn-glow-anim">
+                            <span>Get My Quote</span>
+                            <i class="fa-solid fa-arrow-right-long"></i>
+                        </button>
+                        <div class="secure-badge">
+                            <i class="fa-solid fa-lock"></i> 256-bit SSL Secure
+                        </div>
+                    </div>
+        
+                </form>
+            </div>
+            <div class="card-shadow-layer"></div>
+        </div>
+    </main>
+
+    <script src="../js/script.js"></script>
+
+    <div id="quotesModal" class="modal-overlay">
+    <div class="modal-wrapper">
+        
+        <button class="modal-close-btn js-close-modal"><i class="fa-solid fa-xmark"></i></button>
+
+        <div class="modal-floating-logo">
+            <img src="/assets/img/Logo-alexai-main.png" alt="Alex Logo Icon">
+        </div>
+
+        <div class="modal-content-internal text-center">
+            
+            <h3 class="modal-title">AVAILABLE QUOTES</h3>
+            <p class="modal-subtitle">
+                The following quotes associated with your data have been found. 
+                Please select one to continue or start a new one.
+            </p>
+
+            <div class="table-responsive">
+                <table class="quotes-table">
+                    <thead>
+                        <tr>
+                            <th>Quote Number</th>
+                            <th>Creation Date</th>
+                            <th>Last Update</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-bold">00000718</td>
+                            <td>29/09/2025<br><span class="time-muted">15:57</span></td>
+                            <td>13/01/2026<br><span class="time-muted">12:12</span></td>
+                            <td><span class="status-badge">Inactive</span></td>
+                            <td><button class="btn-select">Select</button></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">00000717</td>
+                            <td>29/09/2025<br><span class="time-muted">15:12</span></td>
+                            <td>29/09/2025<br><span class="time-muted">15:12</span></td>
+                            <td><span class="status-badge">Inactive</span></td>
+                            <td><button class="btn-select">Select</button></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">00000707</td>
+                            <td>19/09/2025<br><span class="time-muted">17:18</span></td>
+                            <td>19/09/2025<br><span class="time-muted">17:19</span></td>
+                            <td><span class="status-badge">Inactive</span></td>
+                            <td><button class="btn-select">Select</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer-actions">
+                <button class="btn-purple-action js-start-new">START NEW QUOTE</button>
+                <button class="btn-coral-action js-close-modal">CANCEL</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
