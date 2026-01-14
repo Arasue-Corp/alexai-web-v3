@@ -8,11 +8,14 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" href="./assets/img/favicon.ico" type="image/x-icon">
 
 </head>
 <body>
+
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-3"></div>
 
     <div id="transition-overlay"></div>
 
@@ -33,22 +36,22 @@
     <header class="site-header">
         <div class="container header-wrapper">
             <a href="https://alexai.cloud/" class="logo-container">
-                <img src="/assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="site-logo">
+                <img src="./assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="site-logo">
             </a>
             
             <nav class="main-nav">
                 <ul>
-                    <li><a href="#">Home</a></li>
+                    <li><a href="./index.html">Home</a></li>
                     <li><a href="#" class="js-trigger-quote">Quote</a></li>
                     <li class="has-dropdown">
                         <a href="#products">Products <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
                         <ul class="dropdown-menu organic-box">
-                            <li><a href="#">Alex Sign</a></li>
+                            <li><a href="./alex-sign/index.html">Alex Sign</a></li>
                         </ul>
                     </li>
                     <li><a href="#carriers">Carriers</a></li>
                     <li><a href="#blog">Blog</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="./contact/index.html">Contact</a></li>
                 </ul>
             </nav>
 
@@ -68,12 +71,15 @@
                     <h1>Insurance powered by AI, handled by humans.</h1>
                     <p class="hero-subtitle">Forget boring paperwork. Get smart protection in 90 seconds.</p>
                     <div class="hero-cta-wrapper">
-                        <button class="btn btn-solid btn-large js-trigger-quote">Get Your Instant Quote</button>
+                        <a href="quote/quote.html" class="btn-glow-anim js-trigger-quote" style="width: fit-content; padding: 20px 40px; text-decoration: none;">
+                            <span>Get Your Instant Quote</span>
+                            <i class="fa-solid fa-arrow-right-long"></i>
+                        </a>                    
                     </div>
                 </div>
                 <div class="hero-video-organic">
                     <video id="heroVideoElement" muted playsinline preload="metadata">
-                        <source src="/assets/videos/hero-video-1.mp4" type="video/mp4">
+                        <source src="./assets/videos/hero-video-1.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -87,21 +93,21 @@
                     <div class="slider-container">
                         <div class="slider-track">
                             
-                            <div class="carrier-item"><img src="/assets/img/Carrier-aspire.jpg" alt="Aspire"></div>
-                            <div class="carrier-item"><img src="/assets/img/Carrier-assurance-america.png" alt="Assurance"></div>
-                            <div class="carrier-item"><img src="/assets/img/Carrier-chubb.jpg" alt="Chubb"></div>
-                            <div class="carrier-item"><img src="/assets/img/Carrier-clearcover.png" alt="Clearcover"></div>
-                            <div class="carrier-item"><img src="/assets/img/Carrier-covercube-2.jpg" alt="Covercube"></div>
-                            <div class="carrier-item"><img src="/assets/img/Carrier-just.jpg" alt="Just"></div>
-                            <div class="carrier-item"><img src="/assets/img/Carrier-kemper.jpg" alt="Kemper"></div>
+                            <div class="carrier-item"><img src="./assets/img/Carrier-aspire.jpg" alt="Aspire"></div>
+                            <div class="carrier-item"><img src="./assets/img/Carrier-assurance-america.png" alt="Assurance"></div>
+                            <div class="carrier-item"><img src="./assets/img/Carrier-chubb.jpg" alt="Chubb"></div>
+                            <div class="carrier-item"><img src="./assets/img/Carrier-clearcover.png" alt="Clearcover"></div>
+                            <div class="carrier-item"><img src="./assets/img/Carrier-covercube-2.jpg" alt="Covercube"></div>
+                            <div class="carrier-item"><img src="./assets/img/Carrier-just.jpg" alt="Just"></div>
+                            <div class="carrier-item"><img src="./assets/img/Carrier-kemper.jpg" alt="Kemper"></div>
 
-                            <div class="carrier-item"><img src="/assets/img/Carrier-aspire.jpg" alt="Aspire"></div>
-                            <div class="carrier-item"><img src="/assets/img/Carrier-assurance-america.png" alt="Assurance"></div>
-                            <div class="carrier-item"><img src="/assets/img/Carrier-chubb.jpg" alt="Chubb"></div>
-                            <div class="carrier-item"><img src="/assets/img/Carrier-clearcover.png" alt="Clearcover"></div>
-                            <div class="carrier-item"><img src="/assets/img/Carrier-covercube-2.jpg" alt="Covercube"></div>
-                            <div class="carrier-item"><img src="/assets/img/Carrier-just.jpg" alt="Just"></div>
-                            <div class="carrier-item"><img src="/assets/img/Carrier-kemper.jpg" alt="Kemper"></div>
+                            <div class="carrier-item"><img src="./assets/img/Carrier-aspire.jpg" alt="Aspire"></div>
+                            <div class="carrier-item"><img src="./assets/img/Carrier-assurance-america.png" alt="Assurance"></div>
+                            <div class="carrier-item"><img src="./assets/img/Carrier-chubb.jpg" alt="Chubb"></div>
+                            <div class="carrier-item"><img src="./assets/img/Carrier-clearcover.png" alt="Clearcover"></div>
+                            <div class="carrier-item"><img src="./assets/img/Carrier-covercube-2.jpg" alt="Covercube"></div>
+                            <div class="carrier-item"><img src="./assets/img/Carrier-just.jpg" alt="Just"></div>
+                            <div class="carrier-item"><img src="./assets/img/Carrier-kemper.jpg" alt="Kemper"></div>
 
                         </div>
                     </div>
@@ -112,7 +118,7 @@
         <section id="products" class="section-padding bg-off-white">
             <div class="container">
                 <div class="section-header text-center">
-                    <h2>Protect what matters most</h2>
+                    <h2 class="sketch-headline-sm">Protect what matters most</h2>
                     <p>Select a product to get an AI-powered quote in seconds.</p>
                 </div>
                 
@@ -121,7 +127,7 @@
                     <div class="product-card organic-box">
                         <div class="card-illustration square-video-box">
                             <video class="js-hover-video" loop muted playsinline>
-                                <source src="/assets/videos/car-insurance.mp4" type="video/mp4">
+                                <source src="./assets/videos/car-insurance.mp4" type="video/mp4">
                             </video>
                         </div>
                         <h3>Car Insurance</h3>
@@ -132,7 +138,7 @@
                     <div class="product-card organic-box">
                         <div class="card-illustration square-video-box">
                             <video class="js-hover-video" loop muted playsinline>
-                                <source src="/assets/videos/home-insurance.mp4" type="video/mp4">
+                                <source src="./assets/videos/home-insurance.mp4" type="video/mp4">
                             </video>
                         </div>
                         <h3>Homeowner Insurance</h3>
@@ -143,7 +149,7 @@
                     <div class="product-card organic-box">
                         <div class="card-illustration square-video-box">
                             <video class="js-hover-video" loop muted playsinline>
-                                <source src="/assets/videos/renters-insurance.mp4" type="video/mp4">
+                                <source src="./assets/videos/renters-insurance.mp4" type="video/mp4">
                             </video>
                         </div>
                         <h3>Renters Insurance</h3>
@@ -156,18 +162,22 @@
         </section>
 
         <section id="alex-spotlight" class="section-padding">
-            <div class="container alex-grid">
-                <div class="alex-image-container">
-                    <img src="https://placehold.co/500x500/FFFFFF/4A80F0?text=Hand-Drawn+Alex+Robot" alt="Alex AI Robot sketch">
-                </div>
-                <div class="alex-content">
-                    <h2>Why Alex AI is different.</h2>
-                    <p class="lead-text">We use artificial intelligence to cut costs, not corners. Humans are always in the loop.</p>
-                    <ul class="feature-list">
-                        <li><i class="fa-solid fa-bolt"></i> <strong>Lightning Fast:</strong> Quotes in under 90 seconds.</li>
-                        <li><i class="fa-solid fa-sliders"></i> <strong>Hyper Customized:</strong> Coverage that fits like a glove.</li>
-                        <li><i class="fa-solid fa-hand-holding-dollar"></i> <strong>Faster Payouts:</strong> AI speeds up simple claims.</li>
-                    </ul>
+            <div class="container">
+                <div class="organic-box taped-note">
+                    <div class="washi-tape-large"></div> <div class="alex-grid" style="padding: 40px 20px;">
+                        <div class="alex-image-container">
+                            <img src="https://placehold.co/500x500/FFFFFF/4A80F0?text=Hand-Drawn+Alex+Robot" alt="Alex AI Robot">
+                        </div>
+                        <div class="alex-content">
+                            <h2 class="sketch-headline-sm">Why Alex AI is different.</h2>
+                            <p class="lead-text">We use artificial intelligence to cut costs, not corners.</p>
+                            <ul class="feature-list">
+                                <li><i class="fa-solid fa-bolt"></i> <strong>Lightning Fast:</strong> Quotes in under 90s.</li>
+                                <li><i class="fa-solid fa-sliders"></i> <strong>Hyper Customized:</strong> Fits like a glove.</li>
+                                <li><i class="fa-solid fa-hand-holding-dollar"></i> <strong>Faster Payouts:</strong> AI speeds up claims.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -175,7 +185,7 @@
         <section class="section-padding bg-off-white">
             <div class="container">
                 <div class="section-header text-center">
-                    <h2>Real savings, real fast.</h2>
+                    <h2 class="sketch-headline-sm">Real savings, real fast.</h2>
                     <p>See what others are paying with Alex AI.</p>
                 </div>
                 <div class="grid-3">
@@ -246,37 +256,36 @@
         <section id="blog" class="section-padding bg-off-white">
             <div class="container">
                 <div class="section-header text-center">
-                    <h2>Smarter living & insurance tips</h2>
+                    <h2 class="sketch-headline-sm">Smarter living & insurance tips</h2>
                 </div>
                 <div class="grid-3">
                     <article class="blog-card organic-box">
                         <div class="blog-img">
-                            <img src="https://placehold.co/400x250/E0E7F5/4A80F0?text=Sketch+Blog+1" alt="Blog post">
-                        </div>
+                            <img src="./assets/img/article-12.jpg" alt="Car Insurance Myths" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Auto+Insurance'">                        </div>
                         <div class="blog-content">
-                            <span class="blog-cat">Auto Tech</span>
-                            <h4>How AI is lowering car insurance premiums for safe drivers.</h4>
-                            <a href="#" class="read-more">Read Article <i class="fa-solid fa-arrow-right"></i></a>
+                            <span class="blog-cat">Auto Insurance</span>
+                            <h4>5 common myths about car insurance you should know</h4>
+                            <a href="./5-common-myths-about-car-insurance-you-should-know/" class="read-more">Read Article <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="blog-card organic-box">
                         <div class="blog-img">
-                            <img src="https://placehold.co/400x250/E0E7F5/4A80F0?text=Sketch+Blog+2" alt="Blog post">
+                            <img src="./assets/img/article-11.jpg" alt="AI in Insurance" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Technology'">
                         </div>
                         <div class="blog-content">
-                            <span class="blog-cat">Home Safety</span>
-                            <h4>5 smart home devices that can get you a discount today.</h4>
-                            <a href="#" class="read-more">Read Article <i class="fa-solid fa-arrow-right"></i></a>
+                            <span class="blog-cat">Technology</span>
+                            <h4>How AI is revolutionizing the insurance industry</h4>
+                            <a href="./how-ai-is-revolutionizing-the-insurance-industry/" class="read-more">Read Article <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="blog-card organic-box">
                         <div class="blog-img">
-                            <img src="https://placehold.co/400x250/E0E7F5/4A80F0?text=Sketch+Blog+3" alt="Blog post">
+                            <img src="./assets/img/article-10.jpg" alt="Renters Insurance" onerror="this.src='https://placehold.co/400x250/E0E7F5/4A80F0?text=Home+Insurance'">
                         </div>
                         <div class="blog-content">
-                            <span class="blog-cat">Alex News</span>
-                            <h4>Introducing "Alex Sign": Secure digital documents made easy.</h4>
-                            <a href="#" class="read-more">Read Article <i class="fa-solid fa-arrow-right"></i></a>
+                            <span class="blog-cat">Home Insurance</span>
+                            <h4>A beginner's guide: what does renters insurance cover?</h4>
+                            <a href="./a-beginners-guide-what-does-renters-insurance-cover/" class="read-more">Read Article <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                 </div>
@@ -286,7 +295,7 @@
         <section class="section-padding">
             <div class="container">
                 <div class="section-header text-center">
-                    <h2>Trusted by thousands</h2>
+                    <h2 class="sketch-headline-sm">Trusted by thousands</h2>
                     <p>Our customers are our most important shareholders.</p>
                 </div>
                 <div class="grid-3">
@@ -318,34 +327,59 @@
             </div>
         </section>
 
-        <section id="faq" class="section-padding bg-off-white">
+        <section id="faq" class="section-padding">
             <div class="container" style="max-width: 800px;">
                 <div class="section-header text-center">
-                    <h2>Frequently Asked Questions</h2>
+                    <h2 class="sketch-headline-sm">Frequently Asked Questions</h2>
                 </div>
+                
                 <div class="faq-accordion organic-box">
                     <div class="faq-item">
-                        <button class="faq-question">Is Alex really an AI? <i class="fa-solid fa-plus"></i></button>
+                        <button class="faq-question">What is Alex AI Insurtech? <i class="fa-solid fa-plus"></i></button>
                         <div class="faq-answer">
-                            <p>Yes! Alex is a sophisticated AI trained on insurance data to provide quotes and answer questions instantly. However, real human insurance experts review complex situations and finalize policies.</p>
+                            <p>We are a smart insurance platform that combines powerful artificial intelligence with expert human support. The result? Instant quotes, personalized coverage, and real-time assistance—all in one simple, streamlined experience.</p>
                         </div>
                     </div>
+
                     <div class="faq-item">
-                        <button class="faq-question">How fast is the quote process? <i class="fa-solid fa-plus"></i></button>
+                        <button class="faq-question">How does Alex AI work? <i class="fa-solid fa-plus"></i></button>
                         <div class="faq-answer">
-                            <p>Most users get a bindable price in under 90 seconds. We connect to data sources securely to pre-fill information, saving you time.</p>
+                            <p>Our intelligent AI analyzes your profile and needs to find your perfect insurance match. In just a few clicks, you'll receive customized options. Forget the paperwork and the phone calls—this is instant protection.</p>
                         </div>
                     </div>
+
                     <div class="faq-item">
-                        <button class="faq-question">What is Alex Sign? <i class="fa-solid fa-plus"></i></button>
+                        <button class="faq-question">What types of insurance do you offer? <i class="fa-solid fa-plus"></i></button>
                         <div class="faq-answer">
-                            <p>Alex Sign is our integrated digital signature platform. It allows you to securely sign policy documents instantly from any device, without printing or scanning.</p>
+                            <p>We provide tailored coverage for Auto, Homeowners, Renters, Tech & Devices, and more. Every policy is 100% personalized to fit your lifestyle.</p>
                         </div>
                     </div>
-                     <div class="faq-item">
+
+                    <div class="faq-item">
+                        <button class="faq-question">Is my personal data secure? <i class="fa-solid fa-plus"></i></button>
+                        <div class="faq-answer">
+                            <p>Absolutely. We use bank-level encryption and strict data privacy protocols to ensure your information is always safe and confidential.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">What makes Alex AI different? <i class="fa-solid fa-plus"></i></button>
+                        <div class="faq-answer">
+                            <p>It's simple: we put you in control. Instant quotes powered by AI, transparent pricing with no hidden fees, 24/7 real-time support, and full control to manage your policy anytime, anywhere.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">Can I cancel or change my policy anytime? <i class="fa-solid fa-plus"></i></button>
+                        <div class="faq-answer">
+                            <p>Yes. You can update or cancel your policy at any time directly from your secure dashboard. No phone calls, no hassle. It’s that simple.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
                         <button class="faq-question">How do I file a claim? <i class="fa-solid fa-plus"></i></button>
                         <div class="faq-answer">
-                            <p>The fastest way is through our mobile app. You can upload photos and describe what happened. For simple claims, Alex can process them instantly. You can also call our 24/7 support.</p>
+                            <p>You can file a claim online in just a few minutes. Our guided system and dedicated support team are designed to make the process fast, straightforward, and stress-free.</p>
                         </div>
                     </div>
                 </div>
@@ -357,32 +391,38 @@
     <footer id="contact" class="site-footer">
         <div class="container footer-grid">
             <div class="footer-col brand-col">
-                 <h4 style="font-weight:900; font-size: 1.8rem; margin-bottom: 20px; color: white;">Alex<span style="color:var(--alex-blue-light);">AI</span></h4>
-                 <p style="color: rgba(255,255,255,0.8);">Smart insurance for modern life. Powered by intelligence, driven by humans.</p>
+                <a href="index.html" style="display: block; margin-bottom: 20px;">
+                    <img src="./assets/img/Logo-alexai-main.png" 
+                        alt="Alex AI Insurtech Logo" 
+                        style="max-width: 160px; height: auto; filter: brightness(0) invert(1);">
+                </a>
+                <p style="color: rgba(255,255,255,0.9); font-weight: 500;">
+                    Smart insurance for modern life. Powered by intelligence, driven by humans.
+                </p>
             </div>
             <div class="footer-col">
                 <h5 style="color: white;">Products</h5>
                 <ul class="footer-links">
-                    <li><a href="#">Car Insurance</a></li>
-                    <li><a href="#">Home Insurance</a></li>
-                    <li><a href="#">Renters Insurance</a></li>
-                    <li><a href="#">Alex Sign</a></li>
+                    <li><a href="./quote/quote.html">Car Insurance</a></li>
+                    <li><a href="./homeowners/index.html">Home Insurance</a></li>
+                    <li><a href="./renters/index.html">Renters Insurance</a></li>
+                    <li><a href="./alex-sign/index.html">Alex Sign</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h5 style="color: white;">Company</h5>
                 <ul class="footer-links">
                     <li><a href="#">About Us</a></li>
-                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Ambassadors</a></li>
                     <li><a href="#">Blog</a></li>
-                    <li><a href="#">Press</a></li>
+                    <li><a href="./contact/index.html">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h5 style="color: white;">Contact & Legal</h5>
                 <ul class="footer-links contact-links">
-                    <li><i class="fa-solid fa-phone"></i> +1 (800) 555-ALEX</li>
-                    <li><i class="fa-solid fa-envelope"></i> support@alexai.com</li>
+                    <li><i class="fa-solid fa-phone"></i> +1 480-630-9630</li>
+                    <li><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</li>
                     <li><a href="#">Terms of Service</a></li>
                     <li><a href="#">Privacy Policy</a></li>
                 </ul>
@@ -393,7 +433,7 @@
              <div class="social-links">
                 <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
                 <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
             </div>
         </div>
     </footer>
@@ -402,13 +442,13 @@
         <div class="floating-menu-list organic-box" id="megaMenu">
             <h5>Quick Navigate</h5>
             <ul>
-                <li><a href="#"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
-                <li><a href="#"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
-                <li><a href="#"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
-                <li><a href="#"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
+                <li><a href="./quote/quote.html"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
+                <li><a href="./homeowners/index.html"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
+                <li><a href="./renters/index.html"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
+                <li><a href="./alex-sign/index.html"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
                 <li class="divider"></li>
                 <li><a href="#blog"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
-                <li><a href="#contact"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
+                <li><a href="./contact/index.html"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
             </ul>
         </div>
         <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open quick menu">
@@ -426,6 +466,6 @@
         </button>
     </div>
 
-    <script src="/js/script.js"></script>
+    <script src="./js/script.js"></script>
 </body>
 </html>

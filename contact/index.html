@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Alex AI Insurtech</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+
+    <style>
+        /* Ajustes específicos para esta página */
+        
+        /* Footer Azul Sketch */
+        .site-footer {
+            background-color: #009cff;
+            border-top: 3px solid var(--alex-ink);
+        }
+        
+        /* Header Top Sketch */
+        .top-header {
+            border-bottom: 3px solid var(--alex-ink);
+            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+        }
+
+        /* Ajuste del Grid de Contacto */
+        .contact-grid-layout {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .contact-grid-layout { grid-template-columns: 1fr; }
+            .sidebar-contact { order: -1; margin-bottom: 40px; } /* Info primero en móvil */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-3"></div>
+    <div id="transition-overlay"></div>
+
+    <div class="top-header">
+        <div class="container top-header-flex">
+            <div class="top-contact">
+                <a href="tel:+1800555ALEX"><i class="fa-solid fa-phone"></i> +1 480 630 9630</a>
+                <a href="mailto:hello@alexai.com"><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</a>
+                <span><i class="fa-solid fa-location-dot"></i> 3101 N Central Ave ste 1174, Phoenix, AZ</span>
+            </div>
+            <div class="top-social">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <div class="container header-wrapper">
+            <a href="../index.html" class="logo-container">
+                <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="site-logo">
+            </a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../quote/quote.html">Quote</a></li>
+                    <li class="has-dropdown">
+                        <a href="#">Products <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu organic-box">
+                            <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                            <li><a href="../index.html#products">Insurance</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#carriers">Carriers</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="../quote/quote.html" class="btn btn-solid btn-sm">Get a Quote</a>
+            </div>
+            
+             <button class="mobile-menu-toggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+    </header>
+
+    <main>
+        
+        <section class="section-padding" style="padding-bottom: 40px;">
+            <div class="container text-center">
+                <h1 class="sketch-headline">Get in touch.</h1>
+                <p class="hero-subtitle" style="margin: 0 auto;">Have a question? Send us a message and we'll get back to you as soon as possible.</p>
+            </div>
+        </section>
+
+        <section class="section-padding" style="padding-top: 0;">
+            <div class="container contact-grid-layout">
+                
+                <div class="contact-form-col">
+                    <div class="organic-box" style="padding: 40px;">
+                        <h3 style="margin-bottom: 25px; color: var(--alex-ink);">Send a Message</h3>
+                        
+                        <form action="#" method="POST">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <div class="input-modern-wrapper">
+                                        <i class="fa-regular fa-user input-icon"></i>
+                                        <input type="text" name="first-name" class="alex-input-modern" placeholder="Jane" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <div class="input-modern-wrapper">
+                                        <input type="text" name="last-name" class="alex-input-modern" placeholder="Doe" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-regular fa-envelope input-icon"></i>
+                                    <input type="email" name="email" class="alex-input-modern" placeholder="you@example.com" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-regular fa-comment-dots input-icon"></i>
+                                    <input type="text" name="subject" class="alex-input-modern" placeholder="How can we help?" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Message</label>
+                                <textarea name="message" class="alex-input-modern" rows="5" style="border-radius: 14px; padding: 15px;" placeholder="Write your message here..." required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-glow-anim" style="width: 100%; margin-top: 10px;">
+                                Send Message <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <aside class="sidebar-contact">
+                    
+                    <div class="organic-box taped-note" style="padding: 40px 30px;">
+                        <div class="washi-tape-large"></div>
+                        
+                        <h3 class="sketch-headline-sm" style="font-size: 1.5rem; margin-bottom: 30px;">Contact Info</h3>
+                        
+                        <ul class="feature-list" style="margin-top: 0;">
+                            <li style="display: flex; gap: 15px; align-items: flex-start; margin-bottom: 25px;">
+                                <div class="tile-icon" style="background: #E0F2FE; color: var(--alex-blue-accent); border: 2px solid #BAE6FD;">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <strong style="display: block; color: var(--alex-ink);">Phone</strong>
+                                    <a href="tel:+14806309630" style="color: var(--alex-ink-light);">(480) 630-9630</a>
+                                </div>
+                            </li>
+                            
+                            <li style="display: flex; gap: 15px; align-items: flex-start; margin-bottom: 25px;">
+                                <div class="tile-icon" style="background: #F0FDF4; color: #10B981; border: 2px solid #BBF7D0;">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <strong style="display: block; color: var(--alex-ink);">Email</strong>
+                                    <a href="mailto:hello@alexai.cloud" style="color: var(--alex-ink-light);">hello@alexai.cloud</a>
+                                </div>
+                            </li>
+
+                            <li style="display: flex; gap: 15px; align-items: flex-start;">
+                                <div class="tile-icon" style="background: #FEF2F2; color: #EF4444; border: 2px solid #FECACA;">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <strong style="display: block; color: var(--alex-ink);">Location</strong>
+                                    <span style="color: var(--alex-ink-light);">Phoenix, AZ</span>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <hr class="note-divider" style="margin: 30px 0;">
+
+                        <h4 style="font-size: 1rem; margin-bottom: 15px;">Connect with us</h4>
+                        <div class="social-links" style="display: flex; gap: 15px;">
+                            <a href="https://www.facebook.com/people/Alexai-Insurtech-USA/61573922245346/" target="_blank" class="btn-outline-sketch" style="width: 45px; height: 45px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                            <a href="https://www.instagram.com/alexai.insurtech.usa/" target="_blank" class="btn-outline-sketch" style="width: 45px; height: 45px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/company/alex-ai-insurtech" target="_blank" class="btn-outline-sketch" style="width: 45px; height: 45px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="organic-box" style="margin-top: 30px; padding: 20px; background: #FEF9C3; border-color: #F59E0B; text-align: center;">
+                        <i class="fa-solid fa-headset" style="font-size: 2rem; color: #D97706; margin-bottom: 10px;"></i>
+                        <p style="margin: 0; font-weight: 700; color: #92400E;">Need immediate help?</p>
+                        <p style="font-size: 0.9rem; margin-bottom: 10px; color: #92400E;">Try our 24/7 AI Chat.</p>
+                        <button class="btn btn-sm btn-outline js-trigger-chat" style="background: white; border-color: #D97706; color: #D97706;">Open Chat</button>
+                    </div>
+
+                </aside>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="contact" class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <a href="index.html" style="display: block; margin-bottom: 20px;">
+                    <img src="../assets/img/Logo-alexai-main.png" 
+                        alt="Alex AI Insurtech Logo" 
+                        style="max-width: 160px; height: auto; filter: brightness(0) invert(1);">
+                </a>
+                <p style="color: rgba(255,255,255,0.9); font-weight: 500;">
+                    Smart insurance for modern life. Powered by intelligence, driven by humans.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Products</h5>
+                <ul class="footer-links">
+                    <li><a href="./quote/quote.html">Car Insurance</a></li>
+                    <li><a href="./homeowners/index.html">Home Insurance</a></li>
+                    <li><a href="./renters/index.html">Renters Insurance</a></li>
+                    <li><a href="./alex-sign/index.html">Alex Sign</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Company</h5>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Ambassadors</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="./contact/index.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Contact & Legal</h5>
+                <ul class="footer-links contact-links">
+                    <li><i class="fa-solid fa-phone"></i> +1 480-630-9630</li>
+                    <li><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container copyright-row">
+             <p>&copy; 2026 Alex AI Insurtech. All rights reserved.</p>
+             <div class="social-links">
+                <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="floating-menu-container">
+        <div class="floating-menu-list organic-box" id="megaMenu">
+            <h5>Quick Navigate</h5>
+            <ul>
+                <li><a href="./quote/quote.html"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
+                <li><a href="./homeowners/index.html"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
+                <li><a href="./renters/index.html"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
+                <li><a href="./alex-sign/index.html"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
+                <li class="divider"></li>
+                <li><a href="#blog"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
+                <li><a href="./contact/index.html"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
+            </ul>
+        </div>
+        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open quick menu">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+    </div>
+
+
+    <div id="floating-chat-container">
+        <div class="chat-bubble organic-box" id="chatGreeting">
+            <strong>Alex AI says:</strong><br> 👋 We are here to help!
+        </div>
+        <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
+            <i class="fa-solid fa-robot"></i>
+        </button>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script>
+        // Chat Greeting Delay
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => { 
+                const bubble = document.getElementById('chatGreeting');
+                if(bubble) bubble.classList.add('is-visible'); 
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

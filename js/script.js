@@ -1,96 +1,40 @@
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Alex AI Insurtech - Final JS Loaded");
+    console.log("Alex AI Insurtech - JS Initialized");
 
-    // Initialize the new click-to-play-until-end-and-redirect logic
-    initQuoteTransition();
-
-    // Other initializations
+    // 1. Funciones Globales UI
     initMobileMenu();
     initFloatingMegaMenu();
     initFAQAccordion();
     initFloatingChat();
-    initProductTriggers();
-    initProductVideos();
-});
-
-/**
- * ============================================================
- * 1. NEW: QUOTE TRANSITION WITH FADE EFFECT
- * static -> click -> play full video -> float -> fade to white -> redirect
- * ============================================================
- */
-function initQuoteTransition() {
-    const heroVideo = document.getElementById('heroVideoElement');
-    const videoContainer = document.querySelector('.hero-video-organic');
-    const triggerButtons = document.querySelectorAll('.js-trigger-quote');
-    const overlay = document.getElementById('transition-overlay'); // Select the new overlay
     
-    // Placeholder URL for the next step (change this to your actual quote page)
-    const targetUrl = "quote.html"; 
-
-    if (!heroVideo || triggerButtons.length === 0 || !overlay) {
-        console.warn("Critical elements for transition not found.");
-        return;
+    // 2. Lógica del Home (Video y Productos)
+    if(document.getElementById('heroVideoElement')) {
+        initQuoteTransition();
+        initProductTriggers();
+        initProductVideos();
     }
 
-    triggerButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            // Prevent default jump
-            e.preventDefault(); 
+    // 3. Lógica Step 1 (Formulario)
+    if(document.getElementById('quoteFormStart')) {
+        initQuoteFormLogic();
+        initTableSelectors(); // Para el modal de Step 1
+    }
 
-            console.log("Quote sequence initiated.");
-            
-            // Visual feedback on button
-            btn.textContent = "Starting...";
-            btn.style.pointerEvents = "none"; 
-            btn.style.opacity = "0.8";
+    // 4. Lógica Step 3 (Comparador)
+    // Se ejecuta si detecta elementos de esa página
+    if(document.querySelector('.quote-result-card')) {
+        initQuoteComparison();
+        initMobileFilters();
+    }
+});
 
-            // Start floating animation
-            if (videoContainer) {
-                videoContainer.classList.add('is-playing');
-            }
+/* =========================================
+   CORE FUNCTIONS
+   ========================================= */
 
-            // Reset video to start
-            heroVideo.currentTime = 0;
-
-            // --- LOGIC CHANGE: FADE TRANSITION ---
-            // 1. Set up listener for when video ends naturally
-            heroVideo.addEventListener('ended', () => {
-                console.log("Video playback finished. Starting fade transition...");
-                
-                // ACTIVATE FADE OVERLAY
-                overlay.classList.add('is-active');
-
-                // Wait for fade animation (500ms matching CSS transition) before redirecting
-                setTimeout(() => {
-                     console.log("Fade complete. Redirecting.");
-                     window.location.href = targetUrl;
-                }, 500);
-
-            }, { once: true }); // 'once: true' ensures it only runs once per click
-
-            // 2. Start playing
-            heroVideo.play().catch(err => {
-                console.error("Video play failed. Triggering fallback fade-out immediately.", err);
-                // Fallback: fade out and redirect immediately if video fails
-                overlay.classList.add('is-active');
-                setTimeout(() => { window.location.href = targetUrl; }, 500);
-            });
-        });
-    });
-}
-
-/**
- * ============================================================
- * 2. MOBILE MENU & DROPDOWN LOGIC (Unchanged)
- * ============================================================
- */
 function initMobileMenu() {
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const siteHeader = document.querySelector('.site-header');
-    const navLinks = document.querySelectorAll('.main-nav a:not(.has-dropdown > a)');
-    const dropdownToggles = document.querySelectorAll('.has-dropdown > a');
-
     if (!menuToggle || !siteHeader) return;
 
     menuToggle.addEventListener('click', () => {
@@ -104,32 +48,8 @@ function initMobileMenu() {
             document.body.style.overflow = '';
         }
     });
-
-    // Prevent closing menu if clicking the quote trigger in mobile menu,
-    // let initQuoteTransition handle it.
-    navLinks.forEach(link => {
-        if (!link.classList.contains('js-trigger-quote')) {
-             link.addEventListener('click', () => {
-                  if (window.innerWidth < 768) { menuToggle.click(); }
-             });
-        }
-    });
-
-    dropdownToggles.forEach(toggle => {
-        toggle.addEventListener('click', (e) => {
-            if (window.innerWidth < 768) {
-                e.preventDefault();
-                toggle.parentElement.classList.toggle('active');
-            }
-        });
-    });
 }
 
-/**
- * ============================================================
- * 3. LEFT FLOATING MEGA MENU (Unchanged)
- * ============================================================
- */
 function initFloatingMegaMenu() {
     const triggerBtn = document.querySelector('.js-toggle-mega-menu');
     const menuList = document.getElementById('megaMenu');
@@ -137,162 +57,233 @@ function initFloatingMegaMenu() {
 
     triggerBtn.addEventListener('click', () => {
         menuList.classList.toggle('is-open');
-        const icon = triggerBtn.querySelector('i');
-        if(menuList.classList.contains('is-open')){
-             icon.classList.remove('fa-bars-staggered'); icon.classList.add('fa-xmark');
-        } else {
-             icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars-staggered');
-        }
     });
-
+    
+    // Cerrar al clickear fuera
     document.addEventListener('click', (e) => {
-        if (!triggerBtn.contains(e.target) && !menuList.contains(e.target) && menuList.classList.contains('is-open')) {
-            triggerBtn.click();
+        if (!triggerBtn.contains(e.target) && !menuList.contains(e.target)) {
+            menuList.classList.remove('is-open');
         }
     });
 }
 
-/**
- * ============================================================
- * 4. FAQ ACCORDION (Unchanged)
- * ============================================================
- */
 function initFAQAccordion() {
-    const faqQuestions = document.querySelectorAll('.faq-question');
-    faqQuestions.forEach(question => {
+    document.querySelectorAll('.faq-question').forEach(question => {
         question.addEventListener('click', () => {
             const item = question.parentElement;
-            document.querySelectorAll('.faq-item').forEach(otherItem => {
-                if(otherItem !== item) otherItem.classList.remove('active');
-            });
             item.classList.toggle('active');
         });
     });
 }
 
-/**
- * ============================================================
- * 5. FLOATING CHAT & PRODUCT TRIGGERS (Unchanged)
- * ============================================================
- */
 function initFloatingChat() {
     const chatBubble = document.getElementById('chatGreeting');
     const chatTriggers = document.querySelectorAll('.js-trigger-chat');
     setTimeout(() => { if (chatBubble) chatBubble.classList.add('is-visible'); }, 2500);
-    chatTriggers.forEach(btn => btn.addEventListener('click', () => {
-        if (chatBubble) chatBubble.classList.remove('is-visible');
-        alert('🤖 Opening Alex AI Chat Interface...');
-    }));
+    chatTriggers.forEach(btn => btn.addEventListener('click', () => alert('🤖 Alex AI Chat Opening...')));
 }
 
-function initProductTriggers() {
-    // Only target the product card buttons
-    const triggers = document.querySelectorAll('.js-product-trigger');
-    triggers.forEach(btn => {
+/* =========================================
+   HOME PAGE LOGIC
+   ========================================= */
+function initQuoteTransition() {
+    const heroVideo = document.getElementById('heroVideoElement');
+    const videoContainer = document.querySelector('.hero-video-organic');
+    const triggerButtons = document.querySelectorAll('.js-trigger-quote');
+    const overlay = document.getElementById('transition-overlay'); 
+    const targetUrl = "quote/quote.html"; 
+
+    if (!heroVideo || !overlay) return;
+
+    triggerButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            let product = btn.getAttribute('data-product');
-            alert(`🚀 Starting quote for: ${product.toUpperCase()}`);
+            e.preventDefault(); 
+            btn.innerHTML = "Starting...";
+            btn.style.pointerEvents = "none"; 
+            if (videoContainer) videoContainer.classList.add('is-playing');
+            heroVideo.currentTime = 0; heroVideo.muted = false;
+
+            const go = () => { overlay.classList.add('is-active'); setTimeout(() => window.location.href = targetUrl, 500); };
+            heroVideo.addEventListener('ended', go, { once: true });
+            heroVideo.play().catch(go); // Si falla autoplay, ir directo
         });
     });
 }
 
 function initProductVideos() {
-    const productCards = document.querySelectorAll('.product-card');
-
-    productCards.forEach(card => {
+    document.querySelectorAll('.product-card').forEach(card => {
         const video = card.querySelector('.js-hover-video');
+        if (!video) return;
+        card.addEventListener('mouseenter', () => video.play().catch(() => {}));
+        card.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+    });
+}
 
-        if (!video) return; // Si no hay video, saltar
+function initProductTriggers() {
+    document.querySelectorAll('.js-product-trigger').forEach(btn => {
+        btn.addEventListener('click', () => window.location.href = "quote/quote.html");
+    });
+}
 
-        // Evento: Mouse entra -> Reproducir
-        card.addEventListener('mouseenter', () => {
-            // Usamos una promesa para evitar errores si el usuario entra y sale muy rápido
-            const playPromise = video.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    console.log("Reproducción interrumpida (usuario salió muy rápido)");
-                });
+/* =========================================
+   QUOTE STEP 1 LOGIC
+   ========================================= */
+function initQuoteFormLogic() {
+    const quoteForm = document.getElementById('quoteFormStart');
+    const modal = document.getElementById('quotesModal');
+    const closeButtons = document.querySelectorAll('.js-close-modal');
+    const startNewBtn = document.querySelector('.js-start-new');
+
+    quoteForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = quoteForm.querySelector('button');
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking...';
+        setTimeout(() => {
+            btn.innerHTML = original;
+            if(modal) modal.classList.add('is-active');
+        }, 1500);
+    });
+
+    closeButtons.forEach(btn => btn.addEventListener('click', () => modal.classList.remove('is-active')));
+    
+    if (startNewBtn) {
+        startNewBtn.addEventListener('click', () => {
+            startNewBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating...';
+            setTimeout(() => { window.location.href = "quote-2.html"; }, 1000);
+        });
+    }
+}
+
+function initTableSelectors() {
+    document.querySelectorAll('.btn-select').forEach(btn => {
+        btn.addEventListener('click', () => alert('Loading existing quote...'));
+    });
+}
+
+/* =========================================
+   QUOTE STEP 3 LOGIC (Unified)
+   ========================================= */
+function initQuoteComparison() {
+    // 1. Manejo de Selección de Tarjetas
+    const selectBtns = document.querySelectorAll('.js-select-quote');
+    const priceDisplay = document.getElementById('selected-price-display');
+    const mobilePriceDisplay = document.getElementById('mobile-price-display'); // Nuevo elemento móvil
+
+    selectBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const card = this.closest('.quote-result-card');
+            const wasSelected = card.classList.contains('is-selected');
+
+            // Reset visual
+            document.querySelectorAll('.quote-result-card').forEach(c => {
+                c.classList.remove('is-selected');
+                const b = c.querySelector('.js-select-quote');
+                if(b) { b.innerHTML = 'Select Plan'; b.classList.remove('selected-state'); b.className = 'btn-blue-sketch js-select-quote'; }
+            });
+
+            if (!wasSelected) {
+                // Activar selección
+                card.classList.add('is-selected');
+                this.innerHTML = 'Selected';
+                this.className = 'btn-green-sketch js-select-quote selected-state'; // Cambiar clase
+                
+                // Extraer precio y actualizar UI
+                const priceText = card.querySelector('.price-group').innerText.replace('/mo','').replace('$','').trim();
+                const formattedPrice = '$' + priceText.match(/\d+/)[0] + '/mo';
+                
+                if(priceDisplay) {
+                    priceDisplay.innerHTML = formattedPrice;
+                    priceDisplay.style.color = 'var(--alex-ink)';
+                }
+                if(mobilePriceDisplay) {
+                    mobilePriceDisplay.innerHTML = formattedPrice;
+                    mobilePriceDisplay.parentElement.classList.add('has-value');
+                }
+            } else {
+                // Deseleccionar
+                if(priceDisplay) {
+                    priceDisplay.innerHTML = '--';
+                    priceDisplay.style.color = '#94A3B8';
+                }
+                if(mobilePriceDisplay) {
+                    mobilePriceDisplay.innerHTML = '--';
+                    mobilePriceDisplay.parentElement.classList.remove('has-value');
+                }
             }
         });
+    });
 
-        // Evento: Mouse sale -> Pausar y Reiniciar
-        card.addEventListener('mouseleave', () => {
-            video.pause();
-            video.currentTime = 0; // Regresa el video al fotograma 0 (opcional, pero se ve mejor)
+    // 2. Modal de Comparación
+    const compareBtn = document.querySelector('.js-open-compare');
+    const compareModal = document.getElementById('compareModal');
+    const closeCompareBtns = document.querySelectorAll('.js-close-compare');
+
+    if (compareBtn && compareModal) {
+        compareBtn.addEventListener('click', () => compareModal.classList.add('is-active'));
+    }
+    closeCompareBtns.forEach(btn => btn.addEventListener('click', () => compareModal.classList.remove('is-active')));
+
+    // 3. Filtros (Basic vs Full)
+    const modeInputs = document.querySelectorAll('.js-filter-mode');
+    modeInputs.forEach(input => {
+        input.addEventListener('change', (e) => {
+            updateFilters(e.target.value);
         });
     });
 }
 
-/* ============================================================
-   7. QUOTE FORM HANDLING (Modificado con Modal)
-   ============================================================ */
-document.addEventListener("DOMContentLoaded", () => {
-    const quoteForm = document.getElementById('quoteFormStart');
-    const modal = document.getElementById('quotesModal');
+function updateFilters(mode) {
+    // Referencias a elementos
+    const aspireTags = document.getElementById('tags-aspire');
+    const aspirePrice = document.getElementById('price-aspire');
     
-    // Botones dentro del modal
-    const closeButtons = document.querySelectorAll('.js-close-modal');
-    const startNewBtn = document.querySelector('.js-start-new');
-
-    // 1. MANEJAR EL ENVÍO DEL FORMULARIO
-    if (quoteForm) {
-        quoteForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const btn = quoteForm.querySelector('button');
-            const originalText = btn.innerHTML;
-            
-            // Efecto de carga en el botón
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking Data...';
-            btn.style.opacity = '0.8';
-            btn.style.pointerEvents = 'none';
-            
-            // Simulamos petición al servidor (1.5 segundos)
-            setTimeout(() => {
-                // Restauramos el botón
-                btn.innerHTML = originalText;
-                btn.style.opacity = '1';
-                btn.style.pointerEvents = 'all';
-
-                // ABRIMOS EL MODAL
-                if(modal) {
-                    modal.classList.add('is-active');
-                }
-            }, 1500);
-        });
+    // Inputs del sidebar (para sincronizar visualmente)
+    const limitBi = document.getElementById('limit-bi');
+    const dedComp = document.getElementById('ded-comp');
+    
+    if(mode === 'basic') {
+        if(limitBi) limitBi.value = 'state';
+        if(dedComp) dedComp.value = '0';
+        if(aspirePrice) aspirePrice.innerHTML = '<div class="highlighter-mark"></div> <span class="currency">$</span>45<span class="mo">/mo</span>';
+        if(aspireTags) aspireTags.innerHTML = '<span class="spec-tag warning"><i class="fa-solid fa-triangle-exclamation"></i> Liability Only</span><span class="spec-tag">State Mins</span>';
+    } else {
+        if(limitBi) limitBi.value = '100/300';
+        if(dedComp) dedComp.value = '500';
+        if(aspirePrice) aspirePrice.innerHTML = '<div class="highlighter-mark"></div> <span class="currency">$</span>79<span class="mo">/mo</span>';
+        if(aspireTags) aspireTags.innerHTML = '<span class="spec-tag"><i class="fa-solid fa-shield-halved"></i> Full Coverage</span><span class="spec-tag"><i class="fa-solid fa-wrench"></i> Low Ded ($500)</span>';
     }
+}
 
-    // 2. CERRAR MODAL (Botón Cancel o X)
-    if (closeButtons) {
-        closeButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                modal.classList.remove('is-active');
-            });
-        });
-    }
+function initMobileFilters() {
+    const filterBtn = document.querySelector('.js-toggle-filters');
+    const closeFilterBtn = document.querySelector('.js-close-filters');
+    const filterPanel = document.getElementById('mobileFiltersPanel');
+    const applyBtn = document.querySelector('.js-apply-filters');
 
-    // 3. START NEW QUOTE (Simulación de ir al siguiente paso)
-    if (startNewBtn) {
-        startNewBtn.addEventListener('click', () => {
-            // Animación de carga en el botón del modal
-            startNewBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating...';
-            
-            setTimeout(() => {
-                alert("🚀 Starting a FRESH quote! Redirecting to Step 2...");
-                // window.location.href = "step-2.html"; 
-                modal.classList.remove('is-active');
-                startNewBtn.innerHTML = 'START NEW QUOTE';
-            }, 1000);
-        });
-    }
+    if (!filterBtn || !filterPanel) return;
 
-    // 4. SELECCIONAR EXISTENTE
-    const selectButtons = document.querySelectorAll('.btn-select');
-    selectButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const row = this.closest('tr');
-            const quoteId = row.querySelector('td').innerText; // Obtiene el ID (ej: 00000718)
-            alert(`📂 Loading existing quote #${quoteId}...`);
-        });
+    filterBtn.addEventListener('click', () => {
+        filterPanel.classList.add('is-visible');
+        document.body.style.overflow = 'hidden';
     });
-});
+
+    const closeFunc = () => {
+        filterPanel.classList.remove('is-visible');
+        document.body.style.overflow = '';
+    };
+
+    if(closeFilterBtn) closeFilterBtn.addEventListener('click', closeFunc);
+    
+    if(applyBtn) {
+        applyBtn.addEventListener('click', () => {
+            const original = applyBtn.innerHTML;
+            applyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Applied!';
+            setTimeout(() => {
+                applyBtn.innerHTML = original;
+                closeFunc();
+            }, 500);
+        });
+    }
+}

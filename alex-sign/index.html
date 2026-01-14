@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Sign - Digital Document Management</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+    
+    <style>
+        /* PEQUEÑOS AJUSTES ESPECÍFICOS PARA ESTA PÁGINA SI NO ESTÁN EN EL CSS GLOBAL */
+        
+        /* Ajuste para el Footer Azul Brillante solicitado */
+        .site-footer {
+            background-color: #009cff;
+            border-top: 3px solid var(--alex-ink);
+        }
+        
+        /* Ajuste para el Top Header Sketch */
+        .top-header {
+            border-bottom: 3px solid var(--alex-ink);
+            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-3"></div>
+    <div id="transition-overlay"></div>
+
+    <div class="top-header">
+        <div class="container top-header-flex">
+            <div class="top-contact">
+                <a href="tel:+1800555ALEX"><i class="fa-solid fa-phone"></i> +1 480 630 9630</a>
+                <a href="mailto:hello@alexai.com"><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</a>
+                <span><i class="fa-solid fa-location-dot"></i> 3101 N Central Ave ste 1174, Phoenix, AZ</span>
+            </div>
+            <div class="top-social">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <div class="container header-wrapper">
+            <a href="../index.html" class="logo-container">
+                <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="site-logo">
+            </a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../quote/quote.html">Quote</a></li>
+                    <li class="has-dropdown">
+                        <a href="#">Products <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu organic-box">
+                            <li><a href="#">Alex Sign</a></li>
+                            <li><a href="../index.html#products">Insurance</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#carriers">Carriers</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="../quote/quote.html" class="btn btn-solid btn-sm">Get a Quote</a>
+            </div>
+            
+             <button class="mobile-menu-toggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+    </header>
+
+    <main>
+        <section class="section-padding">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <div class="sketch-label" style="margin-bottom: 20px;">Digital Document Management</div>
+                    <h1>Streamline Your Document Processing With <span style="color:var(--alex-blue-accent);">AlexSign</span>.</h1>
+                    <p class="hero-subtitle">
+                        A cutting-edge platform leveraging AI to revolutionize digital document management for businesses and entrepreneurs.
+                    </p>
+                    <div class="hero-cta-wrapper">
+                        <a href="../contact/index.html" class="btn-glow-anim">
+                            <span>Get Started Free</span>
+                            <i class="fa-solid fa-arrow-right-long"></i>
+                        </a>                    
+                    </div>
+                </div>
+                <div class="hero-video-organic" style="text-align: center; background: #F8FAFC; padding: 60px 40px; border: 3px solid var(--alex-ink); box-shadow: var(--shadow-sketch-rest);">
+                    <img src="../assets/img/Logo-alex-sign.png" alt="AlexSign Logo" style="max-width: 90%; filter: drop-shadow(8px 8px 0px rgba(44, 62, 80, 0.1)); animation: float-vertical 6s infinite ease-in-out;">
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding bg-off-white">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2 class="sketch-headline-sm">Explore Capabilities</h2>
+                    <p>Features designed to enhance your workflow efficiency.</p>
+                </div>
+                
+                <div class="grid-3">
+                    <div class="product-card organic-box" style="text-align: left; padding: 30px;">
+                        <i class="fa-solid fa-brain" style="font-size: 2.5rem; color: var(--alex-blue-accent); margin-bottom: 20px;"></i>
+                        <h3>Machine Learning</h3>
+                        <p>Our AI optimizes document processes, improving accuracy and speed over time.</p>
+                    </div>
+
+                    <div class="product-card organic-box" style="text-align: left; padding: 30px;">
+                        <i class="fa-solid fa-file-signature" style="font-size: 2.5rem; color: var(--alex-blue-accent); margin-bottom: 20px;"></i>
+                        <h3>AI Generation</h3>
+                        <p>Create legal documents effortlessly with our AI-Driven Generation Tools.</p>
+                    </div>
+
+                    <div class="product-card organic-box" style="text-align: left; padding: 30px;">
+                        <i class="fa-solid fa-layer-group" style="font-size: 2.5rem; color: var(--alex-blue-accent); margin-bottom: 20px;"></i>
+                        <h3>Bulk Signing</h3>
+                        <p>Sign multiple documents simultaneously with our batch processing feature.</p>
+                    </div>
+
+                    <div class="product-card organic-box" style="text-align: left; padding: 30px;">
+                        <i class="fa-solid fa-shield-halved" style="font-size: 2.5rem; color: var(--alex-blue-accent); margin-bottom: 20px;"></i>
+                        <h3>Advanced Security</h3>
+                        <p>Ensure document security and track every action with audit logs.</p>
+                    </div>
+
+                    <div class="product-card organic-box" style="text-align: left; padding: 30px;">
+                        <i class="fa-solid fa-plug" style="font-size: 2.5rem; color: var(--alex-blue-accent); margin-bottom: 20px;"></i>
+                        <h3>Integration</h3>
+                        <p>Integrate with CRMs and automate workflows for seamless operations.</p>
+                    </div>
+                    
+                    <div class="product-card organic-box" style="background: var(--alex-ink); color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                        <h3 style="color: white;">Ready to sign?</h3>
+                        <p style="color: rgba(255,255,255,0.7);">Get started today.</p>
+                        <a href="../contact/index.html" class="btn btn-glow-anim" style="width: 100%;">Contact Sales</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2 class="sketch-headline-sm">Simple Pricing</h2>
+                    <p>Choose the plan that fits your business scale.</p>
+                </div>
+                
+                <div class="grid-3">
+                    <div class="quote-example-card organic-box">
+                        <div class="quote-header">
+                            <h4>Starter</h4>
+                            <span class="badge-sketch">Basic</span>
+                        </div>
+                        <div class="quote-price">
+                            <span class="currency">$</span>79
+                        </div>
+                        <ul class="feature-list" style="font-size: 0.95rem;">
+                             <li><i class="fa-solid fa-check"></i> Unlimited simple signatures</li>
+                             <li><i class="fa-solid fa-check"></i> 10 monthly documents</li>
+                             <li><i class="fa-solid fa-check"></i> LegalAI Assistant</li>
+                             <li><i class="fa-solid fa-check"></i> Up to 3 users</li>
+                             <li><i class="fa-solid fa-check"></i> 3 GB storage</li>
+                        </ul>
+                        <a href="../contact/index.html" class="btn btn-outline" style="width: 100%; margin-top: 20px;">Contact Us</a>
+                    </div>
+
+                    <div class="quote-example-card organic-box popular-choice">
+                        <div class="popular-tag-sketch">Most Popular</div>
+                        <div class="quote-header">
+                            <h4>Growth</h4>
+                            <span class="badge-sketch" style="background: var(--alex-blue-accent); color: white; border: none;">Business</span>
+                        </div>
+                        <div class="quote-price">
+                            <span class="currency">$</span>299
+                        </div>
+                        <ul class="feature-list" style="font-size: 0.95rem;">
+                             <li><i class="fa-solid fa-check"></i> <strong>Unlimited simple signatures</strong></li>
+                             <li><i class="fa-solid fa-check"></i> 30 monthly documents</li>
+                             <li><i class="fa-solid fa-check"></i> Dynamic user roles</li>
+                             <li><i class="fa-solid fa-check"></i> <strong>Up to 10 users</strong></li>
+                             <li><i class="fa-solid fa-check"></i> 30 GB storage</li>
+                             <li><i class="fa-solid fa-star"></i> Priority Support</li>
+                        </ul>
+                        <a href="../contact/index.html" class="btn btn-glow-anim" style="width: 100%; margin-top: 20px;">Get Started</a>
+                    </div>
+
+                    <div class="quote-example-card organic-box">
+                        <div class="quote-header">
+                            <h4>Scale</h4>
+                            <span class="badge-sketch">Enterprise</span>
+                        </div>
+                        <div class="quote-price">
+                            <span class="currency">$</span>599
+                        </div>
+                        <ul class="feature-list" style="font-size: 0.95rem;">
+                             <li><i class="fa-solid fa-check"></i> <strong>Unlimited documents</strong></li>
+                             <li><i class="fa-solid fa-check"></i> Document Integration</li>
+                             <li><i class="fa-solid fa-check"></i> <strong>30 Users</strong></li>
+                             <li><i class="fa-solid fa-check"></i> 100 GB storage</li>
+                             <li><i class="fa-solid fa-check"></i> API Integration (Optional)</li>
+                             <li><i class="fa-solid fa-crown"></i> VIP Support</li>
+                        </ul>
+                        <a href="../contact/index.html" class="btn btn-outline" style="width: 100%; margin-top: 20px;">Contact Sales</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding bg-off-white">
+            <div class="container">
+                <div class="organic-box taped-note" style="margin-bottom: 60px;">
+                    <div class="washi-tape-large"></div>
+                    <div style="padding: 40px;">
+                        <h3 class="sketch-headline-sm" style="margin-bottom: 20px;">Success Story</h3>
+                        <p style="font-style: italic; font-size: 1.2rem; line-height: 1.8;">
+                            "I’ve always dreaded dealing with insurance companies. In less than 10 minutes, I had a quote... But the real test came when I had to file a small claim. I did it through the app in five minutes. It’s the first time I feel like an insurance agency is actually on my side."
+                        </p>
+                        <div class="reviewer" style="margin-top: 20px;">
+                            <div class="avatar-sketch" style="width: 50px; height: 50px; background: #CBD5E1; display:flex; align-items:center; justify-content:center; font-weight:bold;">M</div>
+                            <div>
+                                <span style="display:block; font-weight:800; color:var(--alex-ink);">Michael - Verified User</span>
+                                <span style="font-size: 0.8rem; color: #64748B;">Use case: Claims & Signing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-3">
+                    <div class="review-card organic-box">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p>"Great for my projects."</p>
+                        <div class="reviewer">
+                             <img src="../assets/img/Profile-joel.png" onerror="this.src='https://placehold.co/50x50?text=J'" alt="Joel" class="avatar-sketch" style="width:50px;">
+                             <span>Joel Cota<br><small>Project Manager</small></span>
+                        </div>
+                    </div>
+                    <div class="review-card organic-box">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p>"Essential for architects."</p>
+                        <div class="reviewer">
+                             <img src="../assets/img/Profile-antony.png" onerror="this.src='https://placehold.co/50x50?text=A'" alt="Antony" class="avatar-sketch" style="width:50px;">
+                             <span>Antony G.<br><small>Architect</small></span>
+                        </div>
+                    </div>
+                    <div class="review-card organic-box">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p>"Contracts made easy."</p>
+                        <div class="reviewer">
+                             <img src="../assets/img/Profile-jenny.png" onerror="this.src='https://placehold.co/50x50?text=J'" alt="Jenny" class="avatar-sketch" style="width:50px;">
+                             <span>Jenny Rojas<br><small>Musician</small></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container" style="max-width: 800px;">
+                <div class="section-header text-center">
+                    <h2 class="sketch-headline-sm">FAQ</h2>
+                    <p>Common questions about Alex Sign.</p>
+                </div>
+                <div class="faq-accordion organic-box">
+                    <div class="faq-item">
+                        <button class="faq-question">What is Alex Sign? <i class="fa-solid fa-plus"></i></button>
+                        <div class="faq-answer">
+                            <p>Alex Sign is an electronic signature platform that allows you to sign documents with full legal validity, from any device and at any time. It is designed for both individual users and businesses looking to digitize and automate their signing.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">What makes Alex Sign different? <i class="fa-solid fa-plus"></i></button>
+                        <div class="faq-answer">
+                            <p>Alex Sign combines legal e-signature technology, artificial intelligence, and automation. Key features include AI-Powered generation of legal documents, bulk signing, and advanced security logs.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">Can I automatically generate documents? <i class="fa-solid fa-plus"></i></button>
+                        <div class="faq-answer">
+                            <p>Yes. Alex Sign includes an AI-Powered document generator that helps you create personalized contracts, agreements, and other legal documents in minutes.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">Is it legal to sign with Alex Sign? <i class="fa-solid fa-plus"></i></button>
+                        <div class="faq-answer">
+                            <p>Yes. All electronic signatures made through Alex Sign comply with U.S. laws such as the ESIGN Act and UETA, making them fully legally binding.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">How does Bulk Signing work? <i class="fa-solid fa-plus"></i></button>
+                        <div class="faq-answer">
+                            <p>Bulk signing allows you to send and sign multiple documents at once, whether for different recipients or repeated workflows. Ideal for HR or sales teams.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="contact" class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <a href="index.html" style="display: block; margin-bottom: 20px;">
+                    <img src="../assets/img/Logo-alexai-main.png" 
+                        alt="Alex AI Insurtech Logo" 
+                        style="max-width: 160px; height: auto; filter: brightness(0) invert(1);">
+                </a>
+                <p style="color: rgba(255,255,255,0.9); font-weight: 500;">
+                    Smart insurance for modern life. Powered by intelligence, driven by humans.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Products</h5>
+                <ul class="footer-links">
+                    <li><a href="./quote/quote.html">Car Insurance</a></li>
+                    <li><a href="./homeowners/index.html">Home Insurance</a></li>
+                    <li><a href="./renters/index.html">Renters Insurance</a></li>
+                    <li><a href="./alex-sign/index.html">Alex Sign</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Company</h5>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Ambassadors</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="./contact/index.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Contact & Legal</h5>
+                <ul class="footer-links contact-links">
+                    <li><i class="fa-solid fa-phone"></i> +1 480-630-9630</li>
+                    <li><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container copyright-row">
+             <p>&copy; 2026 Alex AI Insurtech. All rights reserved.</p>
+             <div class="social-links">
+                <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="floating-menu-container">
+        <div class="floating-menu-list organic-box" id="megaMenu">
+            <h5>Quick Navigate</h5>
+            <ul>
+                <li><a href="./quote/quote.html"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
+                <li><a href="./homeowners/index.html"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
+                <li><a href="./renters/index.html"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
+                <li><a href="./alex-sign/index.html"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
+                <li class="divider"></li>
+                <li><a href="#blog"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
+                <li><a href="./contact/index.html"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
+            </ul>
+        </div>
+        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open quick menu">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+    </div>
+
+
+    <div id="floating-chat-container">
+        <div class="chat-bubble organic-box" id="chatGreeting">
+            <strong>Alex Sign AI:</strong><br> Need help creating a contract?
+        </div>
+        <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
+            <i class="fa-solid fa-robot"></i>
+        </button>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script>
+        // Inicializar chat específico para esta página
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => { 
+                const bubble = document.getElementById('chatGreeting');
+                if(bubble) bubble.classList.add('is-visible'); 
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

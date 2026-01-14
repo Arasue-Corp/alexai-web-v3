@@ -6,15 +6,15 @@
    1. VARIABLES & SETUP (BLUE PALETTE)
 ============================================= */
 :root {
-    /* --- PALETTE: VIBRANT BLUE & TECH INK --- */
-    --alex-blue-accent: #4A80F0;  /* The new "azulito" */
-    --alex-blue-light: #5FD4F4;   /* Lighter cyan */
-    --alex-ink: #2C3E50;          /* Deep slate blue ink */
-    --alex-ink-light: #64748B;    /* Cooler grey */
+/* --- PALETTE --- */
+    --alex-blue-accent: #4A80F0;
+    --alex-blue-light: #5FD4F4;
+    --alex-ink: #2C3E50;
+    --alex-ink-light: #64748B;
     
     /* --- BACKGROUNDS --- */
     --bg-white: #FFFFFF;
-    --bg-off-white: #F8FAFC;      /* Very subtle cool grey/blue tint */
+    --bg-off-white: #F8FAFC;
     
     /* --- ORGANIC VARIABLES --- */
     --organic-radius: 25px 20px 28px 22px; 
@@ -56,6 +56,16 @@ img { max-width: 100%; height: auto; }
 .grid-2-uneven { display: grid; grid-template-columns: 1.5fr 1fr; gap: 60px; }
 .align-center { align-items: center; }
 
+/* ANIMACIONES (Restauradas) */
+.anim-entry { 
+    opacity: 0; 
+    transform: translateY(20px); 
+    animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+}
+@keyframes slideUpFade { 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
 /* =============================================
    3. UI COMPONENTS
 ============================================= */
@@ -66,20 +76,23 @@ img { max-width: 100%; height: auto; }
     border-radius: var(--organic-radius);
 }
 .btn-sm { padding: 10px 24px; font-size: 0.95rem; }
-.btn-large { padding: 20px 50px; font-size: 1.2rem; }
 
-.btn-solid {
-    background-color: var(--alex-blue-accent); color: white;
-    border: 2px solid var(--alex-ink); box-shadow: var(--shadow-button);
+/* Botón Animado Principal */
+.btn-glow-anim {
+    width: auto; padding: 18px 30px; border: none; border-radius: 14px;
+    background: linear-gradient(135deg, #4A80F0 0%, #3B66CC 100%);
+    color: white; font-size: 1.1rem; font-weight: 800; cursor: pointer;
+    display: inline-flex; justify-content: center; align-items: center; gap: 10px;
+    transition: all 0.3s; position: relative; overflow: hidden;
+    box-shadow: 0 10px 20px rgba(74, 128, 240, 0.3);
 }
-.btn-solid:hover {
-    transform: translate(-3px, -3px); box-shadow: 6px 6px 0px var(--alex-ink);
-    background-color: #3a70e0;
-}
+.btn-glow-anim:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(74, 128, 240, 0.4); }
+.btn-glow-anim i { transition: transform 0.3s; }
+.btn-glow-anim:hover i { transform: translateX(5px); }
 
 .btn-outline {
     background-color: transparent; color: var(--alex-ink);
-    border: 2px solid var(--alex-ink);
+    border: 2px solid var(--alex-ink); border-radius: 12px;
 }
 .btn-outline:hover {
     background-color: var(--bg-off-white);
@@ -100,15 +113,27 @@ img { max-width: 100%; height: auto; }
 /* =============================================
    4. HEADER & NAVIGATION
 ============================================= */
-.top-header { padding: 10px 0; font-size: 0.9rem; font-weight: 700; background-color: var(--alex-blue-accent); color: white; }
+.top-header { 
+    background-color: var(--alex-blue-accent); 
+    color: white;
+    padding: 12px 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    
+    /* EFECTO SKETCH */
+    border-bottom: 3px solid var(--alex-ink); /* Línea negra gruesa */
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1); /* Sombra dura estilo cómic */
+    position: relative;
+    z-index: 200; /* Para que la sombra quede por encima del menú */
+}
 .top-header-flex { display: flex; justify-content: space-between; }
 .top-contact a, .top-contact span { margin-right: 20px; opacity: 0.9; color: white;}
 .top-contact a:hover { opacity: 1; text-decoration: underline;}
 .top-social a { margin-left: 15px; opacity: 0.9; color: white;}
+
 .site-header { 
     padding: 20px 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); 
     position: sticky; top: 0; z-index: 100; border-bottom: 2px solid rgba(44, 62, 80, 0.1); 
-    transition: all 0.3s ease;
 }
 .header-wrapper { display: flex; justify-content: space-between; align-items: center; }
 .main-nav ul { display: flex; gap: 30px; align-items: center; margin: 0; }
@@ -258,12 +283,51 @@ img { max-width: 100%; height: auto; }
 .faq-item.active .faq-answer { max-height: 300px; }
 
 /* Footer */
-.site-footer { background-color: var(--alex-ink); color: var(--bg-off-white); padding: 80px 0 40px; text-align: center;}
+.site-footer { 
+    background-color: #027ecb; 
+    color: white;
+    padding: 80px 0 40px;
+    text-align: center;
+    
+    /* EFECTO SKETCH */
+    border-top: 3px solid var(--alex-ink); /* Línea negra superior */
+    position: relative;
+    margin-top: 60px; /* Separación del contenido */
+    box-shadow: inset 0 10px 0 rgba(0,0,0,0.05); /* Profundidad interna */
+}
+
+.site-footer::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 4px;
+    background: var(--alex-ink);
+    border-radius: 4px;
+}
+
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 60px; text-align: left;}
-.footer-col h5 { color: white; margin-bottom: 25px; font-size: 1.1rem; }
-.footer-links li { margin-bottom: 12px; }
-.footer-links a, .contact-links li { color: rgba(255,255,255, 0.7); font-weight: 600; font-size: 0.95rem; transition: all 0.2s; }
-.footer-links a:hover { color: var(--alex-blue-accent); padding-left: 5px; }
+
+.footer-col h5 {
+    color: white;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.1); /* Sombra leve al texto */
+    font-weight: 900;
+    letter-spacing: 0.5px;
+}
+
+.footer-links a, .contact-links li {
+    color: rgba(255,255,255, 0.95) !important; /* Blanco casi puro */
+    font-weight: 600;
+}
+
+.footer-links a:hover {
+    color: var(--alex-ink) !important; /* Al pasar el mouse se pone oscuro (tinta) */
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
 .contact-links i { margin-right: 10px; color: var(--alex-blue-light); }
 .copyright-row { 
     border-top: 2px solid rgba(255,255,255, 0.1); padding-top: 30px;
@@ -284,8 +348,21 @@ img { max-width: 100%; height: auto; }
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 #floating-menu-container { position: fixed; bottom: 30px; left: 30px; z-index: 998; display: flex; flex-direction: column; align-items: flex-start; }
-.floating-menu-btn { background: var(--alex-ink); color: var(--alex-blue-accent); }
-.floating-menu-btn:hover { transform: translate(3px, -3px) scale(1.05) rotate(5deg); box-shadow: 5px 5px 0px var(--alex-ink); color: white;}
+.floating-menu-btn { 
+    background: #009cff; 
+    color: white;        
+    width: 65px; height: 65px;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    font-size: 28px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    border: 2px solid var(--alex-ink); box-shadow: var(--shadow-button);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.floating-menu-btn:hover { 
+    background: white;       
+    color: #009cff;          
+    transform: translate(3px, -3px) scale(1.05) rotate(5deg);
+    box-shadow: 5px 5px 0px var(--alex-ink);
+}
 .floating-menu-list {
     position: absolute; bottom: 85px; left: 0; width: 250px; padding: 25px; margin-bottom: 15px;
     opacity: 0; visibility: hidden; transform: translateY(20px) scale(0.95);
@@ -312,37 +389,164 @@ img { max-width: 100%; height: auto; }
 /* =============================================
    7. RESPONSIVE
 ============================================= */
+/* TABLETS Y LAPTOPS PEQUEÑAS (1024px) */
 @media (max-width: 1024px) {
-    .products-grid, .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    /* Home: Ajuste de grids */
+    .products-grid, .grid-3 { grid-template-columns: repeat(2, 1fr); gap: 30px; }
     .hero-grid, .alex-grid, .grid-2-uneven { grid-template-columns: 1fr; text-align: center; }
-    .hero-video-organic, .alex-image-container, .app-image-container { order: 1; margin-top: 50px; width: 100%; }
-    .hero-content { padding-right: 0; }
+    
+    /* Video en Home */
+    .hero-video-organic { width: 100%; margin: 40px auto 0; order: 2; }
+    .hero-content { padding-right: 0; order: 1; }
     .hero-subtitle { margin-left: auto; margin-right: auto; }
-    .app-badges, .reviewer, .footer-grid { justify-content: center; text-align: center;}
+    
+    /* Centrar elementos */
+    .app-badges, .reviewer, .footer-grid { justify-content: center; text-align: center; }
+    .alex-image-container, .app-image-container { margin: 40px auto; width: 80%; }
+
+    /* Quote 3: Ajuste de columnas sin ocultar nada */
+    .compare-grid-layout { 
+        grid-template-columns: 1fr; /* Una sola columna */
+        gap: 40px;
+    }
+    
+    /* Sidebar de Filtros en Quote 3: Se convierte en Drawer (Cajón) */
+    .filters-col {
+        display: none; /* Oculto por defecto */
+        position: fixed;
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        z-index: 2000;
+        background: rgba(255,255,255,0.98); 
+        backdrop-filter: blur(10px);
+        padding: 80px 20px 100px 20px; 
+        overflow-y: auto;
+        transform: translateX(-100%); /* Preparado para animación */
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Cuando JS agrega la clase .is-visible */
+    .filters-col.is-visible {
+        display: block !important; /* Forzar aparición */
+        transform: translateX(0); /* Animar entrada */
+    }
+
+    /* Ajuste para que el botón de cerrar sea visible */
+    .mobile-only-btn {
+        display: flex !important;
+    }
+    
+    /* Sidebar de Acciones (Resumen): NO OCULTAR, sino reacomodar */
+    .actions-col { 
+        display: block !important; 
+        order: 3; /* Poner al final del flujo */
+    }
+    /* Estilo específico para el resumen en móvil/tablet */
+    .actions-col .sticky-wrapper {
+        position: static; /* Ya no es sticky, es parte del flujo */
+        background: #FEF9C3; /* Fondo amarillo suave para destacar */
+        border-radius: 12px;
+        padding: 20px;
+        border: 2px dashed #F59E0B;
+    }
 }
+
+/* MÓVILES (768px) */
 @media (max-width: 768px) {
     :root { --section-spacing: 60px; }
-    h1 { font-size: 2.8rem; } h2 { font-size: 2.2rem; }
+    
+    /* Tipografía adaptable */
+    h1 { font-size: 2.4rem; line-height: 1.1; } 
+    h2, .sketch-headline { font-size: 2rem; }
+    .sketch-headline-sm { font-size: 1.8rem; }
+    
+    /* Header Móvil */
     .top-header-flex { flex-direction: column; gap: 10px; text-align: center; }
     .top-contact, .top-social { justify-content: center; display: flex; flex-wrap: wrap; gap: 15px;}
-    .main-nav, .header-actions { display: none; }
-    .mobile-menu-toggle { display: block; z-index: 101; position: relative;}
+    
+    /* Navegación */
+    .main-nav, .header-actions { display: none; } /* Ocultar menú desktop */
+    .mobile-menu-toggle { display: block; z-index: 101; position: relative; font-size: 1.6rem;}
+    
     .site-header.nav-open .main-nav {
         display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-        background: rgba(248, 250, 252, 0.98); backdrop-filter: blur(15px);
-        padding-top: 100px; flex-direction: column; align-items: center; overflow-y: auto;
+        background: #ffffff; padding: 100px 30px; 
+        flex-direction: column; align-items: flex-start; overflow-y: auto; z-index: 100;
     }
-    .main-nav ul { flex-direction: column; gap: 30px; }
-    .main-nav a { font-size: 1.5rem; }
-    .products-grid, .grid-3, .footer-grid { grid-template-columns: 1fr; }
-    .footer-grid { gap: 30px; }
-    .copyright-row { flex-direction: column; gap: 20px; }
-    #floating-chat-container { bottom: 20px; right: 20px; }
-    #floating-menu-container { bottom: 20px; left: 20px; }
-    .floating-menu-btn, .chat-avatar-btn { width: 55px; height: 55px; font-size: 24px; }
-    .floating-menu-list { bottom: 75px; width: 220px; left: -10px;}
+    .site-header.nav-open .main-nav ul { flex-direction: column; gap: 25px; width: 100%; }
+    .site-header.nav-open .main-nav a { 
+        font-size: 1.4rem; color: var(--alex-ink); font-weight: 800; display: block;
+        border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; width: 100%;
+    }
+
+    /* Grids a 1 columna */
+    .products-grid, .grid-3, .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+    .footer-grid { text-align: left; }
+    .copyright-row { flex-direction: column-reverse; gap: 20px; text-align: center;}
+    
+    /* Quote Tool Steps 1 & 2 */
+    .step-grid-container { grid-template-columns: 1fr; display: flex; flex-direction: column;}
+    
+    /* Mover el Sidebar de Progreso (Quote 1 y 2) */
+    .sidebar-col { 
+        order: -1; /* Ponerlo ARRIBA para ver el progreso/precio */
+        margin-bottom: 20px; width: 100%;
+    }
+    .sidebar-note { 
+        padding: 15px 20px; transform: none; 
+        display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+    }
+    .sidebar-note .progress-list-sketch, .sidebar-note .mini-tip, .sidebar-note .washi-tape { 
+        display: none; /* Simplificar visualmente en móvil */
+    }
+    .sidebar-title { margin-bottom: 0; font-size: 1rem; border: none; }
+    .sidebar-price-preview { margin-top: 0; padding-top: 0; border: none; text-align: right; }
+    .sidebar-price-preview .price { font-size: 1.5rem; }
+
+    /* Forms */
+    .form-row, .form-row-3, .form-row-2, .visual-coverage-grid { flex-direction: column; grid-template-columns: 1fr; gap: 15px; }
+    .quote-card-stacked { padding: 30px 20px; }
+    .alex-input-modern, .alex-select-clean { font-size: 16px; /* Evita zoom en iOS */ }
+    
+    /* Botones Táctiles Grandes */
+    .form-action, .form-action-row { flex-direction: column-reverse; gap: 15px; }
+    .btn-glow-anim, .btn-outline-sketch { width: 100%; justify-content: center; padding: 16px; }
+
+    /* Quote 3 Resultados */
+    .result-content-modern { 
+        grid-template-columns: 1fr; text-align: center; gap: 15px; padding: 20px;
+    }
+    .details-col { border: none; border-top: 1px dashed #E2E8F0; border-bottom: 1px dashed #E2E8F0; padding: 15px 0; }
+    .carrier-col { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    .carrier-logo-lg { margin-bottom: 0; width: 70px; }
+    
+    /* Botones Flotantes */
+    #floating-chat-container { bottom: 85px; right: 20px; } /* Subir para no tapar barra inferior */
+    #floating-menu-container { bottom: 85px; left: 20px; }
+    
+    /* Botón de Filtro Móvil */
+    .mobile-filter-btn {
+        display: flex; position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+        background: var(--alex-ink); color: white; padding: 12px 25px; border-radius: 30px;
+        z-index: 900; font-weight: 700; align-items: center; gap: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2); border: 2px solid white;
+    }
+    
+    /* Barra de Acción Inferior (Quote 3) */
+    .mobile-action-bar {
+        display: flex; position: fixed; bottom: 0; left: 0; width: 100%;
+        background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+        padding: 15px 20px; z-index: 995; border-top: 1px solid #E2E8F0;
+        justify-content: space-between; align-items: center;
+        box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+    }
+    .compare-grid-layout { padding-bottom: 100px; /* Espacio para la barra */ }
 }
-@keyframes float-vertical { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+
+/* UTILIDADES MÓVILES GLOBALES */
+.mobile-filter-btn, .mobile-action-bar { display: none; } /* Ocultos en desktop */
 
 /* =============================================
    8. MISC (Transition, Logo, Motion)
@@ -795,21 +999,41 @@ video.product-icon { filter: none !important; object-fit: contain; }
 .micro-benefits li { font-size: 0.8rem; color: #64748B; margin-bottom: 3px; }
 .micro-benefits i { color: #10B981; margin-right: 5px; }
 .text-red { color: #EF4444 !important; }
-.price-col { text-align: center; }
-.price-group { position: relative; display: inline-block; font-size: 2rem; font-weight: 900; color: var(--alex-ink); margin-bottom: 5px; }
+.price-col {
+    position: relative;
+    z-index: 10; /* Esto evita que el efecto "Selected" tape el precio */
+}.price-group { position: relative; display: inline-block; font-size: 2rem; font-weight: 900; color: var(--alex-ink); margin-bottom: 5px; }
 .highlighter-mark {
-    position: absolute; top: 55%; left: -5px; right: -5px; height: 12px;
-    background: rgba(250, 204, 21, 0.4); z-index: -1; transform: translateY(-50%) rotate(-2deg);
+    position: absolute;
+    top: 55%; 
+    left: -5px; 
+    /* Quitamos 'right' para poder animar el ancho desde la izquierda */
+    width: 0%; 
+    height: 14px; /* Un poco más grueso para que se note bien */
+    background: rgba(250, 204, 21, 0.5); /* Amarillo marcador */
+    z-index: -1; 
+    transform: translateY(-50%) rotate(-2deg);
+    border-radius: 2px;
+    /* Animación suave tipo "dibujo" */
+    transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .pay-total { font-size: 0.7rem; color: #64748B; margin-bottom: 12px; }
+.btn-blue-sketch {
+    width: 100%; padding: 10px; background: #009cff; color: white;
+    border: 2px solid var(--alex-ink); border-radius: 10px;
+    font-weight: 800; cursor: pointer; box-shadow: 3px 3px 0 var(--alex-ink);
+    transition: 0.2s; font-size: 0.9rem;
+}
+
 .btn-green-sketch {
     width: 100%; padding: 10px; background: #10B981; color: white;
     border: 2px solid var(--alex-ink); border-radius: 10px;
     font-weight: 800; cursor: pointer; box-shadow: 3px 3px 0 var(--alex-ink);
     transition: 0.2s; font-size: 0.9rem;
 }
-.btn-green-sketch:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--alex-ink); }
-.btn-green-sketch.selected-state { background: #059669; box-shadow: inset 0 3px 5px rgba(0,0,0,0.3); transform: translate(2px, 2px); }
+
+.btn-blue-sketch:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--alex-ink); }
+.btn-blue-sketch.selected-state { background: #027ecb; box-shadow: inset 0 3px 5px rgba(0,0,0,0.3); transform: translate(2px, 2px); }
 .btn-outline-sketch-sm {
     width: 100%; padding: 10px; background: transparent; color: var(--alex-ink);
     border: 2px solid #CBD5E1; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.2s;
@@ -825,7 +1049,7 @@ video.product-icon { filter: none !important; object-fit: contain; }
     border-radius: var(--organic-radius);
 }
 .ink-stamp {
-    border: 4px solid #10B981; color: #10B981; font-size: 1.8rem; font-weight: 900;
+    border: 4px solid #009cff; color: #009cff; font-size: 1.8rem; font-weight: 900;
     padding: 10px 30px; border-radius: 8px; transform: rotate(-15deg) scale(2); opacity: 0;
     transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); mix-blend-mode: multiply;
 }
@@ -974,4 +1198,585 @@ video.product-icon { filter: none !important; object-fit: contain; }
     .alex-compare-table th, .alex-compare-table td { padding: 10px; font-size: 0.8rem; }
     .comp-logo { height: 30px; }
     .price-cell { font-size: 1.1rem; }
+}
+
+/* ==========================================================================
+   14. STEP 3 SPECIFIC STYLES (Moved from HTML)
+   Estilos específicos para la vista de comparación y el modal tipo "Sketchpad"
+========================================================================== */
+
+/* Ajuste del Modal para que parezca una hoja de papel */
+.modal-wrapper.modal-sketchpad {
+    border-radius: 25px 22px 28px 20px; /* Borde orgánico */
+    border: 3px solid var(--alex-ink);
+    box-shadow: 10px 10px 0 rgba(44, 62, 80, 0.2);
+    padding: 0;
+    overflow: hidden;
+    background-image: radial-gradient(#E2E8F0 1px, transparent 1px);
+    background-size: 20px 20px; /* Fondo de puntos sutil */
+    background-color: #fff;
+}
+
+/* Header con Washi Tape */
+.modal-header-sketch {
+    background: white;
+    padding: 30px 30px 10px 30px;
+    border-bottom: 2px dashed var(--alex-ink);
+    position: relative;
+}
+.modal-tape-deco {
+    position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(1deg);
+    width: 140px; height: 35px;
+    background-color: rgba(95, 212, 244, 0.5); /* Cyan Tape */
+    mask-image: url("data:image/svg+xml,%3Csvg width='200' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 L5 0 L10 10 L15 0 L20 10 L25 0 L200 0 L200 60 L195 50 L190 60 L185 50 L0 60 Z' fill='black'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='200' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 L5 0 L10 10 L15 0 L20 10 L25 0 L200 0 L200 60 L195 50 L190 60 L185 50 L0 60 Z' fill='black'/%3E%3C/svg%3E");
+    mask-size: 100% 100%;
+    opacity: 0.9;
+}
+
+/* Tabs tipo Sticker dentro del modal */
+.modal-tabs-stickers {
+    display: flex; gap: 10px; justify-content: center; margin-top: 15px;
+}
+.m-sticker {
+    padding: 8px 20px; border: 2px solid var(--alex-ink); border-radius: 20px 5px 20px 5px;
+    font-weight: 800; font-size: 0.8rem; cursor: pointer; text-transform: uppercase;
+    background: white; transition: 0.2s;
+}
+.m-sticker.active {
+    background: var(--alex-blue-accent); color: white; border-color: var(--alex-blue-accent);
+    transform: rotate(-2deg) scale(1.05); box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+}
+.m-sticker:not(.active):hover { background: #F1F5F9; }
+
+/* Tabla Estilo Cuaderno */
+.sketch-table { width: 100%; border-collapse: collapse; }
+.sketch-table th { 
+    text-align: center; padding: 20px; vertical-align: bottom; 
+    border-bottom: 3px solid var(--alex-ink);
+}
+.sketch-table td {
+    padding: 18px 20px; 
+    border-bottom: 1px dashed #94A3B8; /* Línea de cuaderno */
+    color: var(--alex-ink); vertical-align: middle; font-size: 0.95rem;
+}
+.sketch-table tr:last-child td { border-bottom: none; }
+
+/* Columnas */
+.col-feature { text-align: left; font-weight: 700; color: #64748B; width: 30%; }
+.col-plan { text-align: center; width: 35%; border-left: 2px dashed #E2E8F0; }
+
+/* Efecto Resaltador Amarillo en la Celda */
+.highlight-cell-bg {
+    position: relative; z-index: 1;
+}
+.highlight-cell-bg::before {
+    content: ''; position: absolute; top: 10px; bottom: 10px; left: 10px; right: 10px;
+    background: rgba(250, 204, 21, 0.25); /* Amarillo suave */
+    z-index: -1; transform: rotate(-1deg); border-radius: 4px;
+}
+
+/* Footer del Modal */
+.modal-footer-sketch {
+    padding: 20px; background: white; border-top: 2px solid var(--alex-ink);
+    display: flex; justify-content: flex-end; gap: 15px;
+}
+
+/* Botón Cerrar (Círculo rojo dibujado) */
+.sketch-close-btn {
+    position: absolute; top: 15px; right: 15px;
+    width: 35px; height: 35px; border: 2px solid var(--alex-ink); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--alex-ink); cursor: pointer; transition: 0.2s; background: white;
+}
+.sketch-close-btn:hover { background: #EF4444; color: white; border-color: #EF4444; transform: rotate(90deg); }
+
+/* Estilos de botones y badges específicos de Step 3 */
+.sidebar-panel.organic-box { overflow: visible !important; position: relative; margin-top: 15px; }
+.sidebar-badge-float { position: absolute; top: -18px; left: 20px; z-index: 50; background: var(--alex-blue-accent); color: white; font-weight: 800; font-size: 0.85rem; padding: 6px 18px; border-radius: 20px 6px 20px 6px; border: 4px solid #FFFFFF; box-shadow: 0 4px 6px rgba(44, 62, 80, 0.15); transform: rotate(-2deg); }
+.carrier-logo-lg { width: 90px; height: auto; margin-bottom: 10px; mix-blend-mode: multiply; opacity: 0.9; filter: contrast(1.05); transition: all 0.3s ease; }
+.quote-result-card:hover .carrier-logo-lg { transform: scale(1.05); opacity: 1; }
+
+.btn-stack { width: 100%; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-purple { background-color: #8B5CF6; border: 2px solid #7C3AED; color: white; border-radius: 12px; font-weight: 700; padding: 12px; transition: 0.2s; }
+.btn-purple:hover { background-color: #7C3AED; transform: translateY(-2px); }
+.btn-blue-outline { background-color: white; border: 2px solid #3B82F6; color: #3B82F6; border-radius: 12px; font-weight: 700; padding: 12px; transition: 0.2s; }
+.btn-blue-outline:hover { background-color: #EFF6FF; border-color: #2563EB; color: #2563EB; }
+.btn-blue-main { background: linear-gradient(135deg, #009cff, #027ecb); border: none; color: white; border-radius: 12px; font-weight: 800; padding: 14px; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); transition: 0.2s; }
+.btn-blue-main:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4); }
+
+/* 2. Cuando el mouse entra en la tarjeta, el marcador crece */
+.quote-result-card:hover .highlighter-mark {
+    width: 110%; /* Un poco más del 100% para cubrir todo el precio */
+}
+
+/* 3. Opcional: Si quieres que se quede marcado cuando está seleccionado */
+.quote-result-card.is-selected .highlighter-mark {
+    width: 110%;
+    background: rgba(250, 204, 21, 0.7); /* Un poco más oscuro al seleccionar */
+}
+
+/* --- FONDO AMBIENTAL --- */
+.ambient-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: -1;
+    opacity: 0.6;
+    animation: float-vertical 10s infinite ease-in-out;
+}
+.glow-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: rgba(74, 128, 240, 0.15); }
+.glow-2 { bottom: 20%; right: -5%; width: 400px; height: 400px; background: rgba(95, 212, 244, 0.15); animation-delay: 2s; }
+.glow-3 { top: 40%; left: 30%; width: 300px; height: 300px; background: rgba(250, 204, 21, 0.05); animation-delay: 4s; }
+
+@keyframes float-vertical { 
+    0%, 100% { transform: translateY(0); } 
+    50% { transform: translateY(-20px); } 
+}
+
+/* --- BOTÓN GLOW ANIMADO --- */
+.btn-glow-anim {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #4A80F0 0%, #3B66CC 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 10px 20px rgba(74, 128, 240, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+.btn-glow-anim:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(74, 128, 240, 0.4);
+}
+.btn-glow-anim i {
+    transition: transform 0.3s;
+}
+.btn-glow-anim:hover i {
+    transform: translateX(5px); /* Mueve la flechita */
+}
+
+/* --- ESTILO NOTA ADHESIVA (Taped Note) --- */
+.taped-note {
+    background: #FFFFFF;
+    position: relative;
+    transform: rotate(1deg); /* Ligera inclinación para realismo */
+    margin: 40px 0;
+    z-index: 1;
+}
+
+/* La cinta adhesiva (Washi Tape) */
+.washi-tape-large {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-1.5deg);
+    width: 200px;
+    height: 50px;
+    background-color: rgba(95, 212, 244, 0.5); /* Color Cyan translúcido */
+    opacity: 0.9;
+    /* Recorte en zig-zag con CSS Mask */
+    mask-image: url("data:image/svg+xml,%3Csvg width='200' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 L5 0 L10 10 L15 0 L20 10 L25 0 L200 0 L200 60 L195 50 L190 60 L185 50 L0 60 Z' fill='black'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='200' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 L5 0 L10 10 L15 0 L20 10 L25 0 L200 0 L200 60 L195 50 L190 60 L185 50 L0 60 Z' fill='black'/%3E%3C/svg%3E");
+}
+
+/* Layout interno de la nota */
+.alex-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+@media (max-width: 900px) {
+    .alex-grid { grid-template-columns: 1fr; text-align: center; }
+    .washi-tape-large { width: 150px; height: 40px; }
+}
+
+/* Listas con iconos */
+.feature-list { list-style: none; padding: 0; margin-top: 20px; }
+.feature-list li { margin-bottom: 15px; font-size: 1.1rem; color: var(--alex-ink); }
+.feature-list i { color: var(--alex-blue-accent); margin-right: 10px; font-size: 1.2rem; }
+
+/* --- TIPOGRAFÍA SKETCH --- */
+.sketch-headline-sm {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--alex-ink);
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+.underline-sketch {
+    width: 80px;
+    height: 6px;
+    background: rgba(95, 212, 244, 0.5); /* Subrayado Cyan */
+    border-radius: 4px;
+    margin: 5px auto 30px auto;
+}
+
+.btn-solid {
+    background-color: var(--alex-blue-accent); color: white;
+    border: 2px solid var(--alex-ink); box-shadow: var(--shadow-button);
+}
+.btn-solid:hover {
+    transform: translate(-3px, -3px); box-shadow: 6px 6px 0px var(--alex-ink);
+    background-color: #3a70e0;
+}
+
+/* ==========================================================================
+   MOBILE PREMIUM OVERHAUL (Global & Specifics)
+   Agrega esto al final de tu style.css
+========================================================================== */
+
+/* 1. AJUSTES GLOBALES DE TIPOGRAFÍA Y ESPACIADO */
+@media (max-width: 768px) {
+    :root {
+        --section-spacing: 50px; /* Menos espacio entre secciones */
+        --organic-radius: 18px;  /* Bordes un poco menos exagerados */
+    }
+    
+    body { font-size: 16px; } /* Evita zoom automático en iOS en inputs */
+    
+    h1, .sketch-headline { font-size: 2.2rem !important; word-wrap: break-word; }
+    h2, .sketch-headline-sm { font-size: 1.8rem !important; }
+    h3 { font-size: 1.4rem !important; }
+    
+    .container { width: 92%; } /* Más ancho en móvil para aprovechar espacio */
+    
+    /* Botones ancho completo para fácil click con el pulgar */
+    .btn, .btn-glow-anim, .btn-outline, .btn-blue-sketch {
+        width: 100% !important;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+}
+
+/* 2. HEADER & NAV MÓVIL (Full Screen Experience) */
+@media (max-width: 900px) {
+    .site-header { padding: 15px 0; }
+    .nav-logo { height: 60px; }
+    
+    /* El menú se convierte en una experiencia inmersiva */
+    .site-header.nav-open .main-nav {
+        background: rgba(255,255,255,0.98);
+        padding-top: 80px;
+        justify-content: flex-start;
+        gap: 20px;
+    }
+    .main-nav ul { gap: 20px; width: 100%; text-align: center; }
+    .main-nav a { font-size: 1.4rem; display: block; padding: 10px; border-bottom: 1px solid #f0f0f0; }
+    
+    /* Ocultar elementos desktop */
+    .header-actions { display: none; } /* Se ocultan botones del header en menú cerrado */
+    
+    /* Mostrar botones dentro del menú móvil si es necesario (requiere JS para moverlos o duplicarlos en HTML) */
+}
+
+/* 3. HOME (Index) MÓVIL */
+@media (max-width: 768px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        min-height: auto;
+        padding-top: 30px;
+        gap: 30px;
+    }
+    
+    /* Video primero o segundo según preferencia. Aquí lo ponemos segundo. */
+    .hero-video-organic { order: -1; width: 100%; margin-bottom: 20px; }
+    
+    .hero-subtitle { font-size: 1.1rem; margin-bottom: 20px; }
+    
+    /* Cards de productos en 1 columna */
+    .products-grid { grid-template-columns: 1fr; gap: 20px; }
+    
+    /* Carrusel de Carriers */
+    .slider-track { gap: 20px; }
+    .carrier-item { width: 100px; height: 60px; }
+    .carrier-item img { max-height: 40px; }
+    
+    /* Why Us / Alex Spotlight */
+    .alex-grid { display: flex; flex-direction: column-reverse; gap: 30px; }
+    .alex-image-container { width: 80%; margin: 0 auto; }
+    
+    /* Footer Stacked */
+    .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 30px; }
+    .footer-col { border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; }
+    .copyright-row { flex-direction: column-reverse; gap: 15px; }
+}
+
+/* 4. COTIZADOR (Quote 1 & 2) MÓVIL */
+@media (max-width: 900px) {
+    .step-grid-container { display: flex; flex-direction: column; }
+    
+    /* Sidebar se mueve al fondo o se oculta */
+    .sidebar-col { 
+        order: -1; /* Poner resumen arriba (opcional) o abajo */
+        margin-bottom: 20px;
+    }
+    /* Transformar el Sidebar en una barra colapsable o simplificada */
+    .sidebar-note { 
+        padding: 15px; 
+        background: #FEF9C3; /* Amarillo suave para destacar */
+        transform: none; 
+        border: 1px solid #FCD34D;
+    }
+    .progress-list-sketch { display: none; } /* Ocultar lista larga en móvil */
+    .sidebar-price-preview { 
+        border: none; margin: 0; padding: 0; 
+        display: flex; justify-content: space-between; align-items: center; 
+    }
+    .sidebar-price-preview .label { font-size: 0.9rem; margin-bottom: 0; }
+    .sidebar-price-preview .price { font-size: 1.5rem; }
+    
+    /* Formularios */
+    .form-row, .form-row-3, .form-row-2 { flex-direction: column; gap: 15px; }
+    .quote-card-stacked { padding: 25px 20px; }
+    
+    /* Grilla de Coberturas (Quote 2) */
+    .visual-coverage-grid { grid-template-columns: 1fr; }
+    .full-width-tile { grid-column: span 1; }
+    
+    /* Botones de acción flotantes (Sticky Bottom) */
+    /* Esto da una sensación muy de "App" */
+    .form-action-row, .form-action {
+        flex-direction: column-reverse; /* Cancelar abajo, Continuar arriba */
+    }
+}
+
+/* 5. VISTA DE COMPARACIÓN (Quote 3) - EL RETO MAYOR */
+@media (max-width: 1024px) {
+    .compare-grid-layout {
+        grid-template-columns: 1fr; /* Todo en una columna */
+        gap: 20px;
+    }
+    
+    /* Sidebar de Filtros: OCULTO POR DEFECTO */
+    .filters-col {
+        display: none; /* Se activará con JS */
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(255,255,255,0.98);
+        z-index: 1000;
+        overflow-y: auto;
+        padding: 80px 20px 20px 20px;
+    }
+    .filters-col.is-visible { display: block; animation: slideInRight 0.3s ease; }
+    
+    /* Botón flotante para abrir filtros */
+    .mobile-filter-btn {
+        display: flex !important; /* Forzar display */
+        position: fixed;
+        bottom: 20px; left: 50%; transform: translateX(-50%);
+        background: var(--alex-ink); color: white;
+        padding: 12px 30px; border-radius: 30px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        z-index: 900; font-weight: 800; align-items: center; gap: 10px;
+        border: 2px solid white;
+    }
+    
+    /* Tarjetas de Resultados */
+    .result-content-modern {
+        grid-template-columns: 1fr; /* Stack vertical */
+        text-align: center;
+        gap: 15px;
+    }
+    .details-col { 
+        border: none; border-top: 1px dashed #E2E8F0; border-bottom: 1px dashed #E2E8F0; 
+        padding: 15px 0; margin: 10px 0;
+    }
+    .tags-container { justify-content: center; }
+    .carrier-col { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .carrier-logo-lg { width: 60px; margin: 0; }
+    
+    /* Sticky Summary en Quote 3 */
+    .actions-col { display: none; } /* Ocultar resumen lateral en Quote 3 móvil para ganar espacio */
+}
+
+@keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+/* 6. MODAL (Tablas) en MÓVIL */
+@media (max-width: 700px) {
+    .modal-wrapper { padding: 20px; width: 95%; }
+    .modal-header-compare { padding: 15px; }
+    
+    /* Hacer la tabla scrolleable horizontalmente */
+    .modal-body-scroll { padding: 10px; }
+    .alex-compare-table { min-width: 500px; } /* Forzar ancho para activar scroll */
+    
+    .modal-vehicle-tabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 5px; }
+    .mv-tab { white-space: nowrap; }
+}
+
+/* UTILIDAD: Botón de Filtro Móvil (Oculto en desktop) */
+.mobile-filter-btn { display: none; }
+
+/* --- BARRA DE ACCIÓN MÓVIL (Premium Mobile) --- */
+.mobile-action-bar {
+    display: none; /* Oculto en desktop */
+    position: fixed; bottom: 0; left: 0; width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid #E2E8F0;
+    padding: 15px 20px; z-index: 990;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    justify-content: space-between; align-items: center;
+    gap: 20px;
+}
+
+.ms-price-container { display: flex; flex-direction: column; }
+.ms-label { font-size: 0.75rem; color: #94A3B8; font-weight: 700; text-transform: uppercase; }
+.ms-price { font-size: 1.6rem; font-weight: 900; color: var(--alex-ink); line-height: 1; transition: color 0.3s; }
+.ms-price-container.has-value .ms-price { color: #10B981; }
+
+.ms-next-btn {
+    width: auto !important; /* Override global width */
+    margin: 0 !important;
+    padding: 14px 30px;
+    box-shadow: 0 5px 15px rgba(74, 128, 240, 0.3);
+}
+
+/* Ajustes Responsive */
+@media (max-width: 1024px) {
+    .mobile-action-bar { display: flex; }
+    /* Subir el botón de filtros para que no tape la barra */
+    .mobile-filter-btn { bottom: 95px; } 
+    /* Dar espacio al contenido para que no quede tapado por la barra */
+    .compare-grid-layout { padding-bottom: 100px; }
+}
+
+.results-col {
+    /* Esto previene que el contenido expanda el grid y rompa el diseño */
+    min-width: 0; 
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 1025px) {
+    .mobile-only-btn {
+        display: none !important;
+    }
+}
+
+.sketch-close-btn.mobile-only-btn {
+    width: 40px; 
+    height: 40px; 
+    background: #EF4444; 
+    color: white; 
+    border: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* =========================================================
+   CORRECCIÓN CRÍTICA: FILTROS MÓVILES (DRAWER)
+   Agrega esto al final de tu style.css para arreglar el menú fantasma
+   ========================================================= */
+
+@media (max-width: 1024px) {
+    /* 1. Aseguramos que el contenedor de filtros sea un cajón fijo */
+    .filters-col {
+        display: none; /* Oculto por defecto para que no estorbe */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999 !important; /* Capa superior a todo */
+        background: rgba(255, 255, 255, 0.98); /* Fondo blanco casi opaco */
+        backdrop-filter: blur(10px);
+        padding: 80px 20px 100px 20px; /* Espacio para no tapar el header/footer */
+        overflow-y: auto; /* Permitir scroll dentro del menú */
+    }
+
+    /* 2. Clase activa: Forzamos su aparición */
+    .filters-col.is-visible {
+        display: block !important; /* SOBRESCRIBE cualquier display:none anterior */
+        animation: slideInFromLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    /* 3. Asegurar que el botón de cerrar (X) sea visible y clickable */
+    .sketch-close-btn.mobile-only-btn {
+        display: flex !important;
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        z-index: 10000; /* Encima del panel */
+        background: #EF4444; /* Rojo para destacar */
+        color: white;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+}
+
+/* Animación suave de entrada desde la izquierda */
+@keyframes slideInFromLeft {
+    from { opacity: 0; transform: translateX(-10%); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* =========================================================
+   MEJORA DEL MODAL DE COMPARACIÓN (TABLA ROBUSTA)
+   ========================================================= */
+
+/* Estilo para los separadores de sección en la tabla */
+.section-row td {
+    background-color: #F1F5F9;
+    color: var(--alex-ink-light);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 20px;
+    text-align: center;
+    border-top: 2px solid #E2E8F0;
+    border-bottom: 2px solid #E2E8F0;
+}
+
+/* Pill tags para los deducibles (hace que resalten) */
+.tag-pill {
+    display: inline-block;
+    background: #E0F2FE;
+    color: #0369A1;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border: 1px solid #BAE6FD;
+}
+
+/* Iconos de ayuda visual */
+.text-muted { color: #94A3B8; font-size: 0.9em; margin-left: 5px; cursor: help; }
+.text-red { color: #EF4444; }
+
+/* FIX PARA MÓVIL: Scroll Horizontal Obligatorio */
+.modal-body-scroll {
+    overflow-x: auto; /* Permite deslizar si la tabla es ancha */
+    -webkit-overflow-scrolling: touch;
+    background-color: white; /* Asegura fondo blanco */
+}
+
+.compare-detailed-table {
+    min-width: 600px; /* IMPORTANTE: Fuerza el ancho para activar scroll en móvil */
+}
+
+/* Ajustes de celdas */
+.col-feature {
+    width: 35%;
+    font-size: 0.9rem;
+    border-right: 1px dashed #E2E8F0;
+}
+.col-plan {
+    width: 32.5%;
+    text-align: center;
+    font-size: 0.95rem;
 }
