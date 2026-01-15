@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renters Quote - Alex AI</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+
+    <style>
+        /* Reglas críticas */
+        .form-tab-panel { display: none; animation: fadeIn 0.5s; }
+        .form-tab-panel.active { display: block !important; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .hidden { display: none !important; }
+        .dynamic-field { animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Estilo para las tarjetas de repetidores (Additional Insured/Interest) */
+        .repeater-card {
+            background: #F8FAFC;
+            border: 2px dashed #CBD5E1;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .btn-delete-card {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #EF4444;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body class="quote-page-body">
+
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-3"></div>
+    <div id="transition-overlay"></div>
+
+   <div class="top-header">
+        <div class="container top-header-flex">
+            <div class="top-contact">
+                <a href="tel:+1800555ALEX"><i class="fa-solid fa-phone"></i> +1 480 630 9630</a>
+                <a href="mailto:hello@alexai.com"><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</a>
+                <span><i class="fa-solid fa-location-dot"></i> 3101 N Central Ave ste 1174, Phoenix, AZ</span>
+            </div>
+            <div class="top-social">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <div class="container header-wrapper">
+            <a href="https://alexai.cloud/" class="logo-container">
+                <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="site-logo">
+            </a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../quote/quote.html" class="js-trigger-quote">Quote</a></li>
+                    <li class="has-dropdown">
+                        <a href="../index.html#products">Products <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu organic-box">
+                            <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#carriers">Carriers</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="../ambassadors/index.html" class="btn btn-outline btn-sm">Become an Ambassador</a>
+                <a href="../quote/quote.html" class="btn btn-solid btn-sm js-trigger-quote">Check Prices</a>
+            </div>
+            
+             <button class="mobile-menu-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        </div>
+    </header>
+
+    <main class="quote-main-content step-layout-wrapper">
+        <div class="step-grid-container">
+            
+            <div class="main-form-col">
+                <div class="quote-card-stacked anim-entry">
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar" id="visualProgressBar" style="width: 14%;"></div>
+                    </div>
+                    <div class="steps-indicator">Step <span id="stepNumber">1</span> of 7</div>
+
+                    <form id="renters-quote-form">
+                        
+                        <div class="form-tab-panel active" id="tab-0">
+                            <h3 class="tab-panel-title">Policy Information</h3>
+                            
+                            <div class="alex-input-group">
+                                <label>Effective Date <span class="req">*</span></label>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-regular fa-calendar input-icon"></i>
+                                    <input type="text" name="effective-date" class="alex-input-modern date-picker" placeholder="MM/DD/YYYY" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row-2">
+                                <div class="alex-input-group flex-grow">
+                                    <label>Email Address <span class="req">*</span></label>
+                                    <div class="input-modern-wrapper">
+                                        <i class="fa-regular fa-envelope input-icon"></i>
+                                        <input type="email" name="email" class="alex-input-modern" placeholder="name@email.com" required>
+                                    </div>
+                                </div>
+                                <div class="alex-input-group flex-grow">
+                                    <label>Phone Number (Optional)</label>
+                                    <div class="input-modern-wrapper">
+                                        <i class="fa-solid fa-phone input-icon"></i>
+                                        <input type="tel" name="phone" class="alex-input-modern" placeholder="(555) 000-0000">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="divider-dashed"></div>
+
+                            <div class="form-row-3">
+                                <div class="alex-input-group"><label>First Name <span class="req">*</span></label><input type="text" name="first-name" class="alex-input-modern" required></div>
+                                <div class="alex-input-group"><label>Middle Name</label><input type="text" name="middle-name" class="alex-input-modern" placeholder="Optional"></div>
+                                <div class="alex-input-group"><label>Last Name <span class="req">*</span></label><input type="text" name="last-name" class="alex-input-modern" required></div>
+                            </div>
+
+                            <div class="form-row-3">
+                                <div class="alex-input-group"><label>Date of Birth <span class="req">*</span></label><input type="text" name="dob" class="alex-input-modern date-picker" placeholder="MM/DD/YYYY" required></div>
+                                <div class="alex-input-group">
+                                    <label>Gender <span class="req">*</span></label>
+                                    <select name="gender" class="alex-input-modern" required>
+                                        <option value="">Select...</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="alex-input-group">
+                                    <label>Marital Status <span class="req">*</span></label>
+                                    <select name="marital-status" class="alex-input-modern" required>
+                                        <option value="">Select...</option>
+                                        <option value="Single">Single</option>
+                                        <option value="Married">Married</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-tab-panel" id="tab-1">
+                            <h3 class="tab-panel-title">Property Details</h3>
+                            
+                            <div class="alex-input-group">
+                                <label>Residence Type <span class="req">*</span></label>
+                                <select id="residence-type" name="residence-type" class="alex-input-modern" required onchange="toggleRentersFields()">
+                                    <option value="">Select...</option>
+                                    <option value="Single Family">Single Family</option>
+                                    <option value="Duplex">Duplex</option>
+                                    <option value="Townhouse, Center">Townhouse, Center</option>
+                                    <option value="Rowhouse, Center">Rowhouse, Center</option>
+                                    <option value="Condo">Condo</option>
+                                    <option value="Apartment">Apartment</option>
+                                    <option value="Triplex">Triplex</option>
+                                    <option value="Quadplex">Quadplex</option>
+                                    <option value="Townhouse, End">Townhouse, End</option>
+                                    <option value="Rowhouse, End">Rowhouse, End</option>
+                                    <option value="Mobile Home">Mobile Home</option>
+                                </select>
+                            </div>
+
+                            <div id="dynamic-property-fields">
+                                <div class="alex-input-group hidden dynamic-field" id="group-complex-name">
+                                    <label>Complex Name</label>
+                                    <div class="input-modern-wrapper">
+                                        <i class="fa-regular fa-building input-icon"></i>
+                                        <input type="text" id="complex-name" name="complex-name" class="alex-input-modern" placeholder="e.g. Sunset Valley Apts">
+                                    </div>
+                                </div>
+
+                                <div class="form-row-2 hidden dynamic-field" id="group-condo-apt-details">
+                                    <div class="alex-input-group flex-grow">
+                                        <label>Gated Community?</label>
+                                        <select id="gated-community" name="gated-community" class="alex-input-modern">
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="alex-input-group flex-grow">
+                                        <label># of Units on Site</label>
+                                        <input type="number" id="num-units" name="num-units" class="alex-input-modern" placeholder="e.g. 50">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divider-dashed"></div>
+
+                            <div class="alex-input-group">
+                                <label>Property Address 1 <span class="req">*</span></label>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-solid fa-location-dot input-icon"></i>
+                                    <input type="text" name="prop-address1" class="alex-input-modern" placeholder="123 Main St" required>
+                                </div>
+                            </div>
+                            <div class="alex-input-group">
+                                <label>Property Address 2 (Optional)</label>
+                                <input type="text" name="prop-address2" class="alex-input-modern" placeholder="Apt, Unit, Suite, etc.">
+                            </div>
+
+                            <div class="form-row-3">
+                                <div class="alex-input-group"><label>City <span class="req">*</span></label><input type="text" name="prop-city" class="alex-input-modern" required></div>
+                                <div class="alex-input-group"><label>State <span class="req">*</span></label><input type="text" name="prop-state" class="alex-input-modern" value="AZ" readonly></div>
+                                <div class="alex-input-group"><label>Zip <span class="req">*</span></label><input type="text" name="prop-zip" class="alex-input-modern" required></div>
+                            </div>
+
+                            <div class="alex-input-group">
+                                <label>Billing Reminders <span class="req">*</span></label>
+                                <select name="billing-reminders" class="alex-input-modern" required>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-tab-panel" id="tab-2">
+                            <h3 class="tab-panel-title">Mailing Address</h3>
+                            
+                            <div class="form-check-modern" style="margin-bottom: 20px;">
+                                <label class="custom-check-container">
+                                    <input type="checkbox" id="same-as-property" checked>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <div class="legal-text-modern" style="font-weight:700; color:var(--alex-ink);">Same as Property Address</div>
+                            </div>
+
+                            <div id="mailing-address-wrapper" class="hidden dynamic-field">
+                                <div class="alex-input-group">
+                                    <label>Mailing Address 1 <span class="req">*</span></label>
+                                    <input type="text" name="mail-address1" class="alex-input-modern mailing-req">
+                                </div>
+                                <div class="alex-input-group">
+                                    <label>Mailing Address 2 (Optional)</label>
+                                    <input type="text" name="mail-address2" class="alex-input-modern">
+                                </div>
+                                <div class="form-row-3">
+                                    <div class="alex-input-group"><label>City <span class="req">*</span></label><input type="text" name="mail-city" class="alex-input-modern mailing-req"></div>
+                                    <div class="alex-input-group"><label>State <span class="req">*</span></label><input type="text" name="mail-state" class="alex-input-modern" value="AZ" readonly></div>
+                                    <div class="alex-input-group"><label>Zip <span class="req">*</span></label><input type="text" name="mail-zip" class="alex-input-modern mailing-req"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-tab-panel" id="tab-3">
+                            <h3 class="tab-panel-title">Coverages</h3>
+                            <p class="section-desc">Select desired limits and deductibles.</p>
+
+                            <div class="alex-input-group">
+                                <label>Content Limit <span class="req">*</span></label>
+                                <select name="content-limit" class="alex-input-modern" required>
+                                    <option value="">Select...</option>
+                                    <option value="5000">$5,000</option>
+                                    <option value="10000">$10,000</option>
+                                    <option value="15000">$15,000</option>
+                                    <option value="20000">$20,000</option>
+                                </select>
+                            </div>
+
+                            <div class="alex-input-group">
+                                <label>Content Deductibles (All Other | Theft) <span class="req">*</span></label>
+                                <select name="content-deductible" class="alex-input-modern" required>
+                                    <option value="">Select...</option>
+                                    <option value="250|500">$250 | $500</option>
+                                    <option value="250|1000">$250 | $1,000</option>
+                                    <option value="500|500">$500 | $500</option>
+                                    <option value="500|1000">$500 | $1,000</option>
+                                    <option value="1000|1000">$1,000 | $1,000</option>
+                                </select>
+                            </div>
+
+                            <div class="alex-input-group">
+                                <label>Liability Limit <span class="req">*</span></label>
+                                <select name="liability-limit" class="alex-input-modern" required>
+                                    <option value="">Select...</option>
+                                    <option value="50000">$50,000</option>
+                                    <option value="100000">$100,000</option>
+                                </select>
+                            </div>
+
+                            <div class="form-check-modern">
+                                <label class="custom-check-container">
+                                    <input type="checkbox" name="water-backup">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <div class="legal-text-modern">Include Water Backup Coverage</div>
+                            </div>
+                        </div>
+
+                        <div class="form-tab-panel" id="tab-4">
+                            <h3 class="tab-panel-title">Additional Named Insured(s)</h3>
+                            <p class="section-desc">Roommates or partners to list on the policy.</p>
+                            
+                            <div id="additional-insured-list"></div>
+                            
+                            <button type="button" id="btn-add-insured" class="btn-outline-sketch" style="width:100%; justify-content:center;">
+                                <i class="fa-solid fa-user-plus"></i> Add Person
+                            </button>
+                        </div>
+
+                        <div class="form-tab-panel" id="tab-5">
+                            <h3 class="tab-panel-title">Current Coverage (Optional)</h3>
+                            
+                            <div class="form-row-2">
+                                <div class="alex-input-group flex-grow">
+                                    <label>Current Company</label>
+                                    <input type="text" name="current-company" class="alex-input-modern">
+                                </div>
+                                <div class="alex-input-group flex-grow">
+                                    <label>Policy Number</label>
+                                    <input type="text" name="current-policy" class="alex-input-modern">
+                                </div>
+                            </div>
+
+                            <div class="divider-dashed"></div>
+
+                            <div class="form-row-2">
+                                <div class="alex-input-group flex-grow"><label>Contents Amount</label><input type="text" name="current-contents" class="alex-input-modern" placeholder="$10,000"></div>
+                                <div class="alex-input-group flex-grow"><label>Liability Limit</label><input type="text" name="current-liability" class="alex-input-modern" placeholder="$100,000"></div>
+                            </div>
+                            <div class="alex-input-group">
+                                <label>Deductible</label>
+                                <input type="text" name="current-deductible" class="alex-input-modern" placeholder="$500">
+                            </div>
+
+                            <div class="file-upload-box">
+                                <input type="file" class="file-upload-input" id="declarationPageInput">
+                                <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2.5rem; color: var(--alex-blue-accent); margin-bottom: 15px;"></i>
+                                <p id="uploadText" style="font-weight: 700; margin: 0; color: var(--alex-ink);">Click to upload Declaration Page</p>
+                                <p style="font-size: 0.85rem; color: #94A3B8; margin-top: 5px;">PDF, JPG or PNG</p>
+                            </div>
+                        </div>
+
+                        <div class="form-tab-panel" id="tab-6">
+                            <h3 class="tab-panel-title">Additional Interest</h3>
+                            <p class="section-desc">Landlord or Property Management info.</p>
+                            
+                            <div id="additional-interest-list"></div>
+                            
+                            <button type="button" id="btn-add-interest" class="btn-outline-sketch" style="width:100%; justify-content:center;">
+                                <i class="fa-solid fa-building"></i> Add Interest
+                            </button>
+                        </div>
+
+                        <div class="form-action-row" style="margin-top: 40px;">
+                            <button type="button" id="btn-prev" class="btn-outline-sketch" style="display:none;">Back</button>
+                            <button type="button" id="btn-next" class="btn-glow-anim">Next Step <i class="fa-solid fa-arrow-right"></i></button>
+                            <button type="submit" id="btn-submit" class="btn-glow-anim" style="display:none;">Get Quote <i class="fa-solid fa-check"></i></button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <aside class="sidebar-col anim-entry" style="animation-delay: 0.2s;">
+                <div class="organic-box sidebar-note taped-note">
+                    <div class="washi-tape"></div>
+                    <h4 class="sidebar-title">Your Progress</h4>
+                    <ul class="progress-list-sketch" id="sidebarList">
+                        <li class="active" data-step="0"><span class="sketch-circle"></span> Policy Info</li>
+                        <li data-step="1"><i class="fa-regular fa-circle"></i> Property</li>
+                        <li data-step="2"><i class="fa-regular fa-circle"></i> Mailing</li>
+                        <li data-step="3"><i class="fa-regular fa-circle"></i> Coverages</li>
+                        <li data-step="4"><i class="fa-regular fa-circle"></i> Add'l Insured</li>
+                        <li data-step="5"><i class="fa-regular fa-circle"></i> Current Pol.</li>
+                        <li data-step="6"><i class="fa-regular fa-circle"></i> Add'l Interest</li>
+                    </ul>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+    <div class="custom-modal-overlay" id="successModal">
+        <div class="custom-modal-content">
+            <div class="modal-icon-circle"><i class="fa-solid fa-check"></i></div>
+            <h3 style="margin-bottom: 10px;">Quote Request Sent!</h3>
+            <p style="color: #64748B;">Our AI is analyzing your rental info. We'll be in touch shortly with your rates.</p>
+            <button class="btn-glow-anim" id="closeModalBtn" style="width: 100%; margin-top: 20px;">Awesome</button>
+        </div>
+    </div>
+
+        <footer id="contact" class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <a href="../index.html" style="display: block; margin-bottom: 20px;">
+                    <img src="../assets/img/Logo-alexai-main.png" 
+                        alt="Alex AI Insurtech Logo" 
+                        style="max-width: 160px; height: auto; filter: brightness(0) invert(1);">
+                </a>
+                <p style="color: rgba(255,255,255,0.9); font-weight: 500;">
+                    Smart insurance for modern life. Powered by intelligence, driven by humans.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Products</h5>
+                <ul class="footer-links">
+                    <li><a href="../quote/quote.html">Car Insurance</a></li>
+                    <li><a href="../homeowners/index.html">Home Insurance</a></li>
+                    <li><a href="../renters/index.html">Renters Insurance</a></li>
+                    <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Company</h5>
+                <ul class="footer-links">
+                    <li><a href="https://www.instagram.com/alexai.insurtech.usa/">About Us</a></li>
+                    <li><a href="../ambassadors/index.html">Ambassadors</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Contact & Legal</h5>
+                <ul class="footer-links contact-links">
+                    <li><i class="fa-solid fa-phone"></i> +1 480-630-9630</li>
+                    <li><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</li>
+                    <li><a href="../terms-conditions/index.html">Terms of Service</a></li>
+                    <li><a href="../privacy-policy/index.html">Privacy Policy</a></li>
+                </ul>
+                <div class="app-buttons-row" style="display:flex; gap:15px; flex-wrap:wrap;">
+                    <a href="https://apps.apple.com/us/app/alex-ai-insurtech-app/id6752793999" class="btn-app-store">
+                        <i class="fa-brands fa-apple"></i>
+                        <div>
+                            <span class="small-txt">Download on the</span>
+                            <span class="big-txt">App Store</span>
+                        </div>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=cloud.alexai.movil&pcampaignid=web_share" class="btn-app-store">
+                        <i class="fa-brands fa-google-play"></i>
+                        <div>
+                            <span class="small-txt">Get it on</span>
+                            <span class="big-txt">Google Play</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="container copyright-row">
+             <p>&copy; 2026 Alex AI Insurtech. All rights reserved.</p>
+             <div class="social-links">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Alex-AI-Insurtech" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="floating-menu-container">
+        <div class="floating-menu-list organic-box" id="megaMenu">
+            <h5>Quick Navigate</h5>
+            <ul>
+                <li><a href="../quote/quote.html"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
+                <li><a href="../homeowners/index.html"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
+                <li><a href="../renters/index.html"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
+                <li><a href="../alex-sign/index.html"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
+                <li class="divider"></li>
+                <li><a href="../blog/index.html"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
+                <li><a href="../contact/index.html"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
+            </ul>
+        </div>
+        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open quick menu">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+    </div>
+
+
+    <div id="floating-chat-container">
+        <div class="chat-bubble organic-box" id="chatGreeting">
+            <strong>Alex AI says:</strong><br> 👋 Need help renting?
+        </div>
+        <button class="chat-avatar-btn js-trigger-chat"><i class="fa-solid fa-robot"></i></button>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // 1. Inicializar Wizard Genérico
+            if(typeof initHomeQuoteWizard === 'function') {
+                initHomeQuoteWizard(); 
+            }
+
+            // 2. Chat
+            setTimeout(() => { document.getElementById('chatGreeting').classList.add('is-visible'); }, 1500);
+
+            // 3. Lógica Mailing Address
+            const mailCheck = document.getElementById('same-as-property');
+            const mailWrap = document.getElementById('mailing-address-wrapper');
+            
+            if(mailCheck && mailWrap) {
+                const reqInputs = mailWrap.querySelectorAll('.mailing-req');
+                
+                function toggleMailing() {
+                    if(mailCheck.checked) {
+                        mailWrap.classList.add('hidden');
+                        reqInputs.forEach(i => i.removeAttribute('required'));
+                    } else {
+                        mailWrap.classList.remove('hidden');
+                        reqInputs.forEach(i => i.setAttribute('required', 'true'));
+                    }
+                }
+                
+                mailCheck.addEventListener('change', toggleMailing);
+                toggleMailing(); // Run on init
+            }
+
+            // 4. Lógica Property Type (Apt/Condo)
+            const resSelect = document.getElementById('residence-type');
+            if(resSelect) {
+                resSelect.addEventListener('change', toggleRentersFields);
+                toggleRentersFields(); // Init
+            }
+
+            // 5. Repeaters Complejos
+            // Additional Insured
+            document.getElementById('btn-add-insured').addEventListener('click', () => {
+                const container = document.getElementById('additional-insured-list');
+                const id = Date.now();
+                const html = `
+                <div class="repeater-card dynamic-field" id="insured-${id}">
+                    <button type="button" class="btn-delete-card" onclick="document.getElementById('insured-${id}').remove()">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <h5 style="margin-top:0; color:var(--alex-blue-accent);">Insured Person</h5>
+                    <div class="form-row-3">
+                        <div class="alex-input-group"><label>First Name <span class="req">*</span></label><input type="text" class="alex-input-modern" required></div>
+                        <div class="alex-input-group"><label>Middle Name</label><input type="text" class="alex-input-modern" placeholder="Optional"></div>
+                        <div class="alex-input-group"><label>Last Name <span class="req">*</span></label><input type="text" class="alex-input-modern" required></div>
+                    </div>
+                    <div class="alex-input-group" style="margin-bottom:0;">
+                        <label>Date of Birth <span class="req">*</span></label>
+                        <input type="text" class="alex-input-modern date-picker-new" placeholder="MM/DD/YYYY" required>
+                    </div>
+                </div>`;
+                container.insertAdjacentHTML('beforeend', html);
+                flatpickr(".date-picker-new", { dateFormat: "m/d/Y", disableMobile: "true" });
+            });
+
+            // Additional Interest
+            document.getElementById('btn-add-interest').addEventListener('click', () => {
+                const container = document.getElementById('additional-interest-list');
+                const id = Date.now();
+                const html = `
+                <div class="repeater-card dynamic-field" id="interest-${id}">
+                    <button type="button" class="btn-delete-card" onclick="document.getElementById('interest-${id}').remove()">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <h5 style="margin-top:0; color:var(--alex-blue-accent);">Interested Party</h5>
+                    <div class="alex-input-group"><label>Name / Entity <span class="req">*</span></label><input type="text" class="alex-input-modern" required></div>
+                    <div class="alex-input-group"><label>Address 1 <span class="req">*</span></label><input type="text" class="alex-input-modern" required></div>
+                    <div class="form-row-3">
+                        <div class="alex-input-group"><label>City <span class="req">*</span></label><input type="text" class="alex-input-modern" required></div>
+                        <div class="alex-input-group"><label>State <span class="req">*</span></label><input type="text" class="alex-input-modern" required></div>
+                        <div class="alex-input-group"><label>Zip <span class="req">*</span></label><input type="text" class="alex-input-modern" required></div>
+                    </div>
+                </div>`;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+
+            // 6. SUBMIT MODAL LOGIC (La corrección solicitada)
+            const form = document.getElementById('renters-quote-form');
+            const modal = document.getElementById('successModal');
+            const closeBtn = document.getElementById('closeModalBtn');
+
+            if(form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault(); // Detiene envío real
+                    if(modal) modal.classList.add('is-open'); // Muestra modal
+                });
+            }
+
+            if(closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    if(modal) modal.classList.remove('is-open');
+                    window.location.href = "../index.html"; // Redirige
+                });
+            }
+        });
+
+        function toggleRentersFields() {
+            const type = document.getElementById('residence-type').value;
+            const complex = document.getElementById('group-complex-name');
+            const details = document.getElementById('group-condo-apt-details');
+            
+            complex.classList.add('hidden');
+            details.classList.add('hidden');
+            
+            if(type === 'Apartment') {
+                complex.classList.remove('hidden');
+                details.classList.remove('hidden');
+            } else if (type === 'Condo') {
+                details.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

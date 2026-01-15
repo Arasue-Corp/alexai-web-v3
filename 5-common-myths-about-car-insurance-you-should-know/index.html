@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Alex AI Insurtech</title>
+    <title>5 Common Myths About Car Insurance - Alex AI Blog</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -11,17 +11,98 @@
     <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
 
     <style>
-        /* Ajuste del Grid de Contacto */
-        .contact-grid-layout {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 60px;
-            align-items: start;
+
+        /* Estilo de Lectura */
+        .article-paper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px;
+            background: white;
+        }
+        
+        .post-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--alex-ink-light);
+            font-weight: 600;
+        }
+        
+        .category-pill {
+            background: var(--alex-blue-accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        @media (max-width: 900px) {
-            .contact-grid-layout { grid-template-columns: 1fr; }
-            .sidebar-contact { order: -1; margin-bottom: 40px; } /* Info primero en móvil */
+        .post-featured-image {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            border: 2px solid var(--alex-ink);
+            margin: 30px 0 40px 0;
+            box-shadow: 5px 5px 0 rgba(44, 62, 80, 0.1);
+        }
+
+        /* Tipografía del Artículo */
+        .article-content p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #334155;
+        }
+        
+        .article-content h3 {
+            font-size: 1.5rem;
+            color: var(--alex-blue-accent);
+            margin-top: 40px;
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .article-content h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            bottom: 5px;
+            width: 4px;
+            background: var(--alex-ink);
+            border-radius: 2px;
+        }
+
+        /* Estilo para la Cita (Sticky Note) */
+        .quote-note {
+            margin: 40px 0;
+            font-family: 'Inter', sans-serif; /* O una fuente manuscrita si tuvieras */
+            font-size: 1.2rem;
+            font-weight: 700;
+            line-height: 1.6;
+            transform: rotate(-1deg);
+        }
+
+        /* Navegación Breadcrumb */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: var(--alex-ink-light);
+            margin-bottom: 30px;
+            transition: 0.2s;
+        }
+        .back-link:hover { color: var(--alex-blue-accent); transform: translateX(-5px); }
+
+        @media (max-width: 768px) {
+            .article-paper { padding: 30px 20px; }
+            .article-content p { font-size: 1rem; }
         }
     </style>
 </head>
@@ -78,128 +159,62 @@
 
     <main>
         
-        <section class="section-padding" style="padding-bottom: 40px;">
-            <div class="container text-center">
-                <h1 class="sketch-headline">Get in touch.</h1>
-                <p class="hero-subtitle" style="margin: 0 auto;">Have a question? Send us a message and we'll get back to you as soon as possible.</p>
-            </div>
-        </section>
-
-        <section class="section-padding" style="padding-top: 0;">
-            <div class="container contact-grid-layout">
+        <section class="section-padding bg-off-white">
+            <div class="container">
                 
-                <div class="contact-form-col">
-                    <div class="organic-box" style="padding: 40px;">
-                        <h3 style="margin-bottom: 25px; color: var(--alex-ink);">Send a Message</h3>
-                        
-                        <form action="#" method="POST">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>First Name</label>
-                                    <div class="input-modern-wrapper">
-                                        <i class="fa-regular fa-user input-icon"></i>
-                                        <input type="text" name="first-name" class="alex-input-modern" placeholder="Jane" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Last Name</label>
-                                    <div class="input-modern-wrapper">
-                                        <input type="text" name="last-name" class="alex-input-modern" placeholder="Doe" required>
-                                    </div>
-                                </div>
-                            </div>
+                <a href="../blog/index.html" class="back-link">
+                    <i class="fa-solid fa-arrow-left"></i> Back to all posts
+                </a>
 
-                            <div class="form-group">
-                                <label>Email Address</label>
-                                <div class="input-modern-wrapper">
-                                    <i class="fa-regular fa-envelope input-icon"></i>
-                                    <input type="email" name="email" class="alex-input-modern" placeholder="you@example.com" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Subject</label>
-                                <div class="input-modern-wrapper">
-                                    <i class="fa-regular fa-comment-dots input-icon"></i>
-                                    <input type="text" name="subject" class="alex-input-modern" placeholder="How can we help?" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Message</label>
-                                <textarea name="message" class="alex-input-modern" rows="5" style="border-radius: 14px; padding: 15px;" placeholder="Write your message here..." required></textarea>
-                            </div>
-
-                            <button type="submit" class="btn-glow-anim" style="width: 100%; margin-top: 10px;">
-                                Send Message <i class="fa-solid fa-paper-plane"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-                <aside class="sidebar-contact">
+                <article class="organic-box article-paper">
                     
-                    <div class="organic-box taped-note" style="padding: 40px 30px;">
-                        <div class="washi-tape-large"></div>
+                    <header class="post-header text-center">
+                        <div class="post-meta-row" style="justify-content: center;">
+                            <span class="category-pill">Auto Insurance</span>
+                            <span>July 28, 2025</span>
+                        </div>
+                        <h1 class="sketch-headline-sm" style="font-size: 2.2rem; margin-bottom: 10px;">5 common myths about car insurance you should know</h1>
+                        <p style="color: var(--alex-ink-light);">By <strong>The Alex AI Team</strong></p>
+                    </header>
+
+                    <img src="../assets/img/article-12.jpg" alt="White car driving" class="post-featured-image" onerror="this.src='https://placehold.co/800x450/E0E7F5/4A80F0?text=Auto+Insurance'">
+
+                    <div class="article-content">
+                        <p class="lead-text" style="font-size: 1.3rem; margin-bottom: 30px;">The world of auto insurance can be confusing, and over the years, several myths have become widely accepted as fact.</p>
                         
-                        <h3 class="sketch-headline-sm" style="font-size: 1.5rem; margin-bottom: 30px;">Contact Info</h3>
+                        <p>Believing these misconceptions can lead to inadequate coverage or overpaying for your policy. Let's debunk five of the most common myths to help you make smarter decisions.</p>
                         
-                        <ul class="feature-list" style="margin-top: 0;">
-                            <li style="display: flex; gap: 15px; align-items: flex-start; margin-bottom: 25px;">
-                                <div class="tile-icon" style="background: #E0F2FE; color: var(--alex-blue-accent); border: 2px solid #BAE6FD;">
-                                    <i class="fa-solid fa-phone"></i>
-                                </div>
-                                <div>
-                                    <strong style="display: block; color: var(--alex-ink);">Phone</strong>
-                                    <a href="tel:+14806309630" style="color: var(--alex-ink-light);">(480) 630-9630</a>
-                                </div>
-                            </li>
-                            
-                            <li style="display: flex; gap: 15px; align-items: flex-start; margin-bottom: 25px;">
-                                <div class="tile-icon" style="background: #F0FDF4; color: #10B981; border: 2px solid #BBF7D0;">
-                                    <i class="fa-solid fa-envelope"></i>
-                                </div>
-                                <div>
-                                    <strong style="display: block; color: var(--alex-ink);">Email</strong>
-                                    <a href="mailto:hello@alexai.cloud" style="color: var(--alex-ink-light);">hello@alexai.cloud</a>
-                                </div>
-                            </li>
+                        <h3>Myth 1: Red cars are more expensive to insure</h3>
+                        <p>This is one of the most persistent myths, but it's completely false. Insurers do not factor in the color of your car when calculating your premium. They are concerned with the car's make, model, year, engine size, safety features, and repair costs—not its paint job.</p>
 
-                            <li style="display: flex; gap: 15px; align-items: flex-start;">
-                                <div class="tile-icon" style="background: #FEF2F2; color: #EF4444; border: 2px solid #FECACA;">
-                                    <i class="fa-solid fa-location-dot"></i>
-                                </div>
-                                <div>
-                                    <strong style="display: block; color: var(--alex-ink);">Location</strong>
-                                    <span style="color: var(--alex-ink-light);">3101 N Central Ave ste 1174, Phoenix, AZ</span>
-                                </div>
-                            </li>
-                        </ul>
+                        <h3>Myth 2: Your insurance covers you if you lend your car to a friend</h3>
+                        <p>In most cases, insurance follows the vehicle, not the driver. This means if you lend your car to a friend and they get into an accident, it's <em>your</em> insurance policy that will have to cover the damages. Be very careful about who you let behind the wheel.</p>
 
-                        <hr class="note-divider" style="margin: 30px 0;">
+                        <h3>Myth 3: The minimum state-required coverage is enough</h3>
+                        <p>While meeting the legal minimum for liability coverage keeps you on the right side of the law, it's often dangerously inadequate. State minimums can be very low. If you cause a serious accident, the costs for injuries and property damage can easily exceed those limits, leaving you personally responsible.</p>
 
-                        <h4 style="font-size: 1rem; margin-bottom: 15px;">Connect with us</h4>
-                        <div class="social-links" style="display: flex; gap: 15px;">
-                            <a href="https://www.facebook.com/people/Alexai-Insurtech-USA/61573922245346/" target="_blank" class="btn-blue-sketch" style="width: 45px; height: 45px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                <i class="fa-brands fa-facebook-f"></i>
-                            </a>
-                            <a href="https://www.instagram.com/alexai.insurtech.usa/" target="_blank" class="btn-blue-sketch" style="width: 45px; height: 45px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                <i class="fa-brands fa-instagram"></i>
-                            </a>
-                            <a href="https://www.youtube.com/@Alex-AI-Insurtech" target="_blank" class="btn-blue-sketch" style="width: 45px; height: 45px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                <i class="fa-brands fa-youtube"></i>
-                            </a>
+                        <div class="sticky-note-yellow quote-note">
+                            <div class="pin-tack"></div>
+                            <i class="fa-solid fa-quote-left" style="color: #CA8A04; opacity: 0.5; font-size: 1.5rem;"></i>
+                            <p style="margin: 10px 0 0 0; color: #854D0E;">"The right insurance isn't about meeting the bare minimum; it's about fully protecting your financial well-being from the unexpected."</p>
+                        </div>
+
+                        <h3>Myth 4: A new car is always more expensive to insure than an old one</h3>
+                        <p>This is not always true. While a new car's higher value can increase comprehensive and collision coverage costs, it also comes with advanced safety features (like automatic braking and lane assist) that can earn you significant discounts. An older car without these features might be considered riskier in some ways.</p>
+
+                        <h3>Myth 5: Your credit score doesn't affect your insurance rate</h3>
+                        <p>In most states, insurers use a credit-based insurance score to help determine premiums. Statistical data has shown a correlation between credit history and the likelihood of filing a claim. Maintaining a good credit score is a great way to keep your insurance rates low.</p>
+                    </div>
+
+                    <div style="margin-top: 60px; padding-top: 30px; border-top: 2px dashed #E2E8F0;">
+                        <div class="organic-box" style="background: #F0F9FF; border-color: var(--alex-blue-accent); padding: 30px; text-align: center;">
+                            <h3 style="margin-top: 0; color: var(--alex-ink);">Stop believing myths, start saving.</h3>
+                            <p style="font-size: 1rem; margin-bottom: 20px;">Get a transparent, AI-powered quote in less than 2 minutes.</p>
+                            <a href="../quote/quote.html" class="btn-glow-anim" style="width: fit-content; margin: 0 auto;">Check My Price</a>
                         </div>
                     </div>
 
-                    <div class="organic-box" style="margin-top: 30px; padding: 20px; background: #FEF9C3; border-color: #F59E0B; text-align: center;">
-                        <i class="fa-solid fa-headset" style="font-size: 2rem; color: #D97706; margin-bottom: 10px;"></i>
-                        <p style="margin: 0; font-weight: 700; color: #92400E;">Need immediate help?</p>
-                        <p style="font-size: 0.9rem; margin-bottom: 10px; color: #92400E;">Try our 24/7 AI Chat.</p>
-                        <button class="btn btn-sm btn-outline js-trigger-chat" style="background: white; border-color: #D97706; color: #D97706;">Open Chat</button>
-                    </div>
-
-                </aside>
+                </article>
 
             </div>
         </section>
@@ -291,9 +306,10 @@
         </button>
     </div>
 
+
     <div id="floating-chat-container">
         <div class="chat-bubble organic-box" id="chatGreeting">
-            <strong>Alex AI says:</strong><br> 👋 We are here to help!
+            <strong>Alex AI says:</strong><br> 👋 Need a better coverage?
         </div>
         <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
             <i class="fa-solid fa-robot"></i>
@@ -302,12 +318,11 @@
 
     <script src="../js/script.js"></script>
     <script>
-        // Chat Greeting Delay
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => { 
                 const bubble = document.getElementById('chatGreeting');
                 if(bubble) bubble.classList.add('is-visible'); 
-            }, 1000);
+            }, 2000);
         });
     </script>
 </body>

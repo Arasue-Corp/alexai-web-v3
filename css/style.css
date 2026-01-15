@@ -1780,3 +1780,305 @@ video.product-icon { filter: none !important; object-fit: contain; }
     text-align: center;
     font-size: 0.95rem;
 }
+
+/* =========================================================
+   ESTILOS DE LA SECCIÓN APP Y BOTONES DE DESCARGA
+   ========================================================= */
+
+/* Botones de Tienda (iOS / Android) estilo Sketch */
+.btn-app-store {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #514690;
+    color: white !important;
+    padding: 10px 24px;
+    border-radius: 14px;
+    text-align: left;
+    border: 2px solid var(--alex-ink);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 4px 4px 0 rgba(74, 128, 240, 0.3); /* Sombra Azul */
+    min-width: 180px;
+}
+
+/* Efecto Hover */
+.btn-app-store:hover {
+    transform: translateY(-4px) rotate(-1deg); /* Ligera rotación orgánica */
+    box-shadow: 8px 8px 0 var(--alex-blue-accent); /* Sombra crece y cambia de color */
+    background-color: #009cff; /* Un tono ligeramente más claro */
+}
+
+/* Icono dentro del botón */
+.btn-app-store i {
+    font-size: 2.2rem;
+}
+
+/* Textos del botón */
+.btn-app-store .small-txt {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    opacity: 0.8;
+    line-height: 1.2;
+    letter-spacing: 0.5px;
+}
+
+.btn-app-store .big-txt {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 800;
+    line-height: 1;
+    font-family: var(--font-main);
+}
+
+/* Ajuste Responsive para móviles */
+@media (max-width: 600px) {
+    .app-buttons-row {
+        flex-direction: column;
+        width: 100%;
+    }
+    .btn-app-store {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* --- ESTILOS EXTRA PARA COTIZADOR HOGAR --- */
+
+/* Etiqueta roja para campos obligatorios */
+.req { color: #EF4444; font-weight: 900; margin-left: 3px; }
+
+/* Subtítulos pequeños (usados en Valuables) */
+.s-label { font-size: 0.75rem; color: #64748B; font-weight: 700; display: block; margin-bottom: 4px; }
+.mb-10 { margin-bottom: 10px; }
+
+/* Estilo para los Botones Grandes de Radio (Primary/Secondary, House/Condo) */
+.radio-tile-group { display: flex; gap: 15px; width: 100%; }
+.radio-tile-label { flex: 1; cursor: pointer; position: relative; min-width: 0; }
+.radio-tile-label input { display: none; }
+.radio-tile-content {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 15px 10px; border: 2px solid #E2E8F0; border-radius: 12px; background: #F8FAFC;
+    transition: all 0.2s ease; text-align: center; height: 100%; min-height: 80px;
+}
+.radio-tile-content i { font-size: 1.5rem; margin-bottom: 8px; color: #94A3B8; }
+.radio-tile-content span { font-weight: 700; font-size: 0.9rem; color: var(--alex-ink); }
+
+/* Estado seleccionado del Radio Button */
+.radio-tile-label input:checked + .radio-tile-content {
+    border-color: var(--alex-blue-accent); background: #EFF6FF;
+    box-shadow: 0 4px 10px rgba(74, 128, 240, 0.15); transform: translateY(-2px);
+}
+.radio-tile-label input:checked + .radio-tile-content i { color: var(--alex-blue-accent); }
+
+/* Tarjetas rojas para las Pérdidas (Loss History) */
+.loss-entry-card {
+    background: #FEF2F2; border: 1px dashed #FDA4AF; border-radius: 12px;
+    padding: 20px; margin-top: 20px; position: relative;
+    animation: slideUpFade 0.3s ease-out;
+}
+.loss-title { font-size: 0.9rem; font-weight: 800; color: #BE123C; margin-bottom: 15px; text-transform: uppercase; }
+
+/* Responsive para los botones grandes */
+@media (max-width: 600px) {
+    .radio-tile-group { flex-direction: column; gap: 10px; }
+    .radio-tile-content { flex-direction: row; justify-content: flex-start; gap: 15px; padding: 15px; min-height: auto; }
+    .radio-tile-content i { margin-bottom: 0; }
+}
+
+/* --- LÓGICA VISUAL DEL WIZARD (OBLIGATORIO) --- */
+.form-tab-panel { 
+    display: none; /* Oculta todos los pasos por defecto */
+    animation: slideUpFade 0.4s ease-out; 
+}
+
+.form-tab-panel.active { 
+    display: block; /* Muestra SOLO el paso actual */
+}
+
+/* Estilos de validación */
+.shake-anim { animation: shake 0.5s; }
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+/* =========================================================
+   MEJORAS VISUALES (MODAL & UPLOAD)
+   ========================================================= */
+
+/* --- 1. Estilo para el Input de Archivo (PDF Upload) --- */
+.file-upload-box {
+    border: 2px dashed #CBD5E1; 
+    border-radius: 16px; 
+    padding: 40px 20px; 
+    text-align: center;
+    background: #F8FAFC; 
+    cursor: pointer; 
+    position: relative; 
+    margin-top: 20px; 
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-upload-box:hover { 
+    border-color: var(--alex-blue-accent); 
+    background: #EFF6FF; 
+    transform: translateY(-2px);
+}
+
+.file-upload-input {
+    position: absolute; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%; 
+    opacity: 0; 
+    cursor: pointer;
+    z-index: 5;
+}
+
+/* --- 2. Estilo del Modal de Éxito (Pop-up bonito) --- */
+.custom-modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(44, 62, 80, 0.6); /* Fondo oscuro semitransparente */
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: none; /* Oculto por defecto */
+    align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s ease;
+}
+
+.custom-modal-overlay.is-open {
+    display: flex; opacity: 1;
+}
+
+.custom-modal-content {
+    background: white;
+    width: 90%; max-width: 450px;
+    padding: 40px;
+    border-radius: 24px;
+    border: 3px solid var(--alex-ink); /* Borde estilo Sketch */
+    box-shadow: 10px 10px 0 rgba(74, 128, 240, 0.2); /* Sombra sólida */
+    text-align: center;
+    transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+}
+
+.custom-modal-overlay.is-open .custom-modal-content {
+    transform: scale(1);
+}
+
+.modal-icon-circle {
+    width: 80px; height: 80px;
+    background: #DCFCE7; /* Verde claro */
+    color: #10B981; /* Verde fuerte */
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; margin: 0 auto 20px;
+    border: 2px solid var(--alex-ink);
+}
+
+/* =========================================================
+   ESTILOS DE CALENDARIO (FLATPICKR CUSTOM)
+   ========================================================= */
+
+/* Fondo y bordes del calendario */
+.flatpickr-calendar {
+    border-radius: 16px !important;
+    box-shadow: 0 10px 30px rgba(44, 62, 80, 0.15) !important;
+    border: 2px solid var(--alex-ink) !important;
+    font-family: var(--font-main) !important;
+    padding: 10px !important;
+}
+
+/* Cabecera (Mes y Año) */
+.flatpickr-month {
+    background: transparent !important;
+    color: var(--alex-ink) !important;
+    fill: var(--alex-ink) !important;
+    margin-bottom: 10px;
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+    font-weight: 800 !important;
+}
+
+/* Días de la semana */
+span.flatpickr-weekday {
+    color: #94A3B8 !important;
+    font-weight: 700 !important;
+}
+
+/* Días del mes (Normal) */
+.flatpickr-day {
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    color: var(--alex-ink) !important;
+    border: 1px solid transparent !important;
+}
+
+/* Día Seleccionado (Azul Alex) */
+.flatpickr-day.selected, 
+.flatpickr-day.startRange, 
+.flatpickr-day.endRange, 
+.flatpickr-day.selected.inRange, 
+.flatpickr-day.startRange.inRange, 
+.flatpickr-day.endRange.inRange, 
+.flatpickr-day.selected:focus, 
+.flatpickr-day.startRange:focus, 
+.flatpickr-day.endRange:focus, 
+.flatpickr-day.selected:hover, 
+.flatpickr-day.startRange:hover, 
+.flatpickr-day.endRange:hover, 
+.flatpickr-day.selected.prevMonthDay, 
+.flatpickr-day.startRange.prevMonthDay, 
+.flatpickr-day.endRange.prevMonthDay, 
+.flatpickr-day.selected.nextMonthDay, 
+.flatpickr-day.startRange.nextMonthDay, 
+.flatpickr-day.endRange.nextMonthDay {
+    background: var(--alex-blue-accent) !important;
+    border-color: var(--alex-blue-accent) !important;
+    color: white !important;
+    box-shadow: 0 4px 10px rgba(74, 128, 240, 0.3);
+}
+
+/* Hover en días */
+.flatpickr-day:hover {
+    background: #EFF6FF !important;
+    border-color: #BFDBFE !important;
+}
+
+/* Utilidad para ocultar campos dinámicos */
+.hidden {
+    display: none !important;
+}
+
+/* --- AMBASSADOR SPECIFIC --- */
+.ambassador-main-card { max-width: 850px; margin: 0 auto; }
+
+.form-step-panel { display: none; animation: slideUpFade 0.4s ease-out; }
+.form-step-panel.active { display: block; }
+
+.payment-setup-box {
+    background: #F0F9FF; border: 2px solid #BAE6FD; border-radius: 16px;
+    padding: 30px; text-align: center; margin: 20px 0;
+}
+
+.info-highlight-box {
+    background: #F8FAFC; border-radius: 12px; padding: 25px; margin-bottom: 30px;
+}
+.info-highlight-box ul li { list-style: none; margin-bottom: 10px; font-weight: 700; color: var(--alex-ink); }
+
+.quiz-card { background: #FFFFFF; border: 2px solid #E2E8F0; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+.quiz-question { font-weight: 800; color: var(--alex-ink); margin-bottom: 15px; }
+.quiz-opt { display: block; padding: 10px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+.quiz-opt:hover { background: #EFF6FF; }
+
+.success-celebration .icon-wrap { font-size: 4rem; color: #EAB308; margin-bottom: 20px; }
+

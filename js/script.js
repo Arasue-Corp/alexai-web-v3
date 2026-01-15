@@ -287,3 +287,314 @@ function initMobileFilters() {
         });
     }
 }
+
+/* --- LÓGICA DEL COTIZADOR DE HOGAR --- */
+function initHomeQuoteWizard() {
+    let currentStep = 0;
+    const steps = document.querySelectorAll('.form-tab-panel');
+    const sidebarItems = document.querySelectorAll('#sidebarList li');
+    const totalSteps = steps.length;
+    
+    // Botones
+    const btnNext = document.getElementById('btn-next');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnSubmit = document.getElementById('btn-submit');
+    const progress = document.getElementById('visualProgressBar');
+    const stepNumDisplay = document.getElementById('stepNumber');
+
+    // Función para validar campos requeridos antes de avanzar
+    function validateStep(index) {
+        const currentPanel = steps[index];
+        const requiredInputs = currentPanel.querySelectorAll('input[required], select[required]');
+        let isValid = true;
+
+        requiredInputs.forEach(input => {
+            if (!input.value || input.value.trim() === '') {
+                isValid = false;
+                input.style.borderColor = 'red';
+                // Pequeña animación de error
+                input.classList.add('shake-anim');
+                setTimeout(() => input.classList.remove('shake-anim'), 500);
+            } else {
+                input.style.borderColor = '#E2E8F0';
+            }
+        });
+        return isValid;
+    }
+
+    // Función para actualizar qué paso se ve
+    function updateUI() {
+        // 1. Mostrar/Ocultar Pasos
+        steps.forEach((s, i) => {
+            if (i === currentStep) {
+                s.classList.add('active'); // CSS se encarga de mostrarlo
+                window.scrollTo(0, 0); // Subir al inicio
+            } else {
+                s.classList.remove('active');
+            }
+        });
+
+        // 2. Actualizar Sidebar
+        if(sidebarItems.length) {
+            sidebarItems.forEach((li, i) => {
+                li.classList.remove('active', 'done');
+                // Limpiamos iconos previos
+                let text = li.innerText.replace('✓', '').trim(); 
+                
+                if (i < currentStep) {
+                    li.classList.add('done');
+                    // Icono de Check si ya pasó
+                    if(!li.innerHTML.includes('fa-check')) li.innerHTML = '<i class="fa-solid fa-check"></i> ' + text;
+                } else if (i === currentStep) {
+                    li.classList.add('active');
+                }
+            });
+        }
+
+        // 3. Botones (Mostrar/Ocultar)
+        if(btnPrev) btnPrev.style.display = currentStep === 0 ? 'none' : 'inline-flex';
+        
+        if (currentStep === totalSteps - 1) {
+            if(btnNext) btnNext.style.display = 'none';
+            if(btnSubmit) btnSubmit.style.display = 'inline-flex';
+        } else {
+            if(btnNext) btnNext.style.display = 'inline-flex';
+            if(btnSubmit) btnSubmit.style.display = 'none';
+        }
+
+        // 4. Barra de Progreso
+        if(progress) progress.style.width = ((currentStep + 1) / totalSteps) * 100 + '%';
+        if(stepNumDisplay) stepNumDisplay.innerText = currentStep + 1;
+    }
+
+    // Listeners de Botones
+    if(btnNext) {
+        btnNext.addEventListener('click', (e) => {
+            e.preventDefault();
+            if(validateStep(currentStep)) {
+                currentStep++;
+                updateUI();
+            } else {
+                // Opcional: alert("Please fill required fields");
+            }
+        });
+    }
+
+    if(btnPrev) {
+        btnPrev.addEventListener('click', (e) => {
+            e.preventDefault();
+            if(currentStep > 0) {
+                currentStep--;
+                updateUI();
+            }
+        });
+    }
+
+    // Inicializar UI
+    updateUI();
+
+    // --- 6. INICIALIZAR CALENDARIOS BONITOS (FLATPICKR) ---
+    // Esto convierte los inputs .date-picker en calendarios reales
+    flatpickr(".date-picker", {
+        dateFormat: "m/d/Y",  // Formato Mes/Día/Año
+        altInput: true,       // Muestra un input alternativo bonito
+        altFormat: "F j, Y",  // Lo que ve el usuario: "September 29, 2025"
+        disableMobile: "true" // Fuerza el diseño bonito incluso en móviles
+    });
+
+    // --- 7. MANEJO DEL MODAL DE ÉXITO (Sin mensaje feo) ---
+    const form = document.getElementById('home-quote-form');
+    const modal = document.getElementById('successModal'); // Asegúrate de tener el HTML del modal pegado
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    if(form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault(); // Detiene recarga y alertas nativas
+            
+            // Mostrar Modal Bonito
+            if(modal) {
+                modal.classList.add('is-open');
+            } else {
+                console.error("Falta el HTML del modal en tu archivo");
+            }
+        });
+    }
+
+    if(closeModalBtn && modal) {
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('is-open');
+            // Redirigir al home
+            window.location.href = "../../index.html"; 
+        });
+    }
+}
+
+// AUTO-INICIAR SI ESTAMOS EN LA PÁGINA CORRECTA
+document.addEventListener("DOMContentLoaded", () => {
+    if(document.getElementById('home-quote-form')) {
+        initHomeQuoteWizard();
+    }
+
+/* --- LÓGICA ESPECÍFICA COTIZADOR HOGAR --- */
+
+// Lógica de Historial de Pérdidas (1 a 5)
+const lossSelect = document.getElementById('num-losses');
+const lossContainer = document.getElementById('dynamic-loss-container');
+
+if(lossSelect && lossContainer) {
+    lossSelect.addEventListener('change', (e) => {
+        const count = parseInt(e.target.value);
+        lossContainer.innerHTML = ''; // Limpiar contenedor
+
+        if (count > 0) {
+            for(let i = 1; i <= count; i++) {
+                // Crear HTML del mini-formulario
+                const html = `
+                    <div class="loss-entry-card">
+                        <div class="loss-title"><i class="fa-solid fa-triangle-exclamation"></i> Loss Incident #${i}</div>
+                        <div class="form-row-2">
+                            <div class="alex-input-group flex-grow">
+                                <label>Date of Loss <span class="req">*</span></label>
+                                <input type="text" class="alex-input-modern date-picker" placeholder="MM/DD/YYYY" required>
+                            </div>
+                            <div class="alex-input-group flex-grow">
+                                <label>Type of Loss <span class="req">*</span></label>
+                                <input type="text" class="alex-input-modern" placeholder="e.g. Fire, Theft" required>
+                            </div>
+                        </div>
+                        <div class="form-row-2">
+                            <div class="alex-input-group flex-grow">
+                                <label>Details <span class="req">*</span></label>
+                                <input type="text" class="alex-input-modern" placeholder="Description" required>
+                            </div>
+                            <div class="alex-input-group flex-grow">
+                                <label>Amount Paid <span class="req">*</span></label>
+                                <input type="number" class="alex-input-modern" placeholder="$0.00" required>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                lossContainer.insertAdjacentHTML('beforeend', html);
+            }
+        }
+    });
+}
+
+// Lógica Toggle Segundo Asegurado
+const toggle2nd = document.getElementById('toggleSecondInsured');
+const secSection = document.getElementById('secondInsuredSection');
+
+if(toggle2nd && secSection) {
+    toggle2nd.addEventListener('change', (e) => {
+        if(e.target.checked) {
+            secSection.style.display = 'block';
+            // Volver obligatorios los campos al mostrarse (opcional pero recomendado)
+            secSection.querySelectorAll('input').forEach(i => i.setAttribute('required', 'true'));
+        } else {
+            secSection.style.display = 'none';
+            // Quitar obligatoriedad al ocultarse
+            secSection.querySelectorAll('input').forEach(i => i.removeAttribute('required'));
+        }
+    });
+}
+
+});
+
+/* --- LÓGICA DE UI (MODAL & UPLOAD) --- */
+
+// 1. Manejo del Input de Archivo (Cambiar texto al subir)
+const fileInput = document.getElementById('declarationPageInput');
+const fileText = document.getElementById('uploadText');
+
+if(fileInput && fileText) {
+    fileInput.addEventListener('change', function(e) {
+        if(this.files && this.files.length > 0) {
+            // Cambiar texto al nombre del archivo
+            fileText.innerHTML = `<i class="fa-solid fa-check" style="color:#10B981"></i> ${this.files[0].name}`;
+            fileText.style.color = '#10B981';
+        }
+    });
+}
+
+// 2. Manejo del Modal de Éxito
+const modal = document.getElementById('successModal');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const form = document.getElementById('home-quote-form'); // Asegúrate que tu form tenga este ID
+
+// Función para abrir modal
+function showSuccessModal() {
+    if(modal) {
+        modal.classList.add('is-open');
+        // Efecto confetti o sonido opcional aquí
+    }
+}
+
+// Función para cerrar modal
+if(closeModalBtn && modal) {
+    closeModalBtn.addEventListener('click', () => {
+        modal.classList.remove('is-open');
+        // Redirigir al home o resetear form
+        window.location.href = "../../index.html"; 
+    });
+}
+
+// Interceptar el envío del formulario para mostrar el modal
+if(form) {
+    form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Evita recarga real
+        showSuccessModal();
+    });
+}
+
+// Función específica para Renters Insurance - Property Tab
+function toggleRentersFields() {
+    const residenceSelect = document.getElementById('residence-type');
+    const complexGroup = document.getElementById('group-complex-name');
+    const condoAptGroup = document.getElementById('group-condo-apt-details');
+    
+    // Inputs internos para manejar atributos 'required' si fuera necesario
+    const complexInput = document.getElementById('complex-name');
+    const gatedInput = document.getElementById('gated-community');
+    const unitsInput = document.getElementById('num-units');
+
+    const type = residenceSelect.value;
+
+    // 1. Resetear visibilidad (Ocultar todo primero)
+    complexGroup.classList.add('hidden');
+    condoAptGroup.classList.add('hidden');
+
+    // 2. Lógica condicional
+    if (type === 'Apartment') {
+        // Mostrar todo
+        complexGroup.classList.remove('hidden');
+        condoAptGroup.classList.remove('hidden');
+        
+        // Hacer requeridos si es necesario (opcional)
+        // complexInput.setAttribute('required', 'true');
+        // unitsInput.setAttribute('required', 'true');
+
+    } else if (type === 'Condo') {
+        // Mostrar solo Gated y Units
+        condoAptGroup.classList.remove('hidden');
+        
+        // complexInput.removeAttribute('required'); // Asegurar que Complex no sea required
+        // unitsInput.setAttribute('required', 'true');
+    } else {
+        // Limpiar valores si se ocultan para no enviar basura (opcional)
+        complexInput.value = '';
+        gatedInput.value = 'No';
+        unitsInput.value = '';
+        
+        // Quitar required
+        // complexInput.removeAttribute('required');
+        // unitsInput.removeAttribute('required');
+    }
+}
+
+// Inicializar al cargar la página por si el navegador guardó la selección
+document.addEventListener('DOMContentLoaded', function() {
+    const residenceSelect = document.getElementById('residence-type');
+    if(residenceSelect) {
+        toggleRentersFields(); // Ejecutar lógica inicial
+    }
+});

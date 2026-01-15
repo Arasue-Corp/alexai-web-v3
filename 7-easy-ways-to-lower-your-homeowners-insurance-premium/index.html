@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Alex AI Insurtech</title>
+    <title>7 Easy Ways to Lower Your Homeowners Insurance Premium - Alex AI Blog</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -11,17 +11,109 @@
     <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
 
     <style>
-        /* Ajuste del Grid de Contacto */
-        .contact-grid-layout {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 60px;
-            align-items: start;
+        /* Estilo de Lectura */
+        .article-paper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px;
+            background: white;
+        }
+        
+        .post-meta-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--alex-ink-light);
+            font-weight: 600;
+        }
+        
+        .category-pill {
+            background: var(--alex-blue-accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        @media (max-width: 900px) {
-            .contact-grid-layout { grid-template-columns: 1fr; }
-            .sidebar-contact { order: -1; margin-bottom: 40px; } /* Info primero en móvil */
+        .post-featured-image {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            border: 2px solid var(--alex-ink);
+            margin: 30px 0 40px 0;
+            box-shadow: 5px 5px 0 rgba(44, 62, 80, 0.1);
+        }
+
+        .article-content p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #334155;
+        }
+        
+        .article-content h3 {
+            font-size: 1.5rem;
+            color: var(--alex-blue-accent);
+            margin-top: 40px;
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .article-content h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            bottom: 5px;
+            width: 4px;
+            background: var(--alex-ink);
+            border-radius: 2px;
+        }
+
+        /* Listas dentro del artículo */
+        .article-content ul {
+            margin-bottom: 25px;
+            padding-left: 20px;
+        }
+        .article-content ul li {
+            list-style: disc;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #334155;
+            font-weight: 500;
+        }
+
+        /* Estilo Nota Adhesiva para Citas */
+        .quote-note {
+            margin: 40px 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            line-height: 1.6;
+            transform: rotate(-1deg);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: var(--alex-ink-light);
+            margin-bottom: 30px;
+            transition: 0.2s;
+        }
+        .back-link:hover { color: var(--alex-blue-accent); transform: translateX(-5px); }
+
+        @media (max-width: 768px) {
+            .article-paper { padding: 30px 20px; }
+            .article-content p { font-size: 1rem; }
         }
     </style>
 </head>
@@ -78,128 +170,76 @@
 
     <main>
         
-        <section class="section-padding" style="padding-bottom: 40px;">
-            <div class="container text-center">
-                <h1 class="sketch-headline">Get in touch.</h1>
-                <p class="hero-subtitle" style="margin: 0 auto;">Have a question? Send us a message and we'll get back to you as soon as possible.</p>
-            </div>
-        </section>
-
-        <section class="section-padding" style="padding-top: 0;">
-            <div class="container contact-grid-layout">
+        <section class="section-padding bg-off-white">
+            <div class="container">
                 
-                <div class="contact-form-col">
-                    <div class="organic-box" style="padding: 40px;">
-                        <h3 style="margin-bottom: 25px; color: var(--alex-ink);">Send a Message</h3>
-                        
-                        <form action="#" method="POST">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>First Name</label>
-                                    <div class="input-modern-wrapper">
-                                        <i class="fa-regular fa-user input-icon"></i>
-                                        <input type="text" name="first-name" class="alex-input-modern" placeholder="Jane" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Last Name</label>
-                                    <div class="input-modern-wrapper">
-                                        <input type="text" name="last-name" class="alex-input-modern" placeholder="Doe" required>
-                                    </div>
-                                </div>
-                            </div>
+                <a href="../blog/index.html" class="back-link">
+                    <i class="fa-solid fa-arrow-left"></i> Back to all posts
+                </a>
 
-                            <div class="form-group">
-                                <label>Email Address</label>
-                                <div class="input-modern-wrapper">
-                                    <i class="fa-regular fa-envelope input-icon"></i>
-                                    <input type="email" name="email" class="alex-input-modern" placeholder="you@example.com" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Subject</label>
-                                <div class="input-modern-wrapper">
-                                    <i class="fa-regular fa-comment-dots input-icon"></i>
-                                    <input type="text" name="subject" class="alex-input-modern" placeholder="How can we help?" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Message</label>
-                                <textarea name="message" class="alex-input-modern" rows="5" style="border-radius: 14px; padding: 15px;" placeholder="Write your message here..." required></textarea>
-                            </div>
-
-                            <button type="submit" class="btn-glow-anim" style="width: 100%; margin-top: 10px;">
-                                Send Message <i class="fa-solid fa-paper-plane"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-                <aside class="sidebar-contact">
+                <article class="organic-box article-paper">
                     
-                    <div class="organic-box taped-note" style="padding: 40px 30px;">
-                        <div class="washi-tape-large"></div>
-                        
-                        <h3 class="sketch-headline-sm" style="font-size: 1.5rem; margin-bottom: 30px;">Contact Info</h3>
-                        
-                        <ul class="feature-list" style="margin-top: 0;">
-                            <li style="display: flex; gap: 15px; align-items: flex-start; margin-bottom: 25px;">
-                                <div class="tile-icon" style="background: #E0F2FE; color: var(--alex-blue-accent); border: 2px solid #BAE6FD;">
-                                    <i class="fa-solid fa-phone"></i>
-                                </div>
-                                <div>
-                                    <strong style="display: block; color: var(--alex-ink);">Phone</strong>
-                                    <a href="tel:+14806309630" style="color: var(--alex-ink-light);">(480) 630-9630</a>
-                                </div>
-                            </li>
-                            
-                            <li style="display: flex; gap: 15px; align-items: flex-start; margin-bottom: 25px;">
-                                <div class="tile-icon" style="background: #F0FDF4; color: #10B981; border: 2px solid #BBF7D0;">
-                                    <i class="fa-solid fa-envelope"></i>
-                                </div>
-                                <div>
-                                    <strong style="display: block; color: var(--alex-ink);">Email</strong>
-                                    <a href="mailto:hello@alexai.cloud" style="color: var(--alex-ink-light);">hello@alexai.cloud</a>
-                                </div>
-                            </li>
+                    <header class="post-header text-center">
+                        <div class="post-meta-row">
+                            <span class="category-pill">Home Insurance</span>
+                            <span>June 30, 2025</span>
+                        </div>
+                        <h1 class="sketch-headline-sm" style="font-size: 2.2rem; margin-bottom: 10px;">7 Easy ways to lower your homeowners insurance premium</h1>
+                        <p style="color: var(--alex-ink-light);">By <strong>The Alex AI Team</strong></p>
+                    </header>
 
-                            <li style="display: flex; gap: 15px; align-items: flex-start;">
-                                <div class="tile-icon" style="background: #FEF2F2; color: #EF4444; border: 2px solid #FECACA;">
-                                    <i class="fa-solid fa-location-dot"></i>
-                                </div>
-                                <div>
-                                    <strong style="display: block; color: var(--alex-ink);">Location</strong>
-                                    <span style="color: var(--alex-ink-light);">3101 N Central Ave ste 1174, Phoenix, AZ</span>
-                                </div>
-                            </li>
+                    <img src="../assets/img/article-7.jpg" alt="Piggy bank in front of house" class="post-featured-image" onerror="this.src='https://placehold.co/800x450/E0E7F5/4A80F0?text=Home+Insurance'">
+
+                    <div class="article-content">
+                        <p class="lead-text" style="font-size: 1.3rem; margin-bottom: 30px; font-weight: 600; color: var(--alex-ink);">
+                            Homeowners insurance is a crucial expense for protecting your biggest asset, but that doesn't mean you should overpay.
+                        </p>
+                        
+                        <p>Many homeowners aren't aware of the simple, actionable steps they can take to reduce their annual premium. Here are seven easy ways to put money back in your pocket without sacrificing coverage.</p>
+                        
+                        <h3>1. Bundle your policies</h3>
+                        <p>This is one of the easiest and most effective ways to save. Most insurance companies offer a significant multi-policy discount—often between 10% and 20%—if you purchase your home and auto insurance from them.</p>
+
+                        <h3>2. Increase your deductible</h3>
+                        <p>As we've discussed before, a higher deductible leads to a lower premium. Increasing your deductible from $500 to $1,000 can save you as much as 25% on your policy. Just make sure you can comfortably afford the higher amount out-of-pocket.</p>
+
+                        <h3>3. Improve home security and safety</h3>
+                        <p>Insurers love a well-protected home. You can earn discounts by installing safety features like:</p>
+                        <ul>
+                            <li>Monitored security systems (burglar and fire alarms)</li>
+                            <li>Deadbolt locks</li>
+                            <li>Smoke detectors</li>
+                            <li>Fire extinguishers</li>
                         </ul>
 
-                        <hr class="note-divider" style="margin: 30px 0;">
+                        <h3>4. Maintain a good credit score</h3>
+                        <p>In many states, your credit history is a factor in determining your insurance rates. Insurers have found that individuals with better credit tend to file fewer claims. Regularly paying your bills on time and keeping your credit utilization low can lead to better rates.</p>
 
-                        <h4 style="font-size: 1rem; margin-bottom: 15px;">Connect with us</h4>
-                        <div class="social-links" style="display: flex; gap: 15px;">
-                            <a href="https://www.facebook.com/people/Alexai-Insurtech-USA/61573922245346/" target="_blank" class="btn-blue-sketch" style="width: 45px; height: 45px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                <i class="fa-brands fa-facebook-f"></i>
-                            </a>
-                            <a href="https://www.instagram.com/alexai.insurtech.usa/" target="_blank" class="btn-blue-sketch" style="width: 45px; height: 45px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                <i class="fa-brands fa-instagram"></i>
-                            </a>
-                            <a href="https://www.youtube.com/@Alex-AI-Insurtech" target="_blank" class="btn-blue-sketch" style="width: 45px; height: 45px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                <i class="fa-brands fa-youtube"></i>
-                            </a>
+                        <div class="sticky-note-yellow quote-note">
+                            <div class="pin-tack"></div>
+                            <i class="fa-solid fa-quote-left" style="color: #CA8A04; opacity: 0.5; font-size: 1.5rem;"></i>
+                            <p style="margin: 10px 0 0 0; color: #854D0E;">"Being proactive about your home's safety and your financial health is one of the best long-term strategies for keeping insurance costs down."</p>
+                        </div>
+
+                        <h3>5. Review your coverage annually</h3>
+                        <p>Your needs change over time. Don't just "set it and forget it." Review your policy annually to ensure you're not paying for coverage you no longer need. For instance, if you sold expensive jewelry that was specifically listed on your policy, you can remove that rider.</p>
+
+                        <h3>6. Ask about other discounts</h3>
+                        <p>You might be surprised at the range of available discounts. Ask your provider if they offer savings for things like being a non-smoker, being retired, or for having updated plumbing or electrical systems.</p>
+
+                        <h3>7. Shop around</h3>
+                        <p>Loyalty doesn't always pay. The insurance market is competitive, and rates can vary significantly between companies. It's wise to compare quotes from multiple insurers every few years. That's where Alex AI shines—we do the shopping for you, ensuring you always have the best rate for your needs.</p>
+                    </div>
+
+                    <div style="margin-top: 60px; padding-top: 30px; border-top: 2px dashed #E2E8F0;">
+                        <div class="organic-box" style="background: #F0F9FF; border-color: var(--alex-blue-accent); padding: 30px; text-align: center;">
+                            <h3 style="margin-top: 0; color: var(--alex-ink);">Ready to lower your premium?</h3>
+                            <p style="font-size: 1rem; margin-bottom: 20px;">Let Alex AI shop the best rates for your home today.</p>
+                            <a href="../homeowners-quotation/index.html" class="btn-glow-anim" style="width: fit-content; margin: 0 auto;">Get a Home Quote</a>
                         </div>
                     </div>
 
-                    <div class="organic-box" style="margin-top: 30px; padding: 20px; background: #FEF9C3; border-color: #F59E0B; text-align: center;">
-                        <i class="fa-solid fa-headset" style="font-size: 2rem; color: #D97706; margin-bottom: 10px;"></i>
-                        <p style="margin: 0; font-weight: 700; color: #92400E;">Need immediate help?</p>
-                        <p style="font-size: 0.9rem; margin-bottom: 10px; color: #92400E;">Try our 24/7 AI Chat.</p>
-                        <button class="btn btn-sm btn-outline js-trigger-chat" style="background: white; border-color: #D97706; color: #D97706;">Open Chat</button>
-                    </div>
-
-                </aside>
+                </article>
 
             </div>
         </section>
@@ -293,21 +333,20 @@
 
     <div id="floating-chat-container">
         <div class="chat-bubble organic-box" id="chatGreeting">
-            <strong>Alex AI says:</strong><br> 👋 We are here to help!
+            <strong>Alex AI says:</strong><br> 👋 Hi! Need a better coverage?
         </div>
         <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
             <i class="fa-solid fa-robot"></i>
         </button>
     </div>
 
-    <script src="../js/script.js"></script>
+    <script src="../../js/script.js"></script>
     <script>
-        // Chat Greeting Delay
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => { 
                 const bubble = document.getElementById('chatGreeting');
                 if(bubble) bubble.classList.add('is-visible'); 
-            }, 1000);
+            }, 2000);
         });
     </script>
 </body>
