@@ -101,7 +101,7 @@ function initQuoteTransition() {
             btn.innerHTML = "Starting...";
             btn.style.pointerEvents = "none"; 
             if (videoContainer) videoContainer.classList.add('is-playing');
-            heroVideo.currentTime = 0; heroVideo.muted = false;
+            heroVideo.currentTime = 0; heroVideo.muted = true;
 
             const go = () => { overlay.classList.add('is-active'); setTimeout(() => window.location.href = targetUrl, 500); };
             heroVideo.addEventListener('ended', go, { once: true });

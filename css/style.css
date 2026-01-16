@@ -2082,3 +2082,77 @@ span.flatpickr-weekday {
 
 .success-celebration .icon-wrap { font-size: 4rem; color: #EAB308; margin-bottom: 20px; }
 
+/* Utilidades de Validación */
+.error-msg {
+    display: block;
+    color: #EF4444;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 5px;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ajuste visual para inputs ocultos de pago */
+.payment-group {
+    animation: slideUpFade 0.3s ease-out;
+}
+
+/* --- ESTILOS DEL QUIZ (Interactive) --- */
+
+/* 1. Ocultar el input nativo pero mantenerlo funcional */
+.radio-tile-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* 2. Estilo base de la opción (Caja gris/blanca) */
+.quiz-opt {
+    display: block;
+    padding: 15px 20px;
+    background: #FFFFFF;
+    border: 2px solid #E2E8F0;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #475569; /* Gris oscuro */
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+/* 3. Efecto Hover (cuando pasas el mouse) */
+.radio-tile-label:hover .quiz-opt {
+    border-color: #94A3B8;
+    background: #F8FAFC;
+    transform: translateY(-2px);
+}
+
+/* 4. ESTADO SELECCIONADO (Feedback Visual Importante) */
+/* Cuando el input hermano está checked, cambia el estilo de .quiz-opt */
+.radio-tile-label input:checked + .quiz-opt {
+    border-color: #4A80F0; /* Tu azul Alex AI */
+    background: #EFF6FF;   /* Azul muy pálido de fondo */
+    color: #1E40AF;        /* Texto azul oscuro */
+    box-shadow: 0 4px 12px rgba(74, 128, 240, 0.2); /* Sombra azul */
+    font-weight: 700;
+}
+
+/* 5. Icono de Check al seleccionar (Opcional pero recomendado) */
+.radio-tile-label input:checked + .quiz-opt::after {
+    content: '\f058'; /* Icono de FontAwesome (Check Circle) */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #4A80F0;
+    font-size: 1.2rem;
+}
