@@ -3,19 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex AI - Vehicle Coverage</title>
+    <title>Alex AI - Smart Quote | Step 2</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css"> 
-    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+
+    <style>
+        /* --- 1. ESTILOS DE VALIDACIÓN (SHAKE) --- */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+            20%, 40%, 60%, 80% { transform: translateX(4px); }
+        }
+
+        .input-error {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+            border-color: #EF4444 !important; 
+            background-color: #FEF2F2 !important;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
+        }
+
+        /* --- 2. TOOLTIPS (ESTILO SKETCH) --- */
+        .input-label-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .tooltip-container { position: relative; display: inline-block; cursor: help; }
+        .tooltip-icon { color: #94A3B8; font-size: 0.9rem; transition: color 0.2s; }
+        .tooltip-icon:hover { color: var(--alex-blue-accent); }
+
+        .tooltip-content {
+            visibility: hidden; width: 220px; background-color: #FFFFFF; color: var(--alex-ink);
+            text-align: left; border-radius: 12px; padding: 12px; position: absolute;
+            z-index: 100; bottom: 125%; left: 50%; transform: translateX(-50%);
+            border: 2px solid var(--alex-ink); box-shadow: 4px 4px 0 rgba(74, 128, 240, 0.2);
+            font-size: 0.8rem; font-weight: 500; opacity: 0; transition: opacity 0.3s;
+        }
+        .tooltip-content::after {
+            content: ""; position: absolute; top: 100%; left: 50%; margin-left: -8px;
+            border-width: 8px; border-style: solid; border-color: var(--alex-ink) transparent transparent transparent;
+        }
+        .tooltip-container:hover .tooltip-content { visibility: visible; opacity: 1; }
+        
+        @media (max-width: 600px) {
+            .tooltip-content { width: 180px; left: -20px; transform: translateX(0); }
+            .tooltip-content::after { left: 30px; }
+        }
+
+        /* --- 3. AJUSTES CHAT MÓVIL --- */
+        @media (max-width: 768px) {
+            #chatGreeting { display: none !important; }
+            #floating-chat-container { bottom: 85px !important; right: 20px !important; } 
+        }
+
+        /* --- 4. WIZARD & SIDEBAR --- */
+        .wizard-header { margin-bottom: 30px; text-align: left; }
+        .wizard-message { font-size: 1.1rem; font-weight: 800; color: var(--alex-blue-accent); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .step-counter { font-size: 0.8rem; color: var(--alex-ink-light); background: #E2E8F0; padding: 4px 10px; border-radius: 12px; }
+        .wizard-track { height: 10px; background: #E2E8F0; border-radius: 10px; overflow: hidden; position: relative; }
+        .wizard-fill { height: 100%; background: linear-gradient(90deg, #4A80F0, #5FD4F4); border-radius: 10px; transition: width 0.5s; }
+        
+        .progress-list-sketch li a { text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px; padding: 6px 0; font-weight: 500; }
+        .progress-list-sketch li.active a { color: var(--alex-blue-accent); font-weight: 800; }
+        .progress-list-sketch li.pending a { color: #EF4444; opacity: 0.7; }
+        .progress-list-sketch li.done a { text-decoration: line-through; text-decoration-color: #10B981; color: #94A3B8; }
+
+        /* --- 5. CUPÓN DE DESCUENTO --- */
+        .discount-coupon-box {
+            margin-top: 25px;
+            background: #ECFDF5; border: 2px dashed #10B981; border-radius: 12px;
+            padding: 20px; text-align: center; position: relative; overflow: hidden;
+        }
+        .discount-coupon-box::before, .discount-coupon-box::after {
+            content: ''; position: absolute; top: 50%; width: 20px; height: 20px;
+            background: #fff; border-radius: 50%; transform: translateY(-50%);
+        }
+        .discount-coupon-box::before { left: -12px; border-right: 2px dashed #10B981; }
+        .discount-coupon-box::after { right: -12px; border-left: 2px dashed #10B981; }
+        .dc-title { font-size: 0.7rem; text-transform: uppercase; font-weight: 800; color: #059669; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+        .dc-amount { font-size: 2rem; font-weight: 900; color: #10B981; line-height: 1; display: block; }
+        .dc-sub { font-size: 0.8rem; color: #065F46; font-weight: 600; margin-top: 5px; display: block; }
+        .dc-icon { position: absolute; top: 10px; right: 10px; color: rgba(16, 185, 129, 0.2); font-size: 3rem; transform: rotate(15deg); }
+
+        /* Estilo Calendario */
+        .flatpickr-calendar { border-radius: 16px; border: 2px solid var(--alex-ink); box-shadow: 5px 5px 0 rgba(0,0,0,0.1); }
+        .flatpickr-day.selected { background: var(--alex-blue-accent); border-color: var(--alex-blue-accent); }
+    </style>
 </head>
 <body class="quote-page-body">
 
     <nav class="quote-nav">
         <a href="quote.html" class="nav-back-btn">
             <div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div>
-            <span>Back to Step 1</span>
+            <span>Back</span>
         </a>
         <div class="nav-brand">
             <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI" class="nav-mini-logo">
@@ -29,222 +108,176 @@
     <main class="quote-main-content step-layout-wrapper">
         <div class="ambient-glow glow-1"></div>
         <div class="ambient-glow glow-2"></div>
+        <div class="ambient-glow glow-3"></div>
 
         <div class="step-grid-container">
             
             <div class="main-form-col">
                 
-                <div class="vehicle-badge-tabs">
-                    <button class="quote-badge-3d badge-vehicle active" id="badge-1" onclick="switchCar(1)">
-                        <i class="fa-solid fa-car"></i> Vehicle 1
-                    </button>
-                    <button class="quote-badge-3d badge-vehicle inactive" id="badge-2" onclick="switchCar(2)">
-                        <i class="fa-solid fa-car-side"></i> Vehicle 2
-                    </button>
-                    <button class="add-badge-btn" title="Add Vehicle"><i class="fa-solid fa-plus"></i></button>
-                </div>
-
                 <div class="quote-card-stacked anim-entry">
                     
-                    <div class="progress-container">
-                        <div class="progress-bar" style="width: 55%;"></div>
-                    </div>
-                    <div class="steps-indicator">Step 2 of 4: Vehicle Details</div>
-
-                    <div id="car-form-1" class="car-form-content">
-                        <div class="quote-header text-center">
-                            <h3>Customize your Titan.</h3>
-                            <p>Coverage details for your <strong>2020 Nissan Titan</strong>.</p>
+                    <div class="wizard-header">
+                        <div class="wizard-message">
+                            <span><i class="fa-solid fa-map-location-dot"></i> Validating Location...</span>
+                            <span class="step-counter">Step 2 of 14</span>
                         </div>
+                        <div class="wizard-track">
+                            <div class="wizard-fill" style="width: 14.2%;"></div>
+                        </div>
+                    </div>
 
-                        <form>
-                            <div class="alex-input-group">
-                                <label>VIN Number</label>
+                    <div class="quote-header text-center">
+                        <h3>Where do you call home?</h3>
+                        <p>Your address helps us find regional discounts and rates.</p>
+                    </div>
+            
+                    <form id="quoteFormStep2">
+                        
+                        <div class="form-row-2" style="display: flex; gap: 20px; flex-wrap: wrap;">
+                            <div class="form-group flex-grow" style="flex: 2;">
+                                <div class="input-label-row">
+                                    <label for="address">Street Address</label>
+                                    <div class="tooltip-container">
+                                        <i class="fa-solid fa-circle-question tooltip-icon"></i>
+                                        <span class="tooltip-content">Enter the physical address where your vehicle is parked at night.</span>
+                                    </div>
+                                </div>
                                 <div class="input-modern-wrapper">
-                                    <i class="fa-solid fa-barcode input-icon"></i>
-                                    <input type="text" class="alex-input-modern" value="1N6AA1EK2KN518910">
-                                    <i class="fa-solid fa-circle-check validation-icon"></i>
-                                    <button type="button" class="scan-btn"><i class="fa-solid fa-camera"></i></button>
+                                    <i class="fa-solid fa-house input-icon"></i>
+                                    <input type="text" id="address" class="alex-input-modern validate-req" placeholder="123 Main St">
                                 </div>
                             </div>
 
-                            <div class="form-row-3">
-                                <div class="alex-input-group"><label>Year</label><div class="input-modern-wrapper"><select class="alex-input-modern"><option>2020</option></select></div></div>
-                                <div class="alex-input-group"><label>Make</label><div class="input-modern-wrapper"><select class="alex-input-modern"><option>Nissan</option></select></div></div>
-                                <div class="alex-input-group"><label>Model</label><div class="input-modern-wrapper"><select class="alex-input-modern"><option>Titan S</option></select></div></div>
+                            <div class="form-group flex-grow" style="flex: 1;">
+                                <label for="apt">Apt / Suite <small>(Optional)</small></label>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-regular fa-building input-icon"></i>
+                                    <input type="text" id="apt" class="alex-input-modern" placeholder="Unit B">
+                                </div>
                             </div>
-
-                            <div class="form-row-2">
-                                <div class="alex-input-group"><label>Alt. Garage?</label><div class="input-modern-wrapper"><select class="alex-input-modern"><option>No</option><option>Yes</option></select></div></div>
-                                <div class="alex-input-group flex-grow"><label>Garaging Zip</label><div class="input-modern-wrapper"><i class="fa-solid fa-map-pin input-icon"></i><input type="text" class="alex-input-modern" value="85001"></div></div>
-                            </div>
-
-                            <div class="divider-dashed"></div>
-                            <h5 class="subsection-title"><i class="fa-solid fa-shield-halved"></i> Coverage Options</h5>
-
-                            <div class="visual-coverage-grid">
-                                <label class="coverage-tile selected">
-                                    <input type="checkbox" checked>
-                                    <div class="tile-content">
-                                        <div class="tile-top-row"><span class="tile-title">Collision</span><div class="tile-check"><i class="fa-solid fa-check"></i></div></div>
-                                        <select class="tile-select"><option>$500 Ded.</option></select>
-                                    </div>
-                                </label>
-                                <label class="coverage-tile selected">
-                                    <input type="checkbox" checked>
-                                    <div class="tile-content">
-                                        <div class="tile-top-row"><span class="tile-title">Comprehensive</span><div class="tile-check"><i class="fa-solid fa-check"></i></div></div>
-                                        <select class="tile-select"><option>$500 Ded.</option></select>
-                                    </div>
-                                </label>
-                                <label class="coverage-tile">
-                                    <input type="checkbox">
-                                    <div class="tile-content">
-                                        <div class="tile-top-row"><span class="tile-title">Gap</span><div class="tile-check"><i class="fa-solid fa-check"></i></div></div>
-                                        <select class="tile-select"><option>No</option><option>Yes</option></select>
-                                    </div>
-                                </label>
-                                <label class="coverage-tile">
-                                    <input type="checkbox">
-                                    <div class="tile-content">
-                                        <div class="tile-top-row"><span class="tile-title">Towing</span><div class="tile-check"><i class="fa-solid fa-check"></i></div></div>
-                                        <select class="tile-select"><option>None</option><option>50 Miles</option></select>
-                                    </div>
-                                </label>
-                                <label class="coverage-tile">
-                                    <input type="checkbox">
-                                    <div class="tile-content">
-                                        <div class="tile-top-row"><span class="tile-title">Custom Parts</span><div class="tile-check"><i class="fa-solid fa-check"></i></div></div>
-                                        <select class="tile-select"><option>$0 Limit</option><option>$1000</option></select>
-                                    </div>
-                                </label>
-                                <label class="coverage-tile">
-                                    <input type="checkbox">
-                                    <div class="tile-content">
-                                        <div class="tile-top-row"><span class="tile-title">Rental</span><div class="tile-check"><i class="fa-solid fa-check"></i></div></div>
-                                        <select class="tile-select"><option>None</option><option>$30/day</option></select>
-                                    </div>
-                                </label>
-                                <label class="coverage-tile full-width-tile">
-                                    <input type="checkbox">
-                                    <div class="tile-content horizontal-layout">
-                                        <div class="tile-info">
-                                            <span class="tile-title">Safety Features</span>
-                                            <span class="tile-desc">Alarm, GPS Tracker, etc.</span>
-                                        </div>
-                                        <select class="tile-select wide-select"><option>Standard Alarm</option><option>Active GPS</option></select>
-                                    </div>
-                                </label>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div id="car-form-2" class="car-form-content" style="display: none;">
-                        <div class="quote-header text-center">
-                            <h3>Customize your Civic.</h3>
-                            <p>Coverage details for your <strong>2018 Honda Civic</strong>.</p>
                         </div>
 
-                        <form>
-                            <div class="alex-input-group">
-                                <label>VIN Number</label>
+                        <div class="form-group">
+                            <div class="input-label-row">
+                                <label for="moveInDate">Time at residence (Move-in Date)</label>
+                                <div class="tooltip-container">
+                                    <i class="fa-solid fa-circle-question tooltip-icon"></i>
+                                    <span class="tooltip-content">Longer residency often equals stability discounts (2+ years is ideal).</span>
+                                </div>
+                            </div>
+                            <div class="input-modern-wrapper">
+                                <i class="fa-regular fa-calendar-check input-icon"></i>
+                                <input type="text" id="moveInDate" class="alex-input-modern date-picker validate-req" placeholder="Select Date">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group flex-grow">
+                                <div class="input-label-row">
+                                    <label for="zipCode">Zip Code</label>
+                                    <div class="tooltip-container">
+                                        <i class="fa-solid fa-circle-question tooltip-icon"></i>
+                                        <span class="tooltip-content">Rates are heavily determined by neighborhood risk factors.</span>
+                                    </div>
+                                </div>
                                 <div class="input-modern-wrapper">
-                                    <i class="fa-solid fa-barcode input-icon"></i>
-                                    <input type="text" class="alex-input-modern" value="2HGFC2F58JH59201">
-                                    <i class="fa-solid fa-circle-check validation-icon"></i>
+                                    <i class="fa-solid fa-map-pin input-icon"></i>
+                                    <input type="tel" id="zipCode" class="alex-input-modern validate-req" placeholder="00000" maxlength="5">
                                 </div>
                             </div>
 
-                            <div class="form-row-3">
-                                <div class="alex-input-group"><label>Year</label><div class="input-modern-wrapper"><select class="alex-input-modern"><option>2018</option></select></div></div>
-                                <div class="alex-input-group"><label>Make</label><div class="input-modern-wrapper"><select class="alex-input-modern"><option>Honda</option></select></div></div>
-                                <div class="alex-input-group"><label>Model</label><div class="input-modern-wrapper"><select class="alex-input-modern"><option>Civic LX</option></select></div></div>
+                            <div class="form-group flex-grow">
+                                <label for="city">City</label>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-solid fa-city input-icon"></i>
+                                    <input type="text" id="city" class="alex-input-modern validate-req" placeholder="City Name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group flex-grow">
+                                <label for="state">State</label>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-solid fa-flag-usa input-icon"></i>
+                                    <select id="state" class="alex-input-modern validate-req">
+                                        <option value="" disabled selected>Select State</option>
+                                        <option value="AZ">Arizona</option>
+                                        <option value="TX">Texas</option>
+                                        <option value="CA">California</option>
+                                        <option value="FL">Florida</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="divider-dashed"></div>
-                            <h5 class="subsection-title"><i class="fa-solid fa-shield-halved"></i> Coverage Options (Honda)</h5>
-
-                            <div class="visual-coverage-grid">
-                                <label class="coverage-tile selected">
-                                    <input type="checkbox" checked>
-                                    <div class="tile-content">
-                                        <div class="tile-top-row"><span class="tile-title">Collision</span><div class="tile-check"><i class="fa-solid fa-check"></i></div></div>
-                                        <select class="tile-select"><option>$1000 Ded.</option></select>
-                                    </div>
-                                </label>
-                                <label class="coverage-tile selected">
-                                    <input type="checkbox" checked>
-                                    <div class="tile-content">
-                                        <div class="tile-top-row"><span class="tile-title">Comprehensive</span><div class="tile-check"><i class="fa-solid fa-check"></i></div></div>
-                                        <select class="tile-select"><option>$1000 Ded.</option></select>
-                                    </div>
-                                </label>
-                                <label class="coverage-tile">
-                                    <input type="checkbox">
-                                    <div class="tile-content">
-                                        <div class="tile-top-row"><span class="tile-title">Gap</span><div class="tile-check"><i class="fa-solid fa-check"></i></div></div>
-                                        <select class="tile-select"><option>No</option></select>
-                                    </div>
-                                </label>
-                                <label class="coverage-tile">
-                                    <input type="checkbox">
-                                    <div class="tile-content">
-                                        <div class="tile-top-row"><span class="tile-title">Towing</span><div class="tile-check"><i class="fa-solid fa-check"></i></div></div>
-                                        <select class="tile-select"><option>None</option></select>
-                                    </div>
-                                </label>
-                                <label class="coverage-tile">
-                                    <input type="checkbox">
-                                    <div class="tile-content">
-                                        <div class="tile-top-row"><span class="tile-title">Rental</span><div class="tile-check"><i class="fa-solid fa-check"></i></div></div>
-                                        <select class="tile-select"><option>None</option></select>
-                                    </div>
-                                </label>
-                                 <label class="coverage-tile full-width-tile">
-                                    <input type="checkbox">
-                                    <div class="tile-content horizontal-layout">
-                                        <div class="tile-info"><span class="tile-title">Safety Features</span></div>
-                                        <select class="tile-select wide-select"><option>Standard</option></select>
-                                    </div>
-                                </label>
+                            <div class="form-group flex-grow">
+                                <label for="county">County</label>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-solid fa-map input-icon"></i>
+                                    <input type="text" id="county" class="alex-input-modern validate-req" placeholder="County">
+                                </div>
                             </div>
-                        </form>
-                    </div>
-
-                    <div class="form-action-row" style="margin-top: 30px;">
-                        <button type="button" class="btn-outline-sketch">
-                            <i class="fa-solid fa-plus"></i> Add Vehicle
-                        </button>
-                        <button type="submit" class="btn-glow-anim">
-                            Next Step <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-
+                        </div>
+            
+                        <div class="form-action" style="margin-top: 30px;">
+                            <button type="button" class="btn-glow-anim" id="btnNext">
+                                <span>Next Step</span>
+                                <i class="fa-solid fa-arrow-right-long"></i>
+                            </button>
+                            <div class="secure-badge">
+                                <i class="fa-solid fa-shield-halved"></i> Address Verified via Google Maps
+                            </div>
+                        </div>
+            
+                    </form>
                 </div>
                 <div class="card-shadow-layer"></div>
             </div>
 
-            <aside class="sidebar-col anim-entry">
+            <aside class="sidebar-col anim-entry" style="animation-delay: 0.2s;">
                 <div class="organic-box sidebar-note taped-note">
                     <div class="washi-tape"></div>
                     <h4 class="sidebar-title">Coverage Path</h4>
+                    
                     <ul class="progress-list-sketch">
-                        <li class="done"><i class="fa-solid fa-check"></i> Client Info</li>
-                        <li class="done"><i class="fa-solid fa-check"></i> Drivers</li>
-                        <li class="done"><i class="fa-solid fa-check"></i> Violations</li>
-                        <li class="done"><i class="fa-solid fa-check"></i> Add'l Info</li>
-                        <li class="active"><span class="sketch-circle"></span> Vehicles (2)</li>
+                        <li class="active">
+                            <a href="#">
+                                <span class="sketch-circle"></span> Client Information
+                            </a>
+                        </li>
+                        <li class="pending">
+                            <a href="#">
+                                <i class="fa-regular fa-circle"></i> Drivers
+                            </a>
+                        </li>
+                        <li class="pending">
+                            <a href="#">
+                                <i class="fa-regular fa-circle"></i> Violations
+                            </a>
+                        </li>
+                        <li class="pending">
+                            <a href="#">
+                                <i class="fa-regular fa-circle"></i> Additional Info
+                            </a>
+                        </li>
+                        <li class="pending">
+                            <a href="#">
+                                <i class="fa-regular fa-circle"></i> Vehicle
+                            </a>
+                        </li>
                     </ul>
                     
-                    <div class="sidebar-price-preview">
-                        <span class="label">Est. Total</span>
-                        <span class="price">$195<span>/mo</span></span>
+                    <div class="discount-coupon-box">
+                        <i class="fa-solid fa-tags dc-icon"></i>
+                        <span class="dc-title">Potential Discounts</span>
+                        <span class="dc-amount">2 Found</span>
+                        <span class="dc-sub">Unlock more in next steps!</span>
                     </div>
 
                     <div class="mini-tip">
                         <div class="tip-icon"><i class="fa-regular fa-lightbulb"></i></div>
                         <div>
-                            <strong>Alex Tip:</strong> Multi-car discount applied! You saved <b>$45/mo</b>.
+                            <strong>Alex Tip:</strong> Did you know? Accurate garaging addresses prevent future rate hikes or claim denials.
                         </div>
                     </div>
                 </div>
@@ -257,13 +290,13 @@
         <div class="floating-menu-list organic-box" id="megaMenu">
             <h5>Quick Navigate</h5>
             <ul>
-                <li><a href="#"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
-                <li><a href="#"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
-                <li><a href="#"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
-                <li><a href="#"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
+                <li><a href="../quote/quote.html"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
+                <li><a href="../homeowners/index.html"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
+                <li><a href="../renters/index.html"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
+                <li><a href="../alex-sign/index.html"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
                 <li class="divider"></li>
-                <li><a href="#blog"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
-                <li><a href="#contact"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
+                <li><a href="../blog/index.html"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
+                <li><a href="../contact/index.html"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
             </ul>
         </div>
         <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open quick menu">
@@ -271,59 +304,79 @@
         </button>
     </div>
 
-
     <div id="floating-chat-container">
         <div class="chat-bubble organic-box" id="chatGreeting">
-            <strong>Alex AI says:</strong><br> 👋 Hi! Need help picking a plan?
+            <strong>Alex AI says:</strong><br> 👋 Moving recently? We can help.
         </div>
         <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
             <i class="fa-solid fa-robot"></i>
         </button>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="../js/script.js"></script>
     <script>
-        // LOGICA DE BADGES (STICKERS)
-        function switchCar(id) {
-            // Ocultar forms
-            document.querySelectorAll('.car-form-content').forEach(f => f.style.display = 'none');
-            // Quitar estado activo de badges
-            document.querySelectorAll('.badge-vehicle').forEach(b => {
-                b.classList.remove('active');
-                b.classList.add('inactive');
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // 1. Inicializar Calendario
+            flatpickr(".date-picker", {
+                dateFormat: "m/d/Y",
+                altInput: true,
+                altFormat: "F j, Y",
+                disableMobile: "true"
             });
-            
-            // Activar badge seleccionado
-            const activeBadge = document.getElementById('badge-' + id);
-            activeBadge.classList.add('active');
-            activeBadge.classList.remove('inactive');
-            
-            // Mostrar form con animación
-            const form = document.getElementById('car-form-' + id);
-            form.style.display = 'block';
-            form.style.opacity = '0';
-            form.style.transform = 'translateY(10px)';
-            
-            setTimeout(() => {
-                form.style.transition = 'all 0.3s ease';
-                form.style.opacity = '1';
-                form.style.transform = 'translateY(0)';
-            }, 10);
-        }
-        
-        // Manejo visual de las tiles
-        document.querySelectorAll('.coverage-tile select').forEach(sel => {
-            sel.addEventListener('change', function() {
-                const tile = this.closest('.coverage-tile');
-                if(this.value.includes('None') || this.value.includes('No') || this.value.includes('$0')) {
-                    tile.classList.remove('selected');
-                    tile.querySelector('input').checked = false;
-                } else {
-                    tile.classList.add('selected');
-                    tile.querySelector('input').checked = true;
-                }
+
+            // 2. Lógica de Validación
+            const btnNext = document.getElementById('btnNext');
+
+            if(btnNext) {
+                btnNext.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const requiredFields = document.querySelectorAll('.validate-req');
+                    let isValid = true;
+                    let firstError = null;
+
+                    requiredFields.forEach(field => {
+                        // Reset
+                        field.classList.remove('input-error');
+                        
+                        // Check vacío
+                        if (!field.value.trim()) {
+                            isValid = false;
+                            void field.offsetWidth; // Force Reflow
+                            field.classList.add('input-error');
+                            
+                            if(!firstError) firstError = field;
+                        }
+                    });
+
+                    if (!isValid) {
+                        if(firstError) firstError.focus();
+                    } else {
+                        // Todo OK -> Navegar
+                        const originalText = btnNext.innerHTML;
+                        btnNext.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Validating Address...';
+                        
+                        setTimeout(() => {
+                            // AQUÍ IRÍAMOS A LA PANTALLA 3 (DRIVERS)
+                            alert("Address Validated! Moving to Drivers (Screen 3).");
+                            // window.location.href = "quote-3.html";
+                            btnNext.innerHTML = 'Next Step <i class="fa-solid fa-arrow-right-long"></i>';
+                        }, 1000);
+                    }
+                });
+            }
+
+            // 3. Limpiar errores al escribir
+            document.querySelectorAll('.validate-req').forEach(input => {
+                input.addEventListener('input', function() {
+                    if(this.value.trim()) this.classList.remove('input-error');
+                });
             });
+
         });
     </script>
+
 </body>
 </html>

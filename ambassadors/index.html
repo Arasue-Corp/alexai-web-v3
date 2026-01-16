@@ -10,29 +10,69 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="../css/ambassador.css">
+    <link rel="stylesheet" href="../css/style.css">
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
     <script>
-        // Esta variable es la que busca tu ambassador.js
         const SUPABASE_URL = 'https://pddukinvrrmibnxfunuw.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBkZHVraW52cnJtaWJueGZ1bnV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk2NjY4NzQsImV4cCI6MjAyNTI0Mjg3NH0.U7J_sWc-Fm-X4d5y2Z8n2b2x3c4v5b6n7m8';
-        window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBkZHVraW52cnJtaWJueGZ1bnV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM0MDYwMTYsImV4cCI6MjA3ODk4MjAxNn0.1-NioXXntQALwJL5nAoGyX6hysG3QsZu7Qg-hsJAzdY';
+        const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        window.supabase = client;
     </script>
 </head>
-<body>
+<body class="quote-page-body">
+
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-3"></div>
+    <div id="transition-overlay"></div>
+
+   <div class="top-header">
+        <div class="container top-header-flex">
+            <div class="top-contact">
+                <a href="tel:+1800555ALEX"><i class="fa-solid fa-phone"></i> +1 480 630 9630</a>
+                <a href="mailto:hello@alexai.com"><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</a>
+                <span><i class="fa-solid fa-location-dot"></i> 3101 N Central Ave ste 1174, Phoenix, AZ</span>
+            </div>
+            <div class="top-social">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
 
     <header class="site-header">
-        <div class="header-content">
-            <a href="https://alexai.cloud/" class="logo-link" target="_blank">
-                <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="logo-img">
+        <div class="container header-wrapper">
+            <a href="https://alexai.cloud/" class="logo-container">
+                <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="site-logo">
             </a>
-            <nav class="header-nav">
-                <a href="https://alexai.cloud/" target="_blank">Home</a>
-                <a href="https://rater.alexai.cloud/quote-tool" target="_blank">Quote Auto</a>
-                <a href="https://alexai.cloud/contact-us" target="_blank">Contact</a>
+            
+                        <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../quote/quote.html" class="js-trigger-quote">Quote</a></li>
+                    <li class="has-dropdown">
+                        <a href="../index.html#products">Products <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu organic-box">
+                            <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#carriers">Carriers</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+
+                    <li class="mobile-only-nav"><a href="../ambassadors/documents.html">Become an Ambassador</a></li>
+                    <li class="mobile-only-nav"><a href="../quote/quote.html" style="color: var(--alex-blue-accent);">Check Prices</a></li>
+                </ul>
             </nav>
+
+            <div class="header-actions">
+                <a href="../ambassadors/index.html" class="btn btn-outline btn-sm">Become an Ambassador</a>
+                <a href="../quote/quote.html" class="btn btn-solid btn-sm js-trigger-quote">Check Prices</a>
+            </div>
+            
+             <button class="mobile-menu-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
         </div>
     </header>
 
@@ -73,7 +113,7 @@
                     <p id="step1-error" class="error-message hidden"></p>
                     
                     <div class="form-navigation">
-                        <button type="button" id="btn-step1-next" class="button-primary">
+                        <button type="button" id="btn-step1-next" class="btn-glow-anim">
                             Next Step <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
@@ -101,8 +141,8 @@
                         </div>
                         
                         <div class="form-navigation" style="justify-content: space-between;">
-                             <button type="button" class="button-secondary" id="visual-back-step1">Back</button>
-                             <button type="button" class="button-primary" onclick="showQuizIntro()">
+                             <button type="button" class="btn-outline-sketch" id="visual-back-step1">Back</button>
+                             <button type="button" class="btn-glow-anim" onclick="showQuizIntro()">
                                 Continue <i class="fa-solid fa-arrow-right"></i>
                              </button>
                         </div>
@@ -120,8 +160,8 @@
                         </div>
 
                         <div class="form-navigation">
-                            <button type="button" class="button-secondary" onclick="showPaypal()">Back</button>
-                            <button type="button" id="btn-step2-next" class="button-primary generate-btn">
+                            <button type="button" class="btn-outline-sketch" onclick="showPaypal()">Back</button>
+                            <button type="button" id="btn-step2-next" class="btn-glow-anim generate-btn">
                                 Start Certification
                             </button>
                         </div>
@@ -138,50 +178,50 @@
                         <div class="form-group quiz-question">
                             <label>When do you earn your $25 reward?</label>
                             <div class="quiz-options">
-                                <label class="quiz-option"><input type="radio" id="q1-a" name="q1" value="A"> A) When someone clicks my link.</label>
+                                <label class="quiz-option"><input type="radio" id="q1-a" name="q1" value="A" required> A) When someone clicks my link.</label>
                                 <label class="quiz-option"><input type="radio" id="q1-b" name="q1" value="B"> B) When someone requests a quote.</label>
-                                <label class="quiz-option"><input type="radio" id="q1-c" name="q1" value="C" required> C) When my referral pays their first month's policy.</label>
+                                <label class="quiz-option"><input type="radio" id="q1-c" name="q1" value="C"> C) When my referral pays their first month's policy.</label>
                             </div>
                         </div>
 
                         <div class="form-group quiz-question">
                             <label>A friend asks what the policy covers. What do you do?</label>
                             <div class="quiz-options">
-                                <label class="quiz-option"><input type="radio" id="q2-a" name="q2" value="A"> A) I explain the coverages as best as I can.</label>
-                                <label class="quiz-option"><input type="radio" id="q2-b" name="q2" value="B" required> B) I tell them I'm not an agent, but the Alex AI team will explain everything when they use my link.</label>
+                                <label class="quiz-option"><input type="radio" id="q2-a" name="q2" value="A" required> A) I explain the coverages as best as I can.</label>
+                                <label class="quiz-option"><input type="radio" id="q2-b" name="q2" value="B"> B) I tell them I'm not an agent, but the Alex AI team will explain everything when they use my link.</label>
                             </div>
                         </div>
 
                         <div class="form-group quiz-question">
                             <label>Can you refer yourself or your spouse to earn the reward?</label>
                             <div class="quiz-options">
-                                <label class="quiz-option"><input type="radio" id="q3-a" name="q3" value="A"> A) Yes, all sales count.</label>
-                                <label class="quiz-option"><input type="radio" id="q3-b" name="q3" value="B" required> B) No, the program is only for attracting new customers.</label>
+                                <label class="quiz-option"><input type="radio" id="q3-a" name="q3" value="A" required> A) Yes, all sales count.</label>
+                                <label class="quiz-option"><input type="radio" id="q3-b" name="q3" value="B"> B) No, the program is only for attracting new customers.</label>
                             </div>
                         </div>
 
                         <div class="form-group quiz-question">
                             <label>What is the correct way to promote your link?</label>
                             <div class="quiz-options">
-                                <label class="quiz-option"><input type="radio" id="q4-a" name="q4" value="A"> A) Sending 500 mass (spam) emails to strangers.</label>
-                                <label class="quiz-option"><input type="radio" id="q4-b" name="q4" value="B" required> B) Sharing it authentically with friends, family, or on my social media.</label>
+                                <label class="quiz-option"><input type="radio" id="q4-a" name="q4" value="A" required> A) Sending 500 mass (spam) emails to strangers.</label>
+                                <label class="quiz-option"><input type="radio" id="q4-b" name="q4" value="B"> B) Sharing it authentically with friends, family, or on my social media.</label>
                             </div>
                         </div>
 
                         <div class="form-group quiz-question">
                             <label>Can you promise someone will get "financial freedom" or "replace their income" with this program?</label>
                             <div class="quiz-options">
-                                <label class="quiz-option"><input type="radio" id="q5-a" name="q5" value="A"> A) Yes, if they refer a lot of people.</label>
-                                <label class="quiz-option"><input type="radio" id="q5-b" name="q5" value="B" required> B) No, that's a misleading income claim and is prohibited.</label>
+                                <label class="quiz-option"><input type="radio" id="q5-a" name="q5" value="A" required> A) Yes, if they refer a lot of people.</label>
+                                <label class="quiz-option"><input type="radio" id="q5-b" name="q5" value="B"> B) No, that's a misleading income claim and is prohibited.</label>
                             </div>
                         </div>
 
                     </div> <p id="quiz-error" class="error-message hidden"></p>
                     
                     <div class="form-navigation">
-                        <button type="button" id="btn-step3-back" class="button-secondary">Back</button>
+                        <button type="button" id="btn-step3-back" class="btn-outline-sketch">Back</button>
                         
-                        <button type="submit" id="quiz-submit-btn" class="button-primary generate-btn">
+                        <button type="submit" id="quiz-submit-btn" class="btn-glow-anim generate-btn">
                             <span class="btn-text">Submit Answers</span>
                             <span class="loader hidden"></span>
                         </button>
@@ -190,9 +230,9 @@
                 
                 <div id="step-4" class="form-step hidden" data-step="4">
                     <h1 style="color:var(--alex-blue);">Congratulations, <span id="user-name-final">Ambassador</span>!</h1>
-                    <p>Your account is ready. Please activate it below.</p>
+                    <p>Your account is about to be active. Use the following button to activate your account. Use your email, if you don't have a password, try the next format: @JohnDoe01012000 (@ + FirstName + LastName + DOB)</p>
                     
-                    <a href="https://rater.alexai.cloud/login" class="button-primary" style="display:block; text-align:center; text-decoration:none; margin-top:20px;">
+                    <a href="https://rater.alexai.cloud/login" class="btn-glow-anim" style="display:block; text-align:center; text-decoration:none; margin-top:20px;">
                         Activate My Account
                     </a>
                     
@@ -247,16 +287,116 @@
 
     </div>
 
-    <div id="success-modal" class="modal-overlay hidden">
-        <div class="modal-content" style="background:white; padding:30px; border-radius:20px; text-align:center; position:relative; max-width:400px; border:3px solid var(--alex-ink);">
-            <button id="modal-close-btn" style="position:absolute; top:10px; right:15px; background:none; border:none; font-size:2rem; cursor:pointer;">&times;</button>
-            <i class="fa-solid fa-certificate" style="font-size:4rem; color:#F59E0B; margin-bottom:20px;"></i>
-            <h2 style="color:#10B981; margin:0;">Complete!</h2>
-            <p>Your certificate is ready.</p>
+    <div id="success-modal" class="modal-overlay-ambassador hidden">
+        <div class="modal-content">
+            <div class="modal-tape"></div>
+            
+            <button id="modal-close-btn" aria-label="Close">&times;</button>
+            
+            <div class="success-stamp">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            
+            <h2>Success!</h2>
+            <p>Registration complete.<br>Your certificate has been generated.</p>
         </div>
     </div>
 
+    <footer id="contact" class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <a href="../index.html" style="display: block; margin-bottom: 20px;">
+                    <img src="../assets/img/Logo-alexai-main.png" 
+                        alt="Alex AI Insurtech Logo" 
+                        style="max-width: 160px; height: auto; filter: brightness(0) invert(1);">
+                </a>
+                <p style="color: rgba(255,255,255,0.9); font-weight: 500;">
+                    Smart insurance for modern life. Powered by intelligence, driven by humans.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Products</h5>
+                <ul class="footer-links">
+                    <li><a href="../quote/quote.html">Car Insurance</a></li>
+                    <li><a href="../homeowners/index.html">Home Insurance</a></li>
+                    <li><a href="../renters/index.html">Renters Insurance</a></li>
+                    <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Company</h5>
+                <ul class="footer-links">
+                    <li><a href="https://www.instagram.com/alexai.insurtech.usa/">About Us</a></li>
+                    <li><a href="../ambassadors/index.html">Ambassadors</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Contact & Legal</h5>
+                <ul class="footer-links contact-links">
+                    <li><i class="fa-solid fa-phone"></i> +1 480-630-9630</li>
+                    <li><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</li>
+                    <li><a href="../terms-conditions/index.html">Terms of Service</a></li>
+                    <li><a href="../privacy-policy/index.html">Privacy Policy</a></li>
+                </ul>
+                <div class="app-buttons-row" style="display:flex; gap:15px; flex-wrap:wrap;">
+                    <a href="https://apps.apple.com/us/app/alex-ai-insurtech-app/id6752793999" class="btn-app-store">
+                        <i class="fa-brands fa-apple"></i>
+                        <div>
+                            <span class="small-txt">Download on the</span>
+                            <span class="big-txt">App Store</span>
+                        </div>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=cloud.alexai.movil&pcampaignid=web_share" class="btn-app-store">
+                        <i class="fa-brands fa-google-play"></i>
+                        <div>
+                            <span class="small-txt">Get it on</span>
+                            <span class="big-txt">Google Play</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="container copyright-row">
+             <p>&copy; 2026 Alex AI Insurtech. All rights reserved.</p>
+             <div class="social-links">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Alex-AI-Insurtech" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="floating-menu-container">
+        <div class="floating-menu-list organic-box" id="megaMenu">
+            <h5>Quick Navigate</h5>
+            <ul>
+                <li><a href="../quote/quote.html"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
+                <li><a href="../homeowners/index.html"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
+                <li><a href="../renters/index.html"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
+                <li><a href="../alex-sign/index.html"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
+                <li class="divider"></li>
+                <li><a href="../blog/index.html"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
+                <li><a href="../contact/index.html"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
+            </ul>
+        </div>
+        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open quick menu">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+    </div>
+
+    <div id="floating-chat-container">
+        <div class="chat-bubble organic-box" id="chatGreeting">
+            <strong>Alex AI says:</strong><br> 👋 Welcome aboard!
+        </div>
+        <button class="chat-avatar-btn js-trigger-chat"><i class="fa-solid fa-robot"></i></button>
+    </div>
+
     <script src="../js/ambassador.js"></script>
+    <script src="../js/script.js"></script>
+
 
     <script>
         // 1. Manejo visual de pantallas internas

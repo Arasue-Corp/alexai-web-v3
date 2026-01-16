@@ -3,19 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex AI - Smart Quote</title>
+    <title>Alex AI - Smart Quote | Step 1</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css"> 
     <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+
+    <style>
+        /* --- 1. ESTILOS DE VALIDACIÓN (SHAKE & RED) --- */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+            20%, 40%, 60%, 80% { transform: translateX(4px); }
+        }
+
+        .input-error {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+            border-color: #EF4444 !important; 
+            background-color: #FEF2F2 !important;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
+        }
+
+        /* --- 2. ESTILOS DEL MODAL (VISIBILIDAD CONTROLADA) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(44, 62, 80, 0.85); /* Fondo oscuro */
+            z-index: 99999; /* Z-Index muy alto */
+            display: none; /* Oculto por defecto */
+            justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+        
+        /* CLASE QUE ACTIVA EL MODAL */
+        .modal-overlay.is-active {
+            display: flex !important;
+            opacity: 1;
+        }
+
+        .modal-wrapper.modal-wide {
+            max-width: 800px; width: 90%;
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        /* Tabla dentro del Modal */
+        .quotes-table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 20px 0; }
+        .quotes-table th { background: #F1F5F9; padding: 12px; font-size: 0.75rem; text-transform: uppercase; color: #64748B; letter-spacing: 1px; border-bottom: 2px solid #E2E8F0; text-align: left; }
+        .quotes-table td { padding: 15px; border-bottom: 1px solid #F1F5F9; color: var(--alex-ink); font-size: 0.9rem; vertical-align: middle; text-align: left; }
+        
+        /* --- 3. DISEÑO "DESCUENTOS" (Estilo Cupón) --- */
+        .discount-coupon-box {
+            margin-top: 25px;
+            background: #ECFDF5; /* Verde menta muy claro */
+            border: 2px dashed #10B981; /* Borde punteado */
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Círculos decorativos del cupón */
+        .discount-coupon-box::before, .discount-coupon-box::after {
+            content: ''; position: absolute; top: 50%; width: 20px; height: 20px;
+            background: #fff; border-radius: 50%; transform: translateY(-50%);
+        }
+        .discount-coupon-box::before { left: -12px; border-right: 2px dashed #10B981; }
+        .discount-coupon-box::after { right: -12px; border-left: 2px dashed #10B981; }
+
+        .dc-title { font-size: 0.7rem; text-transform: uppercase; font-weight: 800; color: #059669; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+        .dc-amount { font-size: 2rem; font-weight: 900; color: #10B981; line-height: 1; display: block; }
+        .dc-sub { font-size: 0.8rem; color: #065F46; font-weight: 600; margin-top: 5px; display: block; }
+        .dc-icon { position: absolute; top: 10px; right: 10px; color: rgba(16, 185, 129, 0.2); font-size: 3rem; transform: rotate(15deg); }
+
+        /* --- 4. AJUSTES RESPONSIVOS --- */
+        @media (max-width: 768px) {
+            #chatGreeting { display: none !important; }
+            #floating-chat-container { bottom: 85px !important; right: 20px !important; } 
+            .modal-wrapper.modal-wide { width: 95%; padding: 15px; }
+            .quotes-table { display: block; overflow-x: auto; }
+            .quotes-table th, .quotes-table td { white-space: nowrap; }
+        }
+
+        /* Status Styles */
+        .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
+        .status-badge.saved { background: #DCFCE7; color: #15803D; }
+        .status-badge.pending { background: #FEF9C3; color: #A16207; }
+
+        /* Wizard & Sidebar */
+        .wizard-header { margin-bottom: 30px; text-align: left; }
+        .wizard-message { font-size: 1.1rem; font-weight: 800; color: var(--alex-blue-accent); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .step-counter { font-size: 0.8rem; color: var(--alex-ink-light); background: #E2E8F0; padding: 4px 10px; border-radius: 12px; }
+        .wizard-track { height: 10px; background: #E2E8F0; border-radius: 10px; overflow: hidden; position: relative; }
+        .wizard-fill { height: 100%; background: linear-gradient(90deg, #4A80F0, #5FD4F4); border-radius: 10px; transition: width 0.5s; }
+        
+        .progress-list-sketch li a { text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px; padding: 6px 0; font-weight: 500; }
+        .progress-list-sketch li.active a { color: var(--alex-blue-accent); font-weight: 800; }
+        .progress-list-sketch li.pending a { color: #EF4444; opacity: 0.7; }
+        .progress-list-sketch li.done a { text-decoration: line-through; text-decoration-color: #10B981; color: #94A3B8; }
+        
+        /* Botones Generales */
+        .btn-purple-action { background: #8B5CF6; color: white; border: 2px solid var(--alex-ink); padding: 12px 25px; border-radius: 10px; font-weight: 700; cursor: pointer; box-shadow: 3px 3px 0 rgba(0,0,0,0.1); margin: 5px; }
+        .btn-coral-action { background: #F87171; color: white; border: 2px solid var(--alex-ink); padding: 12px 25px; border-radius: 10px; font-weight: 700; cursor: pointer; box-shadow: 3px 3px 0 rgba(0,0,0,0.1); margin: 5px; }
+        .btn-resume { background: #EFF6FF; color: var(--alex-blue-accent); padding: 6px 12px; border-radius: 6px; border: none; font-weight: 700; cursor: pointer; }
+    </style>
 </head>
 <body class="quote-page-body">
 
     <nav class="quote-nav">
         <a href="../index.html" class="nav-back-btn">
             <div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div>
-            <span>Back Home</span>
+            <span>Exit Quote</span>
         </a>
         <div class="nav-brand">
             <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI" class="nav-mini-logo">
@@ -37,32 +139,37 @@
                 
                 <div class="quote-card-stacked anim-entry">
                     
-                    <div class="progress-container">
-                        <div class="progress-bar" style="width: 25%;"></div>
+                    <div class="wizard-header">
+                        <div class="wizard-message">
+                            <span><i class="fa-regular fa-hand-spock"></i> Getting to know you...</span>
+                            <span class="step-counter">Step 1 of 14</span>
+                        </div>
+                        <div class="wizard-track">
+                            <div class="wizard-fill" style="width: 7.1%;"></div>
+                        </div>
                     </div>
-                    <div class="steps-indicator">Step 1 of 4: Basic Info</div>
 
                     <div class="quote-header text-center">
-                        <h3>Let's get you covered.</h3>
-                        <p>Smart protection starts with a few details.</p>
+                        <h3>First things first.</h3>
+                        <p>We need some basic info to start finding your best match.</p>
                     </div>
             
-                    <form id="quoteFormStart">
+                    <form id="quoteFormStep1">
                         
                         <div class="form-row">
-                            <div class="form-group">
+                            <div class="form-group flex-grow">
                                 <label for="firstName">First Name</label>
                                 <div class="input-modern-wrapper">
                                     <i class="fa-regular fa-user input-icon"></i>
-                                    <input type="text" id="firstName" class="alex-input-modern" placeholder="Your name" required>
+                                    <input type="text" id="firstName" class="alex-input-modern validate-req" placeholder="e.g. John">
                                 </div>
                             </div>
-            
-                            <div class="form-group">
+                        
+                            <div class="form-group flex-grow">
                                 <label for="zipCode">Zip Code</label>
                                 <div class="input-modern-wrapper">
                                     <i class="fa-solid fa-map-pin input-icon"></i>
-                                    <input type="tel" id="zipCode" class="alex-input-modern" placeholder="00000" pattern="[0-9]*" maxlength="5" required>
+                                    <input type="tel" id="zipCode" class="alex-input-modern validate-req" placeholder="00000" maxlength="5">
                                 </div>
                             </div>
                         </div>
@@ -71,28 +178,27 @@
                             <label for="email">Email Address</label>
                             <div class="input-modern-wrapper">
                                 <i class="fa-regular fa-envelope input-icon"></i>
-                                <input type="email" id="email" class="alex-input-modern" placeholder="you@example.com" required>
+                                <input type="email" id="email" class="alex-input-modern validate-req" placeholder="you@example.com">
                             </div>
                         </div>
             
                         <div class="form-check-modern">
                             <label class="custom-check-container">
-                                <input type="checkbox" id="legalCheck" required>
+                                <input type="checkbox" id="legalCheck" class="validate-req">
                                 <span class="checkmark"></span>
                             </label>
                             <div class="legal-text-modern">
-                                By checking this box, you agree to our <a href="#">Terms of Service</a>. You consent to receive notifications and quotes from Alex AI Insurtech LLC. 
-                                <span class="sub-legal">You also consent to receive notifications, quotes, and marketing communications from Alex AI Insurtech LLC. For SMS: Message frequency varies. Message and data rates may apply. Text HELP to (480) 630-9630 for assistance or STOP to cancel at any time. For Email: You can unsubscribe by clicking the 'Unsubscribe' link at the bottom of any email.</span>
+                                By checking this box, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. You also consent to receive notifications, quotes, and marketing communications from Alex AI Insurtech LLC. For SMS: Message frequency varies. Message and data rates may apply. Text HELP to (480) 630-9630 for assistance or STOP to cancel at any time. For Email: You can unsubscribe by clicking the 'Unsubscribe' link at the bottom of any email.
                             </div>
                         </div>
             
                         <div class="form-action" style="margin-top: 30px;">
-                            <button type="submit" class="btn-glow-anim">
-                                <span>Get My Quote</span>
+                            <button type="button" class="btn-glow-anim" id="btnNext">
+                                <span>Next Step</span>
                                 <i class="fa-solid fa-arrow-right-long"></i>
                             </button>
                             <div class="secure-badge">
-                                <i class="fa-solid fa-lock"></i> 256-bit SSL Secure
+                                <i class="fa-solid fa-lock"></i> Your data is 256-bit SSL Encrypted
                             </div>
                         </div>
             
@@ -104,24 +210,27 @@
             <aside class="sidebar-col anim-entry" style="animation-delay: 0.2s;">
                 <div class="organic-box sidebar-note taped-note">
                     <div class="washi-tape"></div>
-                    <h4 class="sidebar-title">Your Path</h4>
+                    <h4 class="sidebar-title">Coverage Path</h4>
                     
                     <ul class="progress-list-sketch">
-                        <li class="active"><span class="sketch-circle"></span> Client Info</li>
-                        <li><i class="fa-regular fa-circle"></i> Drivers</li>
-                        <li><i class="fa-regular fa-circle"></i> Vehicles</li>
-                        <li><i class="fa-regular fa-circle"></i> Coverage</li>
+                        <li class="active"><a href="#"><span class="sketch-circle"></span> Client Information</a></li>
+                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Drivers</a></li>
+                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Violations</a></li>
+                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Additional Info</a></li>
+                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Vehicle</a></li>
                     </ul>
                     
-                    <div class="sidebar-price-preview">
-                        <span class="label">Est. Total</span>
-                        <span class="price">--<span>/mo</span></span>
+                    <div class="discount-coupon-box">
+                        <i class="fa-solid fa-tags dc-icon"></i>
+                        <span class="dc-title">Potential Discounts</span>
+                        <span class="dc-amount">2 Found</span>
+                        <span class="dc-sub">Unlock more in next steps!</span>
                     </div>
 
                     <div class="mini-tip">
-                        <div class="tip-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <div class="tip-icon"><i class="fa-regular fa-lightbulb"></i></div>
                         <div>
-                            <strong>Fast Fact:</strong> Alex AI checks 20+ carriers in real-time to find your best rate.
+                            <strong>Alex Tip:</strong> Accuracy matters! Using your exact Zip Code ensures we find your <i>Early Bird</i> discount.
                         </div>
                     </div>
                 </div>
@@ -131,49 +240,52 @@
     </main>
 
     <div id="quotesModal" class="modal-overlay">
-        <div class="modal-wrapper">
-            
+        <div class="modal-wrapper modal-wide organic-box">
             <button class="modal-close-btn js-close-modal"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-floating-logo">
-                <img src="../assets/img/Logo-alexai-main.png" alt="Alex Logo Icon">
-            </div>
-
+            
             <div class="modal-content-internal text-center">
+                <div style="margin-bottom: 20px;">
+                    <img src="../assets/img/Logo-alexai-main.png" alt="Alex Logo" style="height: 40px;">
+                </div>
+
                 <h3 class="modal-title">Welcome Back!</h3>
                 <p class="modal-subtitle">
-                    We found existing quotes linked to your email. You can pick up where you left off or start fresh.
+                    We found existing quotes linked to <strong><span id="userEmailSpan">your email</span></strong>.
                 </p>
 
                 <div class="table-responsive">
                     <table class="quotes-table">
                         <thead>
                             <tr>
-                                <th>Quote #</th>
-                                <th>Date</th>
+                                <th>Quote Number</th>
+                                <th>Creation Date</th>
+                                <th>Last Update</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="fw-bold">00000718</td>
-                                <td>29/09/2025</td>
-                                <td><span class="status-badge">Saved</span></td>
-                                <td><button class="btn-select">Load</button></td>
+                                <td style="font-weight: 800;">#Q-839201</td>
+                                <td>Oct 12, 2025</td>
+                                <td>2 hours ago</td>
+                                <td><span class="status-badge saved">Saved</span></td>
+                                <td><button class="btn-resume">Resume</button></td>
                             </tr>
                             <tr>
-                                <td class="fw-bold">00000717</td>
-                                <td>29/09/2025</td>
-                                <td><span class="status-badge">Saved</span></td>
-                                <td><button class="btn-select">Load</button></td>
+                                <td style="font-weight: 800;">#Q-772109</td>
+                                <td>Sep 05, 2025</td>
+                                <td>Sep 05, 2025</td>
+                                <td><span class="status-badge pending">Incomplete</span></td>
+                                <td><button class="btn-resume">Resume</button></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="modal-footer-actions">
-                    <button class="btn-purple-action js-start-new">START NEW QUOTE</button>
-                    <button class="btn-coral-action js-close-modal">CANCEL</button>
+                    <button class="btn-purple-action js-start-new">Start New Quote</button>
+                    <button class="btn-coral-action js-close-modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -183,13 +295,13 @@
         <div class="floating-menu-list organic-box" id="megaMenu">
             <h5>Quick Navigate</h5>
             <ul>
-                <li><a href="#"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
-                <li><a href="#"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
-                <li><a href="#"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
-                <li><a href="#"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
+                <li><a href="../quote/quote.html"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
+                <li><a href="../homeowners/index.html"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
+                <li><a href="../renters/index.html"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
+                <li><a href="../alex-sign/index.html"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
                 <li class="divider"></li>
-                <li><a href="#blog"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
-                <li><a href="#contact"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
+                <li><a href="../blog/index.html"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
+                <li><a href="../contact/index.html"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
             </ul>
         </div>
         <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open quick menu">
@@ -197,10 +309,9 @@
         </button>
     </div>
 
-
     <div id="floating-chat-container">
         <div class="chat-bubble organic-box" id="chatGreeting">
-            <strong>Alex AI says:</strong><br> 👋 Hi! Need help picking a plan?
+            <strong>Alex AI says:</strong><br> 👋 Need help starting?
         </div>
         <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
             <i class="fa-solid fa-robot"></i>
@@ -209,9 +320,103 @@
 
     <script src="../js/script.js"></script>
     <script>
-        // Lógica específica para este paso (Modal)
-        // Ya que initQuoteFormLogic está en script.js, esto se inicializa solo
-        // Si necesitas algo específico inline, va aquí.
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos
+            const modal = document.getElementById('quotesModal');
+            const btnNext = document.getElementById('btnNext'); // El botón "type=button"
+            const emailInput = document.getElementById('email');
+            const emailSpan = document.getElementById('userEmailSpan');
+            
+            // Botones Modal
+            const btnStartNew = document.querySelector('.js-start-new');
+            const btnCancel = document.querySelector('.js-close-modal');
+            const btnCloseX = document.querySelector('.modal-close-btn');
+
+            // --- LÓGICA PRINCIPAL DEL CLIC ---
+            if(btnNext) {
+                btnNext.addEventListener('click', function(e) {
+                    e.preventDefault(); // Por seguridad extra
+                    
+                    // 1. VALIDACIÓN
+                    const requiredFields = document.querySelectorAll('.validate-req');
+                    let isValid = true;
+                    let firstError = null;
+
+                    requiredFields.forEach(field => {
+                        field.classList.remove('input-error'); 
+                        
+                        let isEmpty = false;
+                        if(field.type === 'checkbox') {
+                            isEmpty = !field.checked;
+                        } else {
+                            isEmpty = !field.value.trim();
+                        }
+
+                        if (isEmpty) {
+                            isValid = false;
+                            void field.offsetWidth; // Reiniciar animación
+                            field.classList.add('input-error');
+                            if(!firstError) firstError = field;
+                        }
+                    });
+
+                    // Si hay error, detener y enfocar
+                    if (!isValid) {
+                        if(firstError) firstError.focus();
+                        return;
+                    }
+
+                    // 2. ÉXITO -> SIMULAR CARGA Y MOSTRAR MODAL
+                    const originalText = btnNext.innerHTML;
+                    btnNext.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking Account...';
+                    
+                    setTimeout(() => {
+                        // Restaurar botón
+                        btnNext.innerHTML = originalText;
+                        
+                        // Poner correo en el modal
+                        if(emailInput.value) emailSpan.textContent = emailInput.value;
+                        
+                        // ABRIR MODAL
+                        modal.classList.add('is-active'); 
+                    }, 800);
+                });
+            }
+
+            // --- CERRAR MODAL ---
+            const closeModal = () => {
+                if(modal) modal.classList.remove('is-active');
+            };
+            
+            if(btnCancel) btnCancel.addEventListener('click', closeModal);
+            if(btnCloseX) btnCloseX.addEventListener('click', closeModal);
+
+            // --- BOTÓN START NEW QUOTE ---
+            if(btnStartNew) {
+                btnStartNew.addEventListener('click', () => {
+                    btnStartNew.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating...';
+                    setTimeout(() => {
+                        window.location.href = "quote-2.html"; 
+                    }, 800);
+                });
+            }
+
+            // --- LIMPIAR ERRORES AL ESCRIBIR ---
+            document.querySelectorAll('.validate-req').forEach(input => {
+                input.addEventListener('input', function() {
+                    if(this.type === 'checkbox') { 
+                        if(this.checked) this.classList.remove('input-error'); 
+                    } else { 
+                        if(this.value.trim()) this.classList.remove('input-error'); 
+                    }
+                });
+                if(input.type === 'checkbox') {
+                    input.addEventListener('change', function() {
+                        if(this.checked) this.classList.remove('input-error');
+                    });
+                }
+            });
+        });
     </script>
 
 </body>

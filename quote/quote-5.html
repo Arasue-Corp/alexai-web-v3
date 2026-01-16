@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex AI - Smart Quote | Step 5 (Violations)</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+
+    <style>
+
+        /* --- 5. CUPÓN --- */
+        .discount-coupon-box {
+            margin-top: 25px; background: #ECFDF5; border: 2px dashed #10B981; border-radius: 12px;
+            padding: 20px; text-align: center; position: relative; overflow: hidden;
+        }
+        .discount-coupon-box::before, .discount-coupon-box::after {
+            content: ''; position: absolute; top: 50%; width: 20px; height: 20px; background: #fff; border-radius: 50%; transform: translateY(-50%);
+        }
+        .discount-coupon-box::before { left: -12px; border-right: 2px dashed #10B981; }
+        .discount-coupon-box::after { right: -12px; border-left: 2px dashed #10B981; }
+        .dc-title { font-size: 0.7rem; text-transform: uppercase; font-weight: 800; color: #059669; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+        .dc-amount { font-size: 2rem; font-weight: 900; color: #10B981; line-height: 1; display: block; }
+        .dc-sub { font-size: 0.8rem; color: #065F46; font-weight: 600; margin-top: 5px; display: block; }
+        .dc-icon { position: absolute; top: 10px; right: 10px; color: rgba(16, 185, 129, 0.2); font-size: 3rem; transform: rotate(15deg); }
+
+        /* --- ESTILOS ESPECÍFICOS DE VIOLATIONS --- */
+
+        /* TOGGLE INICIAL GRANDE */
+        .violation-toggle-wrapper {
+            background: #F8FAFC; border: 2px solid #E2E8F0; padding: 25px;
+            border-radius: 16px; margin-bottom: 30px; text-align: center;
+        }
+        .violation-question { font-size: 1.2rem; font-weight: 700; color: var(--alex-ink); margin-bottom: 20px; }
+        
+        /* BOTONES RADIO TILE (Yes/No) */
+        .radio-tile-group { display: flex; justify-content: center; gap: 20px; }
+        .radio-tile-group input { display: none; }
+        .radio-tile {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            width: 120px; padding: 15px; border: 2px solid #E2E8F0; border-radius: 12px;
+            cursor: pointer; transition: all 0.2s; background: #FFF;
+        }
+        .radio-tile i { font-size: 1.5rem; margin-bottom: 8px; color: #94A3B8; }
+        .radio-tile span { font-weight: 700; color: #64748B; }
+        
+        .radio-tile-group input:checked + .radio-tile {
+            border-color: var(--alex-blue-accent); background: #EFF6FF; box-shadow: 0 4px 12px rgba(74, 128, 240, 0.15);
+        }
+        .radio-tile-group input:checked + .radio-tile i,
+        .radio-tile-group input:checked + .radio-tile span { color: var(--alex-blue-accent); }
+
+        /* CONTENEDOR DE PESTAÑAS (Igual que Drivers) */
+        .driver-tabs-wrapper { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid #E2E8F0; padding-bottom: 10px; }
+        .driver-tab {
+            background: #F8FAFC; border: 2px solid #E2E8F0; padding: 10px 20px;
+            border-radius: 12px 12px 0 0; cursor: pointer; font-weight: 700; color: var(--alex-ink-light);
+            transition: all 0.2s ease; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;
+        }
+        .driver-tab:hover { background: #EFF6FF; color: var(--alex-blue-accent); }
+        .driver-tab.active {
+            background: #FFFFFF; border-color: var(--alex-blue-accent); border-bottom-color: #FFFFFF;
+            color: var(--alex-blue-accent); transform: translateY(2px); z-index: 2;
+        }
+
+        /* ÁREA DE VIOLACIONES */
+        .violations-container { display: none; } /* Oculto hasta que dice YES */
+        .violations-container.visible { display: block; animation: fadeIn 0.4s ease; }
+
+        .driver-violation-panel { display: none; }
+        .driver-violation-panel.active { display: block; animation: fadeIn 0.3s ease; }
+
+        /* TARJETA DE VIOLACIÓN INDIVIDUAL */
+        .violation-card {
+            background: #FFF; border: 2px solid #E2E8F0; border-left: 5px solid #EF4444; /* Borde rojo warning */
+            border-radius: 12px; padding: 20px; margin-bottom: 20px; position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: all 0.2s;
+        }
+        .violation-card:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0,0,0,0.05); }
+        
+        .btn-remove-violation {
+            position: absolute; top: 15px; right: 15px;
+            background: #FEF2F2; color: #EF4444; border: none; width: 30px; height: 30px;
+            border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: 0.2s;
+        }
+        .btn-remove-violation:hover { background: #FCA5A5; color: white; }
+
+        /* BOTÓN AÑADIR */
+        .btn-add-violation-row {
+            width: 100%; border: 2px dashed #CBD5E1; background: #F8FAFC; color: #64748B;
+            padding: 15px; border-radius: 12px; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s;
+        }
+        .btn-add-violation-row:hover { border-color: var(--alex-blue-accent); color: var(--alex-blue-accent); background: #EFF6FF; }
+
+        /* GRID PARA LOS CAMPOS DE LA TARJETA */
+        .violation-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+        }
+        .full-width { grid-column: 1 / -1; }
+
+        @media (max-width: 768px) {
+            .violation-grid { grid-template-columns: 1fr; }
+        }
+
+        /* MENSAJE DE ESTADO VACÍO */
+        .empty-state-message {
+            text-align: center; padding: 30px; color: #94A3B8; font-style: italic;
+        }
+
+        /* Wizard & General */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .wizard-header { margin-bottom: 30px; }
+        .wizard-message { font-size: 1.1rem; font-weight: 800; color: var(--alex-blue-accent); margin-bottom: 8px; display: flex; justify-content: space-between; }
+        .wizard-track { height: 10px; background: #E2E8F0; border-radius: 10px; overflow: hidden; }
+        .wizard-fill { height: 100%; background: linear-gradient(90deg, #4A80F0, #5FD4F4); width: 35.7%; transition: width 0.5s; }
+        
+        .input-error { animation: shake 0.4s; border-color: #EF4444 !important; background: #FEF2F2 !important; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+
+
+        /* --- BOTONES DE NAVEGACIÓN INTERNA (Next/Prev Driver) --- */
+        .nav-internal-row {
+            display: flex;
+            justify-content: space-between; /* Separa los botones a los extremos */
+            margin-top: 20px;
+            border-top: 1px solid #F1F5F9;
+            padding-top: 15px;
+        }
+
+        .btn-internal-nav {
+            background: var(--alex-ink);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .btn-internal-nav:hover {
+            background: var(--alex-blue-accent);
+            transform: translateX(3px);
+        }
+
+        .btn-internal-nav.prev {
+            background: #E2E8F0;
+            color: var(--alex-ink);
+        }
+
+        .btn-internal-nav.prev:hover {
+            background: #CBD5E1;
+            transform: translateX(-3px);
+        }
+
+
+    </style>
+</head>
+<body class="quote-page-body">
+
+    <nav class="quote-nav">
+        <a href="quote-4.html" class="nav-back-btn">
+            <div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div>
+            <span>Back</span>
+        </a>
+        <div class="nav-brand">
+            <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI" class="nav-mini-logo">
+        </div>
+        <div class="lang-switch-modern">
+            <span class="lang-opt">ES</span>
+            <span class="lang-opt active">EN</span>
+        </div>
+    </nav>
+
+    <main class="quote-main-content step-layout-wrapper">
+        <div class="ambient-glow glow-1"></div>
+        <div class="ambient-glow glow-2"></div>
+
+        <div class="step-grid-container">
+            
+            <div class="main-form-col">
+                <div class="quote-card-stacked anim-entry">
+                    
+                    <div class="wizard-header">
+                        <div class="wizard-message">
+                            <span><i class="fa-solid fa-gavel"></i> Driving History</span>
+                            <span class="step-counter">Step 5 of 14</span>
+                        </div>
+                        <div class="wizard-track">
+                            <div class="wizard-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="quote-header text-center">
+                        <h3>Accidents or Violations?</h3>
+                        <p>Have any drivers had tickets, accidents, or claims in the last 5 years?</p>
+                    </div>
+
+                    <form id="quoteFormStep5">
+                        
+                        <div class="violation-toggle-wrapper">
+                            <div class="violation-question">Any incidents in the last 5 years?</div>
+                            <div class="radio-tile-group">
+                                <label>
+                                    <input type="radio" name="hasViolations" value="no" checked onchange="toggleViolations(false)">
+                                    <div class="radio-tile">
+                                        <i class="fa-regular fa-face-smile"></i>
+                                        <span>No</span>
+                                    </div>
+                                </label>
+                                <label>
+                                    <input type="radio" name="hasViolations" value="yes" onchange="toggleViolations(true)">
+                                    <div class="radio-tile">
+                                        <i class="fa-solid fa-triangle-exclamation"></i>
+                                        <span>Yes</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="violationsContainer" class="violations-container">
+                            
+                            <div class="driver-tabs-wrapper" id="driverTabs">
+                                <div class="driver-tab active" onclick="switchTab('d1')">Driver 1</div>
+                                <div class="driver-tab" onclick="switchTab('d2')">Driver 2</div>
+                            </div>
+
+                            <div id="panel-d1" class="driver-violation-panel active">
+                                <div class="empty-state-message" id="empty-d1">No violations added for Driver 1 yet.</div>
+                                <div id="cards-container-d1"></div>
+                                
+                                <button type="button" class="btn-add-violation-row" onclick="addViolationCard('d1')">
+                                    <i class="fa-solid fa-plus"></i> Add Violation for Driver 1
+                                </button>
+                            </div>
+
+                            <div id="panel-d2" class="driver-violation-panel">
+                                <div class="empty-state-message" id="empty-d2">No violations added for Driver 2 yet.</div>
+                                <div id="cards-container-d2"></div>
+                                
+                                <button type="button" class="btn-add-violation-row" onclick="addViolationCard('d2')">
+                                    <i class="fa-solid fa-plus"></i> Add Violation for Driver 2
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div class="form-action" style="margin-top: 30px;">
+                            <button type="button" class="btn-glow-anim" id="btnNext">
+                                <span>Next Step</span>
+                                <i class="fa-solid fa-arrow-right-long"></i>
+                            </button>
+                            <div class="secure-badge">
+                                <i class="fa-solid fa-lock"></i> History Verification
+                            </div>
+                        </div>
+            
+                    </form>
+                </div>
+                <div class="card-shadow-layer"></div>
+            </div>
+
+            <aside class="sidebar-col anim-entry" style="animation-delay: 0.2s;">
+                <div class="organic-box sidebar-note taped-note">
+                    <div class="washi-tape"></div>
+                    <h4 class="sidebar-title">Coverage Path</h4>
+                    
+                    <ul class="progress-list-sketch">
+                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Client Information</a></li>
+                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Drivers</a></li>
+                        <li class="active"><a href="#"><span class="sketch-circle"></span> Violations</a></li>
+                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Additional Info</a></li>
+                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Vehicle</a></li>
+                    </ul>
+
+                    <div class="discount-coupon-box">
+                        <i class="fa-solid fa-tags dc-icon"></i>
+                        <span class="dc-title">Potential Discounts</span>
+                        <span class="dc-amount">4 Found</span>
+                        <span class="dc-sub">Unlock more in next steps!</span>
+                    </div>
+                    
+                    <div class="mini-tip">
+                        <div class="tip-icon"><i class="fa-regular fa-lightbulb"></i></div>
+                        <div>
+                            <strong>Alex Tip:</strong> Be honest! Carriers run reports anyway. Disclosing incidents now ensures your final price is accurate.
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <div id="floating-menu-container">
+        <div class="floating-menu-list organic-box" id="megaMenu">
+            <h5>Quick Navigate</h5>
+            <ul><li><a href="#"><i class="fa-solid fa-car"></i> Car Insurance</a></li></ul>
+        </div>
+        <button class="floating-menu-btn js-toggle-mega-menu"><i class="fa-solid fa-bars-staggered"></i></button>
+    </div>
+    <div id="floating-chat-container">
+        <button class="chat-avatar-btn js-trigger-chat"><i class="fa-solid fa-robot"></i></button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        // --- 1. GLOBAL TOGGLE VISIBILITY ---
+        function toggleViolations(show) {
+            const container = document.getElementById('violationsContainer');
+            if(show) {
+                container.classList.add('visible');
+                // Si es la primera vez y no hay violations, agregar una automática al Driver 1 para UX
+                const d1Container = document.getElementById('cards-container-d1');
+                if(d1Container.children.length === 0) {
+                    addViolationCard('d1');
+                }
+            } else {
+                container.classList.remove('visible');
+                // Opcional: Limpiar o advertir si había datos
+            }
+        }
+
+        // --- 2. TAB SWITCHING ---
+        window.switchTab = function(driverId) {
+            // Tabs visual
+            document.querySelectorAll('.driver-tab').forEach(t => t.classList.remove('active'));
+            // Encontrar el tab clickeado (esto es una simplificación, en producción usar IDs únicos)
+            // Aquí iteramos buscando el onclick que coincida
+            const tabs = document.querySelectorAll('.driver-tab');
+            tabs.forEach(t => {
+                if(t.getAttribute('onclick').includes(driverId)) t.classList.add('active');
+            });
+
+            // Panels visibility
+            document.querySelectorAll('.driver-violation-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById(`panel-${driverId}`).classList.add('active');
+        }
+
+        // --- 3. ADD VIOLATION CARD (DYNAMIC HTML) ---
+        window.addViolationCard = function(driverId) {
+            const container = document.getElementById(`cards-container-${driverId}`);
+            const emptyState = document.getElementById(`empty-${driverId}`);
+            
+            if(emptyState) emptyState.style.display = 'none';
+
+            const cardId = 'viol-' + Date.now(); // Unique ID
+            
+            const card = document.createElement('div');
+            card.className = 'violation-card anim-entry';
+            card.id = cardId;
+            
+            // LISTA DE VIOLACIONES (Resumida para el ejemplo, pero incluye todas las categorias principales)
+            const violationsOptions = `
+                <option value="" disabled selected>Select Violation Type...</option>
+                <optgroup label="Accidents">
+                    <option>Accident, At-Fault</option>
+                    <option>Accident, Not At-Fault</option>
+                    <option>Accident with Pedestrian</option>
+                </optgroup>
+                <optgroup label="Major Violations">
+                    <option>DUI/DWI Alcohol or Drugs</option>
+                    <option>Reckless Driving</option>
+                    <option>Driving Suspended/Revoked</option>
+                    <option>Leaving Scene / Hit-and-Run</option>
+                </optgroup>
+                <optgroup label="Speeding">
+                    <option>Speeding</option>
+                    <option>Speeding in School Zone</option>
+                    <option>Excessive Acceleration</option>
+                </optgroup>
+                <optgroup label="Traffic Violations">
+                    <option>Failure to Stop (Red Light/Stop Sign)</option>
+                    <option>Failure to Yield</option>
+                    <option>Improper Lane Change</option>
+                    <option>Following Too Close</option>
+                    <option>Distracted Driving / Cell Phone</option>
+                </optgroup>
+                <optgroup label="Other">
+                    <option>Comprehensive Claim (Glass/Theft)</option>
+                    <option>Towing / Roadside Claim</option>
+                    <option>Ticket - Other Moving Violation</option>
+                </optgroup>
+            `;
+
+            card.innerHTML = `
+                <button type="button" class="btn-remove-violation" onclick="removeCard('${cardId}', '${driverId}')" title="Remove">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                
+                <div class="violation-grid">
+                    <div class="form-group full-width">
+                        <label>Description / Violation Type</label>
+                        <div class="input-modern-wrapper">
+                            <select class="alex-input-modern validate-req">
+                                ${violationsOptions}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Occurrence Date</label>
+                        <div class="input-modern-wrapper">
+                            <i class="fa-regular fa-calendar input-icon"></i>
+                            <input type="text" class="alex-input-modern date-picker validate-req" placeholder="MM/DD/YYYY">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display:flex; gap:10px;">
+                        <div style="flex:1;">
+                            <label>Years</label>
+                            <div class="input-modern-wrapper" style="background:#F1F5F9;">
+                                <input type="text" class="alex-input-modern" readonly placeholder="--" style="text-align:center;">
+                            </div>
+                        </div>
+                        <div style="flex:1;">
+                            <label>Months</label>
+                            <div class="input-modern-wrapper" style="background:#F1F5F9;">
+                                <input type="text" class="alex-input-modern" readonly placeholder="--" style="text-align:center;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Payout Amount 1 (BI/PD)</label>
+                        <div class="input-modern-wrapper">
+                            <i class="fa-solid fa-dollar-sign input-icon"></i>
+                            <input type="number" class="alex-input-modern" placeholder="0.00">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Payout Amount 2 (Collision)</label>
+                        <div class="input-modern-wrapper">
+                            <i class="fa-solid fa-dollar-sign input-icon"></i>
+                            <input type="number" class="alex-input-modern" placeholder="0.00">
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(card);
+
+            // Init date picker for this card
+            flatpickr(card.querySelector('.date-picker'), {
+                dateFormat: "m/d/Y", maxDate: "today", disableMobile: "true",
+                onChange: function(selectedDates) {
+                    if(selectedDates[0]) {
+                        // Calculate Time Since Logic
+                        const now = new Date();
+                        const diff = new Date(now - selectedDates[0]);
+                        const years = Math.abs(diff.getUTCFullYear() - 1970);
+                        const months = diff.getUTCMonth();
+                        
+                        const inputs = card.querySelectorAll('input[readonly]');
+                        inputs[0].value = years;
+                        inputs[1].value = months;
+                    }
+                }
+            });
+        }
+
+        // --- 4. REMOVE CARD ---
+        window.removeCard = function(cardId, driverId) {
+            const card = document.getElementById(cardId);
+            if(card) card.remove();
+            
+            const container = document.getElementById(`cards-container-${driverId}`);
+            if(container.children.length === 0) {
+                document.getElementById(`empty-${driverId}`).style.display = 'block';
+            }
+        }
+
+        // --- 5. NEXT STEP VALIDATION ---
+        document.getElementById('btnNext').addEventListener('click', (e) => {
+            e.preventDefault();
+            const btn = e.target.closest('button');
+            const hasViolations = document.querySelector('input[name="hasViolations"]:checked').value;
+
+            if(hasViolations === 'yes') {
+                // Validar que si dice YES, haya al menos una card válida
+                const visibleContainer = document.querySelector('.driver-violation-panel.active');
+                // Si tienes tabs, podrías querer validar todos los drivers, aquí validamos el activo por simpleza o todos
+                const allCards = document.querySelectorAll('.violation-card');
+                
+                if(allCards.length === 0) {
+                    alert("Please add at least one violation or select 'No'.");
+                    return;
+                }
+
+                let isValid = true;
+                document.querySelectorAll('.validate-req').forEach(input => {
+                    if(input.closest('.violation-card') && !input.value) {
+                        isValid = false;
+                        input.classList.add('input-error');
+                    } else {
+                        input.classList.remove('input-error');
+                    }
+                });
+
+                if(!isValid) return;
+            }
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+            setTimeout(() => {
+                alert("History Saved. Moving to Step 6.");
+                // window.location.href = "quote-6.html";
+                btn.innerHTML = 'Next Step <i class="fa-solid fa-arrow-right-long"></i>';
+            }, 1000);
+        });
+
+    </script>
+</body>
+</html>

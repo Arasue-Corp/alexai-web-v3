@@ -37,6 +37,8 @@ html { scroll-behavior: smooth; }
 body {
     font-family: var(--font-main); background-color: var(--bg-white);
     color: var(--alex-ink-light); line-height: 1.6; font-size: 18px; overflow-x: hidden;
+    background-image: radial-gradient(#CBD5E1 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
 }
 h1, h2, h3, h4, h5 { color: var(--alex-ink); font-weight: 900; line-height: 1.1; letter-spacing: -0.5px; }
 h1 { font-size: 4rem; letter-spacing: -1.5px; }
@@ -47,7 +49,20 @@ a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
 ul { list-style: none; }
 img { max-width: 100%; height: auto; }
 
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden; /* Corta cualquier cosa que se salga horizontalmente */
+    margin: 0;
+    padding: 0;
+}
+
 /* Utility Classes */
+/* Hide mobile specific menu items by default */
+.mobile-only-nav { 
+    display: none; 
+}
+
 .container { width: 90%; max-width: 1200px; margin: 0 auto; }
 .section-padding { padding: var(--section-spacing) 0; }
 .text-center { text-align: center; }
@@ -476,6 +491,26 @@ img { max-width: 100%; height: auto; }
         flex-direction: column; align-items: flex-start; overflow-y: auto; z-index: 100;
     }
     .site-header.nav-open .main-nav ul { flex-direction: column; gap: 25px; width: 100%; }
+
+    /* Reveal the items only when menu is open on mobile */
+    .site-header.nav-open .main-nav .mobile-only-nav {
+        display: block;
+        width: 100%;
+    }
+
+    /* Optional: Style "Check Prices" differently to make it stand out */
+    .site-header.nav-open .main-nav .mobile-only-nav a[href*="quote"] {
+        background-color: var(--alex-blue-accent);
+        color: white !important;
+        border: 2px solid var(--alex-ink);
+        border-radius: 12px;
+        text-align: center;
+        padding: 15px;
+        margin-top: 10px;
+        box-shadow: 4px 4px 0 rgba(44, 62, 80, 0.1);
+    }
+
+
     .site-header.nav-open .main-nav a { 
         font-size: 1.4rem; color: var(--alex-ink); font-weight: 800; display: block;
         border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; width: 100%;
@@ -2155,4 +2190,20 @@ span.flatpickr-weekday {
     transform: translateY(-50%);
     color: #4A80F0;
     font-size: 1.2rem;
+}
+
+/* =========================================================
+   FIX POSICIÓN BOTÓN FLOTANTE (Móvil)
+   Agrega esto al FINAL de style.css
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    /* CHAT (Botón derecho): Lo movemos más a la izquierda */
+    #floating-chat-container {
+        right: 13% !important; /* Aumentamos esto para alejarlo del borde derecho */
+        left: auto !important;  /* Seguridad */
+        bottom: 9% !important; /* Altura para no tapar footers */
+        
+    }
 }

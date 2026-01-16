@@ -96,13 +96,54 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Cerrar Modal
+// Cerrar Modal y Redirigir
     const closeModal = () => {
         successModal.classList.add('hidden');
-        window.scrollTo(0, 0);
+        window.location.href = 'https://alexai.cloud/'; // O tu index.html local
     };
 
     if(modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
     if(btnFinish) btnFinish.addEventListener('click', closeModal);
 
+});
+
+// --- LÓGICA PARA FORZAR DESCARGA DE PDFS (Agrega esto al final) ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Selecciona todos los enlaces que tengan el atributo 'download'
+    const downloadLinks = document.querySelectorAll('a[download]');
+
+    downloadLinks.forEach(link => {
+        link.addEventListener('click', async (e) => {
+            e.preventDefault(); // Evita que el navegador abra el link
+            
+            const url = link.href;
+            const filename = link.getAttribute('download') || 'document.pdf'; // Nombre por defecto si falla
+
+            try {
+                // 1. Obtener el archivo como "blob" (datos crudos)
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Network error');
+                const blob = await response.blob();
+
+                // 2. Crear una URL temporal para ese blob
+                const blobUrl = window.URL.createObjectURL(blob);
+
+                // 3. Crear un enlace invisible y hacerle click programáticamente
+                const tempLink = document.createElement('a');
+                tempLink.href = blobUrl;
+                tempLink.download = filename; // Esto fuerza el nombre del archivo
+                document.body.appendChild(tempLink);
+                tempLink.click();
+
+                // 4. Limpiar
+                document.body.removeChild(tempLink);
+                window.URL.revokeObjectURL(blobUrl);
+
+            } catch (error) {
+                console.error("Error en descarga forzada:", error);
+                // Fallback: Si falla el script, abrir en nueva pestaña
+                window.open(url, '_blank');
+            }
+        });
+    });
 });

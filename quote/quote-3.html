@@ -3,19 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex AI - Compare Quotes</title>
+    <title>Alex AI - Smart Quote | Step 3</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css"> 
-    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+
+    <style>
+        /* --- 1. ESTILOS DE VALIDACIÓN --- */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+            20%, 40%, 60%, 80% { transform: translateX(4px); }
+        }
+
+        .input-error {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+            border-color: #EF4444 !important; 
+            background-color: #FEF2F2 !important;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
+        }
+
+        /* --- 2. TOOLTIPS --- */
+        .input-label-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .tooltip-container { position: relative; display: inline-block; cursor: help; }
+        .tooltip-icon { color: #94A3B8; font-size: 0.9rem; transition: color 0.2s; }
+        .tooltip-icon:hover { color: var(--alex-blue-accent); }
+
+        .tooltip-content {
+            visibility: hidden; width: 240px; background-color: #FFFFFF; color: var(--alex-ink);
+            text-align: left; border-radius: 12px; padding: 12px; position: absolute;
+            z-index: 100; bottom: 125%; left: 50%; transform: translateX(-50%);
+            border: 2px solid var(--alex-ink); box-shadow: 4px 4px 0 rgba(74, 128, 240, 0.2);
+            font-size: 0.8rem; font-weight: 500; opacity: 0; transition: opacity 0.3s;
+        }
+        .tooltip-content::after {
+            content: ""; position: absolute; top: 100%; left: 50%; margin-left: -8px;
+            border-width: 8px; border-style: solid; border-color: var(--alex-ink) transparent transparent transparent;
+        }
+        .tooltip-container:hover .tooltip-content { visibility: visible; opacity: 1; }
+        @media (max-width: 600px) { .tooltip-content { width: 180px; left: -20px; transform: translateX(0); } .tooltip-content::after { left: 30px; } }
+
+        /* --- 3. MOBILE CHAT FIX --- */
+        @media (max-width: 768px) {
+            #chatGreeting { display: none !important; }
+            #floating-chat-container { bottom: 85px !important; right: 20px !important; } 
+        }
+
+        /* --- 4. WIZARD --- */
+        .wizard-header { margin-bottom: 30px; text-align: left; }
+        .wizard-message { font-size: 1.1rem; font-weight: 800; color: var(--alex-blue-accent); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .step-counter { font-size: 0.8rem; color: var(--alex-ink-light); background: #E2E8F0; padding: 4px 10px; border-radius: 12px; }
+        .wizard-track { height: 10px; background: #E2E8F0; border-radius: 10px; overflow: hidden; position: relative; }
+        .wizard-fill { height: 100%; background: linear-gradient(90deg, #4A80F0, #5FD4F4); border-radius: 10px; transition: width 0.5s; }
+        
+        .progress-list-sketch li a { text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px; padding: 6px 0; font-weight: 500; }
+        .progress-list-sketch li.active a { color: var(--alex-blue-accent); font-weight: 800; }
+        .progress-list-sketch li.pending a { color: #EF4444; opacity: 0.7; }
+        .progress-list-sketch li.done a { text-decoration: line-through; text-decoration-color: #10B981; color: #94A3B8; }
+
+        /* --- 5. CUPÓN --- */
+        .discount-coupon-box {
+            margin-top: 25px; background: #ECFDF5; border: 2px dashed #10B981; border-radius: 12px;
+            padding: 20px; text-align: center; position: relative; overflow: hidden;
+        }
+        .discount-coupon-box::before, .discount-coupon-box::after {
+            content: ''; position: absolute; top: 50%; width: 20px; height: 20px; background: #fff; border-radius: 50%; transform: translateY(-50%);
+        }
+        .discount-coupon-box::before { left: -12px; border-right: 2px dashed #10B981; }
+        .discount-coupon-box::after { right: -12px; border-left: 2px dashed #10B981; }
+        .dc-title { font-size: 0.7rem; text-transform: uppercase; font-weight: 800; color: #059669; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+        .dc-amount { font-size: 2rem; font-weight: 900; color: #10B981; line-height: 1; display: block; }
+        .dc-sub { font-size: 0.8rem; color: #065F46; font-weight: 600; margin-top: 5px; display: block; }
+        .dc-icon { position: absolute; top: 10px; right: 10px; color: rgba(16, 185, 129, 0.2); font-size: 3rem; transform: rotate(15deg); }
+
+        /* Flatpickr Custom */
+        .flatpickr-calendar { border-radius: 16px; border: 2px solid var(--alex-ink); box-shadow: 5px 5px 0 rgba(0,0,0,0.1); }
+        .flatpickr-day.selected { background: var(--alex-blue-accent); border-color: var(--alex-blue-accent); }
+    </style>
 </head>
 <body class="quote-page-body">
 
     <nav class="quote-nav">
         <a href="quote-2.html" class="nav-back-btn">
             <div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div>
-            <span>Back to Vehicles</span>
+            <span>Back</span>
         </a>
         <div class="nav-brand">
             <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI" class="nav-mini-logo">
@@ -29,328 +102,266 @@
     <main class="quote-main-content step-layout-wrapper">
         <div class="ambient-glow glow-1"></div>
         <div class="ambient-glow glow-2"></div>
+        <div class="ambient-glow glow-3"></div>
 
-        <div class="container compare-grid-layout">            
-            <aside class="filters-col anim-entry" id="mobileFiltersPanel">
-                <button class="sketch-close-btn js-close-filters mobile-only-btn" style="top: 20px; right: 20px; position:absolute; z-index:1001;">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-                
-                <div class="organic-box sidebar-panel taped-note">
-                    <div class="sidebar-badge-float"><i class="fa-solid fa-sliders"></i> Fine Tune</div>
-                    <div class="washi-tape"></div>
+        <div class="step-grid-container">
+            
+            <div class="main-form-col">
+                <div class="quote-card-stacked anim-entry">
                     
-                    <div class="panel-header-clean">
-                        <div class="vehicle-switcher-modern">
-                            <button class="v-switch-btn prev"><i class="fa-solid fa-chevron-left"></i></button>
-                            <div class="v-info-center">
-                                <span class="v-tag">Editing Vehicle 1</span>
-                                <span class="v-name">2020 Nissan Titan</span>
-                            </div>
-                            <button class="v-switch-btn next"><i class="fa-solid fa-chevron-right"></i></button>
+                    <div class="wizard-header">
+                        <div class="wizard-message">
+                            <span><i class="fa-solid fa-shield-heart"></i> Customize Protection</span>
+                            <span class="step-counter">Step 3 of 14</span>
+                        </div>
+                        <div class="wizard-track">
+                            <div class="wizard-fill" style="width: 21.4%;"></div>
                         </div>
                     </div>
 
-                    <div class="scrollable-filters-clean">
-                        <div class="filter-block">
-                            <label class="block-label">Coverage Mode</label>
-                            <div class="segment-control">
-                                <label>
-                                    <input type="radio" name="mode" value="basic" class="js-filter-mode">
-                                    <span class="segment-item">Basic</span>
-                                </label>
-                                <label>
-                                    <input type="radio" name="mode" value="full" checked class="js-filter-mode">
-                                    <span class="segment-item active">Full Coverage</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="filter-block">
-                            <label class="block-label text-blue"><i class="fa-solid fa-scale-balanced"></i> Liability Limits</label>
-                            <div class="input-modern-wrapper mb-3">
-                                <label class="floating-label">Bodily Injury</label>
-                                <div class="select-wrapper">
-                                    <select class="alex-select-clean" id="limit-bi">
-                                        <option value="100/300" selected>$100k / $300k (Rec.)</option>
-                                        <option value="state">State Minimum</option>
-                                    </select>
+                    <div class="quote-header text-center">
+                        <h3>Define your limits.</h3>
+                        <p>Choose the coverage levels that fit your needs.</p>
+                    </div>
+            
+                    <form id="quoteFormStep3">
+                        
+                        <div class="form-group">
+                            <div class="input-label-row">
+                                <label for="effDate">Effective Date</label>
+                                <div class="tooltip-container">
+                                    <i class="fa-solid fa-circle-question tooltip-icon"></i>
+                                    <span class="tooltip-content">When do you want your new policy to start? Usually today or tomorrow.</span>
                                 </div>
                             </div>
                             <div class="input-modern-wrapper">
-                                <label class="floating-label">Property Damage</label>
-                                <div class="select-wrapper">
-                                    <select class="alex-select-clean" id="limit-pd">
-                                        <option value="50" selected>$50k Limit</option>
-                                        <option value="25">$25k Limit</option>
+                                <i class="fa-regular fa-calendar-check input-icon"></i>
+                                <input type="text" id="effDate" class="alex-input-modern date-picker validate-req" placeholder="Select Start Date">
+                            </div>
+                        </div>
+
+                        <div class="form-row-2" style="display: flex; gap: 20px; flex-wrap: wrap;">
+                            <div class="form-group flex-grow">
+                                <div class="input-label-row">
+                                    <label for="covBI">Liability BI</label>
+                                    <div class="tooltip-container">
+                                        <i class="fa-solid fa-circle-question tooltip-icon"></i>
+                                        <span class="tooltip-content"><strong>Bodily Injury:</strong> Pays for injuries to <em>others</em> when you are at fault in an accident.</span>
+                                    </div>
+                                </div>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-solid fa-user-injured input-icon"></i>
+                                    <select id="covBI" class="alex-input-modern validate-req">
+                                        <option value="" disabled selected>Select Limit</option>
+                                        <option value="25/50">25/50</option>
+                                        <option value="50/100">50/100</option>
+                                        <option value="100/300">100/300</option>
+                                        <option value="250/500">250/500</option>
+                                        <option value="300/500">300/500</option>
+                                        <option value="500/500">500/500</option>
+                                        <option value="500/1mil">500/1 mil</option>
+                                        <option value="1mil/1mil">1 mil/1 mil</option>
+                                        <option value="5mil/5mil">5 mil/5 mil</option>
+                                        <option value="100CSL">100 CSL</option>
+                                        <option value="300CSL">300 CSL</option>
+                                        <option value="500CSL">500 CSL</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group flex-grow">
+                                <div class="input-label-row">
+                                    <label for="covPD">Liability PD</label>
+                                    <div class="tooltip-container">
+                                        <i class="fa-solid fa-circle-question tooltip-icon"></i>
+                                        <span class="tooltip-content"><strong>Property Damage:</strong> Pays for damage to <em>others'</em> cars or property when you are at fault.</span>
+                                    </div>
+                                </div>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-solid fa-car-burst input-icon"></i>
+                                    <select id="covPD" class="alex-input-modern validate-req">
+                                        <option value="" disabled selected>Select Limit</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="250">250</option>
+                                        <option value="500">500</option>
+                                        <option value="1mil">1 mil</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="filter-highlight-box">
-                            <label class="block-label text-dark"><i class="fa-solid fa-car-burst"></i> Deductibles</label>
-                            <div class="split-inputs">
-                                <div class="input-col">
-                                    <span class="tiny-label">Comp.</span>
-                                    <div class="select-wrapper white-bg">
-                                        <select class="alex-select-clean small" id="ded-comp">
-                                            <option value="500">$500</option>
-                                            <option value="0">None</option>
-                                        </select>
+                        <div class="form-group">
+                            <div class="input-label-row">
+                                <label for="covMed">Medical Payments</label>
+                                <div class="tooltip-container">
+                                    <i class="fa-solid fa-circle-question tooltip-icon"></i>
+                                    <span class="tooltip-content">Pays medical bills for <strong>you and your passengers</strong> regardless of who caused the accident.</span>
+                                </div>
+                            </div>
+                            <div class="input-modern-wrapper">
+                                <i class="fa-solid fa-briefcase-medical input-icon"></i>
+                                <select id="covMed" class="alex-input-modern validate-req">
+                                    <option value="" disabled selected>Select Limit</option>
+                                    <option value="No Coverage">No coverage</option>
+                                    <option value="500">500</option>
+                                    <option value="1000">1000</option>
+                                    <option value="2000">2000</option>
+                                    <option value="2500">2500</option>
+                                    <option value="5000">5000</option>
+                                    <option value="10000">10000</option>
+                                    <option value="25000">25000</option>
+                                    <option value="50000">50000</option>
+                                    <option value="100000">100000</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row-2" style="display: flex; gap: 20px; flex-wrap: wrap;">
+                            <div class="form-group flex-grow">
+                                <div class="input-label-row">
+                                    <label for="covUM">Uninsured BI</label>
+                                    <div class="tooltip-container">
+                                        <i class="fa-solid fa-circle-question tooltip-icon"></i>
+                                        <span class="tooltip-content">Protects you if you are hit by a driver who has <strong>NO insurance</strong>.</span>
                                     </div>
                                 </div>
-                                <div class="input-col">
-                                    <span class="tiny-label">Collision</span>
-                                    <div class="select-wrapper white-bg">
-                                        <select class="alex-select-clean small" id="ded-coll">
-                                            <option value="500">$500</option>
-                                            <option value="0">None</option>
-                                        </select>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-solid fa-user-slash input-icon"></i>
+                                    <select id="covUM" class="alex-input-modern validate-req">
+                                        <option value="" disabled selected>Select Limit</option>
+                                        <option value="No Coverage">No coverage</option>
+                                        <option value="25/50">25/50</option>
+                                        <option value="50/100">50/100</option>
+                                        <option value="100/300">100/300</option>
+                                        <option value="250/500">250/500</option>
+                                        <option value="300/500">300/500</option>
+                                        <option value="500/500">500/500</option>
+                                        <option value="500/1000">500/1000</option>
+                                        <option value="1000/1000">1000/1000</option>
+                                        <option value="100CSL">100 CSL</option>
+                                        <option value="300CSL">300 CSL</option>
+                                        <option value="500CSL">500 CSL</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group flex-grow">
+                                <div class="input-label-row">
+                                    <label for="covUIM">Underinsured BI</label>
+                                    <div class="tooltip-container">
+                                        <i class="fa-solid fa-circle-question tooltip-icon"></i>
+                                        <span class="tooltip-content">Protects you if the other driver has insurance, but <strong>not enough</strong> to cover your bills.</span>
                                     </div>
+                                </div>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-solid fa-user-clock input-icon"></i>
+                                    <select id="covUIM" class="alex-input-modern validate-req">
+                                        <option value="" disabled selected>Select Limit</option>
+                                        <option value="No Coverage">No coverage</option>
+                                        <option value="25/50">25/50</option>
+                                        <option value="50/100">50/100</option>
+                                        <option value="100/300">100/300</option>
+                                        <option value="250/500">250/500</option>
+                                        <option value="300/500">300/500</option>
+                                        <option value="500/500">500/500</option>
+                                        <option value="500/1000">500/1000</option>
+                                        <option value="1000/1000">1000/1000</option>
+                                        <option value="100CSL">100 CSL</option>
+                                        <option value="300CSL">300 CSL</option>
+                                        <option value="500CSL">500 CSL</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="filter-block">
-                            <label class="block-label">Extras & Medical</label>
-                            <div class="extra-row"><span>Roadside</span><select class="alex-select-inline"><option>Yes</option></select></div>
-                            <div class="extra-row"><span>Rental</span><select class="alex-select-inline"><option>$30/day</option></select></div>
-                             <div class="extra-row"><span>Med Pay</span><select class="alex-select-inline"><option>$5k</option></select></div>
+                        <div class="form-group">
+                            <div class="input-label-row">
+                                <label for="covDeath">Accidental Death</label>
+                                <div class="tooltip-container">
+                                    <i class="fa-solid fa-circle-question tooltip-icon"></i>
+                                    <span class="tooltip-content">Pays a benefit to your beneficiaries if a covered accident results in death.</span>
+                                </div>
+                            </div>
+                            <div class="input-modern-wrapper">
+                                <i class="fa-solid fa-heart-pulse input-icon"></i>
+                                <select id="covDeath" class="alex-input-modern validate-req">
+                                    <option value="" disabled selected>Select Limit</option>
+                                    <option value="No Coverage">No coverage</option>
+                                    <option value="1000">1000</option>
+                                    <option value="2000">2000</option>
+                                    <option value="3000">3000</option>
+                                    <option value="4000">4000</option>
+                                    <option value="5000">5000</option>
+                                    <option value="6000">6000</option>
+                                    <option value="7000">7000</option>
+                                    <option value="8000">8000</option>
+                                    <option value="9000">9000</option>
+                                    <option value="10000">10000</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+            
+                        <div class="form-action" style="margin-top: 30px;">
+                            <button type="button" class="btn-glow-anim" id="btnNext">
+                                <span>Next Step</span>
+                                <i class="fa-solid fa-arrow-right-long"></i>
+                            </button>
+                            <div class="secure-badge">
+                                <i class="fa-solid fa-check-shield"></i> Coverage Selection Saved
+                            </div>
+                        </div>
+            
+                    </form>
+                </div>
+                <div class="card-shadow-layer"></div>
+            </div>
+
+            <aside class="sidebar-col anim-entry" style="animation-delay: 0.2s;">
+                <div class="organic-box sidebar-note taped-note">
+                    <div class="washi-tape"></div>
+                    <h4 class="sidebar-title">Coverage Path</h4>
                     
-                    <div class="sidebar-footer">
-                        <button class="btn-glow-anim small-glow js-apply-filters"><i class="fa-solid fa-rotate"></i> Update Quotes</button>
+                    <ul class="progress-list-sketch">
+                        <li class="active"><a href="#"><span class="sketch-circle"></span> Client Information</a></li>
+                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Drivers</a></li>
+                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Violations</a></li>
+                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Additional Info</a></li>
+                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Vehicle</a></li>
+                    </ul>
+                    
+                    <div class="discount-coupon-box">
+                        <i class="fa-solid fa-tags dc-icon"></i>
+                        <span class="dc-title">Potential Discounts</span>
+                        <span class="dc-amount">3 Found</span>
+                        <span class="dc-sub">Custom limits unlocked!</span>
+                    </div>
+
+                    <div class="mini-tip">
+                        <div class="tip-icon"><i class="fa-regular fa-lightbulb"></i></div>
+                        <div>
+                            <strong>Alex Tip:</strong> Choosing higher limits (like 100/300) often costs just a few dollars more but offers much better protection.
+                        </div>
                     </div>
                 </div>
             </aside>
 
-            <div class="results-col">
-                <div class="section-header-left anim-entry" style="animation-delay: 0.1s;">
-                    <h2 class="sketch-headline">Great news! You saved money.</h2>
-                    <p>We found <strong>8 quotes</strong> matching your exact coverage needs.</p>
-                </div>
-
-                <div class="quote-result-card organic-box best-match anim-entry" id="card-aspire" style="animation-delay: 0.2s;">
-                    <div class="sticker-badge"><span class="sticker-text">ALEX'S CHOICE</span></div>
-                    <div class="result-content-modern">
-                        <div class="carrier-col">
-                            <img src="../assets/img/Carrier-aspire.jpg" alt="Aspire" class="carrier-logo-lg">
-                            <div class="rating-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i><span>(4.8)</span></div>
-                        </div>
-                        <div class="details-col">
-                            <h4 class="plan-title">Platinum Protection</h4>
-                            <div class="tags-container" id="tags-aspire">
-                                <span class="spec-tag"><i class="fa-solid fa-shield-halved"></i> Full Coverage</span>
-                                <span class="spec-tag"><i class="fa-solid fa-wrench"></i> Low Ded ($500)</span>
-                            </div>
-                            <ul class="micro-benefits"><li><i class="fa-solid fa-check"></i> Includes Roadside & Rental</li><li><i class="fa-solid fa-check"></i> Paperless Discount Applied</li></ul>
-                        </div>
-                        <div class="price-col">
-                            <div class="price-group" id="price-aspire">
-                                <div class="highlighter-mark"></div> <span class="currency">$</span>79<span class="mo">/mo</span>
-                            </div>
-                            <div class="pay-total">Total: $474 / 6mo</div>
-                            <button class="btn-blue-sketch js-select-quote">Select Plan</button>
-                        </div>
-                    </div>
-                    <div class="ink-stamp-overlay"><div class="ink-stamp">SELECTED</div></div>
-                </div>
-
-                <div class="quote-result-card organic-box anim-entry" style="animation-delay: 0.3s;">
-                    <div class="result-content-modern">
-                        <div class="carrier-col">
-                            <img src="../assets/img/Carrier-chubb.jpg" alt="Chubb" class="carrier-logo-lg">
-                             <div class="rating-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
-                        </div>
-                        <div class="details-col">
-                            <h4 class="plan-title">Gold Monthly</h4>
-                            <div class="tags-container"><span class="spec-tag">Higher Limits</span></div>
-                            <ul class="micro-benefits"><li><i class="fa-solid fa-check"></i> OEM Parts Guarantee</li><li><i class="fa-solid fa-check"></i> Accident Forgiveness</li></ul>
-                        </div>
-                        <div class="price-col">
-                            <div class="price-group">
-                                <div class="highlighter-mark"></div>
-                                <span class="currency">$</span>128<span class="mo">/mo</span>
-                            </div>
-                            <div class="pay-total">$160 Down Payment</div>
-                            <button class="btn-blue-sketch js-select-quote">Select Plan</button>
-                        </div>
-                    </div>
-                    <div class="ink-stamp-overlay"><div class="ink-stamp">SELECTED</div></div>
-                </div>
-
-                 <div class="quote-result-card organic-box anim-entry" style="animation-delay: 0.4s;">
-                    <div class="result-content-modern">
-                        <div class="carrier-col">
-                            <img src="../assets/img/Carrier-kemper.jpg" alt="Kemper" class="carrier-logo-lg">
-                             <div class="rating-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
-                        </div>
-                        <div class="details-col">
-                            <h4 class="plan-title">Budget Saver</h4>
-                             <div class="tags-container"><span class="spec-tag warning">Liability Only</span></div>
-                            <ul class="micro-benefits"><li><i class="fa-solid fa-check"></i> State Minimums</li><li><i class="fa-solid fa-xmark text-red"></i> No vehicle repairs</li></ul>
-                        </div>
-                        <div class="price-col">
-                            <div class="price-group">
-                                <div class="highlighter-mark"></div>
-                                <span class="currency">$</span>55<span class="mo">/mo</span>
-                            </div>
-                            <div class="pay-total">$100 Down Payment</div>
-                            <button class="btn-blue-sketch js-select-quote">Select Plan</button>
-                        </div>
-                    </div>
-                    <div class="ink-stamp-overlay"><div class="ink-stamp">SELECTED</div></div>
-                </div>
-            </div>
-
-            <aside class="actions-col anim-entry" style="animation-delay: 0.5s;">
-                <div class="sticky-wrapper">
-                    <div class="organic-box sidebar-note taped-note">
-                        <div class="washi-tape"></div>
-                        <h5>Quote Summary</h5>
-                        <ul class="handwritten-list">
-                            <li>2 Vehicles</li>
-                            <li>Full Coverage</li>
-                            <li>Discounts Applied 
-                                <i class="fa-solid fa-check text-green">paperless</i>
-                                <i class="fa-solid fa-check text-green">homeowner</i>
-
-                            </li>
-                        </ul>
-                        <hr class="note-divider">
-                        <div class="note-total">
-                            <span>Selected:</span>
-                            <strong id="selected-price-display">--</strong>
-                        </div>
-                    </div>
-                    <div style="margin-top: 25px;">
-                        <button class="btn-purple btn-stack"><i class="fa-solid fa-pen-to-square"></i> Update Info</button>
-                        <button class="btn-blue-outline btn-stack js-open-compare"><i class="fa-solid fa-scale-balanced"></i> Compare Plans</button>
-                        <button class="btn-green-sketch btn-stack" onclick="alert('🎉 Proceeding to Checkout!')">Next Step <i class="fa-solid fa-arrow-right"></i></button>
-                    </div>
-                    <div class="secure-badge mt-20"><i class="fa-solid fa-shield-cat"></i> Data Encrypted</div>
-                </div>
-            </aside>
         </div>
-
-        <button class="mobile-filter-btn js-toggle-filters">
-            <i class="fa-solid fa-sliders"></i> Filters
-        </button>
-
-        <div class="mobile-action-bar">
-            <div class="ms-price-container">
-                <span class="ms-label">Total Selected</span>
-                <span class="ms-price" id="mobile-price-display">--</span>
-            </div>
-            <button class="btn-glow-anim ms-next-btn" onclick="alert('🎉 Proceeding to Checkout!')">
-                Next <i class="fa-solid fa-arrow-right"></i>
-            </button>
-        </div>
-
     </main>
-
-    <div id="compareModal" class="modal-overlay">
-        <div class="modal-wrapper modal-wide modal-sketchpad">
-            <button class="sketch-close-btn js-close-compare"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-header-sketch">
-                <div class="modal-tape-deco"></div> 
-                <h3 class="modal-title text-center" style="color:var(--alex-ink);">Coverage Comparison</h3>
-                <div class="modal-tabs-stickers">
-                    <div class="m-sticker active">2020 Nissan Titan</div>
-                    <div class="m-sticker">2018 Honda Civic</div>
-                </div>
-            </div>
-            <div class="modal-body-scroll">
-                <table class="sketch-table compare-detailed-table">
-                    <thead>
-                        <tr>
-                            <th class="col-feature">Details</th>
-                            <th class="col-plan">
-                                <img src="../assets/img/Carrier-aspire.jpg" class="carrier-logo-lg" style="height:35px; width:auto;">
-                                <div class="comp-plan-name">Platinum</div>
-                            </th>
-                            <th class="col-plan">
-                                <img src="../assets/img/Carrier-chubb.jpg" class="carrier-logo-lg" style="height:35px; width:auto;">
-                                <div class="comp-plan-name">Gold</div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="section-row"><td colspan="3">Payment Schedule</td></tr>
-                        <tr>
-                            <td class="col-feature">Down Payment</td>
-                            <td class="col-plan text-green"><strong>$0.00</strong></td>
-                            <td class="col-plan">$160.00</td>
-                        </tr>
-                        <tr>
-                            <td class="col-feature">Monthly Payment</td>
-                            <td class="col-plan highlight-cell-bg"><span class="price-cell text-green">$79.00</span></td>
-                            <td class="col-plan"><span class="price-cell">$128.00</span></td>
-                        </tr>
-                        <tr>
-                            <td class="col-feature">6-Mo Total</td>
-                            <td class="col-plan"><strong>$474.00</strong></td>
-                            <td class="col-plan">$768.00</td>
-                        </tr>
-
-                        <tr class="section-row"><td colspan="3">Liability Limits</td></tr>
-                        <tr>
-                            <td class="col-feature">Bodily Injury <i class="fa-regular fa-circle-question text-muted"></i></td>
-                            <td class="col-plan"><strong>$100k / $300k</strong></td>
-                            <td class="col-plan">$50k / $100k</td>
-                        </tr>
-                        <tr>
-                            <td class="col-feature">Property Damage</td>
-                            <td class="col-plan"><strong>$100k</strong></td>
-                            <td class="col-plan">$50k</td>
-                        </tr>
-
-                        <tr class="section-row"><td colspan="3">Vehicle Protection</td></tr>
-                        <tr>
-                            <td class="col-feature">Comprehensive Ded.</td>
-                            <td class="col-plan"><span class="tag-pill">$500</span></td>
-                            <td class="col-plan"><span class="tag-pill">$1,000</span></td>
-                        </tr>
-                        <tr>
-                            <td class="col-feature">Collision Ded.</td>
-                            <td class="col-plan"><span class="tag-pill">$500</span></td>
-                            <td class="col-plan"><span class="tag-pill">$1,000</span></td>
-                        </tr>
-
-                        <tr class="section-row"><td colspan="3">Included Extras</td></tr>
-                        <tr>
-                            <td class="col-feature">Roadside Assist</td>
-                            <td class="col-plan"><i class="fa-solid fa-check text-green"></i> Included</td>
-                            <td class="col-plan"><i class="fa-solid fa-xmark text-red"></i> Not Incl.</td>
-                        </tr>
-                        <tr>
-                            <td class="col-feature">Rental Car</td>
-                            <td class="col-plan"><strong>$40 / Day</strong></td>
-                            <td class="col-plan">$30 / Day</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer-sketch">
-                <button class="btn-outline-sketch-sm js-close-compare" style="width: auto; padding: 10px 25px;">Close</button>
-                <button class="btn-blue-sketch" style="width: auto; padding: 10px 30px;">Next Car</button>
-            </div>
-        </div>
-    </div>
 
     <div id="floating-menu-container">
         <div class="floating-menu-list organic-box" id="megaMenu">
             <h5>Quick Navigate</h5>
             <ul>
-                <li><a href="#"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
-                <li><a href="#"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
-                <li><a href="#"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
-                <li><a href="#"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
-                <li class="divider"></li>
-                <li><a href="#blog"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
-                <li><a href="#contact"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
+                <li><a href="../quote/quote.html"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
+                <li><a href="../homeowners/index.html"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
+                <li><a href="../renters/index.html"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
+                <li><a href="../alex-sign/index.html"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
+                <li class=\"divider\"></li>
+                <li><a href="../blog/index.html"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
+                <li><a href="../contact/index.html"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
             </ul>
         </div>
         <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open quick menu">
@@ -358,16 +369,75 @@
         </button>
     </div>
 
-
     <div id="floating-chat-container">
         <div class="chat-bubble organic-box" id="chatGreeting">
-            <strong>Alex AI says:</strong><br> 👋 Hi! Need help picking a plan?
+            <strong>Alex AI says:</strong><br> 👋 Limits confused you? Ask me!
         </div>
         <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
             <i class="fa-solid fa-robot"></i>
         </button>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // 1. Calendario Effective Date (minDate: hoy)
+            flatpickr(".date-picker", {
+                dateFormat: "m/d/Y",
+                minDate: "today",
+                altInput: true,
+                altFormat: "F j, Y",
+                disableMobile: "true"
+            });
+
+            // 2. Validación Next Step
+            const btnNext = document.getElementById('btnNext');
+
+            if(btnNext) {
+                btnNext.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const requiredFields = document.querySelectorAll('.validate-req');
+                    let isValid = true;
+                    let firstError = null;
+
+                    requiredFields.forEach(field => {
+                        field.classList.remove('input-error');
+                        
+                        if (!field.value.trim()) {
+                            isValid = false;
+                            void field.offsetWidth; 
+                            field.classList.add('input-error');
+                            if(!firstError) firstError = field;
+                        }
+                    });
+
+                    if (!isValid) {
+                        if(firstError) firstError.focus();
+                    } else {
+                        // ÉXITO
+                        const originalText = btnNext.innerHTML;
+                        btnNext.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving Limits...';
+                        
+                        setTimeout(() => {
+                            // PASO 4
+                            alert("Coverage Saved! Moving to Step 4.");
+                            // window.location.href = "quote-4.html";
+                            btnNext.innerHTML = 'Next Step <i class="fa-solid fa-arrow-right-long"></i>';
+                        }, 1000);
+                    }
+                });
+            }
+
+            // 3. Limpiar errores
+            document.querySelectorAll('.validate-req').forEach(input => {
+                input.addEventListener('input', function() {
+                    if(this.value.trim()) this.classList.remove('input-error');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
