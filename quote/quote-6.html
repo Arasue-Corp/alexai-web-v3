@@ -12,6 +12,46 @@
     <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
 
     <style>
+
+        /* --- BOTONES DE NAVEGACIÓN INTERNA (Next/Prev Driver) --- */
+        .nav-internal-row {
+            display: flex;
+            justify-content: space-between; /* Separa los botones a los extremos */
+            margin-top: 20px;
+            border-top: 1px solid #F1F5F9;
+            padding-top: 15px;
+        }
+
+        .btn-internal-nav {
+            background: var(--alex-ink);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .btn-internal-nav:hover {
+            background: var(--alex-blue-accent);
+            transform: translateX(3px);
+        }
+
+        .btn-internal-nav.prev {
+            background: #E2E8F0;
+            color: var(--alex-ink);
+        }
+
+        .btn-internal-nav.prev:hover {
+            background: #CBD5E1;
+            transform: translateX(-3px);
+        }
+
         /* --- ESTILOS ESPECÍFICOS STEP 6 --- */
 
         /* Radio Tiles (Yes/No) */
@@ -439,7 +479,7 @@
                     btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
                     setTimeout(() => {
                         alert("Additional Info Saved. Moving to Vehicles.");
-                        // window.location.href = "quote-7.html";
+                        window.location.href = "quote-7.html";
                         btn.innerHTML = 'Next Step <i class="fa-solid fa-arrow-right-long"></i>';
                     }, 1000);
                 } else {

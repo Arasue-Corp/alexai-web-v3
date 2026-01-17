@@ -242,6 +242,13 @@
                                 <button type="button" class="btn-add-violation-row" onclick="addViolationCard('d1')">
                                     <i class="fa-solid fa-plus"></i> Add Violation for Driver 1
                                 </button>
+
+                                <div class="nav-internal-row" style="justify-content: flex-end;">
+                                    <button type="button" class="btn-internal-nav" onclick="switchTab('d2')">
+                                        Next Driver <i class="fa-solid fa-chevron-right"></i>
+                                    </button>
+                                </div>
+
                             </div>
 
                             <div id="panel-d2" class="driver-violation-panel">
@@ -251,6 +258,13 @@
                                 <button type="button" class="btn-add-violation-row" onclick="addViolationCard('d2')">
                                     <i class="fa-solid fa-plus"></i> Add Violation for Driver 2
                                 </button>
+
+                                <div class="nav-internal-row" style="justify-content: space-between;">
+                                <button type="button" class="btn-internal-nav prev" onclick="switchTab('d1')">
+                                    <i class="fa-solid fa-chevron-left"></i> Prev Driver
+                                </button>
+                                </div>
+
                             </div>
 
                         </div>
@@ -513,7 +527,7 @@
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
             setTimeout(() => {
                 alert("History Saved. Moving to Step 6.");
-                // window.location.href = "quote-6.html";
+                window.location.href = "quote-6.html";
                 btn.innerHTML = 'Next Step <i class="fa-solid fa-arrow-right-long"></i>';
             }, 1000);
         });

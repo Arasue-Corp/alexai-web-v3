@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex AI - Smart Quote | Step 8 (Employment)</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+
+    <style>
+        /* --- HEADER DESIGN (IGUAL A STEP 4 & 7) --- */
+        .wizard-header { margin-bottom: 25px; }
+        
+        .wizard-message { 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-bottom: 10px; font-family: 'Inter', sans-serif;
+        }
+        .wizard-section-title {
+            color: var(--alex-blue-accent); font-weight: 900; font-size: 1.1rem;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .wizard-step-num {
+            color: var(--alex-blue-accent); font-weight: 800; font-size: 1rem;
+        }
+
+        .wizard-track { height: 8px; background: #E2E8F0; border-radius: 10px; overflow: hidden; }
+        .wizard-fill { height: 100%; background: linear-gradient(90deg, #4A80F0, #5FD4F4); width: 57.1%; transition: width 0.5s; }
+
+        /* Título Dividido */
+        .quote-header-split {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            margin-bottom: 30px; padding-bottom: 10px;
+        }
+        .quote-header-split h3 {
+            color: var(--alex-blue-accent); font-size: 2rem; font-weight: 900; margin: 0; line-height: 1; letter-spacing: -0.5px;
+        }
+        .quote-header-split p {
+            color: #64748B; margin: 0; text-align: right; max-width: 55%; 
+            font-size: 0.95rem; line-height: 1.4; font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .quote-header-split { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .quote-header-split p { text-align: left; max-width: 100%; }
+        }
+
+        /* --- TABS --- */
+        .driver-tabs-wrapper { display: flex; gap: 8px; margin-bottom: 25px; border-bottom: 2px solid #E2E8F0; padding-bottom: 10px; }
+        .driver-tab { background: #F8FAFC; border: 2px solid #E2E8F0; padding: 10px 20px; border-radius: 12px 12px 0 0; cursor: pointer; font-weight: 700; color: var(--alex-ink-light); transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+        .driver-tab.active { background: #FFFFFF; border-color: var(--alex-blue-accent); border-bottom-color: #FFFFFF; color: var(--alex-blue-accent); transform: translateY(2px); z-index: 2; }
+        
+        .driver-panel { display: none; }
+        .driver-panel.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- GRID & FORMS --- */
+        .date-calc-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 20px; align-items: end; }
+        .form-row-2 { display: flex; gap: 15px; margin-bottom: 20px; }
+        .flex-grow { flex: 1; }
+
+        /* --- NAV INTERNA --- */
+        .nav-internal-row { display: flex; justify-content: space-between; margin-top: 20px; border-top: 1px solid #F1F5F9; padding-top: 15px; }
+        .btn-internal-nav { background: var(--alex-ink); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .btn-internal-nav.prev { background: #E2E8F0; color: var(--alex-ink); }
+
+        /* --- EXTRAS --- */
+        .input-error { animation: shake 0.4s; border-color: #EF4444 !important; background: #FEF2F2 !important; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+        
+        /* Cupón */
+        .discount-coupon-box { margin-top: 25px; background: #ECFDF5; border: 2px dashed #10B981; border-radius: 12px; padding: 20px; text-align: center; position: relative; overflow: hidden; }
+        .discount-coupon-box::before, .discount-coupon-box::after { content: ''; position: absolute; top: 50%; width: 20px; height: 20px; background: #fff; border-radius: 50%; transform: translateY(-50%); }
+        .discount-coupon-box::before { left: -12px; border-right: 2px dashed #10B981; }
+        .discount-coupon-box::after { right: -12px; border-left: 2px dashed #10B981; }
+        .dc-title { font-size: 0.7rem; text-transform: uppercase; font-weight: 800; color: #059669; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+        .dc-amount { font-size: 2rem; font-weight: 900; color: #10B981; line-height: 1; display: block; }
+        .dc-sub { font-size: 0.8rem; color: #065F46; font-weight: 600; margin-top: 5px; display: block; }
+        .dc-icon { position: absolute; top: 10px; right: 10px; color: rgba(16, 185, 129, 0.2); font-size: 3rem; transform: rotate(15deg); }
+
+        /* Tooltips */
+        .tooltip-container { position: relative; display: inline-block; cursor: help; margin-left: 5px; }
+        .tooltip-icon { color: #94A3B8; font-size: 0.9rem; }
+        .tooltip-content { visibility: hidden; width: 220px; background: #fff; border: 2px solid var(--alex-ink); color: var(--alex-ink); text-align: left; padding: 10px; border-radius: 8px; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); z-index: 100; box-shadow: 4px 4px 0 rgba(0,0,0,0.1); font-size: 0.8rem; opacity: 0; transition: 0.2s; }
+        .tooltip-container:hover .tooltip-content { visibility: visible; opacity: 1; }
+
+        @media (max-width: 768px) {
+            .form-row-2 { flex-direction: column; gap: 15px; }
+            .date-calc-grid { grid-template-columns: 1fr; gap: 5px; }
+            #chatGreeting { display: none !important; }
+            #floating-chat-container { bottom: 85px !important; right: 20px !important; } 
+        }
+    </style>
+</head>
+<body class="quote-page-body">
+
+    <nav class="quote-nav">
+        <a href="quote-7.html" class="nav-back-btn">
+            <div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div>
+            <span>Back</span>
+        </a>
+        <div class="nav-brand">
+            <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI" class="nav-mini-logo">
+        </div>
+        <div class="lang-switch-modern">
+            <span class="lang-opt">ES</span>
+            <span class="lang-opt active">EN</span>
+        </div>
+    </nav>
+
+    <main class="quote-main-content step-layout-wrapper">
+        <div class="ambient-glow glow-1"></div>
+        <div class="ambient-glow glow-2"></div>
+
+        <div class="step-grid-container">
+            
+            <div class="main-form-col">
+                <div class="quote-card-stacked anim-entry">
+                    
+                    <div class="wizard-header">
+                        <div class="wizard-message">
+                            <div class="wizard-section-title">
+                                <i class="fa-solid fa-briefcase"></i> Employment & Home
+                            </div>
+                            <div class="wizard-step-num">Step 8 of 14</div>
+                        </div>
+                        <div class="wizard-track">
+                            <div class="wizard-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="quote-header-split">
+                        <h3>Tell us about you.</h3>
+                        <p>Occupation and housing stability are key factors that carriers use to determine discounts.</p>
+                    </div>
+
+                    <div class="driver-tabs-wrapper" id="driverTabs">
+                        <div class="driver-tab active" onclick="window.switchTab('d1')"><i class="fa-solid fa-user"></i> Driver 1</div>
+                        <div class="driver-tab" onclick="window.switchTab('d2')"><i class="fa-solid fa-user"></i> Driver 2</div>
+                    </div>
+            
+                    <form id="quoteFormStep8">
+                        
+                        <div id="panel-d1" class="driver-panel active" data-driver="d1">
+                            
+                            <div class="form-group">
+                                <label>What industry do you work in?</label>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-solid fa-industry input-icon"></i>
+                                    <select class="alex-input-modern validate-req">
+                                        <option value="" disabled selected>Select Industry</option>
+                                        <option>Agriculture / Forestry / Fishing</option>
+                                        <option>Art / Design / Media</option>
+                                        <option>Banking / Finance / Real Estate</option>
+                                        <option>Business / Sales / Office</option>
+                                        <option>Construction / Energy / Mining</option>
+                                        <option>Education / Library</option>
+                                        <option>Engineer / Architect / Science / Math</option>
+                                        <option>Food Service / Hotel Service</option>
+                                        <option>Government / Military</option>
+                                        <option>Homemaker (full-time)</option>
+                                        <option>Information Technology</option>
+                                        <option>Insurance</option>
+                                        <option>Legal / Law Enforcement / Security</option>
+                                        <option>Medical / Social Services / Religion</option>
+                                        <option>Personal Care / Service</option>
+                                        <option>Production / Manufacturing</option>
+                                        <option>Repair / Maintenance / Grounds</option>
+                                        <option>Retired (full-time)</option>
+                                        <option>Sport / Recreation</option>
+                                        <option>Student (full-time)</option>
+                                        <option>Travel / Transportation / Storage</option>
+                                        <option>Unemployed</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Occupation</label>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-solid fa-briefcase input-icon"></i>
+                                    <select class="alex-input-modern validate-req">
+                                        <option value="" disabled selected>Select Occupation</option>
+                                        <option>Administrative Assistant</option>
+                                        <option>Analyst</option>
+                                        <option>Clerk</option>
+                                        <option>Director / Administrator</option>
+                                        <option>Engineer-Hardware</option>
+                                        <option>Engineer-Software</option>
+                                        <option>Engineer-Systems</option>
+                                        <option>Executive</option>
+                                        <option>Manager-Systems</option>
+                                        <option>Network Administrator</option>
+                                        <option>Programmer</option>
+                                        <option>Project Coordinator</option>
+                                        <option>Receptionist / Secretary</option>
+                                        <option>Support Technician</option>
+                                        <option>Systems Security</option>
+                                        <option>Technical Writer</option>
+                                        <option>Web Developer</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="date-calc-grid">
+                                <div class="form-group">
+                                    <label>Employment Start Date</label>
+                                    <div class="input-modern-wrapper">
+                                        <i class="fa-regular fa-calendar-check input-icon"></i>
+                                        <input type="text" class="alex-input-modern date-picker validate-req" placeholder="MM/DD/YYYY">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Years Employed</label>
+                                    <div class="input-modern-wrapper" style="background: #F1F5F9;">
+                                        <input type="text" class="alex-input-modern years-calc" placeholder="0" readonly style="text-align: center; font-weight: 800; color:#64748B;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 25px 0;">
+
+                            <div class="form-group">
+                                <div class="input-label-row">
+                                    <label>Education Level</label>
+                                    <div class="tooltip-container"><i class="fa-solid fa-circle-question tooltip-icon"></i><span class="tooltip-content">Higher education degrees often qualify for professional discounts.</span></div>
+                                </div>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-solid fa-graduation-cap input-icon"></i>
+                                    <select class="alex-input-modern validate-req">
+                                        <option value="" disabled selected>Select Education Level</option>
+                                        <option>Associates Degree</option>
+                                        <option>Bachelors Degree</option>
+                                        <option>High School Diploma</option>
+                                        <option>Law Degree</option>
+                                        <option>Masters Degree</option>
+                                        <option>Medical Degree</option>
+                                        <option>No High School Diploma</option>
+                                        <option>Ph D Doctorate</option>
+                                        <option>Some College No Degree</option>
+                                        <option>Vocational Technical Degree</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row-2">
+                                <div class="form-group flex-grow">
+                                    <label>Residence Type</label>
+                                    <div class="input-modern-wrapper">
+                                        <i class="fa-solid fa-house-chimney input-icon"></i>
+                                        <select class="alex-input-modern validate-req">
+                                            <option value="" disabled selected>Select Type</option>
+                                            <option>Home</option>
+                                            <option>Apartment</option>
+                                            <option>Condo</option>
+                                            <option>Mobile Home</option>
+                                            <option>Fixed Mobile Home</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group flex-grow">
+                                    <label>Do you own or rent?</label>
+                                    <div class="input-modern-wrapper">
+                                        <i class="fa-solid fa-key input-icon"></i>
+                                        <select class="alex-input-modern validate-req">
+                                            <option value="" disabled selected>Select Status</option>
+                                            <option>Own</option>
+                                            <option>Rent</option>
+                                            <option>Lease</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="nav-internal-row" style="justify-content: flex-end;">
+                                <button type="button" class="btn-internal-nav" onclick="window.switchTab('d2')">
+                                    Next Driver <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+
+                        </div> <div id="panel-d2" class="driver-panel" data-driver="d2">
+                            <h4 style="margin-bottom:15px; color:var(--alex-blue-accent);">Driver 2 Employment</h4>
+                            <p style="text-align:center; color:#94A3B8; margin: 40px 0;">(Fields hidden for demo - Same logic applies)</p>
+                            
+                            <div class="nav-internal-row" style="justify-content: space-between;">
+                                <button type="button" class="btn-internal-nav prev" onclick="window.switchTab('d1')"><i class="fa-solid fa-chevron-left"></i> Prev Driver</button>
+                            </div>
+                        </div>
+
+
+                        <div class="form-action" style="margin-top: 30px;">
+                            <button type="button" class="btn-glow-anim" id="btnNext">
+                                <span>Next Step</span>
+                                <i class="fa-solid fa-arrow-right-long"></i>
+                            </button>
+                            <div class="secure-badge">
+                                <i class="fa-solid fa-shield-halved"></i> Data Encrypted
+                            </div>
+                        </div>
+            
+                    </form>
+                </div>
+                <div class="card-shadow-layer"></div>
+            </div>
+
+            <aside class="sidebar-col anim-entry" style="animation-delay: 0.2s;">
+                <div class="organic-box sidebar-note taped-note">
+                    <div class="washi-tape"></div>
+                    <h4 class="sidebar-title">Coverage Path</h4>
+                    
+                    <ul class="progress-list-sketch">
+                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Client Information</a></li>
+                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Drivers</a></li>
+                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Violations</a></li>
+                        <li class="active"><a href="#"><span class="sketch-circle"></span> Additional Info</a></li>
+                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Vehicle</a></li>
+                    </ul>
+                    
+                    <div class="discount-coupon-box">
+                        <i class="fa-solid fa-tags dc-icon"></i>
+                        <span class="dc-title">Potential Discounts</span>
+                        <span class="dc-amount">5 Found</span>
+                        <span class="dc-sub">Homeowner discount pending...</span>
+                    </div>
+
+                    <div class="mini-tip">
+                        <div class="tip-icon"><i class="fa-regular fa-lightbulb"></i></div>
+                        <div>
+                            <strong>Alex Tip:</strong> Homeowners often get significant discounts ("bundling potential"), even if you don't buy home insurance right now.
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <div id="floating-menu-container">
+        <div class="floating-menu-list organic-box" id="megaMenu">
+            <h5>Quick Navigate</h5>
+            <ul><li><a href="#"><i class="fa-solid fa-car"></i> Car Insurance</a></li></ul>
+        </div>
+        <button class="floating-menu-btn js-toggle-mega-menu"><i class="fa-solid fa-bars-staggered"></i></button>
+    </div>
+    <div id="floating-chat-container">
+        <button class="chat-avatar-btn js-trigger-chat"><i class="fa-solid fa-robot"></i></button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- 1. TABS LOGIC ---
+            window.switchTab = function(driverId) {
+                document.querySelectorAll('.driver-tab').forEach(t => t.classList.remove('active'));
+                const tabs = document.querySelectorAll('.driver-tab');
+                tabs.forEach(t => { if(t.getAttribute('onclick').includes(driverId)) t.classList.add('active'); });
+
+                document.querySelectorAll('.driver-panel').forEach(p => p.classList.remove('active'));
+                const target = document.getElementById(`panel-${driverId}`);
+                if(target) target.classList.add('active');
+            }
+
+            // --- 2. DATE LOGIC & CALCULATION (STANDARD M/D/Y) ---
+            flatpickr(".date-picker", {
+                dateFormat: "m/d/Y", // Formato estándar
+                maxDate: "today",
+                disableMobile: "true",
+                allowInput: true,
+                onChange: function(selectedDates, dateStr, instance) {
+                    if(selectedDates[0]) {
+                        const now = new Date();
+                        let years = now.getFullYear() - selectedDates[0].getFullYear();
+                        // Ajuste preciso por mes/día
+                        const m = now.getMonth() - selectedDates[0].getMonth();
+                        if (m < 0 || (m === 0 && now.getDate() < selectedDates[0].getDate())) {
+                            years--;
+                        }
+                        years = Math.max(0, years);
+
+                        // Buscar input "Years" hermano
+                        const grid = instance.element.closest('.date-calc-grid');
+                        if(grid) {
+                            const yearInput = grid.querySelector('.years-calc');
+                            if(yearInput) yearInput.value = years;
+                        }
+                    }
+                }
+            });
+
+            // --- 3. SUBMIT ---
+            document.getElementById('btnNext').addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Validación básica
+                let isValid = true;
+                const activePanel = document.querySelector('.driver-panel.active');
+                const inputs = activePanel.querySelectorAll('.validate-req');
+                
+                inputs.forEach(input => {
+                    input.classList.remove('input-error');
+                    if(!input.value.trim()) {
+                        isValid = false;
+                        input.classList.add('input-error');
+                    }
+                });
+
+                if(isValid) {
+                    const btn = document.getElementById('btnNext');
+                    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+                    setTimeout(() => {
+                        alert("Employment Info Saved. Moving to Step 9 (Vehicles).");
+                        window.location.href = "quote-9.html";
+                        btn.innerHTML = 'Next Step <i class="fa-solid fa-arrow-right-long"></i>';
+                    }, 1000);
+                }
+            });
+
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex AI - Smart Quote | Step 9 (Habits)</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+
+    <style>
+        /* --- HEADER & WIZARD (Consistente) --- */
+        .wizard-header { margin-bottom: 25px; }
+        .wizard-message { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-family: 'Inter', sans-serif; }
+        .wizard-section-title { color: var(--alex-blue-accent); font-weight: 900; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+        .wizard-step-num { color: var(--alex-blue-accent); font-weight: 800; font-size: 1rem; }
+        .wizard-track { height: 8px; background: #E2E8F0; border-radius: 10px; overflow: hidden; }
+        .wizard-fill { height: 100%; background: linear-gradient(90deg, #4A80F0, #5FD4F4); width: 64.2%; transition: width 0.5s; } /* Step 9 */
+
+        .quote-header-split { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; padding-bottom: 10px; }
+        .quote-header-split h3 { color: var(--alex-blue-accent); font-size: 2rem; font-weight: 900; margin: 0; line-height: 1; letter-spacing: -0.5px; }
+        .quote-header-split p { color: #64748B; margin: 0; text-align: right; max-width: 55%; font-size: 0.95rem; line-height: 1.4; font-weight: 500; }
+        @media (max-width: 768px) { .quote-header-split { flex-direction: column; align-items: flex-start; gap: 10px; } .quote-header-split p { text-align: left; max-width: 100%; } }
+
+        /* --- TABS --- */
+        .driver-tabs-wrapper { display: flex; gap: 8px; margin-bottom: 25px; border-bottom: 2px solid #E2E8F0; padding-bottom: 10px; }
+        .driver-tab { background: #F8FAFC; border: 2px solid #E2E8F0; padding: 10px 20px; border-radius: 12px 12px 0 0; cursor: pointer; font-weight: 700; color: var(--alex-ink-light); transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+        .driver-tab.active { background: #FFFFFF; border-color: var(--alex-blue-accent); border-bottom-color: #FFFFFF; color: var(--alex-blue-accent); transform: translateY(2px); z-index: 2; }
+        .driver-panel { display: none; }
+        .driver-panel.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- FORMS --- */
+        .radio-tile-group-row { display: flex; gap: 15px; margin-bottom: 10px; }
+        .radio-tile-group-row label { flex: 1; position: relative; cursor: pointer; }
+        .radio-tile-group-row input { display: none; }
+        .radio-tile-compact { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border: 2px solid #E2E8F0; border-radius: 8px; background: #FFF; transition: all 0.2s; font-weight: 700; color: var(--alex-ink-light); }
+        .radio-tile-group-row input:checked + .radio-tile-compact { border-color: var(--alex-blue-accent); background: #EFF6FF; color: var(--alex-blue-accent); box-shadow: 0 4px 10px rgba(74, 128, 240, 0.15); }
+
+        .input-suffix-group { position: relative; }
+        .input-suffix { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #94A3B8; font-weight: 700; font-size: 0.85rem; pointer-events: none; }
+
+        /* --- NAV INTERNA --- */
+        .nav-internal-row { display: flex; justify-content: space-between; margin-top: 20px; border-top: 1px solid #F1F5F9; padding-top: 15px; }
+        .btn-internal-nav { background: var(--alex-ink); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .btn-internal-nav.prev { background: #E2E8F0; color: var(--alex-ink); }
+
+        /* --- EXTRAS --- */
+        .input-error { animation: shake 0.4s; border-color: #EF4444 !important; background: #FEF2F2 !important; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+        
+        .discount-coupon-box { margin-top: 25px; background: #ECFDF5; border: 2px dashed #10B981; border-radius: 12px; padding: 20px; text-align: center; position: relative; overflow: hidden; }
+        .discount-coupon-box::before, .discount-coupon-box::after { content: ''; position: absolute; top: 50%; width: 20px; height: 20px; background: #fff; border-radius: 50%; transform: translateY(-50%); }
+        .discount-coupon-box::before { left: -12px; border-right: 2px dashed #10B981; }
+        .discount-coupon-box::after { right: -12px; border-left: 2px dashed #10B981; }
+        .dc-title { font-size: 0.7rem; text-transform: uppercase; font-weight: 800; color: #059669; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+        .dc-amount { font-size: 2rem; font-weight: 900; color: #10B981; line-height: 1; display: block; }
+        .dc-sub { font-size: 0.8rem; color: #065F46; font-weight: 600; margin-top: 5px; display: block; }
+        .dc-icon { position: absolute; top: 10px; right: 10px; color: rgba(16, 185, 129, 0.2); font-size: 3rem; transform: rotate(15deg); }
+
+        .tooltip-container { position: relative; display: inline-block; cursor: help; margin-left: 5px; }
+        .tooltip-icon { color: #94A3B8; font-size: 0.9rem; }
+        .tooltip-content { visibility: hidden; width: 220px; background: #fff; border: 2px solid var(--alex-ink); color: var(--alex-ink); text-align: left; padding: 10px; border-radius: 8px; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); z-index: 100; box-shadow: 4px 4px 0 rgba(0,0,0,0.1); font-size: 0.8rem; opacity: 0; transition: 0.2s; }
+        .tooltip-container:hover .tooltip-content { visibility: visible; opacity: 1; }
+
+        @media (max-width: 768px) { #chatGreeting { display: none !important; } #floating-chat-container { bottom: 85px !important; right: 20px !important; } }
+    </style>
+</head>
+<body class="quote-page-body">
+
+    <nav class="quote-nav">
+        <a href="quote-8.html" class="nav-back-btn">
+            <div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div>
+            <span>Back</span>
+        </a>
+        <div class="nav-brand">
+            <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI" class="nav-mini-logo">
+        </div>
+        <div class="lang-switch-modern">
+            <span class="lang-opt">ES</span>
+            <span class="lang-opt active">EN</span>
+        </div>
+    </nav>
+
+    <main class="quote-main-content step-layout-wrapper">
+        <div class="ambient-glow glow-1"></div>
+        <div class="ambient-glow glow-2"></div>
+
+        <div class="step-grid-container">
+            
+            <div class="main-form-col">
+                <div class="quote-card-stacked anim-entry">
+                    
+                    <div class="wizard-header">
+                        <div class="wizard-message">
+                            <div class="wizard-section-title"><i class="fa-solid fa-road"></i> Driving Habits</div>
+                            <div class="wizard-step-num">Step 9 of 14</div>
+                        </div>
+                        <div class="wizard-track">
+                            <div class="wizard-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="quote-header-split">
+                        <h3>Daily Routine</h3>
+                        <p>A few final details about how you use your vehicle and your household status.</p>
+                    </div>
+
+                    <div class="driver-tabs-wrapper" id="driverTabs">
+                        <div class="driver-tab active" onclick="window.switchTab('d1')"><i class="fa-solid fa-user"></i> Driver 1</div>
+                        <div class="driver-tab" onclick="window.switchTab('d2')"><i class="fa-solid fa-user"></i> Driver 2</div>
+                    </div>
+            
+                    <form id="quoteFormStep9">
+                        
+                        <div id="panel-d1" class="driver-panel active" data-driver="d1">
+                            
+                            <div class="form-group">
+                                <div class="input-label-row">
+                                    <label>Occasional Operator?</label>
+                                    <div class="tooltip-container">
+                                        <i class="fa-solid fa-circle-question tooltip-icon"></i>
+                                        <span class="tooltip-content">Does this driver use the car less than 25% of the time or is away at school?</span>
+                                    </div>
+                                </div>
+                                <div class="radio-tile-group-row">
+                                    <label><input type="radio" name="occ_d1" value="yes"><div class="radio-tile-compact">Yes</div></label>
+                                    <label><input type="radio" name="occ_d1" value="no" checked><div class="radio-tile-compact">No</div></label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-label-row">
+                                    <label>Daily Round-Trip Commute</label>
+                                    <div class="tooltip-container">
+                                        <i class="fa-solid fa-circle-question tooltip-icon"></i>
+                                        <span class="tooltip-content">Total miles driven to work/school and back home each day.</span>
+                                    </div>
+                                </div>
+                                <div class="input-modern-wrapper input-suffix-group">
+                                    <i class="fa-solid fa-route input-icon"></i>
+                                    <input type="number" class="alex-input-modern validate-req" placeholder="e.g. 20">
+                                    <span class="input-suffix">Miles</span>
+                                </div>
+                            </div>
+
+                            <hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 25px 0;">
+
+                            <div class="form-group">
+                                <label>Are you a Single Parent?</label>
+                                <div class="radio-tile-group-row">
+                                    <label><input type="radio" name="sp_d1" value="yes"><div class="radio-tile-compact">Yes</div></label>
+                                    <label><input type="radio" name="sp_d1" value="no" checked><div class="radio-tile-compact">No</div></label>
+                                </div>
+                            </div>
+
+                            <div class="nav-internal-row" style="justify-content: flex-end;">
+                                <button type="button" class="btn-internal-nav" onclick="window.switchTab('d2')">
+                                    Next Driver <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+
+                        </div> <div id="panel-d2" class="driver-panel" data-driver="d2">
+                            <h4 style="margin-bottom:15px; color:var(--alex-blue-accent);">Driver 2 Habits</h4>
+                            
+                            <div class="form-group">
+                                <label>Occasional Operator?</label>
+                                <div class="radio-tile-group-row">
+                                    <label><input type="radio" name="occ_d2" value="yes"><div class="radio-tile-compact">Yes</div></label>
+                                    <label><input type="radio" name="occ_d2" value="no" checked><div class="radio-tile-compact">No</div></label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Daily Round-Trip Commute</label>
+                                <div class="input-modern-wrapper input-suffix-group">
+                                    <i class="fa-solid fa-route input-icon"></i>
+                                    <input type="number" class="alex-input-modern" placeholder="e.g. 15">
+                                    <span class="input-suffix">Miles</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 25px;">
+                                <label>Single Parent?</label>
+                                <div class="radio-tile-group-row">
+                                    <label><input type="radio" name="sp_d2" value="yes"><div class="radio-tile-compact">Yes</div></label>
+                                    <label><input type="radio" name="sp_d2" value="no" checked><div class="radio-tile-compact">No</div></label>
+                                </div>
+                            </div>
+
+                            <div class="nav-internal-row" style="justify-content: space-between;">
+                                <button type="button" class="btn-internal-nav prev" onclick="window.switchTab('d1')"><i class="fa-solid fa-chevron-left"></i> Prev Driver</button>
+                            </div>
+                        </div>
+
+
+                        <div class="form-action" style="margin-top: 30px;">
+                            <button type="button" class="btn-glow-anim" id="btnNext">
+                                <span>Next Step</span>
+                                <i class="fa-solid fa-arrow-right-long"></i>
+                            </button>
+                            <div class="secure-badge">
+                                <i class="fa-solid fa-shield-halved"></i> Data Encrypted
+                            </div>
+                        </div>
+            
+                    </form>
+                </div>
+                <div class="card-shadow-layer"></div>
+            </div>
+
+            <aside class="sidebar-col anim-entry" style="animation-delay: 0.2s;">
+                <div class="organic-box sidebar-note taped-note">
+                    <div class="washi-tape"></div>
+                    <h4 class="sidebar-title">Coverage Path</h4>
+                    
+                    <ul class="progress-list-sketch">
+                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Client Information</a></li>
+                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Drivers</a></li>
+                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Violations</a></li>
+                        <li class="active"><a href="#"><span class="sketch-circle"></span> Additional Info</a></li>
+                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Vehicle</a></li>
+                    </ul>
+                    
+                    <div class="discount-coupon-box">
+                        <i class="fa-solid fa-tags dc-icon"></i>
+                        <span class="dc-title">Potential Discounts</span>
+                        <span class="dc-amount">5 Found</span>
+                        <span class="dc-sub">Low mileage discount applied!</span>
+                    </div>
+
+                    <div class="mini-tip">
+                        <div class="tip-icon"><i class="fa-regular fa-lightbulb"></i></div>
+                        <div>
+                            <strong>Alex Tip:</strong> If your daily commute is under 20 miles, you might qualify for a "Low Mileage" discount.
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <div id="floating-menu-container"><div class="floating-menu-list organic-box" id="megaMenu"><h5>Quick Navigate</h5><ul><li><a href="#"><i class="fa-solid fa-car"></i> Car Insurance</a></li></ul></div><button class="floating-menu-btn js-toggle-mega-menu"><i class="fa-solid fa-bars-staggered"></i></button></div>
+    <div id="floating-chat-container"><button class="chat-avatar-btn js-trigger-chat"><i class="fa-solid fa-robot"></i></button></div>
+
+    <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // TABS LOGIC
+            window.switchTab = function(driverId) {
+                document.querySelectorAll('.driver-tab').forEach(t => t.classList.remove('active'));
+                const tabs = document.querySelectorAll('.driver-tab');
+                tabs.forEach(t => { if(t.getAttribute('onclick').includes(driverId)) t.classList.add('active'); });
+
+                document.querySelectorAll('.driver-panel').forEach(p => p.classList.remove('active'));
+                const target = document.getElementById(`panel-${driverId}`);
+                if(target) target.classList.add('active');
+            }
+
+            // SUBMIT
+            document.getElementById('btnNext').addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Validación básica
+                let isValid = true;
+                const activePanel = document.querySelector('.driver-panel.active');
+                const inputs = activePanel.querySelectorAll('.validate-req');
+                
+                inputs.forEach(input => {
+                    input.classList.remove('input-error');
+                    if(!input.value.trim()) {
+                        isValid = false;
+                        input.classList.add('input-error');
+                    }
+                });
+
+                if(isValid) {
+                    const btn = document.getElementById('btnNext');
+                    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+                    setTimeout(() => {
+                        alert("Additional Info Completed. Moving to Step 10 (Vehicles).");
+                        window.location.href = "quote-10.html";
+                        btn.innerHTML = 'Next Step <i class="fa-solid fa-arrow-right-long"></i>';
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

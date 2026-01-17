@@ -648,8 +648,8 @@
                         <div class="input-label-row"><label>DL / ID / Passport Number</label></div>
                         <div class="input-modern-wrapper"><i class="fa-solid fa-id-card input-icon"></i><input type="text" class="alex-input-modern validate-req" placeholder="License Number"></div>
                     </div>
-                </div>`;
-
+                </div>
+                
                 <div class="nav-internal-row">
                     <button type="button" class="btn-internal-nav prev" onclick="switchTab('driver-${id - 1}')">
                         <i class="fa-solid fa-chevron-left"></i> Prev Driver
@@ -659,6 +659,10 @@
                         Next Driver <i class="fa-solid fa-chevron-right"></i>
                     </button>
                 </div>
+                
+                `;
+
+
 
             }
 
@@ -680,7 +684,7 @@
 
                 if(isValid) {
                     alert("Driver Info Saved. Moving to Step 5.");
-                    // window.location.href = "quote-5.html";
+                    window.location.href = "quote-5.html";
                 }
             });
         });

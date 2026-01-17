@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex AI - Smart Quote | Step 7 (Licensing)</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css"> 
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+
+    <style>
+        /* --- 1. HEADER CORREGIDO (Estilo Fiel al Diseño) --- */
+        .wizard-header { margin-bottom: 20px; }
+        .wizard-message { 
+            font-size: 1.1rem; font-weight: 800; color: var(--alex-blue-accent); 
+            margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; 
+        }
+        
+        /* ESTILO DEL CONTADOR DE PASOS (LA PÍLDORA) */
+        .step-counter { 
+            font-size: 0.75rem; color: #64748B; background: #F1F5F9; 
+            padding: 4px 12px; border-radius: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+
+        .wizard-track { height: 8px; background: #E2E8F0; border-radius: 10px; overflow: hidden; }
+        .wizard-fill { height: 100%; background: linear-gradient(90deg, #4A80F0, #5FD4F4); width: 50%; transition: width 0.5s; }
+
+        /* TÍTULO PRINCIPAL (IZQUIERDA) Y DESCRIPCIÓN (DERECHA) */
+        .quote-header-split {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            margin-bottom: 30px; border-bottom: 1px solid #F1F5F9; padding-bottom: 20px;
+        }
+        .quote-header-split h3 {
+            color: var(--alex-blue-accent); font-size: 1.8rem; font-weight: 900; margin: 0; line-height: 1;
+        }
+        .quote-header-split p {
+            color: #64748B; margin: 0; text-align: right; max-width: 60%; font-size: 0.9rem; line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .quote-header-split { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .quote-header-split p { text-align: left; max-width: 100%; }
+        }
+
+        /* --- 2. TABS --- */
+        .driver-tabs-wrapper { display: flex; gap: 8px; margin-bottom: 25px; border-bottom: 2px solid #E2E8F0; padding-bottom: 10px; }
+        .driver-tab { background: #F8FAFC; border: 2px solid #E2E8F0; padding: 10px 20px; border-radius: 12px 12px 0 0; cursor: pointer; font-weight: 700; color: var(--alex-ink-light); transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+        .driver-tab.active { background: #FFFFFF; border-color: var(--alex-blue-accent); border-bottom-color: #FFFFFF; color: var(--alex-blue-accent); transform: translateY(2px); z-index: 2; box-shadow: 0 -4px 10px rgba(0,0,0,0.02); }
+        
+        .driver-panel { display: none; }
+        .driver-panel.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- 3. SELLO MORADO (#514690) --- */
+        .us-license-group {
+            position: relative; transition: all 0.4s ease; padding: 15px; border-radius: 12px; border: 2px solid transparent;
+        }
+        .us-license-group.is-disabled {
+            background-color: #F5F3FF; /* Lila suave */
+            opacity: 0.9; pointer-events: none; border: 2px dashed #514690;
+        }
+        .us-license-group.is-disabled input {
+            background-color: #EDE9FE !important; color: #8B5CF6 !important;
+        }
+        .us-license-group.is-disabled::after {
+            content: "NOT APPLICABLE";
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-12deg) scale(0);
+            font-size: 2.2rem; font-weight: 900; color: #514690; border: 5px solid #514690;
+            padding: 10px 30px; border-radius: 12px; text-transform: uppercase; opacity: 1;
+            white-space: nowrap; z-index: 100; background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 25px rgba(81, 70, 144, 0.2);
+            animation: stampIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes stampIn {
+            0% { transform: translate(-50%, -50%) rotate(-12deg) scale(2); opacity: 0; }
+            100% { transform: translate(-50%, -50%) rotate(-12deg) scale(1); opacity: 1; }
+        }
+
+        /* --- 4. GRID & CONDICIONALES --- */
+        .date-calc-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 20px; align-items: end; }
+        
+        .conditional-section { display: none; background: #F8FAFC; border-left: 4px solid var(--alex-blue-accent); padding: 20px; border-radius: 0 12px 12px 0; margin-top: 15px; margin-bottom: 20px; animation: slideIn 0.3s ease-out; }
+        .conditional-section.is-visible { display: block !important; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* Estilo Cupón */
+        .discount-coupon-box { margin-top: 25px; background: #ECFDF5; border: 2px dashed #10B981; border-radius: 12px; padding: 20px; text-align: center; position: relative; overflow: hidden; }
+        .discount-coupon-box::before, .discount-coupon-box::after { content: ''; position: absolute; top: 50%; width: 20px; height: 20px; background: #fff; border-radius: 50%; transform: translateY(-50%); }
+        .discount-coupon-box::before { left: -12px; border-right: 2px dashed #10B981; }
+        .discount-coupon-box::after { right: -12px; border-left: 2px dashed #10B981; }
+        .dc-title { font-size: 0.7rem; text-transform: uppercase; font-weight: 800; color: #059669; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+        .dc-amount { font-size: 2rem; font-weight: 900; color: #10B981; line-height: 1; display: block; }
+        .dc-sub { font-size: 0.8rem; color: #065F46; font-weight: 600; margin-top: 5px; display: block; }
+        .dc-icon { position: absolute; top: 10px; right: 10px; color: rgba(16, 185, 129, 0.2); font-size: 3rem; transform: rotate(15deg); }
+
+        /* Radio Tiles Compact */
+        .radio-tile-group-row { display: flex; gap: 15px; margin-bottom: 10px; }
+        .radio-tile-group-row label { flex: 1; position: relative; cursor: pointer; }
+        .radio-tile-group-row input { display: none; }
+        .radio-tile-compact { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px; border: 2px solid #E2E8F0; border-radius: 8px; background: #FFF; transition: all 0.2s; font-weight: 700; color: var(--alex-ink-light); }
+        .radio-tile-group-row input:checked + .radio-tile-compact { border-color: var(--alex-blue-accent); background: #EFF6FF; color: var(--alex-blue-accent); }
+
+        /* Nav Interna */
+        .nav-internal-row { display: flex; justify-content: space-between; margin-top: 20px; border-top: 1px solid #F1F5F9; padding-top: 15px; }
+        .btn-internal-nav { background: var(--alex-ink); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .btn-internal-nav.prev { background: #E2E8F0; color: var(--alex-ink); }
+
+        /* Error */
+        .input-error { animation: shake 0.4s; border-color: #EF4444 !important; background: #FEF2F2 !important; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+
+        @media (max-width: 768px) {
+            .date-calc-grid { grid-template-columns: 1fr; gap: 5px; }
+            #chatGreeting { display: none !important; }
+            #floating-chat-container { bottom: 85px !important; right: 20px !important; } 
+        }
+    </style>
+</head>
+<body class="quote-page-body">
+
+    <nav class="quote-nav">
+        <a href="quote-6.html" class="nav-back-btn">
+            <div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div>
+            <span>Back</span>
+        </a>
+        <div class="nav-brand">
+            <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI" class="nav-mini-logo">
+        </div>
+        <div class="lang-switch-modern">
+            <span class="lang-opt">ES</span>
+            <span class="lang-opt active">EN</span>
+        </div>
+    </nav>
+
+    <main class="quote-main-content step-layout-wrapper">
+        <div class="ambient-glow glow-1"></div>
+        <div class="ambient-glow glow-2"></div>
+
+        <div class="step-grid-container">
+            
+            <div class="main-form-col">
+                <div class="quote-card-stacked anim-entry">
+                    
+                    <div class="wizard-header">
+                        <div class="wizard-message">
+                            <span><i class="fa-solid fa-id-card"></i> Licensing Details</span>
+                            <span class="step-counter">Step 7 of 14</span>
+                        </div>
+                        <div class="wizard-track">
+                            <div class="wizard-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="quote-header-split">
+                        <h3>Driving Experience</h3>
+                        <p>Verify your license history and any special filings.</p>
+                    </div>
+
+                    <div class="driver-tabs-wrapper" id="driverTabs">
+                        <div class="driver-tab active" onclick="window.switchTab('d1')"><i class="fa-solid fa-user"></i> Driver 1</div>
+                        <div class="driver-tab" onclick="window.switchTab('d2')"><i class="fa-solid fa-user"></i> Driver 2</div>
+                    </div>
+            
+                    <form id="quoteFormStep7">
+                        
+                        <div id="panel-d1" class="driver-panel active" data-driver="d1">
+                            
+                            <div id="us-block-d1" class="us-license-group">
+                                
+                                <div class="date-calc-grid">
+                                    <div class="form-group">
+                                        <label>Licensed in US Since</label>
+                                        <div class="input-modern-wrapper">
+                                            <i class="fa-regular fa-calendar-check input-icon"></i>
+                                            <input type="text" class="alex-input-modern date-picker master-date" data-driver="d1" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Years</label>
+                                        <div class="input-modern-wrapper" style="background: #F1F5F9;">
+                                            <input type="text" class="alex-input-modern years-calc" placeholder="0" readonly style="text-align: center; font-weight: 800; color:#64748B;">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="date-calc-grid">
+                                    <div class="form-group">
+                                        <label>Licensed in AZ Since</label>
+                                        <div class="input-modern-wrapper">
+                                            <i class="fa-solid fa-flag-usa input-icon"></i>
+                                            <input type="text" class="alex-input-modern date-picker slave-date" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Years</label>
+                                        <div class="input-modern-wrapper" style="background: #F1F5F9;">
+                                            <input type="text" class="alex-input-modern years-calc" placeholder="0" readonly style="text-align: center; font-weight: 800; color:#64748B;">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="date-calc-grid">
+                                    <div class="form-group">
+                                        <label>US Driving Experience Start</label>
+                                        <div class="input-modern-wrapper">
+                                            <i class="fa-solid fa-road input-icon"></i>
+                                            <input type="text" class="alex-input-modern date-picker slave-date" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Years</label>
+                                        <div class="input-modern-wrapper" style="background: #F1F5F9;">
+                                            <input type="text" class="alex-input-modern years-calc" placeholder="0" readonly style="text-align: center; font-weight: 800; color:#64748B;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 20px 0;">
+
+                            <div class="form-group">
+                                <label>Do you have a driver's license from another country?</label>
+                                <div class="input-modern-wrapper">
+                                    <i class="fa-solid fa-globe input-icon"></i>
+                                    <select class="alex-input-modern foreign-select" onchange="window.toggleForeign('d1', this)">
+                                        <option value="None" selected>None</option>
+                                        <option value="International">International</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="Mexico">Mexico</option>
+                                        <option value="Matricula">Matricula Consular</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="foreign-section-d1" class="conditional-section">
+                                <div class="date-calc-grid">
+                                    <div class="form-group" style="grid-column: 1 / -1;">
+                                        <label>When did you become a licensed driver? <span style="color:#EF4444">*</span></label>
+                                        <div class="input-modern-wrapper">
+                                            <i class="fa-regular fa-calendar input-icon"></i>
+                                            <input type="text" class="alex-input-modern date-picker" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr style="border: 0; border-top: 1px solid #E2E8F0; margin: 20px 0;">
+
+                            <div class="form-group">
+                                <label>Do you need an SR-22 filing?</label>
+                                <div class="radio-tile-group-row">
+                                    <label><input type="radio" name="sr22_d1" value="yes" onchange="window.toggleSection('sr22-d1', true)"><div class="radio-tile-compact">Yes</div></label>
+                                    <label><input type="radio" name="sr22_d1" value="no" checked onchange="window.toggleSection('sr22-d1', false)"><div class="radio-tile-compact">No</div></label>
+                                </div>
+                            </div>
+
+                            <div id="sr22-d1" class="conditional-section">
+                                <div class="form-group">
+                                    <label>SR-22 Filing Reason</label>
+                                    <div class="input-modern-wrapper">
+                                        <select class="alex-input-modern">
+                                            <option value="" disabled selected>Select One</option>
+                                            <option>No Insurance</option>
+                                            <option>DUI/DWI</option>
+                                            <option>Accident with Death</option>
+                                            <option>Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Is your license currently suspended?</label>
+                                <div class="radio-tile-group-row">
+                                    <label><input type="radio" name="susp_d1" value="yes" onchange="window.toggleSection('susp-d1', true)"><div class="radio-tile-compact">Yes</div></label>
+                                    <label><input type="radio" name="susp_d1" value="no" checked onchange="window.toggleSection('susp-d1', false)"><div class="radio-tile-compact">No</div></label>
+                                </div>
+                            </div>
+
+                            <div id="susp-d1" class="conditional-section">
+                                <div class="date-calc-grid">
+                                    <div class="form-group">
+                                        <label>Suspension Date</label>
+                                        <div class="input-modern-wrapper">
+                                            <i class="fa-regular fa-calendar-xmark input-icon"></i>
+                                            <input type="text" class="alex-input-modern date-picker full-calc" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display:flex; gap:5px;">
+                                        <div style="flex:1;"><label style="font-size:0.7rem;">Years</label><input type="text" class="alex-input-modern years-calc" readonly style="text-align:center; padding:10px 5px; background:#F1F5F9;" placeholder="0"></div>
+                                        <div style="flex:1;"><label style="font-size:0.7rem;">Months</label><input type="text" class="alex-input-modern months-calc" readonly style="text-align:center; padding:10px 5px; background:#F1F5F9;" placeholder="0"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="nav-internal-row" style="justify-content: flex-end;">
+                                <button type="button" class="btn-internal-nav" onclick="window.switchTab('d2')">
+                                    Next Driver <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+
+                        </div> <div id="panel-d2" class="driver-panel" data-driver="d2">
+                            <h4 style="margin-bottom:15px; color:var(--alex-blue-accent);">Driver 2 Licensing</h4>
+                            <p style="text-align:center; color:#94A3B8;">(Fields repeated for Driver 2)</p>
+                            <div class="nav-internal-row" style="justify-content: space-between;">
+                                <button type="button" class="btn-internal-nav prev" onclick="window.switchTab('d1')"><i class="fa-solid fa-chevron-left"></i> Prev Driver</button>
+                            </div>
+                        </div>
+
+
+                        <div class="form-action" style="margin-top: 30px;">
+                            <button type="button" class="btn-glow-anim" id="btnNext">
+                                <span>Next Step</span>
+                                <i class="fa-solid fa-arrow-right-long"></i>
+                            </button>
+                            <div class="secure-badge">
+                                <i class="fa-solid fa-shield-halved"></i> License Verification
+                            </div>
+                        </div>
+            
+                    </form>
+                </div>
+                <div class="card-shadow-layer"></div>
+            </div>
+
+            <aside class="sidebar-col anim-entry" style="animation-delay: 0.2s;">
+                <div class="organic-box sidebar-note taped-note">
+                    <div class="washi-tape"></div>
+                    <h4 class="sidebar-title">Coverage Path</h4>
+                    
+                    <ul class="progress-list-sketch">
+                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Client Information</a></li>
+                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Drivers</a></li>
+                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Violations</a></li>
+                        <li class="active"><a href="#"><span class="sketch-circle"></span> Additional Info</a></li>
+                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Vehicle</a></li>
+                    </ul>
+                    
+                    <div class="discount-coupon-box">
+                        <i class="fa-solid fa-tags dc-icon"></i>
+                        <span class="dc-title">Potential Discounts</span>
+                        <span class="dc-amount">4 Found</span>
+                        <span class="dc-sub">Good driver discount applied!</span>
+                    </div>
+
+                    <div class="mini-tip">
+                        <div class="tip-icon"><i class="fa-regular fa-lightbulb"></i></div>
+                        <div>
+                            <strong>Alex Tip:</strong> Being licensed for 3+ years in the US significantly drops your rate. Foreign experience counts with some carriers!                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <div id="floating-menu-container">
+        <div class="floating-menu-list organic-box" id="megaMenu">
+            <h5>Quick Navigate</h5>
+            <ul><li><a href="#"><i class="fa-solid fa-car"></i> Car Insurance</a></li></ul>
+        </div>
+        <button class="floating-menu-btn js-toggle-mega-menu"><i class="fa-solid fa-bars-staggered"></i></button>
+    </div>
+    <div id="floating-chat-container">
+        <button class="chat-avatar-btn js-trigger-chat"><i class="fa-solid fa-robot"></i></button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="../js/script.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- GLOBAL FUNCTIONS ---
+            
+            window.switchTab = function(driverId) {
+                document.querySelectorAll('.driver-tab').forEach(t => t.classList.remove('active'));
+                const tabs = document.querySelectorAll('.driver-tab');
+                tabs.forEach(t => { if(t.getAttribute('onclick').includes(driverId)) t.classList.add('active'); });
+
+                document.querySelectorAll('.driver-panel').forEach(p => p.classList.remove('active'));
+                const target = document.getElementById(`panel-${driverId}`);
+                if(target) target.classList.add('active');
+            }
+
+            window.toggleSection = function(id, show) {
+                const el = document.getElementById(id);
+                if(el) {
+                    if(show) el.classList.add('is-visible');
+                    else el.classList.remove('is-visible');
+                }
+            }
+
+            window.toggleForeign = function(driverId, selectEl) {
+                const usBlock = document.getElementById(`us-block-${driverId}`);
+                const foreignSection = document.getElementById(`foreign-section-${driverId}`);
+                
+                if(selectEl.value !== 'None') {
+                    // SELLO
+                    usBlock.classList.add('is-disabled');
+                    usBlock.querySelectorAll('input').forEach(i => i.disabled = true);
+                    foreignSection.classList.add('is-visible');
+                } else {
+                    // Normal
+                    usBlock.classList.remove('is-disabled');
+                    usBlock.querySelectorAll('input').forEach(i => i.disabled = false);
+                    foreignSection.classList.remove('is-visible');
+                }
+            }
+
+            // --- DATE LOGIC ---
+
+            // Inicializar Flatpickr Básico
+            flatpickr(".date-picker", {
+                dateFormat: "m/d/Y", 
+                maxDate: "today",
+                disableMobile: "true",
+                allowInput: true,
+                onChange: function(selectedDates, dateStr, instance) {
+                    const input = instance.element;
+                    
+                    if(input.classList.contains('full-calc')) {
+                        calculateTimeSince(selectedDates[0], input);
+                    } else {
+                        calculateYears(selectedDates[0], input);
+                    }
+
+                    // Sync Master
+                    if(input.classList.contains('master-date')) {
+                        const panel = input.closest('.driver-panel');
+                        const usBlock = panel.querySelector('.us-license-group');
+                        
+                        if(!usBlock.classList.contains('is-disabled')) {
+                            const slaves = panel.querySelectorAll('.slave-date');
+                            slaves.forEach(slave => {
+                                if(slave._flatpickr) slave._flatpickr.setDate(selectedDates[0], true);
+                            });
+                        }
+                    }
+                }
+            });
+
+            function calculateYears(dateObj, inputElement) {
+                if(!dateObj) return;
+                const now = new Date();
+                let years = now.getFullYear() - dateObj.getFullYear();
+                const m = now.getMonth() - dateObj.getMonth();
+                if (m < 0 || (m === 0 && now.getDate() < dateObj.getDate())) {
+                    years--;
+                }
+                years = Math.max(0, years);
+
+                const grid = inputElement.closest('.date-calc-grid');
+                if(grid) {
+                    const yearInput = grid.querySelector('.years-calc');
+                    if(yearInput) yearInput.value = years;
+                }
+            }
+
+            function calculateTimeSince(dateObj, inputElement) {
+                if(!dateObj) return;
+                const now = new Date();
+                let months = (now.getFullYear() - dateObj.getFullYear()) * 12;
+                months -= dateObj.getMonth();
+                months += now.getMonth();
+                if (now.getDate() < dateObj.getDate()) months--;
+                
+                const y = Math.floor(months / 12);
+                const m = months % 12;
+
+                const grid = inputElement.closest('.date-calc-grid');
+                if(grid) {
+                    grid.querySelector('.years-calc').value = y;
+                    grid.querySelector('.months-calc').value = m;
+                }
+            }
+
+            // --- SUBMIT ---
+            document.getElementById('btnNext').addEventListener('click', (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('btnNext');
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+                setTimeout(() => {
+                    alert("Licensing Info Saved. Moving to Step 8.");
+                    window.location.href = "quote-8.html";
+                    btn.innerHTML = 'Next Step <i class="fa-solid fa-arrow-right-long"></i>';
+                }, 1000);
+            });
+
+        });
+    </script>
+
+</body>
+</html>
