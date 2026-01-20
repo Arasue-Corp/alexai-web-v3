@@ -125,6 +125,22 @@ html, body {
     border-color: var(--alex-blue-accent);
 }
 
+.app-video-wrapper {
+    max-width: 80%; 
+    width: 100%;
+    margin: 0 auto;  
+    position: relative;
+    z-index: 10;
+}
+
+/* Asegura que el video respete el ancho del wrapper */
+.app-video-wrapper video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 25px; /* Coincide con tu estilo orgánico */
+}
+
 /* =============================================
    4. HEADER & NAVIGATION
 ============================================= */
@@ -774,7 +790,7 @@ video.product-icon { filter: none !important; object-fit: contain; }
 /* =============================================
    12. STEP 2: VEHICLES & HIGH END UI
 ============================================= */
-.step-layout-wrapper { padding-bottom: 80px; align-items: flex-start; padding-top: 40px; }
+.step-layout-wrapper { padding-bottom: 80px; align-items: flex-start; }
 .step-grid-container { display: grid; grid-template-columns: 1fr 280px; gap: 40px; max-width: 1000px; width: 90%; margin: 0 auto; }
 .main-form-col { position: relative; perspective: 1000px; }
 .alex-input-group { margin-bottom: 20px; text-align: left; }

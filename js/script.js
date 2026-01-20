@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
         initQuoteTransition();
         initProductTriggers();
         initProductVideos();
+        initProductTriggersHome();
+        initProductTriggersRenters();
+
     }
 
     // 3. Lógica Step 1 (Formulario)
@@ -110,18 +113,43 @@ function initQuoteTransition() {
     });
 }
 
-function initProductVideos() {
-    document.querySelectorAll('.product-card').forEach(card => {
-        const video = card.querySelector('.js-hover-video');
-        if (!video) return;
-        card.addEventListener('mouseenter', () => video.play().catch(() => {}));
-        card.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+function initProductVideos() { // Puedes mantener el nombre o cambiarlo a initHoverVideos
+    // Seleccionamos TODOS los videos que tengan la clase js-hover-video
+    document.querySelectorAll('.js-hover-video').forEach(video => {
+        
+        // El disparador (trigger) será la tarjeta o la caja contenedora (organic-box)
+        // Si no encuentra ninguno, usa el propio video como disparador
+        const trigger = video.closest('.product-card') || video.closest('.organic-box') || video;
+
+        if (!trigger) return;
+
+        trigger.addEventListener('mouseenter', () => {
+            // Intentar reproducir (capturamos error por si el navegador bloquea)
+            video.play().catch(() => {}); 
+        });
+
+        trigger.addEventListener('mouseleave', () => {
+            video.pause();
+            video.currentTime = 0; // Reiniciar al principio
+        });
     });
 }
 
 function initProductTriggers() {
     document.querySelectorAll('.js-product-trigger').forEach(btn => {
-        btn.addEventListener('click', () => window.location.href = "quote/quote.html");
+        btn.addEventListener('click', () => window.location.href = "./quote/quote.html");
+    });
+}
+
+function initProductTriggersHome() {
+    document.querySelectorAll('.js-product-trigger-home').forEach(btn => {
+        btn.addEventListener('click', () => window.location.href = "./homeowners-quotation/index.html");
+    });
+}
+
+function initProductTriggersRenters() {
+    document.querySelectorAll('.js-product-trigger-renters').forEach(btn => {
+        btn.addEventListener('click', () => window.location.href = "./renters-quotation/index.html");
     });
 }
 

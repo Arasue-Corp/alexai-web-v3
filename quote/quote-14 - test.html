@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex AI - Smart Quote | Step 14</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+
+    <style>
+        /* =========================================
+           1. SETUP & VARIABLES
+           ========================================= */
+        :root {
+            /* Brand Palette */
+            --brand-blue: #009cff;
+            --brand-indigo: #514690;
+            --brand-pink: #e0c0ff;
+            --brand-gray: #999999;
+            --brand-dark: #2C3E50;
+            
+            /* UI Variables */
+            --bg-page: #F5F7FA;
+            --bg-card: #FFFFFF;
+            --border-color: #E2E8F0;
+            --shadow-subtle: 0 4px 20px rgba(81, 70, 144, 0.05);
+            /* Sombra Premium para las tarjetas */
+            --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+            --shadow-hover: 0 20px 25px -5px rgba(0, 156, 255, 0.15), 0 10px 10px -5px rgba(0, 156, 255, 0.04);
+            --shadow-selected: 0 0 0 4px rgba(0, 156, 255, 0.2); /* Ring Effect */
+            
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            
+            --grain-url: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");        }
+
+        body { 
+            background-color: var(--bg-page); 
+            font-family: 'Poppins', sans-serif; 
+            color: var(--brand-dark);
+            -webkit-font-smoothing: antialiased;
+            background-image: none; /* Remove sketch grid if present in global css */
+        }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes badgeDrop { 0% { transform: translateY(-20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+
+        /* =========================================
+           2. HEADER & LAYOUT
+           ========================================= */
+        .page-wrapper { max-width: 1440px; margin: 0 auto; padding: 40px 20px 120px; }
+
+        .main-header { text-align: center; margin-bottom: 50px; position: relative; z-index: 20; }
+
+        .title-sticker {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            padding: 12px 40px;
+            display: inline-flex; flex-direction: column; align-items: center;
+            box-shadow: var(--shadow-subtle);
+            position: relative; overflow: hidden;
+        }
+        .title-sticker::before {
+            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background-image: var(--grain-url); opacity: 0.6; pointer-events: none;
+        }
+        .title-sticker h1 { font-size: 1.8rem; font-weight: 700; color: var(--brand-indigo); margin: 0; line-height: 1.1; letter-spacing: -0.5px; }
+        .title-sticker span { color: var(--brand-blue); }
+        .title-subtitle { display: block; margin-top: 4px; font-size: 0.75rem; font-weight: 500; color: var(--brand-gray); letter-spacing: 1.5px; text-transform: uppercase; }
+
+        .wizard-container {
+            margin-bottom: 30px; padding: 30px 40px; background: white;
+            border: 1px solid var(--border-color); border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-subtle);
+        }
+        .wizard-top { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: 600; color: #64748B; font-size: 0.9rem;}
+        .wizard-title { font-size: 1rem; color: var(--brand-indigo); display: flex; align-items: center; gap: 10px; font-weight: 700; }
+        .wizard-title i { color: var(--brand-blue); }
+        
+        .progress-track { height: 6px; background: #F1F5F9; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+        .progress-fill { height: 100%; width: 100%; background: linear-gradient(90deg, var(--brand-indigo), var(--brand-blue)); border-radius: 10px; }
+        
+        .header-split { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 20px; border-top: 1px solid #F1F5F9; }
+        .header-split h3 { margin: 0; font-size: 1.8rem; font-weight: 700; color: var(--brand-dark); letter-spacing: -0.5px; }
+        .header-split p { margin: 0; text-align: right; font-size: 0.95rem; color: #64748B; font-weight: 400; }
+
+        .marketplace-grid { display: grid; grid-template-columns: 320px 1fr 300px; gap: 30px; align-items: start; }
+
+        /* =========================================
+           3. SIDEBARS
+           ========================================= */
+        .organic-panel {
+            background: white; border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg); padding: 25px; 
+            position: relative; box-shadow: var(--shadow-subtle); overflow: hidden;
+        }
+        .organic-panel::after { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background-image: var(--grain-url); pointer-events: none; z-index: 0; }
+
+        .washi-tape {
+            position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--brand-blue), var(--brand-indigo)); z-index: 10;
+        }
+
+        .sidebar-title { 
+            position: relative; z-index: 2; text-align: left; font-weight: 700; color: var(--brand-dark); 
+            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 25px; font-size: 0.85rem; 
+            padding-bottom: 10px; border-bottom: 2px solid #F1F5F9;
+        }
+
+        .config-sidebar { position: sticky; top: 20px; z-index: 10; } 
+        
+        .veh-nav { 
+            position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; 
+            background: white; padding: 12px; border-radius: var(--radius-sm); 
+            margin-bottom: 25px; border: 2px solid #F1F5F9; 
+        }
+        .veh-btn { border: none; background: none; color: var(--brand-blue); cursor: pointer; font-size: 1rem; transition: 0.2s; }
+        .veh-btn:hover { transform: scale(1.1); }
+        .veh-name { font-weight: 700; font-size: 0.8rem; color: var(--brand-indigo); text-transform: uppercase; }
+
+        .cov-section { position: relative; z-index: 2; margin-bottom: 25px; padding-top: 10px; }
+        .sec-title { font-size: 0.7rem; font-weight: 700; color: var(--brand-gray); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+
+        .cov-field { margin-bottom: 15px; }
+        .cov-label { display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; font-weight: 600; color: var(--brand-dark); margin-bottom: 6px; }
+        .cov-label i { color: var(--brand-blue); opacity: 0.7; }
+        
+        .cov-select, .custom-input {
+            width: 100%; padding: 10px 12px; font-size: 0.85rem; font-weight: 500; color: var(--brand-dark);
+            border: 2px solid #E2E8F0; border-radius: var(--radius-sm); background: white; cursor: pointer; transition: 0.2s;
+            font-family: 'Poppins', sans-serif; appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23514690'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 10px center; background-size: 16px;
+        }
+        .custom-input { background-image: none; }
+        .cov-select:hover, .custom-input:focus { border-color: var(--brand-blue); outline: none; }
+        .cov-select:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 3px rgba(0, 156, 255, 0.1); }
+
+        .radio-stack { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        .radio-opt { display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: #475569; cursor: pointer; }
+        .radio-opt input { margin-top: 3px; accent-color: var(--brand-blue); width: 16px; height: 16px; }
+        .radio-desc { font-size: 0.75rem; color: #94A3B8; margin-top: 2px; line-height: 1.4; }
+        
+        .nested-options { margin-left: 0; padding: 15px; background: #F8FAFC; border-radius: var(--radius-sm); margin-top: 10px; display: none; border: 1px solid #E2E8F0;}
+        .nested-options.active { display: block; animation: fadeInUp 0.3s; }
+
+        .btn-get-quote {
+            width: 100%; padding: 16px; background: #E2E8F0; color: #94A3B8;
+            border: none; border-radius: var(--radius-sm); font-weight: 700; text-transform: uppercase; font-size: 0.9rem;
+            margin-top: 25px; cursor: not-allowed; transition: all 0.3s ease; letter-spacing: 0.5px;
+            position: relative; z-index: 2;
+        }
+        .btn-get-quote.active { background: var(--brand-blue); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 156, 255, 0.3); }
+        .btn-get-quote.active:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 156, 255, 0.4); }
+
+        .summary-sidebar { z-index: 5; }
+        .summary-list { margin: 20px 0; font-size: 0.9rem; position: relative; z-index: 2; }
+        .sum-item { display: flex; justify-content: space-between; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed #E2E8F0; }
+        .sum-item:last-child { border-bottom: none; }
+        .sum-lbl { color: #64748B; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .sum-val { font-weight: 700; color: var(--brand-dark); }
+        .text-green { color: #10B981 !important; }
+
+        /* TOOLTIP */
+        .tooltip-container { position: relative; display: inline-block; margin-left: 5px; cursor: help; color: var(--brand-cyan); }
+        .tooltip-text {
+            visibility: hidden; width: 200px; background-color: var(--brand-purple); color: #fff; text-align: center;
+            border-radius: 6px; padding: 8px; position: absolute; z-index: 100; bottom: 125%; left: 50%;
+            margin-left: -100px; opacity: 0; transition: opacity 0.3s; font-size: 0.7rem; font-weight: 500;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); pointer-events: none;
+        }
+        .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
+
+        /* =========================================
+           4. OFFERS (THE HERO - REFINED)
+           ========================================= */
+        #offersContainer { display: flex; flex-direction: column; gap: 20px; }
+
+        .loading-box { 
+            text-align: center; padding: 80px; background: white; 
+            border-radius: var(--radius-lg); 
+            display: flex; flex-direction: column; align-items: center; gap: 20px; 
+            border: 1px solid var(--border-color); box-shadow: var(--shadow-subtle);
+        }
+        .spinner { width: 50px; height: 50px; border: 4px solid #E2E8F0; border-top-color: var(--brand-blue); border-radius: 50%; animation: spin 0.8s infinite linear; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* --- NEW CARD STYLES --- */
+        .offer-card {
+            background: white; 
+            border-radius: var(--radius-lg);
+            /* Sombra limpia y moderna */
+            box-shadow: var(--shadow-card); 
+            border: 1px solid var(--border-color);
+            position: relative; overflow: hidden;
+            /* Animación suave estilo iOS */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            animation: popIn 0.5s ease-out forwards;
+        }
+        
+        /* Hover Effect: Magnetic Lift */
+        .offer-card:hover { 
+            transform: translateY(-5px) scale(1.01); 
+            box-shadow: var(--shadow-hover); 
+            border-color: #BFDBFE; 
+            z-index: 5;
+        }
+
+        /* Selected State: Ring Effect */
+        .offer-card.selected { 
+            border-color: var(--brand-blue);
+            background: #F8FDFF; /* Tinte azul muy suave */
+            box-shadow: var(--shadow-selected); /* Anillo de luz */
+        }
+        .offer-card.selected::before {
+            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background-image: var(--grain-url); pointer-events: none; opacity: 0.5; z-index: 0;
+        }
+
+        /* Badge Animation */
+        .stamp-mark {
+            position: absolute; top: 15px; right: 15px; transform: none;
+            background: #10B981; color: white; font-weight: 800; font-size: 0.7rem;
+            padding: 5px 15px; border-radius: 20px; 
+            opacity: 0; pointer-events: none; z-index: 10;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
+            text-transform: uppercase; letter-spacing: 0.5px;
+            display: flex; align-items: center; gap: 5px;
+        }
+        .offer-card.selected .stamp-mark { 
+            opacity: 1; 
+            animation: badgeDrop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Layout */
+        .card-main { 
+            padding: 30px; 
+            display: grid; grid-template-columns: 90px 1fr 180px; gap: 30px; align-items: center; 
+            position: relative; z-index: 1;
+        }
+        
+        /* Logo: Improved container */
+        .logo-col {
+            display: flex; align-items: center; justify-content: center;
+            height: 60px; width: 90px;
+            background: white; border: 1px solid #F1F5F9; border-radius: 12px;
+            transition: 0.3s;
+        }
+        .logo-col img { max-width: 80%; max-height: 80%; object-fit: contain; filter: grayscale(100%); opacity: 0.6; transition: 0.3s; }
+        .offer-card:hover .logo-col { border-color: #E2E8F0; }
+        .offer-card:hover .logo-col img, .offer-card.selected .logo-col img { filter: grayscale(0%); opacity: 1; }
+        
+        .info-col h4 { font-size: 1.25rem; font-weight: 700; color: var(--brand-dark); margin: 0 0 8px 0; }
+        .coverage-tags { color: var(--brand-blue); font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .liability-tag { font-size: 0.75rem; font-weight: 600; color: #64748B; background: #F1F5F9; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-top: 8px; border: 1px solid #E2E8F0; }
+
+        /* --- PRICE COLUMN EMPHASIS --- */
+        .price-col { text-align: right; min-width: 150px; }
+        
+        .down-row { 
+            font-size: 0.75rem; color: #64748B; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; 
+            background: #F1F5F9; display: inline-block; padding: 3px 8px; border-radius: 4px;
+        }
+        .down-row strong { color: var(--brand-dark); font-weight: 800; }
+        
+        .monthly-row { position: relative; display: block; }
+        
+        /* El precio Grande y con Gradiente */
+        .price-big { 
+            font-size: 2.6rem; 
+            font-weight: 900; /* Extra bold */
+            background: linear-gradient(135deg, var(--brand-indigo) 0%, var(--brand-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* Fallback */
+            color: var(--brand-indigo);
+            line-height: 0.9;
+            letter-spacing: -1.5px;
+            display: inline-block;
+        }
+        
+        .offer-card.selected .price-big { 
+            /* En selected se mantiene el gradiente, pero quizás más brillante si se desea */
+            filter: drop-shadow(0 2px 4px rgba(0, 156, 255, 0.2));
+        }
+        
+        .per-mo { font-size: 0.8rem; color: #94A3B8; display: block; margin-top: 4px; font-weight: 600; text-align: right; letter-spacing: 0.5px; }
+
+        /* Actions Footer */
+        .card-actions { 
+            display: flex; gap: 1px; background: #F8FAFC; border-top: 1px solid #F1F5F9; 
+            position: relative; z-index: 1;
+        }
+        .action-btn { 
+            flex: 1; padding: 18px; border: none; background: transparent; 
+            font-size: 0.85rem; font-weight: 700; color: #64748B; 
+            cursor: pointer; transition: 0.2s; font-family: 'Poppins', sans-serif;
+            letter-spacing: 0.5px; text-transform: uppercase;
+        }
+        .action-btn:hover { background: #F0F9FF; color: var(--brand-blue); }
+        .action-btn.select-btn { 
+            color: var(--brand-blue); border-left: 1px solid #F1F5F9; 
+        }
+        .offer-card.selected .select-btn { 
+            background: var(--brand-blue); color: white; 
+        }
+        .offer-card.selected .select-btn:hover { background: #0088DD; }
+
+        /* Expandable Details */
+        .details-expand { 
+            display: none; background: #F8FAFC; border-top: 1px solid #E2E8F0; 
+            padding: 30px; font-size: 0.9rem; animation: fadeInUp 0.3s ease-out; 
+            position: relative; z-index: 1;
+        }
+        .details-expand.active { display: block; }
+        
+        .company-header { display: flex; gap: 30px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #E2E8F0; color: var(--brand-dark); font-weight: 600; }
+        .det-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .veh-col h5 { 
+            display: flex; align-items: center; gap: 10px; margin: 0 0 15px 0; 
+            color: var(--brand-indigo); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; 
+        }
+        .det-row { display: flex; justify-content: space-between; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px; margin-bottom: 10px; font-size: 0.85rem; }
+        .det-lbl { font-weight: 500; color: #64748B; }
+        .det-val { font-weight: 600; color: var(--brand-dark); }
+
+        /* =========================================
+           5. RIGHT COLUMN ACTIONS
+           ========================================= */
+        .desktop-btns { display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 2; margin-top: 20px;}
+        .btn-action { 
+            width: 100%; padding: 16px; border-radius: var(--radius-sm); border: none; 
+            font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; 
+            display: flex; justify-content: center; align-items: center; gap: 12px;
+            font-family: 'Poppins', sans-serif; letter-spacing: 0.5px;
+        }
+        
+        .btn-next { background: #E2E8F0; color: #94A3B8; pointer-events: none; opacity: 0.7; }
+        .btn-next.active { 
+            background: linear-gradient(135deg, #10B981, #059669); color: white; 
+            pointer-events: auto; opacity: 1; 
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3); 
+        }
+        .btn-next.active:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4); }
+        
+        .btn-compare { background: white; border: 2px solid #E2E8F0; color: #94A3B8; pointer-events: none; opacity: 0.6; }
+        .btn-compare.active { 
+            background: white; border-color: var(--brand-blue); color: var(--brand-blue); 
+            pointer-events: auto; opacity: 1; box-shadow: 0 4px 10px rgba(0, 156, 255, 0.1);
+        }
+        .btn-compare.active:hover { background: #F0F9FF; }
+
+        .btn-update { background: transparent; border: 1px solid transparent; color: #64748B; font-size: 0.85rem; }
+        .btn-update:hover { color: var(--brand-indigo); text-decoration: underline; }
+
+        /* =========================================
+           6. RESPONSIVE & MOBILE UI
+           ========================================= */
+        .mobile-filter-bar {
+            display: none; position: sticky; top: 0; z-index: 900;
+            background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+            padding: 15px 20px; border-bottom: 1px solid #E2E8F0;
+            margin: -40px -20px 30px -20px;
+        }
+        .btn-mobile-filter {
+            width: 100%; padding: 12px; background: white; border: 2px solid var(--brand-indigo);
+            color: var(--brand-indigo); border-radius: var(--radius-sm); font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+
+        .mobile-dock {
+            display: none; position: fixed; bottom: 0; left: 0; width: 100%;
+            background: white; border-top: 1px solid #E2E8F0; padding: 20px;
+            z-index: 1000; box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
+        }
+        .mobile-dock-row { display: flex; flex-direction: column; gap: 15px; }
+        .mobile-dock-sub { display: flex; gap: 15px; }
+
+        .modal-overlay-quote { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(44, 62, 80, 0.7); backdrop-filter: blur(8px);
+            z-index: 2000; display: none; justify-content: center; align-items: center; 
+            animation: fadeInUp 0.3s ease-out;
+        }
+        .modal-overlay-quote.active { display: flex; }
+        .comp-card { 
+            background: white; width: 90%; max-width: 900px; border-radius: var(--radius-lg); 
+            overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.25); 
+        }
+        .comp-header { 
+            padding: 25px 30px; background: white; border-bottom: 1px solid #E2E8F0; 
+            display: flex; justify-content: space-between; align-items: center; 
+        }
+        .c-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .c-table th, .c-table td { padding: 18px 25px; border-bottom: 1px solid #F1F5F9; text-align: center; }
+        .c-table th { background: #F8FAFC; color: var(--brand-indigo); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;}
+        .c-table td.feat-col { text-align: left; background: white; font-weight: 600; color: #64748B; width: 30%; border-right: 1px solid #F1F5F9;}
+        .c-table tr:last-child td { border-bottom: none; }
+
+        #toast-container { position: fixed; top: 100px; right: 30px; z-index: 10000; }
+        .alex-toast { 
+            background: white; border-left: 5px solid var(--brand-blue); 
+            padding: 15px 25px; border-radius: 4px; margin-bottom: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            font-weight: 600; color: var(--brand-dark); 
+            display: none; align-items: center; gap: 15px; 
+            transform: translateX(50px); opacity: 0; transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .alex-toast.show { display: flex; transform: translateX(0); opacity: 1; }
+        .alex-toast i { color: var(--brand-blue); font-size: 1.2rem; }
+
+        @media (max-width: 1200px) { 
+            .marketplace-grid { grid-template-columns: 280px 1fr; } 
+            .summary-sidebar { display: none; } 
+            .mobile-dock { display: block; } 
+        }
+        @media (max-width: 900px) { 
+            .page-wrapper { padding-top: 20px; }
+            .marketplace-grid { grid-template-columns: 1fr; gap: 20px; } 
+            .config-sidebar { display: none; } 
+            
+            .config-sidebar.mobile-active { 
+                display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
+                z-index: 2500; overflow-y: auto; border-radius: 0; border: none; padding-top: 80px;
+            }
+            .mobile-filter-bar { display: block; }
+            
+            .card-main { grid-template-columns: 1fr; text-align: center; gap: 15px; padding: 25px 20px; } 
+            .logo-col { margin: 0 auto; width: 120px; }
+            .price-col { text-align: center; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #E2E8F0; width: 100%; } 
+            .per-mo { text-align: center; }
+            .det-grid { grid-template-columns: 1fr; gap: 30px; }
+            .title-sticker h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body class="quote-page-body">
+
+    <div id="toast-container"></div>
+
+       <div class="top-header">
+        <div class="container top-header-flex">
+            <div class="top-contact">
+                <a href="tel:+1800555ALEX"><i class="fa-solid fa-phone"></i> +1 480 630 9630</a>
+                <a href="mailto:hello@alexai.com"><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</a>
+                <span><i class="fa-solid fa-location-dot"></i> 3101 N Central Ave ste 1174, Phoenix, AZ</span>
+            </div>
+            <div class="top-social">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <div class="container header-wrapper">
+            <a href="https://alexai.cloud/" class="logo-container">
+                <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="site-logo">
+            </a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../quote/quote.html" class="js-trigger-quote">Quote</a></li>
+                    <li class="has-dropdown">
+                        <a href="../index.html#products">Products <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu organic-box">
+                            <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#carriers">Carriers</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+
+                    <li class="mobile-only-nav"><a href="../ambassadors/documents.html">Become an Ambassador</a></li>
+                    <li class="mobile-only-nav"><a href="../quote/quote.html" style="color: var(--alex-blue-accent);">Check Prices</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="../ambassadors/index.html" class="btn btn-outline btn-sm">Become an Ambassador</a>
+                <a href="../quote/quote.html" class="btn btn-solid btn-sm js-trigger-quote">Check Prices</a>
+            </div>
+            
+             <button class="mobile-menu-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        </div>
+    </header>
+
+    <nav class="quote-nav">
+        <a href="quote-13.html" class="nav-back-btn"><div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div><span>Specs</span></a>
+        <div class="lang-switch-modern"><span class="lang-opt">ES</span><span class="lang-opt active">EN</span></div>
+    </nav>
+
+        <div class="main-header">
+            <div class="title-sticker">
+                <h1>Alex AI <span>Smart Compare</span></h1>
+                <span class="title-subtitle">Powered by AI, handled by humans.</span>
+            </div>
+        </div>
+
+    <div class="page-wrapper">
+        <div class="wizard-container">
+            <div class="wizard-top">
+                <div class="wizard-title"><i class="fa-solid fa-layer-group"></i> The Marketplace</div>
+                <div>Step 14 of 14</div>
+            </div>
+            <div class="progress-track"><div class="progress-fill"></div></div>
+            <div class="header-split">
+                <h3>Select your plan.</h3>
+                <p>Compare tailored quotes from top carriers.</p>
+            </div>
+        </div>
+
+        <div class="mobile-filter-bar">
+            <button class="btn-mobile-filter" onclick="toggleFilters()">
+                <i class="fa-solid fa-sliders"></i> Edit Coverage & Filters
+            </button>
+        </div>
+
+        <div class="marketplace-grid">
+            
+            <aside class="organic-panel config-sidebar" id="configSidebar">
+                <button onclick="toggleFilters()" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:2rem; cursor:pointer;" id="closeFiltersBtn">&times;</button>
+
+                <div class="washi-tape"></div>
+                <div class="sidebar-title">Coverages Configuration</div>
+                
+                <div class="veh-nav">
+                    <button class="veh-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                    <span class="veh-name">2019 NISSAN TITAN S</span>
+                    <button class="veh-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <div class="cov-field">
+                    <label class="cov-label">Coverage Selected <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Choose your protection level</span></i></label>
+                    <div class="radio-stack">
+                        <label class="radio-opt"><input type="radio" name="cov_mode" value="liability" class="recalc"> Liability Only</label>
+                        <label class="radio-opt"><input type="radio" name="cov_mode" value="comp_coll" checked class="recalc"> Comprehensive & Collision</label>
+                        <label class="radio-opt"><input type="radio" name="cov_mode" value="comp" class="recalc"> Comprehensive</label>
+                    </div>
+                </div>
+
+                <div id="deductibleSection">
+                    <div class="section-break"></div>
+                    <div class="sec-title">Collision & Comprehensive</div>
+                    
+                    <div class="cov-field" id="collGroup">
+                        <label class="cov-label">Collision Deductible <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">You pay this amount for repairs</span></i></label>
+                        <select class="cov-select recalc">
+                            <option>No coverage</option><option>100</option><option>250</option><option>500</option><option selected>1000</option><option>2000</option>
+                        </select>
+                    </div>
+                    <div class="cov-field" id="compGroup">
+                        <label class="cov-label">Comprehensive Ded. <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Theft, fire, glass, weather</span></i></label>
+                        <select class="cov-select recalc">
+                            <option>No coverage</option><option>100</option><option>250</option><option>500</option><option selected>1000</option><option>2000</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section-break"></div>
+                <div class="sec-title">Liability Coverage</div>
+                
+                <div class="radio-stack">
+                    <label class="radio-opt">
+                        <input type="radio" name="liab_mode" value="state" class="recalc"> 
+                        <div>
+                            <span>State Minimum ($25/50/15)</span>
+                            <div class="radio-desc">Legal minimum. Good only if price sensitive.</div>
+                        </div>
+                    </label>
+                    <label class="radio-opt">
+                        <input type="radio" name="liab_mode" value="custom" checked class="recalc"> 
+                        <span>Your Protection (Recommended)</span>
+                    </label>
+                </div>
+
+                <div id="customLiabilityOptions" class="nested-options active">
+                    <div class="cov-field">
+                        <label class="cov-label">Bodily Injury <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Injuries to others</span></i></label>
+                        <select class="cov-select recalc">
+                            <option>25K / 50K</option><option>50K / 100K</option><option selected>100K / 300K</option><option>250K / 500K</option><option>500K / 500K</option>
+                        </select>
+                    </div>
+                    <div class="cov-field">
+                        <label class="cov-label">Property Damage <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Damage to other cars/property</span></i></label>
+                        <select class="cov-select recalc">
+                            <option>15K</option><option>25K</option><option selected>50K</option><option>100K</option><option>500K</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section-break"></div>
+                <div class="sec-title">Medical & Protection</div>
+                
+                <div class="cov-field"><label class="cov-label">Medical Payments <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Medical bills for you</span></i></label>
+                    <select class="cov-select recalc"><option>No coverage</option><option>500</option><option>1000</option><option>5000</option><option>10000</option></select>
+                </div>
+                <div class="cov-field"><label class="cov-label">Uninsured BI <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Hit by uninsured driver</span></i></label>
+                    <select class="cov-select recalc"><option>No coverage</option><option>25/50</option><option>50/100</option><option selected>100/300</option></select>
+                </div>
+                <div class="cov-field"><label class="cov-label">Underinsured BI <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Hit by underinsured driver</span></i></label>
+                    <select class="cov-select recalc"><option>No coverage</option><option>25/50</option><option>50/100</option><option selected>100/300</option></select>
+                </div>
+                <div class="cov-field"><label class="cov-label">Accidental Death <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Death benefit</span></i></label>
+                    <select class="cov-select recalc"><option>No coverage</option><option>5000</option><option>10000</option></select>
+                </div>
+
+                <div class="section-break"></div>
+                <div class="sec-title">Extras</div>
+                
+                <div class="cov-field"><label class="cov-label">Roadside Assistance <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Towing & Labor</span></i></label>
+                    <select class="cov-select recalc"><option>No Covg</option><option>50</option><option>75</option><option>100</option></select>
+                </div>
+                <div class="cov-field"><label class="cov-label">Car Rental <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Reimbursement per day</span></i></label>
+                    <select class="cov-select recalc"><option>No Covg</option><option>30</option><option>40</option><option>50</option></select>
+                </div>
+                <div class="cov-field"><label class="cov-label">Gap Coverage</label>
+                    <select class="cov-select recalc"><option>No</option><option>Yes</option></select>
+                </div>
+                <div class="cov-field"><label class="cov-label">Custom Equipment</label>
+                    <input type="number" class="custom-input recalc" placeholder="$0">
+                </div>
+                <div class="cov-field"><label class="cov-label">Safety Features</label>
+                    <select class="cov-select recalc"><option>No</option><option>Yes</option></select>
+                </div>
+                
+                <div class="cov-field" style="margin-top:20px;">
+                    <label class="cov-label">Policy Length</label>
+                    <input type="text" class="custom-input" value="6 months" disabled style="background:#F1F5F9; font-weight:700; color:#94A3B8;">
+                </div>
+
+                <button id="btnRecalc" class="btn-get-quote">UPDATE QUOTES</button>
+            </aside>
+
+            <div id="offersContainer">
+                <div id="loader" class="loading-box">
+                    <div class="spinner"></div>
+                    <h4 style="color:var(--brand-dark); font-weight: 700;">Analyzing Carriers...</h4>
+                    <p style="font-size:0.85rem; color:#64748B;">AI is comparing 12 data points</p>
+                </div>
+            </div>
+
+            <aside class="organic-panel summary-sidebar">
+                <div class="washi-tape" style="background: linear-gradient(90deg, #e0c0ff, #514690);"></div>
+                <div class="sidebar-title">Quote Summary</div>
+                
+                <div class="summary-list">
+                    <div class="sum-item"><span class="sum-lbl">Drivers</span><span class="sum-val">2</span></div>
+                    <div class="sum-item"><span class="sum-lbl">Vehicles</span><span class="sum-val">2</span></div>
+                    <div class="sum-item"><span class="sum-lbl">Lienholders</span><span class="sum-val">1</span></div>
+                    
+                    <div class="sum-item text-green" style="margin-top: 10px;">
+                        <span class="sum-lbl text-green"><i class="fa-solid fa-leaf"></i> Paperless</span> 
+                        <span class="sum-val text-green">Applied</span>
+                    </div>
+                    <div class="sum-item text-green">
+                        <span class="sum-lbl text-green"><i class="fa-solid fa-users"></i> Multi-Car</span> 
+                        <span class="sum-val text-green">Applied</span>
+                    </div>
+                </div>
+
+                <div class="desktop-btns action-btns">
+                    <button class="btn-action btn-next js-btn-next">PROCEED TO CHECKOUT <i class="fa-solid fa-arrow-right"></i></button>
+                    <button class="btn-action btn-compare js-btn-compare">COMPARE SELECTED <i class="fa-solid fa-scale-balanced"></i></button>
+                    <button class="btn-action btn-update js-btn-update" onclick="alert('Redirecting...')">EDIT INFORMATION</button>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <div class="mobile-dock">
+        <div class="mobile-dock-row">
+            <button class="btn-action btn-next js-btn-next">NEXT STEP <i class="fa-solid fa-arrow-right"></i></button>
+            <div class="mobile-dock-sub">
+                <button class="btn-action btn-compare js-btn-compare" style="flex:1;">COMPARE</button>
+                <button class="btn-action btn-update js-btn-update" onclick="alert('Redirecting...')" style="flex:1;">EDIT</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="compareModal" class="modal-overlay-quote">
+        <div class="comp-card">
+            <div class="comp-header">
+                <h3 style="margin:0; color:var(--brand-dark); font-weight: 700;">Plan Comparison</h3>
+                <button onclick="closeModal()" style="border:none; background:none; font-size:2rem; cursor:pointer; color: #94A3B8;">&times;</button>
+            </div>
+            <div style="padding:0; max-height:70vh; overflow-y:auto;">
+                <table class="c-table">
+                    <thead><tr><th class="feat-col">Features</th><th>CoverCube</th><th>Kemper</th></tr></thead>
+                    <tbody>
+                        <tr><td class="feat-col">Down Payment</td><td style="font-weight:700;">$3,920.22</td><td>$900.00</td></tr>
+                        <tr><td class="feat-col">Monthly Payment</td><td style="color:var(--brand-blue); font-weight:800;">$0.00</td><td style="color:var(--brand-blue); font-weight:800;">$661.64</td></tr>
+                        <tr><td class="feat-col">Term</td><td>6 Months</td><td>6 Months</td></tr>
+                        <tr><td class="feat-col">BI Limits</td><td>100/300</td><td>100/300</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+        <footer id="contact" class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <a href="../index.html" style="display: block; margin-bottom: 20px;">
+                    <img src="../assets/img/Logo-alexai-main.png" 
+                        alt="Alex AI Insurtech Logo" 
+                        style="max-width: 160px; height: auto; filter: brightness(0) invert(1);">
+                </a>
+                <p style="color: rgba(255,255,255,0.9); font-weight: 500;">
+                    Smart insurance for modern life. Powered by intelligence, driven by humans.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Products</h5>
+                <ul class="footer-links">
+                    <li><a href="../quote/quote.html">Car Insurance</a></li>
+                    <li><a href="../homeowners/index.html">Home Insurance</a></li>
+                    <li><a href="../renters/index.html">Renters Insurance</a></li>
+                    <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Company</h5>
+                <ul class="footer-links">
+                    <li><a href="https://www.instagram.com/alexai.insurtech.usa/">About Us</a></li>
+                    <li><a href="../ambassadors/index.html">Ambassadors</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Contact & Legal</h5>
+                <ul class="footer-links contact-links">
+                    <li><i class="fa-solid fa-phone"></i> +1 480-630-9630</li>
+                    <li><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</li>
+                    <li><a href="../terms-conditions/index.html">Terms of Service</a></li>
+                    <li><a href="../privacy-policy/index.html">Privacy Policy</a></li>
+                </ul>
+                <div class="app-buttons-row" style="display:flex; gap:15px; flex-wrap:wrap;">
+                    <a href="https://apps.apple.com/us/app/alex-ai-insurtech-app/id6752793999" class="btn-app-store">
+                        <i class="fa-brands fa-apple"></i>
+                        <div>
+                            <span class="small-txt">Download on the</span>
+                            <span class="big-txt">App Store</span>
+                        </div>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=cloud.alexai.movil&pcampaignid=web_share" class="btn-app-store">
+                        <i class="fa-brands fa-google-play"></i>
+                        <div>
+                            <span class="small-txt">Get it on</span>
+                            <span class="big-txt">Google Play</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="container copyright-row">
+             <p>&copy; 2026 Alex AI Insurtech. All rights reserved.</p>
+             <div class="social-links">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Alex-AI-Insurtech" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="floating-menu-container">
+        <div class="floating-menu-list organic-box" id="megaMenu">
+            <h5>Quick Navigate</h5>
+            <ul>
+                <li><a href="../quote/quote.html"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
+                <li><a href="../homeowners/index.html"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
+                <li><a href="../renters/index.html"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
+                <li><a href="../alex-sign/index.html"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
+                <li class="divider"></li>
+                <li><a href="../blog/index.html"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
+                <li><a href="../contact/index.html"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
+            </ul>
+        </div>
+        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open quick menu">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+    </div>
+
+    <div id="floating-chat-container">
+        <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
+            <i class="fa-solid fa-robot"></i>
+        </button>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const offers = [
+                { id: 1, logo: '../assets/img/Carrier-covercube-2.jpg', carrier: 'CoverCube', plan: 'Full Covercube', down: '3,920.22', monthly: '0.00' },
+                { id: 2, logo: '../assets/img/Carrier-kemper.jpg', carrier: 'Kemper', plan: 'Kemper Auto Flex', down: '870.32', monthly: '661.64' },
+                { id: 3, logo: '../assets/img/Carrier-just.jpg', carrier: 'Just', plan: 'Standard Plan', down: '900.00', monthly: '710.00' },
+                { id: 4, logo: '../assets/img/Carrier-clearcover.png', carrier: 'Clearcover', plan: 'Economy', down: '800.00', monthly: '640.00' }
+            ];
+
+            const container = document.getElementById('offersContainer');
+            const loader = document.getElementById('loader');
+            window.selectedIds = [];
+
+            setTimeout(() => { loader.style.display = 'none'; renderOffers(); }, 1500);
+
+            // LOGICA LEFT COLUMN (Show/Hide Fields)
+            const covModeRadios = document.getElementsByName('cov_mode');
+            const dedSec = document.getElementById('deductibleSection');
+            const collGrp = document.getElementById('collGroup');
+            
+            covModeRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    const val = radio.value;
+                    if(val === 'liability') { dedSec.style.display = 'none'; }
+                    else if(val === 'comp') { dedSec.style.display = 'block'; collGrp.style.display = 'none'; }
+                    else { dedSec.style.display = 'block'; collGrp.style.display = 'block'; }
+                    activateRecalc();
+                });
+            });
+
+            const liabRadios = document.getElementsByName('liab_mode');
+            const customLiab = document.getElementById('customLiabilityOptions');
+            liabRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    customLiab.classList.toggle('active', radio.value === 'custom');
+                    activateRecalc();
+                });
+            });
+
+            function showToast(msg) {
+                const toast = document.createElement('div');
+                toast.className = 'alex-toast show';
+                toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${msg}</span>`;
+                document.getElementById('toast-container').appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            }
+
+            function renderOffers() {
+                container.innerHTML = '';
+                offers.forEach(o => {
+                    const div = document.createElement('div');
+                    div.className = 'offer-card';
+                    div.setAttribute('data-id', o.id);
+                    div.innerHTML = `
+                        <div class="stamp-mark"><i class="fa-solid fa-check"></i> SELECTED</div>
+                        
+                        <div class="card-main">
+                            <div class="logo-col"><img src="${o.logo}" class="carrier-logo"></div>
+                            <div class="info-col">
+                                <h4>${o.plan}</h4>
+                                <div class="coverage-tags">BI | PD | UM | MED | COMP | COLL</div>
+                                <div class="liability-tag">Liability: $100k / $300k / $50k</div>
+                            </div>
+                            <div class="price-col">
+                                <div class="down-row">Down Payment: <strong>$${o.down}</strong></div>
+                                <div class="monthly-row">
+                                    <div class="highlight-bg">
+                                        <span class="price-big">$${o.monthly}</span>
+                                    </div>
+                                    <span class="per-mo">Per Month</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-actions">
+                            <button class="action-btn" onclick="toggleDetails(${o.id})">View Details</button>
+                            <button class="action-btn select-btn" onclick="toggleSel(${o.id}, this)">Select Plan</button>
+                        </div>
+
+                        <div id="dtl-${o.id}" class="details-expand">
+                            <div class="company-header">
+                                <span>Company: <strong>${o.carrier}</strong></span>
+                                <span>Product: <strong>${o.plan}</strong></span>
+                            </div>
+                            <div class="det-grid">
+                                <div class="veh-col">
+                                    <h5><i class="fa-solid fa-car"></i> 2019 NISSAN TITAN S</h5>
+                                    <div class="det-row"><span class="det-lbl">VIN</span><span class="det-val">1N6AA...</span></div>
+                                    <div class="det-row"><span class="det-lbl">Comp Ded</span><span class="det-val">$1,000 | $219.48</span></div>
+                                    <div class="det-row"><span class="det-lbl">Coll Ded</span><span class="det-val">$1,000 | $1,021</span></div>
+                                    <div class="det-row"><span class="det-lbl">Towing</span><span class="det-val">$90</span></div>
+                                </div>
+                                <div class="veh-col">
+                                    <h5><i class="fa-solid fa-car"></i> 2022 GMC CANYON</h5>
+                                    <div class="det-row"><span class="det-lbl">Comp Ded</span><span class="det-val">$500 | $132.23</span></div>
+                                    <div class="det-row"><span class="det-lbl">Coll Ded</span><span class="det-val">$500 | $1,130.26</span></div>
+                                    <div class="det-row"><span class="det-lbl">Towing</span><span class="det-val">No Cov</span></div>
+                                </div>
+                            </div>
+                            <div style="text-align:right; margin-top:15px;">
+                                <button onclick="toggleDetails(${o.id})" style="background:none; border:none; color:var(--brand-blue); font-weight:700; cursor:pointer;">Close Details</button>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+
+            window.toggleDetails = id => document.getElementById(`dtl-${id}`).classList.toggle('active');
+            
+            window.toggleSel = function(id, btn) {
+                const card = document.querySelector(`.offer-card[data-id="${id}"]`);
+                if(window.selectedIds.includes(id)) {
+                    window.selectedIds = window.selectedIds.filter(i => i !== id);
+                    card.classList.remove('selected');
+                    btn.textContent = 'Select Plan';
+                } else {
+                    window.selectedIds.push(id);
+                    card.classList.add('selected');
+                    btn.textContent = 'Unselect';
+                    showToast('Plan Added to Comparison');
+                }
+                updateBtns();
+            }
+
+            window.updateBtns = function() {
+                const nextBtns = document.querySelectorAll('.js-btn-next');
+                const compBtns = document.querySelectorAll('.js-btn-compare');
+                
+                nextBtns.forEach(b => b.classList.remove('active'));
+                compBtns.forEach(b => b.classList.remove('active'));
+
+                // LOGICA ESTRICTA DE BOTONES
+                if (window.selectedIds.length === 1) {
+                    nextBtns.forEach(b => b.classList.add('active'));
+                } else if (window.selectedIds.length >= 2) {
+                    compBtns.forEach(b => b.classList.add('active'));
+                }
+            }
+
+            // Mobile Filters Logic
+            window.toggleFilters = function() {
+                const sb = document.getElementById('configSidebar');
+                sb.classList.toggle('mobile-active');
+                document.getElementById('closeFiltersBtn').style.display = sb.classList.contains('mobile-active') ? 'block' : 'none';
+            }
+
+            function activateRecalc() { document.getElementById('btnRecalc').classList.add('active'); }
+            document.querySelectorAll('.recalc').forEach(el => el.addEventListener('change', activateRecalc));
+            document.getElementById('btnRecalc').addEventListener('click', function() {
+                if(!this.classList.contains('active')) return;
+                this.classList.remove('active');
+                container.innerHTML = '';
+                document.getElementById('loader').style.display = 'flex';
+                document.getElementById('configSidebar').classList.remove('mobile-active'); // Close mobile
+                setTimeout(() => { document.getElementById('loader').style.display = 'none'; renderOffers(); }, 1500);
+            });
+
+            // Modals & Next
+            document.querySelectorAll('.js-btn-compare').forEach(btn => btn.addEventListener('click', () => { if(btn.classList.contains('active')) document.getElementById('compareModal').classList.add('active'); }));
+            window.closeModal = () => document.getElementById('compareModal').classList.remove('active');
+            document.querySelectorAll('.js-btn-next').forEach(btn => btn.addEventListener('click', () => { if(btn.classList.contains('active')) alert("Proceeding to Checkout"); }));
+        });
+    </script>
+</body>
+</html>

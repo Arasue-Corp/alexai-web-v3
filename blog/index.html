@@ -87,6 +87,9 @@
                         <a href="../index.html#products">Products <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
                         <ul class="dropdown-menu organic-box">
                             <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                            <li><a href="../homeowners/index.html">Homeowners Insurance</a></li>
+                            <li><a href="../renters/index.html">Renters Insurance</a></li>
+                            <li><a href="../contact/index.html">Others Insurance</a></li>
                         </ul>
                     </li>
                     <li><a href="../index.html#carriers">Carriers</a></li>
@@ -121,7 +124,7 @@
         <section class="section-padding bg-off-white" style="padding-top: 40px;">
             <div class="container">
                 
-                <div class="grid-3">
+                <div class="grid-3" id="blog-grid">
                     
                     <article class="blog-card organic-box">
                         <div class="blog-img">
@@ -329,7 +332,7 @@
 
                 </div>
 
-                <nav class="pagination">
+                <nav class="pagination" id="pagination-controls">
                     <a href="#" class="page-numbers prev-page">&laquo;</a>
                     <a href="#" class="page-numbers current">1</a>
                     <a href="#" class="page-numbers">2</a>
@@ -445,6 +448,93 @@
                 if(bubble) bubble.classList.add('is-visible'); 
             }, 1000);
         });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        // CONFIGURACIÓN
+        const itemsPerPage = 3; // Cantidad de artículos por página
+        const blogContainer = document.getElementById('blog-grid');
+        const paginationContainer = document.getElementById('pagination-controls');
+        
+        if (!blogContainer || !paginationContainer) return;
+
+        const cards = Array.from(blogContainer.getElementsByClassName('blog-card'));
+        const totalPages = Math.ceil(cards.length / itemsPerPage);
+        let currentPage = 1;
+
+        // Función para mostrar la página actual
+        function showPage(page) {
+            if (page < 1) page = 1;
+            if (page > totalPages) page = totalPages;
+            currentPage = page;
+
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+
+            // Ocultar todos y mostrar solo el rango correspondiente
+            cards.forEach((card, index) => {
+                if (index >= start && index < end) {
+                    card.style.display = 'flex'; // Usamos flex porque tu CSS original usa grid/flex
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            updatePaginationButtons();
+            
+            // Scroll suave hacia arriba al cambiar de página
+            const headerOffset = 100;
+            const elementPosition = blogContainer.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+        }
+
+        // Función para generar los botones
+        function updatePaginationButtons() {
+            paginationContainer.innerHTML = '';
+
+            // Botón "Anterior" («)
+            const prevBtn = document.createElement('a');
+            prevBtn.href = '#';
+            prevBtn.innerHTML = '&laquo;';
+            prevBtn.className = 'page-numbers';
+            if (currentPage === 1) prevBtn.style.pointerEvents = 'none'; // Desactivar si es la 1ra
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage(currentPage - 1);
+            });
+            paginationContainer.appendChild(prevBtn);
+
+            // Botones de números (1, 2, 3...)
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('a');
+                btn.href = '#';
+                btn.textContent = i;
+                btn.className = `page-numbers ${i === currentPage ? 'current' : ''}`;
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage(i);
+                });
+                paginationContainer.appendChild(btn);
+            }
+
+            // Botón "Siguiente" (»)
+            const nextBtn = document.createElement('a');
+            nextBtn.href = '#';
+            nextBtn.innerHTML = '&raquo;';
+            nextBtn.className = 'page-numbers';
+            if (currentPage === totalPages) nextBtn.style.pointerEvents = 'none'; // Desactivar si es la última
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage(currentPage + 1);
+            });
+            paginationContainer.appendChild(nextBtn);
+        }
+
+        // Iniciar en la página 1
+        showPage(1);
+    });
     </script>
 </body>
 </html>
