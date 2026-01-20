@@ -37,7 +37,7 @@ html { scroll-behavior: smooth; }
 body {
     font-family: var(--font-main); background-color: var(--bg-white);
     color: var(--alex-ink-light); line-height: 1.6; font-size: 18px; overflow-x: hidden;
-    background-image: radial-gradient(#CBD5E1 1.5px, transparent 1.5px);
+    /* background-image: radial-gradient(#CBD5E1 1.5px, transparent 1.5px); */
     background-size: 24px 24px;
 }
 h1, h2, h3, h4, h5 { color: var(--alex-ink); font-weight: 900; line-height: 1.1; letter-spacing: -0.5px; }
