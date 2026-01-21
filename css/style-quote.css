@@ -322,11 +322,22 @@ body::before {
 
 /* Details */
 .details-expand { 
-    display: none; background: #FAFAFA; border-top: 1px solid #E2E8F0; 
-    padding: 30px; font-size: 0.9rem; animation: fadeInUp 0.3s ease-out; 
+    display: none; 
+    background: #FFFFFF; 
+    border-top: 1px solid #F1F5F9; 
+    padding: 30px; 
+    animation: slideDown 0.3s ease-out; 
     position: relative; z-index: 1;
 }
 .details-expand.active { display: block; }
+
+/* TITULOS DE SECCIÓN */
+.det-sec-title {
+    font-size: 0.85rem; color: var(--color-indigo); font-weight: 800; 
+    text-transform: uppercase; letter-spacing: 1px; margin: 0 0 15px 0;
+    display: flex; align-items: center; gap: 8px;
+}
+.det-sec-title i { opacity: 0.7; }
 
 .company-header { display: flex; gap: 30px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #E2E8F0; color: var(--color-dark); font-weight: 600; }
 .det-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -337,6 +348,89 @@ body::before {
 .det-row { display: flex; justify-content: space-between; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px; margin-bottom: 10px; font-size: 0.85rem; }
 .det-lbl { font-weight: 500; color: #64748B; }
 .det-val { font-weight: 600; color: var(--color-dark); }
+
+/* --- NIVEL 1: COBERTURAS GENERALES (Top Strip) --- */
+.gen-cov-grid {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap: 15px; 
+    background: #F8FAFC; 
+    border: 1px solid #E2E8F0; 
+    border-radius: 12px; 
+    padding: 20px; 
+    margin-bottom: 35px;
+}
+
+.gen-cov-item { display: flex; flex-direction: column; gap: 4px; }
+.gen-lbl { font-size: 0.7rem; color: #64748B; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.gen-val { font-size: 0.95rem; color: var(--color-dark); font-weight: 700; }
+.text-muted { color: #CBD5E1 !important; font-weight: 500; }
+
+/* --- NIVEL 2: GRID DE VEHÍCULOS (2 Columnas) --- */
+.veh-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 Columnas Estrictas */
+    gap: 25px;
+}
+
+/* Tarjeta de Vehículo Individual */
+.veh-det-card {
+    border: 1px solid #E2E8F0; border-radius: 16px;
+    overflow: hidden; background: white;
+    transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+.veh-det-card:hover { border-color: #BFDBFE; box-shadow: 0 10px 25px rgba(0, 156, 255, 0.1); transform: translateY(-2px); }
+
+/* Header del Vehículo */
+.veh-det-header {
+    background: #F8FAFC; padding: 15px 20px;
+    border-bottom: 1px solid #E2E8F0;
+    display: flex; align-items: center; gap: 15px;
+}
+.v-icon-box {
+    width: 36px; height: 36px; background: white; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-primary); font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #F1F5F9;
+}
+.v-info h5 { margin: 0 0 2px 0; font-size: 0.85rem; font-weight: 800; color: var(--color-dark); text-transform: uppercase; }
+.v-info span { font-size: 0.75rem; color: #64748B; font-family: 'Courier New', monospace; letter-spacing: -0.5px; background: #E2E8F0; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+
+/* Cuerpo del Vehículo */
+.veh-det-body { padding: 20px; }
+
+/* Sub-secciones (COMP / COLL) */
+.cov-group-header {
+    font-size: 0.7rem; color: #94A3B8; font-weight: 800; 
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 12px; border-bottom: 2px solid #F1F5F9; padding-bottom: 5px;
+    margin-top: 15px;
+}
+.cov-group-header:first-child { margin-top: 0; }
+
+/* Filas de Datos */
+.cov-list-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px; font-size: 0.85rem;
+}
+.c-label { color: #64748B; font-weight: 500; }
+.c-val-group { text-align: right; line-height: 1.2; }
+.c-ded { font-weight: 700; color: var(--color-dark); display: block; }
+.c-prem { font-size: 0.75rem; color: #10B981; font-weight: 600; }
+.c-prem::before { content: 'Prem: '; opacity: 0.7; }
+
+/* Botón de Cierre Inferior */
+.close-det-btn {
+    margin-top: 30px; width: 100%; padding: 12px; 
+    background: #F8FAFC; border: 1px dashed #E2E8F0; 
+    color: #64748B; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s;
+}
+.close-det-btn:hover { background: #fee2e2; color: #ef4444; border-color: #fecaca; }
+
+/* Responsive */
+@media (max-width: 900px) {
+    .veh-details-grid { grid-template-columns: 1fr; } /* 1 Columna en móvil */
+}
 
 /* =========================================
    5. RIGHT COLUMN ACTIONS (Refined)
@@ -384,40 +478,88 @@ body::before {
 }
 
 /* =========================================
-   6. NOTIFICATION SYSTEM (Right-Side Toast)
+   6. NOTIFICATION SYSTEM "DEEP AURORA GLASS"
    ========================================= */
 #toast-container { 
-    position: fixed; top: 20px; right: 20px; 
-    display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+    position: fixed; top: 25px; right: 25px; 
+    display: flex; flex-direction: column; align-items: flex-end; gap: 15px;
     z-index: 10000; pointer-events: none;
 }
 
 .alex-toast {
-    background: white;
-    padding: 16px 24px;
-    border-radius: 12px;
-    border-left: 5px solid var(--color-success); /* Accent Line */
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12), 0 5px 10px rgba(0,0,0,0.05);
-    display: flex; align-items: center; gap: 15px;
+    /* --- FONDO CON PERSONALIDAD (DEEP AURORA) --- */
+    min-width: 340px;
+    padding: 16px 20px;
     
-    /* Animation States */
-    opacity: 0; transform: translateX(100%);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-    pointer-events: auto;
-    min-width: 300px;
+    /* El gradiente corporativo, pero translúcido */
+    background: linear-gradient(135deg, rgba(30, 27, 75, 0.95) 0%, rgba(59, 130, 246, 0.9) 100%);
+    
+    /* Blur para integrarse con el fondo */
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    
+    /* Borde sutil de luz */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    
+    /* Sombra de color (Glow) que da vida */
+    box-shadow: 
+        0 15px 35px -5px rgba(30, 27, 75, 0.4), /* Sombra profunda */
+        0 8px 15px -5px rgba(59, 130, 246, 0.3), /* Resplandor azul */
+        inset 0 1px 0 rgba(255,255,255,0.2); /* Borde interno superior (luz) */
+        
+    display: flex; align-items: center; gap: 16px;
+    color: white; /* Texto blanco para máximo contraste */
+    
+    /* Animación fluida */
+    opacity: 0; transform: translateY(-20px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: auto; cursor: default;
 }
 
-.alex-toast.show { opacity: 1; transform: translateX(0); }
+.alex-toast.show { opacity: 1; transform: translateY(0) scale(1); }
 
+/* --- ICONO ENCAPSULADO (Glass on Glass) --- */
 .toast-icon-box {
-    width: 32px; height: 32px; background: #ECFDF5; color: var(--color-success);
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 1rem;
+    width: 42px; height: 42px;
+    /* Vidrio esmerilado blanco dentro del fondo oscuro */
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    color: #FFFFFF; /* Icono blanco puro */
+    
+    /* Brillo interno */
+    box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
+    flex-shrink: 0;
 }
 
-.toast-content { display: flex; flex-direction: column; }
-.toast-title { font-weight: 700; color: var(--color-dark); font-size: 0.9rem; }
-.toast-sub { font-weight: 400; color: #64748B; font-size: 0.8rem; }
+/* Animación sutil del icono al aparecer */
+.alex-toast.show .toast-icon-box i {
+    animation: iconPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes iconPop {
+    0% { transform: scale(0); } 
+    100% { transform: scale(1); }
+}
+
+/* --- TEXTO --- */
+.toast-content { display: flex; flex-direction: column; gap: 3px; }
+
+.toast-title { 
+    font-weight: 700; 
+    color: #FFFFFF; 
+    font-size: 0.95rem; 
+    letter-spacing: 0.2px;
+}
+
+.toast-sub { 
+    font-weight: 500; 
+    color: rgba(255, 255, 255, 0.8); /* Blanco translúcido */
+    font-size: 0.8rem;
+}
 
 /* =========================================
    7. RESPONSIVE
@@ -845,3 +987,181 @@ body::before {
 
 /* Ajuste Opcional: Si la tarjeta tiene borde, que el tag no lo tape mal */
 .offer-card { overflow: hidden; } /* Asegura que el tag corte perfecto con la tarjeta */
+
+/* =========================================
+   18. AURORA BRAND CHECKOUT (NO BLACKS)
+   ========================================= */
+
+/* --- PALETA EXTENDIDA (Basada en tu marca) --- */
+:root {
+    --brand-bg: #F5F8FA; /* Azul grisáceo muy claro, no gris muerto */
+    --brand-indigo: #1e1b4b; /* Tu color corporativo oscuro */
+    --brand-blue: #009CFF; /* Tu azul principal */
+    --brand-green: #10B981;
+}
+
+body.bg-matte-brand {
+    background-color: var(--brand-bg);
+    font-family: 'Inter', sans-serif;
+    color: #334155;
+    min-height: 100vh;
+}
+
+/* --- NAVBAR --- */
+.nav-brand-header {
+    background: #FFFFFF;
+    padding: 18px 40px;
+    display: flex; justify-content: center; align-items: center;
+    border-bottom: 1px solid #E2E8F0;
+}
+.nav-logo { height: 36px; }
+
+.secure-badge-blue {
+    font-size: 0.8rem; 
+    color: var(--brand-blue); /* Azul marca en lugar de verde genérico */
+    background: #E0F2FE; /* Azul muy claro */
+    padding: 8px 14px; border-radius: 6px; font-weight: 700;
+    display: flex; align-items: center; gap: 8px; 
+    border: 1px solid #BAE6FD;
+}
+
+/* --- WRAPPER & HEADER --- */
+.brand-wrapper { max-width: 1100px; margin: 40px auto 80px; padding: 0 25px; }
+
+.brand-page-header { margin-bottom: 35px; }
+.back-link-brand {
+    text-decoration: none; color: #64748B; font-weight: 600; font-size: 0.9rem;
+    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 15px;
+    transition: 0.2s;
+}
+.back-link-brand:hover { color: var(--brand-blue); transform: translateX(-3px); }
+
+.title-group { display: inline-block; position: relative; margin-bottom: 10px; }
+.brand-page-header h1 { 
+    font-size: 2.2rem; font-weight: 800; 
+    color: var(--brand-indigo); /* INDIGO MARCA, NO NEGRO */
+    margin: 0; letter-spacing: -0.5px; 
+}
+/* Línea decorativa Aurora debajo del título */
+.aurora-line {
+    height: 4px; width: 60px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-green));
+    margin-top: 5px;
+}
+
+.brand-page-header p { font-size: 1.05rem; color: #64748B; max-width: 600px; }
+
+/* --- ALEX SMART CARD --- */
+.alex-smart-card {
+    /* Gradiente Aurora Sutil */
+    background: linear-gradient(135deg, #EFF6FF 0%, #F5F3FF 100%);
+    border: 1px solid #DBEAFE;
+    border-radius: 16px; padding: 20px;
+    display: flex; gap: 20px; align-items: flex-start;
+    margin-bottom: 40px;
+}
+.smart-avatar {
+    width: 45px; height: 45px; 
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-indigo));
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 1.3rem; box-shadow: 0 4px 10px rgba(0, 156, 255, 0.2);
+    flex-shrink: 0;
+}
+.smart-content h5 { margin: 0 0 5px; color: var(--brand-indigo); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; }
+.smart-content p { margin: 0; font-size: 0.95rem; color: #475569; }
+
+/* --- GRID --- */
+.brand-grid { display: grid; grid-template-columns: 380px 1fr; gap: 35px; align-items: start; }
+
+/* --- CARDS (Base) --- */
+.brand-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); /* Sombra muy suave */
+    padding: 30px;
+}
+
+/* --- FINANZAS (Izquierda) --- */
+.finance-col { position: sticky; top: 20px; }
+.main-contract { border-top: 4px solid var(--brand-blue); /* Acento de marca arriba */ }
+
+.carrier-brand-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.carrier-logo-img { height: 40px; object-fit: contain; }
+.term-pill { font-size: 0.75rem; background: #F1F5F9; color: #475569; padding: 4px 10px; border-radius: 6px; font-weight: 700; }
+
+.total-due-hero { margin-bottom: 30px; border-bottom: 1px dashed #E2E8F0; padding-bottom: 25px; }
+.total-due-hero .label { display: block; font-size: 0.85rem; color: #64748B; font-weight: 600; text-transform: uppercase; margin-bottom: 5px; }
+.amount-brand { 
+    font-size: 3rem; font-weight: 900; 
+    color: var(--brand-indigo); /* Azul oscuro corporativo */
+    letter-spacing: -1.5px; line-height: 1;
+}
+
+/* Schedule */
+.sched-label { font-size: 0.75rem; text-transform: uppercase; color: #94A3B8; margin: 0 0 15px; font-weight: 700; }
+.sched-item { display: flex; align-items: center; gap: 15px; margin-bottom: 12px; font-size: 0.9rem; }
+.dot-indicator { width: 10px; height: 10px; border-radius: 50%; background: var(--brand-blue); box-shadow: 0 0 0 3px #E0F2FE; }
+.dot-indicator.ghost { background: #CBD5E1; box-shadow: none; }
+.sched-item.current { color: var(--brand-indigo); font-weight: 600; }
+.sched-item.future { color: #94A3B8; }
+.sched-item .val { margin-left: auto; }
+
+/* BOTÓN DE ACCIÓN (La joya) */
+.action-footer { margin-top: 30px; }
+
+.btn-bind-aurora {
+    width: 100%; border: none;
+    /* EL GRADIENTE AURORA */
+    background: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-indigo) 100%);
+    color: white;
+    padding: 12px 20px; border-radius: 14px;
+    cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 10px 25px -5px rgba(0, 156, 255, 0.4); /* Sombra azul, no negra */
+    transition: all 0.3s ease;
+}
+.btn-bind-aurora:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px -5px rgba(0, 156, 255, 0.5);
+}
+
+.btn-content { text-align: left; display: flex; flex-direction: column; }
+.btn-title { font-size: 1.1rem; font-weight: 700; }
+.btn-sub { font-size: 0.75rem; opacity: 0.8; font-weight: 500; }
+.btn-icon { font-size: 1.4rem; opacity: 0.9; }
+
+.legal-disclaimer { margin-top: 15px; font-size: 0.75rem; color: #94A3B8; text-align: center; line-height: 1.4; }
+.legal-disclaimer a { color: var(--brand-blue); text-decoration: none; }
+
+
+/* --- ACTIVOS (Derecha) --- */
+.asset-item { margin-bottom: 20px; transition: transform 0.2s; }
+.asset-item:hover { transform: translateY(-3px); border-color: #CBD5E1; }
+
+.asset-top { display: flex; align-items: center; gap: 15px; padding-bottom: 15px; border-bottom: 1px solid #F1F5F9; margin-bottom: 15px; }
+.icon-brand-box {
+    width: 42px; height: 42px; 
+    background: #F0F9FF; /* Fondo azul muy claro */
+    border-radius: 10px; color: var(--brand-blue); 
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+}
+.asset-name h4 { margin: 0; font-size: 1rem; font-weight: 700; color: var(--brand-indigo); }
+.asset-name .vin { font-size: 0.8rem; color: #64748B; font-family: monospace; }
+.status-check { margin-left: auto; color: #10B981; font-size: 1.2rem; }
+
+/* Grid de detalles */
+.specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.group-title { display: block; font-size: 0.7rem; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+.text-brand { color: var(--brand-blue); }
+.text-warn { color: #F59E0B; }
+
+.specs-grid ul { list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #475569; }
+.specs-grid li { margin-bottom: 6px; }
+.specs-grid li strong { color: #334155; }
+.specs-grid i { width: 15px; }
+
+/* Responsive */
+@media (max-width: 900px) {
+    .brand-grid { grid-template-columns: 1fr; }
+    .finance-col { order: -1; position: relative; top: 0; }
+}

@@ -108,28 +108,90 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
 
                 <div id="dtl-${o.id}" class="details-expand">
-                    <div class="company-header">
-                        <span>Company: <strong>${o.carrier}</strong></span>
-                        <span>Product: <strong>${o.plan}</strong></span>
+                    
+                    <div class="det-sec-title"><i class="fa-solid fa-shield-halved"></i> General Policy Coverages</div>
+                    <div class="gen-cov-grid">
+                        <div class="gen-cov-item"><span class="gen-lbl">Liability Limits</span><span class="gen-val">25/50/15</span></div>
+                        <div class="gen-cov-item"><span class="gen-lbl">Uninsured BI</span><span class="gen-val">25/50</span></div>
+                        <div class="gen-cov-item"><span class="gen-lbl">Underinsured BI</span><span class="gen-val">25/50</span></div>
+                        <div class="gen-cov-item"><span class="gen-lbl">Medical Payments</span><span class="gen-val">$500</span></div>
+                        <div class="gen-cov-item"><span class="gen-lbl">Accidental Death</span><span class="gen-val text-muted">No Coverage</span></div>
                     </div>
-                    <div class="det-grid">
-                        <div class="veh-col">
-                            <h5><i class="fa-solid fa-car"></i> 2019 NISSAN TITAN S</h5>
-                            <div class="det-row"><span class="det-lbl">VIN</span><span class="det-val">1N6AA...</span></div>
-                            <div class="det-row"><span class="det-lbl">Comp Ded</span><span class="det-val">$1,000 | $219.48</span></div>
-                            <div class="det-row"><span class="det-lbl">Coll Ded</span><span class="det-val">$1,000 | $1,021</span></div>
-                            <div class="det-row"><span class="det-lbl">Towing</span><span class="det-val">$90</span></div>
+
+                    <div class="det-sec-title"><i class="fa-solid fa-car-rear"></i> Insured Vehicles (2)</div>
+                    <div class="veh-details-grid">
+                        
+                        <div class="veh-det-card">
+                            <div class="veh-det-header">
+                                <div class="v-icon-box">
+                                    <img src="../assets/img/logo-nissan.png" alt="Nissan Logo">
+                                </div>
+                                <div class="v-info">
+                                    <h5>Vehicle 1: 2019 NISSAN TITAN</h5>
+                                    <span>VIN: 1N6AA...3849</span>
+                                </div>
+                            </div>
+                            <div class="veh-det-body">
+                                <div class="cov-group-header">COMP / COLL</div>
+                                <div class="cov-list-row">
+                                    <span class="c-label">Comprehensive</span>
+                                    <div class="c-val-group">
+                                        <span class="c-ded">Ded $1,000</span>
+                                        <span class="c-prem">$219.48</span>
+                                    </div>
+                                </div>
+                                <div class="cov-list-row">
+                                    <span class="c-label">Collision</span>
+                                    <div class="c-val-group">
+                                        <span class="c-ded">Ded $1,000</span>
+                                        <span class="c-prem">$1,021.42</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="cov-group-header">ADDITIONAL</div>
+                                <div class="cov-list-row"><span class="c-label">Towing</span><span class="c-val-group"><span class="c-ded">Included</span><span class="c-prem">$90.00</span></span></div>
+                                <div class="cov-list-row"><span class="c-label">Rental Reim.</span><span class="c-val-group"><span class="c-ded">$40/Day</span><span class="c-prem">$31.00</span></span></div>
+                                <div class="cov-list-row"><span class="c-label">Gap Coverage</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
+                            </div>
                         </div>
-                        <div class="veh-col">
-                            <h5><i class="fa-solid fa-car"></i> 2022 GMC CANYON</h5>
-                            <div class="det-row"><span class="det-lbl">Comp Ded</span><span class="det-val">$500 | $132.23</span></div>
-                            <div class="det-row"><span class="det-lbl">Coll Ded</span><span class="det-val">$500 | $1,130.26</span></div>
-                            <div class="det-row"><span class="det-lbl">Towing</span><span class="det-val">No Cov</span></div>
+
+                        <div class="veh-det-card">
+                            <div class="veh-det-header">
+                                <div class="v-icon-box">
+                                    <img src="../assets/img/logo-gmc.png" alt="GMC Logo">
+                                </div>
+                                <div class="v-info">
+                                    <h5>Vehicle 2: 2022 GMC CANYON</h5>
+                                    <span>VIN: 2GTEA...9921</span>
+                                </div>
+                            </div>
+                            <div class="veh-det-body">
+                                <div class="cov-group-header">COMP / COLL</div>
+                                <div class="cov-list-row">
+                                    <span class="c-label">Comprehensive</span>
+                                    <div class="c-val-group">
+                                        <span class="c-ded">Ded $500</span>
+                                        <span class="c-prem">$145.20</span>
+                                    </div>
+                                </div>
+                                <div class="cov-list-row">
+                                    <span class="c-label">Collision</span>
+                                    <div class="c-val-group">
+                                        <span class="c-ded">Ded $500</span>
+                                        <span class="c-prem">$980.50</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="cov-group-header">ADDITIONAL</div>
+                                <div class="cov-list-row"><span class="c-label">Towing</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
+                                <div class="cov-list-row"><span class="c-label">Rental Reim.</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
+                                <div class="cov-list-row"><span class="c-label">Custom Equip.</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
+                            </div>
                         </div>
+
                     </div>
-                    <div style="text-align:right; margin-top:15px;">
-                        <button onclick="toggleDetails(${o.id})" style="background:none; border:none; color:var(--color-primary); font-weight:700; cursor:pointer;">Close Details</button>
-                    </div>
+                    
+                    <button onclick="toggleDetails(${o.id})" class="close-det-btn">Close Details <i class="fa-solid fa-chevron-up"></i></button>
                 </div>
             `;
             container.appendChild(div);
@@ -223,7 +285,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.querySelectorAll('.js-btn-next').forEach(btn => {
         btn.addEventListener('click', () => { 
-            if(btn.classList.contains('active')) alert("Proceeding to Checkout"); 
+            if(btn.classList.contains('active')) window.location.href = "quote-15.html";
+
         });
     });
 });
