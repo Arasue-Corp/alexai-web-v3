@@ -10,500 +10,8 @@
     
     <link rel="stylesheet" href="../css/style.css"> 
     <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style-quote.css">
 
-    <style>
-        /* =========================================
-           1. EXECUTIVE DESIGN SYSTEM
-           ========================================= */
-        :root {
-            /* Brand Identity */
-            --color-primary: #009cff;       /* Electric Blue */
-            --color-primary-dark: #0077CC;
-            --color-indigo: #514690;        /* Deep Indigo */
-            --color-dark: #0F172A;          /* Slate 900 (Text) */
-            --color-gray: #64748B;          /* Slate 500 (Subtext) */
-            --color-success: #10B981;       /* Emerald */
-            
-            /* Surfaces */
-            --bg-body: #F8FAFC;             /* Cold Matte White */
-            --bg-surface: #FFFFFF;
-            
-            /* Borders */
-            --border-light: #E2E8F0;
-            --border-hover: #CBD5E1;
-            
-            /* Shadows (Layered for Depth) */
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
-            --shadow-float: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-            --shadow-glow: 0 0 0 4px rgba(0, 156, 255, 0.15); /* Ring */
-            
-            --radius-card: 16px;
-            --radius-btn: 10px;
-        }
-
-        /* --- BACKGROUND ATMOSPHERE (Aurora Effect) --- */
-        body { 
-            background-color: var(--bg-body); 
-            font-family: 'Poppins', sans-serif; 
-            color: var(--color-dark);
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-
-        /* Ambient Light Top-Center */
-        body::before {
-            content: ''; position: fixed; top: -30%; left: 50%; transform: translateX(-50%);
-            width: 120%; height: 80vh;
-            background: radial-gradient(50% 50% at 50% 50%, rgba(0, 156, 255, 0.04) 0%, rgba(81, 70, 144, 0.02) 50%, rgba(248, 250, 252, 0) 100%);
-            z-index: -1; pointer-events: none;
-        }
-
-        /* Animations */
-        @keyframes slideInRight { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes fadeInUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes scaleIn { from { transform: scale(0.98); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        /* =========================================
-           2. HEADER AREA
-           ========================================= */
-        .page-wrapper { max-width: 1400px; margin: 0 auto; padding: 40px 20px 120px; }
-
-        .main-header { text-align: center; margin-bottom: 50px; position: relative; z-index: 10; }
-
-        /* Corporate Badge Header */
-        .title-sticker {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-light);
-            border-radius: 100px;
-            padding: 12px 45px;
-            display: inline-flex; flex-direction: column; align-items: center;
-            box-shadow: var(--shadow-md);
-        }
-        
-        .title-sticker h1 { 
-            font-size: 1.75rem; font-weight: 800; color: var(--color-indigo); 
-            margin: 0; line-height: 1.1; letter-spacing: -0.5px; 
-        }
-        .title-sticker span { color: var(--color-primary); }
-        .title-subtitle { margin-top: 4px; font-size: 0.75rem; font-weight: 600; color: var(--color-gray); letter-spacing: 2px; text-transform: uppercase; }
-
-        /* Wizard Progress Bar */
-        .wizard-container {
-            background: var(--bg-surface); border-radius: var(--radius-card);
-            border: 1px solid var(--border-light);
-            padding: 35px 45px; margin-bottom: 40px;
-            box-shadow: var(--shadow-sm);
-        }
-        .wizard-top { display: flex; justify-content: space-between; margin-bottom: 15px; color: var(--color-gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;}
-        .wizard-title { font-size: 1rem; color: var(--color-indigo); display: flex; align-items: center; gap: 10px; font-weight: 700; text-transform: none; }
-        .wizard-title i { color: var(--color-primary); background: #EFF6FF; padding: 8px; border-radius: 8px; }
-        
-        .progress-track { height: 6px; background: #F1F5F9; border-radius: 10px; overflow: hidden; margin-bottom: 25px; }
-        .progress-fill { height: 100%; width: 100%; background: linear-gradient(90deg, var(--color-indigo), var(--color-primary)); border-radius: 10px; }
-        
-        .header-split { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 25px; border-top: 1px solid #F1F5F9; }
-        .header-split h3 { margin: 0; font-size: 1.8rem; font-weight: 800; color: var(--color-dark); letter-spacing: -0.5px; }
-        .header-split p { margin: 0; text-align: right; font-size: 0.95rem; color: var(--color-gray); font-weight: 400; }
-
-        .marketplace-grid { display: grid; grid-template-columns: 300px 1fr 280px; gap: 30px; align-items: start; }
-
-        /* =========================================
-           3. SIDEBARS (Clean & Professional)
-           ========================================= */
-        .organic-panel {
-            background: var(--bg-surface); border: 1px solid var(--border-light);
-            border-radius: var(--radius-card); padding: 25px; 
-            position: relative; box-shadow: var(--shadow-sm);
-        }
-
-        .washi-tape { display: none; } 
-        
-        /* Modern Accent Bar */
-        .organic-panel::before {
-            content:''; position: absolute; top:0; left:0; right:0; height: 3px;
-            background: linear-gradient(90deg, var(--color-primary), var(--color-indigo));
-            opacity: 0.8;
-        }
-
-        .sidebar-title { 
-            font-size: 0.8rem; font-weight: 800; color: var(--color-dark); 
-            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px; 
-            padding-bottom: 15px; border-bottom: 1px solid #F1F5F9;
-        }
-
-        .config-sidebar { position: sticky; top: 20px; z-index: 10; } 
-        
-        /* Vehicle Selector */
-        .veh-nav { 
-            display: flex; justify-content: space-between; align-items: center; 
-            background: #F8FAFC; padding: 10px 12px; border-radius: 10px; 
-            margin-bottom: 25px; border: 1px solid var(--border-light); 
-            transition: 0.3s;
-        }
-        .veh-nav:hover { background: white; border-color: var(--border-hover); box-shadow: var(--shadow-sm); }
-        .veh-btn { border: none; background: white; width: 32px; height: 32px; border-radius: 50%; color: var(--color-primary); cursor: pointer; display:flex; align-items:center; justify-content:center; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .veh-btn:hover { background: var(--color-primary); color: white; }
-        .veh-name { font-weight: 700; font-size: 0.8rem; color: var(--color-indigo); text-transform: uppercase; letter-spacing: 0.5px;}
-
-        /* Form Inputs */
-        .cov-section { margin-bottom: 25px; padding-top: 15px; border-top: 1px dashed #F1F5F9; }
-        .cov-section:first-child { border-top: none; }
-        .sec-title { font-size: 0.7rem; font-weight: 700; color: var(--color-gray); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
-
-        .cov-field { margin-bottom: 15px; }
-        .cov-label { display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; font-weight: 600; color: var(--color-dark); margin-bottom: 6px; }
-        .cov-label i { color: var(--color-primary); opacity: 0.6; }
-        
-        .cov-select, .custom-input {
-            width: 100%; padding: 10px 12px; font-size: 0.85rem; font-weight: 500; color: var(--color-dark);
-            border: 1px solid var(--border-light); border-radius: 8px; background: white; cursor: pointer; transition: 0.2s;
-            font-family: 'Poppins', sans-serif; appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2364748B'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 10px center; background-size: 16px;
-        }
-        .custom-input { background-image: none; }
-        .cov-select:hover, .custom-input:focus { border-color: var(--color-primary); outline: none; }
-        .cov-select:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(0, 156, 255, 0.1); }
-
-        .radio-stack { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-        .radio-opt { 
-            position: relative; display: flex; align-items: flex-start; gap: 10px; 
-            padding: 12px; border-radius: 8px; border: 1px solid transparent;
-            font-size: 0.85rem; color: #475569; cursor: pointer; transition: 0.2s; background: #F8FAFC;
-        }
-        .radio-opt:hover { background: white; border-color: var(--border-light); box-shadow: var(--shadow-sm); }
-        .radio-opt:has(input:checked) { background: #F0F9FF; border-color: #BFDBFE; color: var(--color-indigo); font-weight: 600; box-shadow: none; }
-        
-        .radio-opt input { margin-top: 3px; accent-color: var(--color-primary); width: 16px; height: 16px; }
-        .radio-desc { font-size: 0.75rem; color: #94A3B8; margin-top: 2px; line-height: 1.3; font-weight: 400;}
-        
-        .nested-options { margin-left: 0; padding: 15px; background: white; border: 1px solid #E2E8F0; border-radius: 8px; margin-top: 10px; display: none; box-shadow: var(--shadow-sm);}
-        .nested-options.active { display: block; animation: fadeInUp 0.3s; }
-
-        .btn-get-quote {
-            width: 100%; padding: 16px; background: #E2E8F0; color: #94A3B8;
-            border: none; border-radius: 8px; font-weight: 700; text-transform: uppercase; font-size: 0.85rem;
-            margin-top: 25px; cursor: not-allowed; transition: all 0.3s ease; letter-spacing: 0.5px;
-        }
-        .btn-get-quote.active { background: var(--color-indigo); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(81, 70, 144, 0.25); }
-        .btn-get-quote.active:hover { transform: translateY(-2px); background: var(--color-primary); }
-
-        /* Summary Panel */
-        .sum-item { display: flex; justify-content: space-between; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed #E2E8F0; }
-        .sum-item:last-child { border-bottom: none; }
-        .sum-lbl { color: #64748B; font-weight: 500; display: flex; align-items: center; gap: 8px; }
-        .sum-val { font-weight: 700; color: var(--color-dark); }
-        .text-green { color: #10B981 !important; }
-
-        /* =========================================
-           4. OFFERS (HERO CARDS)
-           ========================================= */
-        #offersContainer { display: flex; flex-direction: column; gap: 20px; }
-
-        .loading-box { 
-            text-align: center; padding: 80px; background: white; 
-            border-radius: var(--radius-card); 
-            display: flex; flex-direction: column; align-items: center; gap: 20px; 
-            border: 1px solid var(--border-light); box-shadow: var(--shadow-md);
-        }
-        .spinner { width: 50px; height: 50px; border: 3px solid #F1F5F9; border-top-color: var(--color-primary); border-radius: 50%; animation: spin 0.8s infinite linear; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* --- CARD DESIGN --- */
-        .offer-card {
-            background: white; 
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow-md); 
-            border: 1px solid transparent; 
-            position: relative; overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
-            animation: scaleIn 0.5s ease-out forwards;
-        }
-        
-        /* Hover: Elevación Suave */
-        .offer-card:hover { 
-            transform: translateY(-5px); 
-            box-shadow: var(--shadow-float); 
-            border-color: #BFDBFE; 
-            z-index: 5;
-        }
-
-        /* Selected: Illuminate */
-        .offer-card.selected { 
-            border-color: var(--color-primary);
-            background: #F8FDFF; /* Tinte azul muy sutil */
-            box-shadow: var(--shadow-glow); /* Anillo Azul */
-        }
-
-        /* Badge "Selected" */
-        .stamp-mark {
-            position: absolute; top: 15px; right: 15px; transform: none;
-            background: var(--color-success); color: white; font-weight: 700; font-size: 0.7rem;
-            padding: 5px 12px; border-radius: 20px; opacity: 0; pointer-events: none; z-index: 10;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
-            text-transform: uppercase; letter-spacing: 0.5px;
-            display: flex; align-items: center; gap: 6px;
-        }
-        .offer-card.selected .stamp-mark { 
-            opacity: 1; 
-            animation: fadeInUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* Card Grid */
-        .card-main { 
-            padding: 30px; 
-            display: grid; grid-template-columns: 100px 1fr 180px; gap: 30px; align-items: center; 
-            position: relative; z-index: 1;
-        }
-        
-        /* Logo Box */
-        .logo-col {
-            width: 100px; height: 60px;
-            display: flex; align-items: center; justify-content: center;
-            background: white; border: 1px solid #F1F5F9; border-radius: 12px;
-            transition: 0.3s;
-        }
-        .logo-col img { max-width: 80%; max-height: 80%; object-fit: contain; filter: grayscale(100%); opacity: 0.6; transition: 0.3s; }
-        .offer-card:hover .logo-col { border-color: #E2E8F0; }
-        .offer-card:hover .logo-col img, .offer-card.selected .logo-col img { filter: grayscale(0%); opacity: 1; }
-        
-        .info-col h4 { font-size: 1.2rem; font-weight: 700; color: var(--color-dark); margin: 0 0 8px 0; }
-        .coverage-tags { color: var(--color-primary); font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        .liability-tag { font-size: 0.75rem; font-weight: 500; color: #64748B; background: #F1F5F9; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-top: 10px; border: 1px solid #E2E8F0; }
-
-        /* --- PRICE HERO --- */
-        .price-col { text-align: right; min-width: 150px; }
-        
-        .down-row { 
-            font-size: 0.75rem; color: #64748B; margin-bottom: 5px; font-weight: 600; text-transform: uppercase; 
-            background: #F1F5F9; display: inline-block; padding: 4px 8px; border-radius: 6px;
-        }
-        .down-row strong { color: var(--color-dark); font-weight: 800; }
-        
-        .monthly-row { position: relative; display: block; margin-top: 5px; }
-        
-        .price-big { 
-            font-size: 2.6rem; 
-            font-weight: 900; 
-            color: var(--color-indigo);
-            line-height: 1;
-            letter-spacing: -1px;
-            display: inline-block;
-        }
-        
-        /* Selected Price Tint */
-        .offer-card.selected .price-big { color: var(--color-primary); }
-        
-        .per-mo { font-size: 0.8rem; color: #94A3B8; display: block; margin-top: 4px; font-weight: 500; text-align: right; letter-spacing: 0.5px; }
-
-        /* Card Actions */
-        .card-actions { 
-            display: flex; gap: 1px; background: #FAFAFA; border-top: 1px solid #F1F5F9; 
-            position: relative; z-index: 1;
-        }
-        .action-btn { 
-            flex: 1; padding: 16px; border: none; background: transparent; 
-            font-size: 0.85rem; font-weight: 600; color: #64748B; 
-            cursor: pointer; transition: 0.2s; font-family: 'Poppins', sans-serif;
-            text-transform: uppercase; letter-spacing: 0.5px;
-        }
-        .action-btn:hover { background: #F0F9FF; color: var(--color-primary); }
-        
-        .action-btn.select-btn { 
-            color: var(--color-primary); border-left: 1px solid #F1F5F9; font-weight: 700;
-        }
-        .offer-card.selected .select-btn { 
-            background: var(--color-primary); color: white; 
-        }
-        .offer-card.selected .select-btn:hover { background: #0088DD; }
-
-        /* Details */
-        .details-expand { 
-            display: none; background: #FAFAFA; border-top: 1px solid #E2E8F0; 
-            padding: 30px; font-size: 0.9rem; animation: fadeInUp 0.3s ease-out; 
-            position: relative; z-index: 1;
-        }
-        .details-expand.active { display: block; }
-        
-        .company-header { display: flex; gap: 30px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #E2E8F0; color: var(--color-dark); font-weight: 600; }
-        .det-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .veh-col h5 { 
-            display: flex; align-items: center; gap: 10px; margin: 0 0 15px 0; 
-            color: var(--color-indigo); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; 
-        }
-        .det-row { display: flex; justify-content: space-between; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px; margin-bottom: 10px; font-size: 0.85rem; }
-        .det-lbl { font-weight: 500; color: #64748B; }
-        .det-val { font-weight: 600; color: var(--color-dark); }
-
-        /* =========================================
-           5. RIGHT COLUMN ACTIONS (Refined)
-           ========================================= */
-        .desktop-btns { display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 2; margin-top: 20px;}
-        .btn-action { 
-            width: 100%; padding: 16px; border-radius: var(--radius-btn); border: none; 
-            font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; 
-            display: flex; justify-content: center; align-items: center; gap: 10px;
-            font-family: 'Poppins', sans-serif; letter-spacing: 0.5px;
-        }
-        
-        .btn-next { background: #E2E8F0; color: #94A3B8; pointer-events: none; opacity: 0.7; }
-        .btn-next.active { 
-            background: linear-gradient(135deg, #009cff, #0077CC); color: white; 
-            pointer-events: auto; opacity: 1; 
-            box-shadow: 0 8px 20px -5px rgba(0, 156, 255, 0.4); 
-        }
-        .btn-next.active:hover { transform: translateY(-2px); box-shadow: 0 12px 25px -5px rgba(0, 156, 255, 0.5); }
-        
-        .btn-compare { background: white; border: 2px solid #E2E8F0; color: #94A3B8; pointer-events: none; opacity: 0.6; }
-        .btn-compare.active { 
-            background: white; border-color: var(--color-primary); color: var(--color-primary); 
-            pointer-events: auto; opacity: 1; box-shadow: 0 4px 10px rgba(0, 156, 255, 0.1);
-        }
-        .btn-compare.active:hover { background: #F0F9FF; }
-
-        /* --- REDESIGNED EDIT BUTTON --- */
-        .btn-update { 
-            background: transparent; 
-            border: 1px solid transparent; 
-            color: #64748B; 
-            font-size: 0.85rem; 
-            text-transform: uppercase; 
-            letter-spacing: 1px;
-            padding: 12px;
-            border-radius: var(--radius-btn);
-            transition: 0.3s;
-        }
-        .btn-update:hover { 
-            background: white; 
-            border-color: #E2E8F0; 
-            color: var(--color-indigo); 
-            box-shadow: var(--shadow-sm);
-        }
-
-        /* =========================================
-           6. NOTIFICATION SYSTEM (Right-Side Toast)
-           ========================================= */
-        #toast-container { 
-            position: fixed; top: 20px; right: 20px; 
-            display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
-            z-index: 10000; pointer-events: none;
-        }
-        
-        .alex-toast {
-            background: white;
-            padding: 16px 24px;
-            border-radius: 12px;
-            border-left: 5px solid var(--color-success); /* Accent Line */
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12), 0 5px 10px rgba(0,0,0,0.05);
-            display: flex; align-items: center; gap: 15px;
-            
-            /* Animation States */
-            opacity: 0; transform: translateX(100%);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            pointer-events: auto;
-            min-width: 300px;
-        }
-        
-        .alex-toast.show { opacity: 1; transform: translateX(0); }
-        
-        .toast-icon-box {
-            width: 32px; height: 32px; background: #ECFDF5; color: var(--color-success);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 1rem;
-        }
-        
-        .toast-content { display: flex; flex-direction: column; }
-        .toast-title { font-weight: 700; color: var(--color-dark); font-size: 0.9rem; }
-        .toast-sub { font-weight: 400; color: #64748B; font-size: 0.8rem; }
-
-        /* =========================================
-           7. RESPONSIVE
-           ========================================= */
-        .mobile-filter-bar {
-            display: none; position: sticky; top: 0; z-index: 900;
-            background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
-            padding: 15px 20px; border-bottom: 1px solid #E2E8F0;
-            margin: -40px -20px 30px -20px;
-        }
-        .btn-mobile-filter {
-            width: 100%; padding: 12px; background: white; border: 2px solid var(--color-indigo);
-            color: var(--color-indigo); border-radius: 10px; font-weight: 700; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-        }
-
-        .mobile-dock {
-            display: none; position: fixed; bottom: 0; left: 0; width: 100%;
-            background: white; border-top: 1px solid #E2E8F0; padding: 20px;
-            z-index: 1000; box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
-        }
-        .mobile-dock-row { display: flex; flex-direction: column; gap: 15px; }
-        .mobile-dock-sub { display: flex; gap: 15px; }
-
-        .modal-overlay-quote { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(5px);
-            z-index: 2000; display: none; justify-content: center; align-items: center; 
-            animation: fadeInUp 0.3s ease-out;
-        }
-        .modal-overlay-quote.active { display: flex; }
-        .comp-card { 
-            background: white; width: 90%; max-width: 900px; border-radius: var(--radius-card); 
-            overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.25); 
-        }
-        .comp-header { 
-            padding: 25px 30px; background: white; border-bottom: 1px solid #E2E8F0; 
-            display: flex; justify-content: space-between; align-items: center; 
-        }
-        .c-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-        .c-table th, .c-table td { padding: 18px 25px; border-bottom: 1px solid #F1F5F9; text-align: center; }
-        .c-table th { background: #F8FAFC; color: var(--color-indigo); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;}
-        .c-table td.feat-col { text-align: left; background: white; font-weight: 600; color: #64748B; width: 30%; border-right: 1px solid #F1F5F9;}
-        .c-table tr:last-child td { border-bottom: none; }
-
-        @media (max-width: 1200px) { 
-            .marketplace-grid { grid-template-columns: 280px 1fr; } 
-            .summary-sidebar { display: none; } 
-            .mobile-dock { display: block; } 
-        }
-        @media (max-width: 900px) { 
-            .page-wrapper { padding-top: 20px; }
-            .marketplace-grid { grid-template-columns: 1fr; gap: 20px; } 
-            .config-sidebar { display: none; } 
-            
-            .config-sidebar.mobile-active { 
-                display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
-                z-index: 2500; overflow-y: auto; border-radius: 0; border: none; padding-top: 80px;
-            }
-            .mobile-filter-bar { display: block; }
-            
-            .card-main { grid-template-columns: 1fr; text-align: center; gap: 15px; padding: 25px 20px; } 
-            .logo-col { margin: 0 auto; }
-            .price-col { text-align: center; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #E2E8F0; width: 100%; } 
-            .per-mo { text-align: center; }
-            .det-grid { grid-template-columns: 1fr; gap: 30px; }
-            .title-sticker h1 { font-size: 1.4rem; }
-        }
-
-                /* TOOLTIP */
-        .tooltip-container { position: relative; display: inline-block; margin-left: 5px; cursor: help; color: var(--brand-cyan); }
-        .tooltip-text {
-            visibility: hidden; width: 200px; background-color: var(--brand-purple); color: #fff; text-align: center;
-            border-radius: 6px; padding: 8px; position: absolute; z-index: 100; bottom: 125%; left: 50%;
-            margin-left: -100px; opacity: 0; transition: opacity 0.3s; font-size: 0.7rem; font-weight: 500;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2); pointer-events: none;
-        }
-        .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
-
-        .cov-select, .custom-input {
-            width: 100%; padding: 8px 10px; font-size: 0.8rem; font-weight: 600; color: var(--brand-purple);
-            border: 1px solid #CBD5E1; border-radius: 8px; background: white; cursor: pointer; transition: 0.2s;
-        }
-        .cov-select:hover, .custom-input:focus { border-color: var(--brand-cyan); outline: none; }
-
-    </style>
 </head>
 <body class="quote-page-body">
 
@@ -591,7 +99,7 @@
         <div class="marketplace-grid">
             
             <aside class="organic-panel config-sidebar" id="configSidebar">
-                <button onclick="toggleFilters()" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:2rem; cursor:pointer;" id="closeFiltersBtn">&times;</button>
+                <button onclick="toggleFilters()" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:2rem; cursor:pointer; display:none;" id="closeFiltersBtn">&times;</button>
 
                 <div class="sidebar-title">Coverages Configuration</div>
                 
@@ -604,7 +112,7 @@
                 <div class="cov-field">
                     <label class="cov-label">Coverage Selected <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Choose your protection level</span></i></label>
                     <div class="radio-stack">
-                        <label class="radio-opt"><input type="radio" name="cov_mode" value="liability" class="recalc"> Liability Only</label>
+                        <label class="radio-opt"><input type="radio" name="cov_mode" value="liability" class="recalc"> Liability Coverage Only</label>
                         <label class="radio-opt"><input type="radio" name="cov_mode" value="comp_coll" checked class="recalc"> Comprehensive & Collision</label>
                         <label class="radio-opt"><input type="radio" name="cov_mode" value="comp" class="recalc"> Comprehensive</label>
                     </div>
@@ -612,19 +120,21 @@
 
                 <div id="deductibleSection">
                     <div class="section-break"></div>
-                    <div class="sec-title">Collision & Comprehensive</div>
+                    <div class="sec-title">Comprehensive & Collision</div>
                     
-                    <div class="cov-field" id="collGroup">
-                        <label class="cov-label">Collision Deductible <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">You pay this amount for repairs</span></i></label>
-                        <select class="cov-select recalc">
-                            <option>No coverage</option><option>100</option><option>250</option><option>500</option><option selected>1000</option><option>2000</option>
-                        </select>
-                    </div>
-                    <div class="cov-field" id="compGroup">
-                        <label class="cov-label">Comprehensive Ded. <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Theft, fire, glass, weather</span></i></label>
-                        <select class="cov-select recalc">
-                            <option>No coverage</option><option>100</option><option>250</option><option>500</option><option selected>1000</option><option>2000</option>
-                        </select>
+                    <div class="form-grid-2">
+                        <div class="cov-field" id="collGroup" style="margin-bottom:0;">
+                            <label class="cov-label">Comprehensive Ded.<i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Theft, fire, glass, weather</span></i></label>
+                            <select class="cov-select recalc">
+                                <option>No Cov</option><option>100</option><option>250</option><option>500</option><option selected>1000</option><option>2000</option>
+                            </select>
+                        </div>
+                        <div class="cov-field" id="compGroup" style="margin-bottom:0;">
+                            <label class="cov-label">Collision Ded. <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">You pay this amount for repairs</span></i></label>
+                            <select class="cov-select recalc">
+                                <option>No Cov</option><option>100</option><option>250</option><option>500</option><option selected>1000</option><option>2000</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -646,53 +156,75 @@
                 </div>
 
                 <div id="customLiabilityOptions" class="nested-options active">
-                    <div class="cov-field">
-                        <label class="cov-label">Bodily Injury <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Injuries to others</span></i></label>
-                        <select class="cov-select recalc">
-                            <option>25K / 50K</option><option>50K / 100K</option><option selected>100K / 300K</option><option>250K / 500K</option><option>500K / 500K</option>
-                        </select>
-                    </div>
-                    <div class="cov-field">
-                        <label class="cov-label">Property Damage <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Damage to other cars/property</span></i></label>
-                        <select class="cov-select recalc">
-                            <option>15K</option><option>25K</option><option selected>50K</option><option>100K</option><option>500K</option>
-                        </select>
+                    <div class="form-grid-2" style="margin-bottom:0;">
+                        <div class="cov-field" style="margin-bottom:0;">
+                            <label class="cov-label">Bodily Injury <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Injuries to others</span></i></label>
+                            <select class="cov-select recalc">
+                                <option>25/50</option><option>50/100</option><option selected>100/300</option><option>250/500</option>
+                            </select>
+                        </div>
+                        <div class="cov-field" style="margin-bottom:0;">
+                            <label class="cov-label">Property Damage <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Damage to other cars/property</span></i></label>
+                            <select class="cov-select recalc">
+                                <option>15K</option><option>25K</option><option selected>50K</option><option>100K</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
                 <div class="section-break"></div>
                 <div class="sec-title">Medical & Protection</div>
                 
-                <div class="cov-field"><label class="cov-label">Medical Payments <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Medical bills for you</span></i></label>
-                    <select class="cov-select recalc"><option>No coverage</option><option>500</option><option>1000</option><option>5000</option><option>10000</option></select>
+                <div class="form-grid-2">
+                    <div class="cov-field" style="margin-bottom:0;">
+                        <label class="cov-label">Medical Payments <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Medical bills for you</span></i></label>
+                        <select class="cov-select recalc"><option>No Cov</option><option>500</option><option>1000</option><option>5000</option></select>
+                    </div>
+                    <div class="cov-field" style="margin-bottom:0;">
+                        <label class="cov-label">Accidental Death <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Death benefit</span></i></label>
+                        <select class="cov-select recalc"><option>No Cov</option><option>5000</option><option>10000</option></select>
+                    </div>
                 </div>
-                <div class="cov-field"><label class="cov-label">Uninsured BI <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Hit by uninsured driver</span></i></label>
-                    <select class="cov-select recalc"><option>No coverage</option><option>25/50</option><option>50/100</option><option selected>100/300</option></select>
-                </div>
-                <div class="cov-field"><label class="cov-label">Underinsured BI <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Hit by underinsured driver</span></i></label>
-                    <select class="cov-select recalc"><option>No coverage</option><option>25/50</option><option>50/100</option><option selected>100/300</option></select>
-                </div>
-                <div class="cov-field"><label class="cov-label">Accidental Death <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Death benefit</span></i></label>
-                    <select class="cov-select recalc"><option>No coverage</option><option>5000</option><option>10000</option></select>
+                
+                <div class="form-grid-2">
+                    <div class="cov-field" style="margin-bottom:0;">
+                        <label class="cov-label">Uninsured BI <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Hit by uninsured driver</span></i></label>
+                        <select class="cov-select recalc"><option>No Cov</option><option>25/50</option><option>50/100</option><option selected>100/300</option></select>
+                    </div>
+                    <div class="cov-field" style="margin-bottom:0;">
+                        <label class="cov-label">Underinsured BI <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Hit by underinsured driver</span></i></label>
+                        <select class="cov-select recalc"><option>No Cov</option><option>25/50</option><option>50/100</option><option selected>100/300</option></select>
+                    </div>
                 </div>
 
                 <div class="section-break"></div>
                 <div class="sec-title">Extras</div>
                 
-                <div class="cov-field"><label class="cov-label">Roadside Assistance <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Towing & Labor</span></i></label>
-                    <select class="cov-select recalc"><option>No Covg</option><option>50</option><option>75</option><option>100</option></select>
+                <div class="form-grid-2">
+                    <div class="cov-field" style="margin-bottom:0;">
+                        <label class="cov-label">Roadside Asst. <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Towing & Labor</span></i></label>
+                        <select class="cov-select recalc"><option>No</option><option>50</option><option>75</option><option>100</option></select>
+                    </div>
+                    <div class="cov-field" style="margin-bottom:0;">
+                        <label class="cov-label">Rental Car <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Reimbursement per day</span></i></label>
+                        <select class="cov-select recalc"><option>No</option><option>30</option><option>40</option><option>50</option></select>
+                    </div>
                 </div>
-                <div class="cov-field"><label class="cov-label">Car Rental <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Reimbursement per day</span></i></label>
-                    <select class="cov-select recalc"><option>No Covg</option><option>30</option><option>40</option><option>50</option></select>
+                
+                <div class="form-grid-2">
+                    <div class="cov-field" style="margin-bottom:0;">
+                        <label class="cov-label">Gap Coverage <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Covers the "gap" between what you owe on a financed/leased vehicle and its actual cash value (ACV)</span></i></label>
+                        <select class="cov-select recalc"><option>No</option><option>Yes</option></select>
+                    </div>
+                    <div class="cov-field" style="margin-bottom:0;">
+                        <label class="cov-label">Safety Feat. <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Product attributes (like anti-lock brakes or lane departure warnings) or built-in tools (like telematics) that reduce risk, preventing accidents and claims</span></i></label>
+                        <select class="cov-select recalc"><option>No</option><option>Yes</option></select>
+                    </div>
                 </div>
-                <div class="cov-field"><label class="cov-label">Gap Coverage</label>
-                    <select class="cov-select recalc"><option>No</option><option>Yes</option></select>
-                </div>
-                <div class="cov-field"><label class="cov-label">Custom Equipment</label>
+
+                <div class="cov-field">
+                    <label class="cov-label">Custom Equipment Value <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Aftermarket additions or modifications that go beyond factory standard, requiring a specific endorsement to cover their value</span></i></label>
                     <input type="number" class="custom-input recalc" placeholder="$0">
-                </div>
-                <div class="cov-field"><label class="cov-label">Safety Features</label>
-                    <select class="cov-select recalc"><option>No</option><option>Yes</option></select>
                 </div>
                 
                 <div class="cov-field" style="margin-top:20px;">
@@ -751,24 +283,173 @@
 
     <div id="compareModal" class="modal-overlay-quote">
         <div class="comp-card">
+            
             <div class="comp-header">
-                <h3 style="margin:0; color:var(--color-dark); font-weight: 700;">Plan Comparison</h3>
-                <button onclick="closeModal()" style="border:none; background:none; font-size:2rem; cursor:pointer; color: #94A3B8;">&times;</button>
+                <div class="comp-title">
+                    <h3>Review & Compare</h3>
+                    <p>Detailed analysis of your top options.</p>
+                </div>
+                <button onclick="closeModal()" class="close-comp-btn"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div style="padding:0; max-height:70vh; overflow-y:auto;">
-                <table class="c-table">
-                    <thead><tr><th class="feat-col">Features</th><th>CoverCube</th><th>Kemper</th></tr></thead>
-                    <tbody>
-                        <tr><td class="feat-col">Down Payment</td><td style="font-weight:700;">$3,920.22</td><td>$900.00</td></tr>
-                        <tr><td class="feat-col">Monthly Payment</td><td style="color:var(--color-primary); font-weight:800;">$0.00</td><td style="color:var(--color-primary); font-weight:800;">$661.64</td></tr>
-                        <tr><td class="feat-col">Term</td><td>6 Months</td><td>6 Months</td></tr>
-                        <tr><td class="feat-col">BI Limits</td><td>100/300</td><td>100/300</td></tr>
-                    </tbody>
-                </table>
+
+            <div class="comp-controls-area">
+                <div class="veh-toggle-container">
+                    <button class="veh-tab-btn active" onclick="switchCompTab('v1', this)">
+                        <i class="fa-solid fa-truck-pickup"></i> 2019 Nissan Titan
+                    </button>
+                    <button class="veh-tab-btn" onclick="switchCompTab('v2', this)">
+                        <i class="fa-solid fa-truck-monster"></i> 2022 GMC Canyon
+                    </button>
+                </div>
+            </div>
+
+            <div class="comp-body">
+                
+                <div id="v1" class="comp-tab-content active">
+                    <div class="table-scroll-wrapper">
+                        <table class="tech-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        <div class="brand-box">
+                                            <img src="../assets/img/Carrier-covercube-2.jpg" class="th-logo">
+                                            <span class="plan-badge">Standard</span>
+                                        </div>
+                                    </th>
+                                    <th class="highlight-head">
+                                        <div class="brand-box">
+                                            <span class="rec-badge"><i class="fa-solid fa-bolt"></i> AI Choice</span>
+                                            <img src="../assets/img/Carrier-kemper.jpg" class="th-logo">
+                                            <span class="plan-badge">Auto Flex</span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="brand-box">
+                                            <div style="height:26px;"></div>
+                                            <img src="../assets/img/Carrier-just.jpg" class="th-logo">
+                                            <span class="plan-badge">Basic</span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-section-row">
+                                    <td colspan="4"><i class="fa-solid fa-coins"></i> Financials & Terms</td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-col"><div class="f-icon"><i class="fa-solid fa-tag"></i></div> Monthly Pmt.</td>
+                                    <td><div class="price-tag-lg">$0.00</div><div class="price-sub">Paid in Full</div></td>
+                                    <td class="highlight-cell"><div class="price-tag-lg" style="color:var(--color-primary);">$661.64</div><div class="price-sub">/ Month</div></td>
+                                    <td><div class="price-tag-lg">$710.00</div><div class="price-sub">/ Month</div></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-col"><div class="f-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div> Down Pmt.</td>
+                                    <td style="font-weight:600; color:#64748B;">$3,920.00</td>
+                                    <td class="highlight-cell" style="font-weight:700; color:var(--color-dark);">$870.32</td>
+                                    <td style="font-weight:600; color:#64748B;">$900.00</td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-col"><div class="f-icon"><i class="fa-solid fa-calendar"></i></div> Policy Term</td>
+                                    <td>6 Months</td>
+                                    <td class="highlight-cell">6 Months</td>
+                                    <td>6 Months</td>
+                                </tr>
+
+                                <tr class="table-section-row">
+                                    <td colspan="4"><i class="fa-solid fa-shield-halved"></i> Coverage Details</td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-col"><div class="f-icon"><i class="fa-solid fa-user-shield"></i></div> Liability</td>
+                                    <td>100/300/50</td>
+                                    <td class="highlight-cell"><strong>100/300/50</strong></td>
+                                    <td>25/50/15</td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-col"><div class="f-icon"><i class="fa-solid fa-car-burst"></i></div> Coll. Ded.</td>
+                                    <td>$1,000</td>
+                                    <td class="highlight-cell">$1,000</td>
+                                    <td>$2,000</td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-col"><div class="f-icon"><i class="fa-solid fa-cloud-showers-heavy"></i></div> Comp. Ded.</td>
+                                    <td>$1,000</td>
+                                    <td class="highlight-cell">$1,000</td>
+                                    <td>$2,000</td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-col"><div class="f-icon"><i class="fa-solid fa-truck-pickup"></i></div> Roadside</td>
+                                    <td><i class="fa-solid fa-check check-ok"></i></td>
+                                    <td class="highlight-cell"><i class="fa-solid fa-xmark check-no"></i></td>
+                                    <td><i class="fa-solid fa-xmark check-no"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-col"><div class="f-icon"><i class="fa-solid fa-key"></i></div> Rental Car</td>
+                                    <td>$40 / day</td>
+                                    <td class="highlight-cell"><i class="fa-solid fa-xmark check-no"></i></td>
+                                    <td><i class="fa-solid fa-xmark check-no"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="v2" class="comp-tab-content">
+                    <div class="table-scroll-wrapper">
+                        <table class="tech-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="highlight-head">
+                                        <div class="brand-box">
+                                            <span class="rec-badge" style="background:#4F46E5;">Best Value</span>
+                                            <img src="../assets/img/Carrier-covercube-2.jpg" class="th-logo">
+                                            <span class="plan-badge">Economy</span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="brand-box">
+                                            <div style="height:26px;"></div>
+                                            <img src="../assets/img/Carrier-kemper.jpg" class="th-logo">
+                                            <span class="plan-badge">Flex Plus</span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-section-row"><td colspan="3"><i class="fa-solid fa-coins"></i> Financials</td></tr>
+                                <tr>
+                                    <td class="feature-col"><div class="f-icon"><i class="fa-solid fa-tag"></i></div> Monthly</td>
+                                    <td class="highlight-cell"><div class="price-tag-lg" style="color:var(--color-primary);">$120.00</div></td>
+                                    <td><div class="price-tag-lg">$145.50</div></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-col"><div class="f-icon"><i class="fa-solid fa-money-bill"></i></div> Down Pmt</td>
+                                    <td class="highlight-cell" style="font-weight:700;">$500.00</td>
+                                    <td>$250.00</td>
+                                </tr>
+                                
+                                <tr class="table-section-row"><td colspan="3"><i class="fa-solid fa-shield"></i> Coverage</td></tr>
+                                <tr>
+                                    <td class="feature-col"><div class="f-icon"><i class="fa-solid fa-user-shield"></i></div> Liability</td>
+                                    <td class="highlight-cell">50/100/50</td>
+                                    <td>50/100/50</td>
+                                </tr>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comp-footer">
+                <div class="disclaimer"><i class="fa-solid fa-lock"></i> Prices are locked for 24 hours. Terms apply.</div>
+                <div>
+                    <button onclick="closeModal()" class="btn-update" style="border:none; background:#F8FAFC;">Keep Looking</button>
+                    <button class="btn-next active" style="padding: 12px 25px; font-size:0.9rem;">Select Recommended</button>
+                </div>
             </div>
         </div>
     </div>
-
         <footer id="contact" class="site-footer">
         <div class="container footer-grid">
             <div class="footer-col brand-col">
@@ -837,213 +518,89 @@
     </footer>
 
     <div id="floating-menu-container">
-        <div class="floating-menu-list organic-box" id="megaMenu">
-            <h5>Quick Navigate</h5>
-            <ul>
-                <li><a href="../quote/quote.html"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
-                <li><a href="../homeowners/index.html"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
-                <li><a href="../renters/index.html"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
-                <li><a href="../alex-sign/index.html"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
-                <li class="divider"></li>
-                <li><a href="../blog/index.html"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
-                <li><a href="../contact/index.html"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
-            </ul>
+        <div class="nav-command-center" id="megaMenu">
+            <div class="cmd-header">
+                <span>Quick Navigate</span>
+                <span class="cmd-badge">MENU</span>
+            </div>
+            <div class="cmd-grid">
+                <a href="../quote/quote.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-car"></i></div>
+                    <span>Car Insurance</span>
+                </a>
+                <a href="../homeowners/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-house"></i></div>
+                    <span>Home Insurance</span>
+                </a>
+                <a href="../renters/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-key"></i></div>
+                    <span>Renters Insurance</span>
+                </a>
+                <a href="../alex-sign/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-file-signature"></i></div>
+                    <span>Alex Sign</span>
+                </a>
+                <a href="../blog/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-newspaper"></i></div>
+                    <span>Blog</span>
+                </a>
+                <a href="../contact/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-headset"></i></div>
+                    <span>Contact Support</span>
+                </a>
+            </div>
+            <div class="cmd-footer">
+                <a href="../index.html">Back to Home <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
         </div>
-        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open quick menu">
-            <i class="fa-solid fa-bars-staggered"></i>
+        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open menu">
+            <i class="fa-regular fa-compass"></i>
         </button>
     </div>
 
     <div id="floating-chat-container">
+        <div class="alex-chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div class="agent-info">
+                    <div class="agent-avatar"><i class="fa-solid fa-robot"></i><div class="status-dot"></div></div>
+                    <div class="agent-text">
+                        <span class="name">Alex AI Assistant</span>
+                        <span class="status">Reply time: Instant</span>
+                    </div>
+                </div>
+                <button class="close-chat-btn js-close-chat"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="chat-body">
+                <div class="chat-timestamp">Today, 5:00 PM</div>
+                
+                <div class="msg-row bot">
+                    <div class="msg-bubble">
+                        Hello! I see you're looking at quotes. Do you have any questions about the <strong>Collision Deductible</strong>? 🚗
+                    </div>
+                </div>
+                
+                <div class="chat-suggestions">
+                    <button>Explain Deductibles</button>
+                    <button>Talk to Human</button>
+                </div>
+            </div>
+            
+            <div class="chat-footer">
+                <input type="text" placeholder="Type your question..." class="chat-input">
+                <button class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+
         <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
-            <i class="fa-solid fa-robot"></i>
+            <i class="fa-solid fa-comment-dots"></i>
+            <span class="online-badge"></span>
         </button>
     </div>
 
     <script src="../js/script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            const offers = [
-                { id: 1, logo: '../assets/img/Carrier-covercube-2.jpg', carrier: 'CoverCube', plan: 'Full Covercube', down: '3,920.22', monthly: '0.00' },
-                { id: 2, logo: '../assets/img/Carrier-kemper.jpg', carrier: 'Kemper', plan: 'Kemper Auto Flex', down: '870.32', monthly: '661.64' },
-                { id: 3, logo: '../assets/img/Carrier-just.jpg', carrier: 'Just', plan: 'Standard Plan', down: '900.00', monthly: '710.00' },
-                { id: 4, logo: '../assets/img/Carrier-clearcover.png', carrier: 'Clearcover', plan: 'Economy', down: '800.00', monthly: '640.00' }
-            ];
+    <script src="../js/script-quote.js"></script>
 
-            const container = document.getElementById('offersContainer');
-            const loader = document.getElementById('loader');
-            window.selectedIds = [];
 
-            setTimeout(() => { loader.style.display = 'none'; renderOffers(); }, 1500);
-
-            // LOGICA LEFT COLUMN
-            const covModeRadios = document.getElementsByName('cov_mode');
-            const dedSec = document.getElementById('deductibleSection');
-            const collGrp = document.getElementById('collGroup');
-            
-            covModeRadios.forEach(radio => {
-                radio.addEventListener('change', () => {
-                    const val = radio.value;
-                    if(val === 'liability') { dedSec.style.display = 'none'; }
-                    else if(val === 'comp') { dedSec.style.display = 'block'; collGrp.style.display = 'none'; }
-                    else { dedSec.style.display = 'block'; collGrp.style.display = 'block'; }
-                    activateRecalc();
-                });
-            });
-
-            const liabRadios = document.getElementsByName('liab_mode');
-            const customLiab = document.getElementById('customLiabilityOptions');
-            liabRadios.forEach(radio => {
-                radio.addEventListener('change', () => {
-                    customLiab.classList.toggle('active', radio.value === 'custom');
-                    activateRecalc();
-                });
-            });
-
-            // --- NOTIFICATION SYSTEM (RIGHT SIDE) ---
-            function showToast(msg) {
-                const container = document.getElementById('toast-container');
-                container.innerHTML = ''; // Limpiar para que no se apilen feo
-
-                const toast = document.createElement('div');
-                toast.className = 'alex-toast';
-                
-                toast.innerHTML = `
-                    <div class="toast-icon-box"><i class="fa-solid fa-check"></i></div>
-                    <div class="toast-content">
-                        <span class="toast-title">Plan Selected</span>
-                        <span class="toast-sub">${msg}</span>
-                    </div>
-                `;
-                
-                container.appendChild(toast);
-                
-                // Trigger reflow for animation
-                void toast.offsetWidth;
-                toast.classList.add('show');
-                
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    setTimeout(() => toast.remove(), 500);
-                }, 3500);
-            }
-
-            function renderOffers() {
-                container.innerHTML = '';
-                offers.forEach(o => {
-                    const div = document.createElement('div');
-                    div.className = 'offer-card';
-                    div.setAttribute('data-id', o.id);
-                    div.innerHTML = `
-                        <div class="stamp-mark"><i class="fa-solid fa-check"></i> SELECTED</div>
-                        
-                        <div class="card-main">
-                            <div class="logo-col"><img src="${o.logo}" class="carrier-logo"></div>
-                            <div class="info-col">
-                                <h4>${o.plan}</h4>
-                                <div class="coverage-tags">BI | PD | UM | MED | COMP | COLL</div>
-                                <div class="liability-tag">Liability: $100k / $300k / $50k</div>
-                            </div>
-                            <div class="price-col">
-                                <div class="down-row">Down Payment: <strong>$${o.down}</strong></div>
-                                <div class="monthly-row">
-                                    <div class="highlight-bg">
-                                        <span class="price-big">$${o.monthly}</span>
-                                    </div>
-                                    <span class="per-mo">Per Month</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-actions">
-                            <button class="action-btn" onclick="toggleDetails(${o.id})">View Details</button>
-                            <button class="action-btn select-btn" onclick="toggleSel(${o.id}, this, '${o.carrier}')">Select Plan</button>
-                        </div>
-
-                        <div id="dtl-${o.id}" class="details-expand">
-                            <div class="company-header">
-                                <span>Company: <strong>${o.carrier}</strong></span>
-                                <span>Product: <strong>${o.plan}</strong></span>
-                            </div>
-                            <div class="det-grid">
-                                <div class="veh-col">
-                                    <h5><i class="fa-solid fa-car"></i> 2019 NISSAN TITAN S</h5>
-                                    <div class="det-row"><span class="det-lbl">VIN</span><span class="det-val">1N6AA...</span></div>
-                                    <div class="det-row"><span class="det-lbl">Comp Ded</span><span class="det-val">$1,000 | $219.48</span></div>
-                                    <div class="det-row"><span class="det-lbl">Coll Ded</span><span class="det-val">$1,000 | $1,021</span></div>
-                                    <div class="det-row"><span class="det-lbl">Towing</span><span class="det-val">$90</span></div>
-                                </div>
-                                <div class="veh-col">
-                                    <h5><i class="fa-solid fa-car"></i> 2022 GMC CANYON</h5>
-                                    <div class="det-row"><span class="det-lbl">Comp Ded</span><span class="det-val">$500 | $132.23</span></div>
-                                    <div class="det-row"><span class="det-lbl">Coll Ded</span><span class="det-val">$500 | $1,130.26</span></div>
-                                    <div class="det-row"><span class="det-lbl">Towing</span><span class="det-val">No Cov</span></div>
-                                </div>
-                            </div>
-                            <div style="text-align:right; margin-top:15px;">
-                                <button onclick="toggleDetails(${o.id})" style="background:none; border:none; color:var(--color-primary); font-weight:700; cursor:pointer;">Close Details</button>
-                            </div>
-                        </div>
-                    `;
-                    container.appendChild(div);
-                });
-            }
-
-            window.toggleDetails = id => document.getElementById(`dtl-${id}`).classList.toggle('active');
-            
-            window.toggleSel = function(id, btn, carrierName) {
-                const card = document.querySelector(`.offer-card[data-id="${id}"]`);
-                if(window.selectedIds.includes(id)) {
-                    window.selectedIds = window.selectedIds.filter(i => i !== id);
-                    card.classList.remove('selected');
-                    btn.textContent = 'Select Plan';
-                } else {
-                    window.selectedIds.push(id);
-                    card.classList.add('selected');
-                    btn.textContent = 'Unselect';
-                    showToast(`${carrierName} Added`);
-                }
-                updateBtns();
-            }
-
-            window.updateBtns = function() {
-                const nextBtns = document.querySelectorAll('.js-btn-next');
-                const compBtns = document.querySelectorAll('.js-btn-compare');
-                
-                nextBtns.forEach(b => b.classList.remove('active'));
-                compBtns.forEach(b => b.classList.remove('active'));
-
-                if (window.selectedIds.length === 1) {
-                    nextBtns.forEach(b => b.classList.add('active'));
-                } else if (window.selectedIds.length >= 2) {
-                    compBtns.forEach(b => b.classList.add('active'));
-                }
-            }
-
-            // Mobile Filters Logic
-            window.toggleFilters = function() {
-                const sb = document.getElementById('configSidebar');
-                sb.classList.toggle('mobile-active');
-                document.getElementById('closeFiltersBtn').style.display = sb.classList.contains('mobile-active') ? 'block' : 'none';
-            }
-
-            function activateRecalc() { document.getElementById('btnRecalc').classList.add('active'); }
-            document.querySelectorAll('.recalc').forEach(el => el.addEventListener('change', activateRecalc));
-            document.getElementById('btnRecalc').addEventListener('click', function() {
-                if(!this.classList.contains('active')) return;
-                this.classList.remove('active');
-                container.innerHTML = '';
-                document.getElementById('loader').style.display = 'flex';
-                document.getElementById('configSidebar').classList.remove('mobile-active'); // Close mobile
-                setTimeout(() => { document.getElementById('loader').style.display = 'none'; renderOffers(); }, 1500);
-            });
-
-            // Modals & Next
-            document.querySelectorAll('.js-btn-compare').forEach(btn => btn.addEventListener('click', () => { if(btn.classList.contains('active')) document.getElementById('compareModal').classList.add('active'); }));
-            window.closeModal = () => document.getElementById('compareModal').classList.remove('active');
-            document.querySelectorAll('.js-btn-next').forEach(btn => btn.addEventListener('click', () => { if(btn.classList.contains('active')) alert("Proceeding to Checkout"); }));
-        });
-    </script>
 </body>
 </html>

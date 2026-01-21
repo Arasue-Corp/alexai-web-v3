@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initMobileMenu();
     initFloatingMegaMenu();
     initFAQAccordion();
-    initFloatingChat();
     
     // 2. Lógica del Home (Video y Productos)
     if(document.getElementById('heroVideoElement')) {
@@ -54,18 +53,87 @@ function initMobileMenu() {
 }
 
 function initFloatingMegaMenu() {
-    const triggerBtn = document.querySelector('.js-toggle-mega-menu');
-    const menuList = document.getElementById('megaMenu');
-    if(!triggerBtn || !menuList) return;
-
-    triggerBtn.addEventListener('click', () => {
-        menuList.classList.toggle('is-open');
-    });
+       // =========================================
+    // LOGICA DE BOTONES FLOTANTES (NUEVO)
+    // =========================================
     
-    // Cerrar al clickear fuera
+    // --- 1. CHAT LOGIC ---
+    const chatBtn = document.querySelector('.js-trigger-chat');
+    const chatWindow = document.getElementById('chatWindow');
+    const chatClose = document.querySelector('.js-close-chat');
+
+    if(chatBtn && chatWindow) {
+        chatBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            chatWindow.classList.add('active');
+            chatBtn.classList.add('open-state'); // Ocultar botón
+            
+            // Cerrar menú si está abierto
+            closeMenu();
+        });
+
+        chatClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeChat();
+        });
+    }
+
+    function closeChat() {
+        if(chatWindow) chatWindow.classList.remove('active');
+        if(chatBtn) chatBtn.classList.remove('open-state');
+    }
+
+// --- 2. MEGA MENU LOGIC (CORREGIDO & FLEXIBLE) ---
+    const menuBtn = document.querySelector('.js-toggle-mega-menu');
+    const menuList = document.getElementById('megaMenu');
+    let originalIconClass = ''; // Variable para guardar tu icono (Brújula, Grid, etc.)
+
+    if(menuBtn && menuList) {
+        // 1. Guardamos la clase exacta de tu icono al cargar la página
+        const iconElement = menuBtn.querySelector('i');
+        if(iconElement) originalIconClass = iconElement.className;
+
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = menuList.classList.contains('is-open');
+            
+            if(isOpen) {
+                closeMenu();
+            } else {
+                menuList.classList.add('is-open');
+                menuBtn.classList.add('active');
+                
+                // Cambiar icono a "X" (Cerrar)
+                if(iconElement) iconElement.className = 'fa-solid fa-xmark';
+
+                // Cerrar chat si está abierto
+                if(typeof closeChat === 'function') closeChat();
+            }
+        });
+
+        // Hacemos la función accesible para el listener global de clicks
+        window.closeMenu = function() {
+            if(menuList) menuList.classList.remove('is-open');
+            if(menuBtn) {
+                menuBtn.classList.remove('active');
+                // RESTAURAR EL ICONO ORIGINAL EXACTO
+                if(iconElement && originalIconClass) {
+                    iconElement.className = originalIconClass;
+                }
+            }
+        };
+    }
+
+    // --- 3. CERRAR AL CLICKEAR FUERA ---
     document.addEventListener('click', (e) => {
-        if (!triggerBtn.contains(e.target) && !menuList.contains(e.target)) {
-            menuList.classList.remove('is-open');
+        // Si existe la función closeChat (del bloque anterior) y el clic fue fuera...
+        if(typeof chatWindow !== 'undefined' && chatWindow && !chatWindow.contains(e.target) && !chatBtn.contains(e.target)) {
+            if(typeof closeChat === 'function') closeChat();
+        }
+        
+        // Cierre del menú
+        if(menuList && !menuList.contains(e.target) && !menuBtn.contains(e.target)) {
+            if(typeof window.closeMenu === 'function') window.closeMenu();
         }
     });
 }
@@ -79,12 +147,6 @@ function initFAQAccordion() {
     });
 }
 
-function initFloatingChat() {
-    const chatBubble = document.getElementById('chatGreeting');
-    const chatTriggers = document.querySelectorAll('.js-trigger-chat');
-    setTimeout(() => { if (chatBubble) chatBubble.classList.add('is-visible'); }, 2500);
-    chatTriggers.forEach(btn => btn.addEventListener('click', () => alert('🤖 Alex AI Chat Opening...')));
-}
 
 /* =========================================
    HOME PAGE LOGIC
