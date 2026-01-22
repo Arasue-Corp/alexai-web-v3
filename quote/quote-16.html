@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Information - Alex AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style-quote.css">
+</head>
+<body class="bg-ultra-matte">
+
+    <div id="toast-container"></div>
+
+    <div id="custom-modal" class="modal-overlay-edit">
+        <div class="modal-box">
+            <div class="modal-icon danger"><i class="fa-solid fa-trash-can"></i></div>
+            <div class="modal-content">
+                <h3>Remove Item?</h3>
+                <p>This will permanently remove this entity. Quote recalculation required.</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-modal-cancel" onclick="closeModalToast()">Cancel</button>
+                <button type="button" id="btn-confirm-action" class="btn-modal-confirm">Yes, Remove</button>
+            </div>
+        </div>
+    </div>
+
+           <div class="top-header">
+        <div class="container top-header-flex">
+            <div class="top-contact">
+                <a href="tel:+1800555ALEX"><i class="fa-solid fa-phone"></i> +1 480 630 9630</a>
+                <a href="mailto:hello@alexai.com"><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</a>
+                <span><i class="fa-solid fa-location-dot"></i> 3101 N Central Ave ste 1174, Phoenix, AZ</span>
+            </div>
+            <div class="top-social">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <div class="container header-wrapper">
+            <a href="https://alexai.cloud/" class="logo-container">
+                <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="site-logo">
+            </a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../quote/quote.html" class="js-trigger-quote">Quote</a></li>
+                    <li class="has-dropdown">
+                        <a href="../index.html#products">Products <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu organic-box">
+                            <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#carriers">Carriers</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+
+                    <li class="mobile-only-nav"><a href="../ambassadors/documents.html">Become an Ambassador</a></li>
+                    <li class="mobile-only-nav"><a href="../quote/quote.html" style="color: var(--alex-blue-accent);">Check Prices</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="../ambassadors/index.html" class="btn btn-outline btn-sm">Become an Ambassador</a>
+                <a href="../quote/quote.html" class="btn btn-solid btn-sm js-trigger-quote">Check Prices</a>
+            </div>
+            
+             <button class="mobile-menu-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        </div>
+    </header>
+
+    <nav class="nav-executive">
+        <div class="nav-content">
+            <span class="page-title">Update information</span>
+            <span class="sep"></span>
+            <span class="page-title">Application Editor</span>
+        </div>
+    </nav>
+
+    <main class="editor-stage">
+        
+        <header class="stage-header">
+            <h1>Review Information</h1>
+            <p>Verify your details below. Changes trigger automatic recalculation.</p>
+        </header>
+
+        <form id="editForm" onsubmit="event.preventDefault();">
+
+            <div class="section-label">
+                <h2><i class="fa-solid fa-users text-indigo"></i> Drivers</h2>
+                <button type="button" class="btn-add-outline" onclick="addEntity('Driver')">
+                    <i class="fa-solid fa-plus"></i> Add Driver
+                </button>
+            </div>
+
+            <div class="premium-card" id="driver-1">
+                <div class="card-head-center">
+                    <div class="avatar-circle primary"><i class="fa-solid fa-heart"></i></div>
+                    <div class="head-info">
+                        <h3>Uri Williams <span class="badge blue">Primary</span></h3>
+                        <div class="meta-line">
+                            <span>Age: 30</span> <span class="dot">•</span> <span>Prior Insurance: <strong class="txt-green">Yes</strong></span>
+                        </div>
+                        <div class="contact-line">
+                            <small><i class="fa-regular fa-envelope"></i> uri.williams@gmail.com</small>
+                            <small><i class="fa-solid fa-phone"></i> +1 (480) 555-0199</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="split-layout">
+                        <div class="split-col">
+                            <h5 class="module-title"><i class="fa-solid fa-user-pen"></i> Profile</h5>
+                            <div class="grid-2">
+                                <div class="inp-group"><label>First Name</label><input type="text" class="clean-input" value="Uri"></div>
+                                <div class="inp-group"><label>Last Name</label><input type="text" class="clean-input" value="Williams"></div>
+                            </div>
+                            <div class="grid-2 mt-3">
+                                <div class="inp-group"><label>Date of Birth</label><input type="date" class="clean-input" value="1995-11-28"></div>
+                                <div class="inp-group"><label>Gender</label><select class="clean-select"><option>Male</option><option>Female</option></select></div>
+                                <div class="inp-group"><label>Marital Status</label><select class="clean-select"><option>Married</option><option>Single</option></select></div>
+                                <div class="inp-group"><label>Education</label><select class="clean-select"><option>Bachelors Degree</option><option>Masters</option></select></div>
+                            </div>
+                        </div>
+
+                        <div class="split-col">
+                            <h5 class="module-title"><i class="fa-solid fa-shield-halved"></i> Insurance</h5>
+                            <div class="inp-group full">
+                            <div class="inp-group"><label>Status</label><input type="text" class="clean-input locked" value="Currently Insured" readonly></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="divider-line"></div>
+
+                    <div class="full-layout">
+                        <h5 class="module-title center"><i class="fa-solid fa-id-card"></i> License Details</h5>
+                        <div class="grid-4">
+                            <div class="inp-group"><label>Status</label><input type="text" class="clean-input locked" value="Valid" readonly></div>
+                            <div class="inp-group span-2"><label>DL Number / ID</label><input type="text" class="clean-input" value="L3110RC17036"></div>
+                            <div class="inp-group"><label>Age Acq.</label><input type="text" class="clean-input locked" value="16" readonly></div>
+                            
+                            <div class="inp-group"><label>Foreign Exp</label><input type="text" class="clean-input locked" value="0" readonly></div>
+                            
+                            <div class="inp-group">
+                                <label>Foreign License</label>
+                                <select class="clean-select js-trigger" data-target="d1-for">
+                                    <option value="None">None</option>
+                                    <option value="Mexico">Mexico</option>
+                                    <option value="International">International</option>
+                                </select>
+                            </div>
+                            <div class="inp-group hidden-anim" id="d1-for"><label class="txt-blue">Date Issued</label><input type="date" class="clean-input"></div>
+
+                            <div class="inp-group">
+                                <label>Suspended?</label>
+                                <select class="clean-select js-trigger" data-target="d1-sus">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="inp-group hidden-anim" id="d1-sus"><label class="txt-red">Suspension Date</label><input type="date" class="clean-input"></div>
+
+                            <div class="inp-group">
+                                <label>SR-22 Filing?</label>
+                                <select class="clean-select js-trigger" data-target="d1-sr22">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="inp-group hidden-anim" id="d1-sr22"><label class="txt-warn">Reason</label><select class="clean-select"><option>DUI</option><option>No Insurance</option></select></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="premium-card" id="driver-2">
+                <div class="card-head-center">
+                    <div class="avatar-circle gray"><i class="fa-solid fa-user"></i></div>
+                    <div class="head-info">
+                        <h3>Elois Wolf<span class="badge gray">Driver 2</span></h3>
+                        <div class="meta-line">
+                            <span>Age: 26</span> <span class="dot">•</span> <span>Prior Insurance: <strong class="txt-red">No</strong></span>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-abs-delete" onclick="confirmRemove('driver-2', 'Driver')">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="split-layout">
+                        <div class="split-col">
+                            <h5 class="module-title"><i class="fa-solid fa-user-pen"></i> Profile</h5>
+                            <div class="grid-2">
+                                <div class="inp-group"><label>First Name</label><input type="text" class="clean-input" value="Elois"></div>
+                                <div class="inp-group"><label>Last Name</label><input type="text" class="clean-input" value="Wolf"></div>
+                            </div>
+                            <div class="grid-2 mt-3">
+                                <div class="inp-group"><label>Date of Birth</label><input type="date" class="clean-input" value="1999-09-09"></div>
+                                <div class="inp-group"><label>Gender</label><select class="clean-select"><option>Female</option><option>Male</option></select></div>
+                                <div class="inp-group"><label>Marital Status</label><select class="clean-select"><option>Married</option><option>Single</option></select></div>
+                                <div class="inp-group"><label>Education</label><select class="clean-select"><option>Bachelors Degree</option><option>Masters</option></select></div>
+                            </div>
+                        </div>
+                        <div class="split-col">
+                            <h5 class="module-title"><i class="fa-solid fa-sliders"></i> Settings</h5>
+                            <div class="inp-group highlight">
+                                <label class="txt-blue">Relationship</label>
+                                <select class="clean-select"><option>Spouse</option><option>Child</option></select>
+                            </div>
+                            <div class="inp-group highlight">
+                                <label class="txt-blue">Exclude Driver?</label>
+                                <select class="clean-select js-exclude">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="full-layout mt-4 pt-4 border-top">
+                        <h5 class="module-title center">License Details</h5>
+                        <div class="grid-4">
+                            <div class="inp-group"><label>Status</label><input type="text" class="clean-input locked" value="Valid" readonly></div>
+                            <div class="inp-group span-2"><label>DL Number</label><input type="text" class="clean-input" value="C95339337"></div>
+                            <div class="inp-group"><label>Age Acq.</label><input type="text" class="clean-input locked" value="16" readonly></div>
+                            <div class="inp-group"><label>Foreign Exp</label><input type="text" class="clean-input locked" value="0" readonly></div>
+                            
+                            <div class="inp-group">
+                                <label>Foreign License</label>
+                                <select class="clean-select js-trigger" data-target="d1-for">
+                                    <option value="None">None</option>
+                                    <option value="Mexico">Mexico</option>
+                                    <option value="International">International</option>
+                                </select>
+                            </div>
+                            <div class="inp-group hidden-anim" id="d1-for"><label class="txt-blue">Date Issued</label><input type="date" class="clean-input"></div>
+
+                            <div class="inp-group">
+                                <label>Suspended?</label>
+                                <select class="clean-select js-trigger" data-target="d1-sus">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="inp-group hidden-anim" id="d1-sus"><label class="txt-red">Suspension Date</label><input type="date" class="clean-input"></div>
+
+                            <div class="inp-group">
+                                <label>SR-22 Filing?</label>
+                                <select class="clean-select js-trigger" data-target="d1-sr22">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="inp-group hidden-anim" id="d1-sr22"><label class="txt-warn">Reason</label><select class="clean-select"><option>DUI</option><option>No Insurance</option></select></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-label mt-60">
+                <h2><i class="fa-solid fa-car text-indigo"></i> Vehicles</h2>
+                <button type="button" class="btn-add-outline" onclick="addEntity('Vehicle')">
+                    <i class="fa-solid fa-plus"></i> Add Vehicle
+                </button>
+            </div>
+
+            <div class="premium-card vehicle-card" id="veh-1">
+                <div class="card-head-center">
+                    <div class="avatar-logo"><img src="../assets/img/logo-nissan.png" alt="Nissan"></div>
+                    <div class="head-info">
+                        <h3>2019 NISSAN TITAN S</h3>
+                        <div class="vin-mono">VIN: ...1N6AA1EK518910</div>
+                    </div>
+                    <button type="button" class="btn-abs-delete disabled" disabled><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+                <div class="card-body">
+                    <div class="split-layout">
+                        <div class="split-col">
+                            <h5 class="module-title"><i class="fa-solid fa-car-side"></i> Car</h5>
+                            <div class="input-stack">
+                                <div class="inp-group"><label>Year</label><input type="text" class="clean-input locked" value="2019" readonly></div>
+                                <div class="inp-group"><label>Make</label><input type="text" class="clean-input locked" value="NISSAN" readonly></div>
+                                <div class="inp-group"><label>Model</label><input type="text" class="clean-input locked" value="TITAN S" readonly></div>
+                            </div>
+                        </div>
+                        <div class="split-col">
+                            <h5 class="module-title"><i class="fa-solid fa-gauge-high"></i> Details</h5>
+                            <div class="grid-2">
+                                <div class="inp-group"><label>Purpose</label><select class="clean-select"><option>Work/School</option></select></div>
+                                <div class="inp-group"><label>Daily Miles</label><input type="number" class="clean-input" value="10"></div>
+                            </div>
+                            <div class="grid-2 mt-3">
+                                <div class="inp-group"><label>Purchased</label><input type="date" class="clean-input" value="2019-06-15"></div>
+                                <div class="inp-group"><label>Payment</label><input type="text" class="clean-input locked" value="Loan" readonly></div>
+                            </div>
+                            <div class="inp-group mt-3"><label>Full Coverage</label><input type="text" class="clean-input locked" value="Yes" readonly></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="premium-card vehicle-card" id="veh-2">
+                <div class="card-head-center">
+                    <div class="avatar-logo"><img src="../assets/img/logo-gmc.png" alt="GMC"></div>
+                    <div class="head-info">
+                        <h3>2022 GMC CANYON</h3>
+                        <div class="vin-mono">VIN: ...C4RJEA384</div>
+                    </div>
+                    <button type="button" class="btn-abs-delete" onclick="confirmRemove('veh-2', 'Vehicle')">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="split-layout">
+                        <div class="split-col">
+                            <h5 class="module-title"><i class="fa-solid fa-car-side"></i> Car</h5>
+                            <div class="input-stack">
+                                <div class="inp-group"><label>Year</label><input type="text" class="clean-input locked" value="2022" readonly></div>
+                                <div class="inp-group"><label>Make</label><input type="text" class="clean-input locked" value="GMC" readonly></div>
+                                <div class="inp-group"><label>Model</label><input type="text" class="clean-input locked" value="CANYON" readonly></div>
+                            </div>
+                        </div>
+                        <div class="split-col">
+                            <h5 class="module-title"><i class="fa-solid fa-gauge-high"></i> Details</h5>
+                            <div class="grid-2">
+                                <div class="inp-group"><label>Purpose</label><select class="clean-select"><option>Work/School</option></select></div>
+                                <div class="inp-group"><label>Daily Miles</label><input type="number" class="clean-input" value="10"></div>
+                            </div>
+                            <div class="grid-2 mt-3">
+                                <div class="inp-group"><label>Purchased</label><input type="date" class="clean-input" value="2019-06-15"></div>
+                                <div class="inp-group"><label>Payment</label><input type="text" class="clean-input locked" value="Loan" readonly></div>
+                            </div>
+                            <div class="inp-group mt-3"><label>Full Coverage</label><input type="text" class="clean-input locked" value="Yes" readonly></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="legal-accordian">
+                <details>
+                    <summary>Legal Disclosures & Consent <i class="fa-solid fa-chevron-down"></i></summary>
+                    <div class="legal-text">
+                        <p>By clicking the "Save & Re-Quote" button, you are providing explicit consent for Alex AI Insurtech to collect, store, and use your personal information for the purpose of retrieving and presenting up-to-date insurance quotes. Your information may be shared with insurance carriers and licensed professionals to help you find the most accurate and relevant policy options based on your profile. These parties may also use your information to conduct a credit history check in order to generate more personalized and competitive quotes. In doing so, you also agree to Alex AI Insurtech’s Privacy Policy and Terms of Service, which explain in detail how your information is handled and protected. Additionally, you consent to receive marketing and promotional emails from AlexAI Insurtech. You can unsubscribe from these emails at any time using the opt-out link included in every message. Your email marketing consent is strictly for Alex AI Insurtech and will not be shared with any insurance carriers or thirdparty professionals.</p>
+                        <p>If you choose to provide your phone number, by clicking "View my quotes", you also give your express consent under the Electronic Signatures in Global and National Commerce Act (E-Sign Act)—to receive marketing calls and text messages from Alex AI Insurtech. These may be delivered via automated systems and may include prerecorded voice messages, even if your number is listed on the national Do Not Call registry. Standard message and data rates may apply. Message frequency may vary. You may reply HELP for assistance or STOP to opt out at any time.</p>
+                        <p>This phone communication consent is strictly limited to Alex AI Insurtech and will not be shared with insurance providers or outside professionals. By providing your phone number, you confirm that you are the owner or authorized user of that number. Please note that giving this consent is not required in order to receive an insurance quote. If you prefer not to receive calls or texts, feel free to contact us directly at (480)-630-9630 for assistance.</p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="dock-wrapper">
+                <div class="dock-glass">
+                    <button type="button" class="dock-btn ghost" onclick="window.location.href='index.html'">
+                        <i class="fa-solid fa-rotate-left"></i> Edit All (Restart)
+                    </button>
+                    <div class="dock-sep"></div>
+                    <button type="button" class="dock-btn text" onclick="window.history.back()">
+                        Back without saving
+                    </button>
+                    <button type="button" class="dock-btn primary" onclick="simulateSave('save')">
+                        Save & Re-Quote <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+        <div class="spacer-footer"></div>
+            <div class="main-header">
+                <div class="title-sticker">
+                    <h1>Alex AI <span>Smart Compare</span></h1>
+                    <span class="title-subtitle">Powered by AI, handled by humans.</span>
+                </div>
+            </div>
+    </main>
+    
+    <footer id="contact" class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <a href="../index.html" style="display: block; margin-bottom: 20px;">
+                    <img src="../assets/img/Logo-alexai-main.png" 
+                        alt="Alex AI Insurtech Logo" 
+                        style="max-width: 160px; height: auto; filter: brightness(0) invert(1);">
+                </a>
+                <p style="color: rgba(255,255,255,0.9); font-weight: 500;">
+                    Smart insurance for modern life. Powered by intelligence, driven by humans.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Products</h5>
+                <ul class="footer-links">
+                    <li><a href="../quote/quote.html">Car Insurance</a></li>
+                    <li><a href="../homeowners/index.html">Home Insurance</a></li>
+                    <li><a href="../renters/index.html">Renters Insurance</a></li>
+                    <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Company</h5>
+                <ul class="footer-links">
+                    <li><a href="https://www.instagram.com/alexai.insurtech.usa/">About Us</a></li>
+                    <li><a href="../ambassadors/index.html">Ambassadors</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Contact & Legal</h5>
+                <ul class="footer-links contact-links">
+                    <li><i class="fa-solid fa-phone"></i> +1 480-630-9630</li>
+                    <li><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</li>
+                    <li><a href="../terms-conditions/index.html">Terms of Service</a></li>
+                    <li><a href="../privacy-policy/index.html">Privacy Policy</a></li>
+                </ul>
+                <div class="app-buttons-row" style="display:flex; gap:15px; flex-wrap:wrap;">
+                    <a href="https://apps.apple.com/us/app/alex-ai-insurtech-app/id6752793999" class="btn-app-store">
+                        <i class="fa-brands fa-apple"></i>
+                        <div>
+                            <span class="small-txt">Download on the</span>
+                            <span class="big-txt">App Store</span>
+                        </div>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=cloud.alexai.movil&pcampaignid=web_share" class="btn-app-store">
+                        <i class="fa-brands fa-google-play"></i>
+                        <div>
+                            <span class="small-txt">Get it on</span>
+                            <span class="big-txt">Google Play</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="container copyright-row">
+             <p>&copy; 2026 Alex AI Insurtech. All rights reserved.</p>
+             <div class="social-links">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Alex-AI-Insurtech" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="floating-menu-container">
+        <div class="nav-command-center" id="megaMenu">
+            <div class="cmd-header">
+                <span>Quick Navigate</span>
+                <span class="cmd-badge">MENU</span>
+            </div>
+            <div class="cmd-grid">
+                <a href="../quote/quote.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-car"></i></div>
+                    <span>Car Insurance</span>
+                </a>
+                <a href="../homeowners/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-house"></i></div>
+                    <span>Home Insurance</span>
+                </a>
+                <a href="../renters/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-key"></i></div>
+                    <span>Renters Insurance</span>
+                </a>
+                <a href="../alex-sign/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-file-signature"></i></div>
+                    <span>Alex Sign</span>
+                </a>
+                <a href="../blog/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-newspaper"></i></div>
+                    <span>Blog</span>
+                </a>
+                <a href="../contact/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-headset"></i></div>
+                    <span>Contact Support</span>
+                </a>
+            </div>
+            <div class="cmd-footer">
+                <a href="../index.html">Back to Home <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </div>
+        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open menu">
+            <i class="fa-regular fa-compass"></i>
+        </button>
+    </div>
+
+    <div id="floating-chat-container">
+        <div class="alex-chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div class="agent-info">
+                    <div class="agent-avatar"><i class="fa-solid fa-robot"></i><div class="status-dot"></div></div>
+                    <div class="agent-text">
+                        <span class="name">Alex AI Assistant</span>
+                        <span class="status">Reply time: Instant</span>
+                    </div>
+                </div>
+                <button class="close-chat-btn js-close-chat"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="chat-body">
+                <div class="chat-timestamp">Today, 5:00 PM</div>
+                
+                <div class="msg-row bot">
+                    <div class="msg-bubble">
+                        Hello! I see you're looking at quotes. Do you have any questions about the <strong>Collision Deductible</strong>? 🚗
+                    </div>
+                </div>
+                
+                <div class="chat-suggestions">
+                    <button>Explain Deductibles</button>
+                    <button>Talk to Human</button>
+                </div>
+            </div>
+            
+            <div class="chat-footer">
+                <input type="text" placeholder="Type your question..." class="chat-input">
+                <button class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
+            <i class="fa-solid fa-comment-dots"></i>
+            <span class="online-badge"></span>
+        </button>
+    </div>
+    <script src="../js/script.js"></script>
+    <script src="../js/script-quote.js"></script>
+</body>
+</html>
