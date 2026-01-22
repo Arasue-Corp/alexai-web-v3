@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             </div>
                             <div class="veh-det-body">
-                                <div class="cov-group-header">COMP / COLL</div>
+                            <div class="coverage-tags">BI | PD | UM | UNDUM | MEDPM | COMP | COLL | TL | RREIM</div>
                                 <div class="cov-list-row">
                                     <span class="c-label">Comprehensive</span>
                                     <div class="c-val-group">
@@ -150,8 +150,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                 
                                 <div class="cov-group-header">ADDITIONAL</div>
                                 <div class="cov-list-row"><span class="c-label">Towing</span><span class="c-val-group"><span class="c-ded">Included</span><span class="c-prem">$90.00</span></span></div>
-                                <div class="cov-list-row"><span class="c-label">Rental Reim.</span><span class="c-val-group"><span class="c-ded">$40/Day</span><span class="c-prem">$31.00</span></span></div>
-                                <div class="cov-list-row"><span class="c-label">Gap Coverage</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
+                                <div class="cov-list-row"><span class="c-label">RREIM.</span><span class="c-val-group"><span class="c-ded">$40/Day</span><span class="c-prem">$31.00</span></span></div>
+                                <div class="cov-list-row"><span class="c-label">GAP</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
+                                <div class="cov-list-row"><span class="c-label">Custom</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
+                                <div class="cov-list-row"><span class="c-label">Safety</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
+
                             </div>
                         </div>
 
@@ -166,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             </div>
                             <div class="veh-det-body">
-                                <div class="cov-group-header">COMP / COLL</div>
+                            <div class="coverage-tags">BI | PD | UM | UNDUM | MEDPM | COMP | COLL</div>
                                 <div class="cov-list-row">
                                     <span class="c-label">Comprehensive</span>
                                     <div class="c-val-group">
@@ -184,8 +187,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                 
                                 <div class="cov-group-header">ADDITIONAL</div>
                                 <div class="cov-list-row"><span class="c-label">Towing</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
-                                <div class="cov-list-row"><span class="c-label">Rental Reim.</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
-                                <div class="cov-list-row"><span class="c-label">Custom Equip.</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
+                                <div class="cov-list-row"><span class="c-label">RREIM</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
+                                <div class="cov-list-row"><span class="c-label">GAP</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
+                                <div class="cov-list-row"><span class="c-label">Custom</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
+                                <div class="cov-list-row"><span class="c-label">Safety</span><span class="c-val-group"><span class="c-ded text-muted">No Cov</span></span></div>
                             </div>
                         </div>
 
@@ -289,6 +294,104 @@ document.addEventListener('DOMContentLoaded', function() {
 
         });
     });
+
+    //EDIT QUOTE
+// --- VARIABLES ---
+    const modal = document.getElementById('custom-modal');
+    const confirmBtn = document.getElementById('btn-confirm-action');
+    let deleteId = null;
+    let deleteType = null;
+
+    // --- TOAST FUNCTION (Colores funcionando) ---
+    window.showToast = function(msg, type = 'success') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        
+        let iconHtml = '<i class="fa-solid fa-check"></i>';
+        if(type === 'danger') iconHtml = '<i class="fa-solid fa-trash-can"></i>';
+        if(type === 'warning') iconHtml = '<i class="fa-solid fa-triangle-exclamation"></i>';
+
+        toast.className = `alex-toast ${type}`;
+        toast.innerHTML = `<div class="t-icon">${iconHtml}</div><div class="t-msg">${msg}</div>`;
+        
+        container.appendChild(toast);
+        
+        requestAnimationFrame(() => toast.classList.add('show'));
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 400);
+        }, 3500);
+    };
+
+    // --- REMOVE ---
+    window.confirmRemove = function(id, type) {
+        if(type === 'Vehicle') {
+            // Count cards with class .vehicle-card
+            const count = document.querySelectorAll('.vehicle-card').length;
+            if(count <= 1) {
+                showToast('Cannot remove the only vehicle', 'warning');
+                return;
+            }
+        }
+        deleteId = id;
+        deleteType = type;
+        modal.classList.add('active');
+    };
+
+    window.closeModalToast = function() {
+        modal.classList.remove('active');
+    };
+
+    if(confirmBtn) {
+        confirmBtn.addEventListener('click', () => {
+            if(deleteId) {
+                const el = document.getElementById(deleteId);
+                if(el) {
+                    el.style.opacity = '0.5';
+                    setTimeout(() => {
+                        el.remove();
+                        showToast(`${deleteType} Removed, Quote will be recalculated`, 'danger');
+                    }, 300);
+                }
+            }
+            closeModalToast();
+        });
+    }
+
+    // --- LOGIC: Conditionals ---
+    const triggers = document.querySelectorAll('.js-trigger');
+    triggers.forEach(t => {
+        t.addEventListener('change', (e) => {
+            const targetId = t.getAttribute('data-target');
+            const target = document.getElementById(targetId);
+            const val = e.target.value;
+            
+            if(target) {
+                let show = (val === 'Yes' || (val !== 'None' && val !== 'No'));
+                if(show) target.classList.add('visible');
+                else target.classList.remove('visible');
+            }
+        });
+    });
+
+    // --- LOGIC: Exclude ---
+    const excluders = document.querySelectorAll('.js-exclude');
+    excluders.forEach(ex => {
+        ex.addEventListener('change', (e) => {
+            if(e.target.value === 'Yes') showToast('Warning: Driver Excluded, Quote will be recalculated', 'warning');
+        });
+    });
+
+    // --- SAVE ---
+    window.simulateSave = function(action) {
+        showToast('Saving changes...', 'success');
+        setTimeout(() => {
+            if(action === 're-quote') window.location.href = 'quote-14-test.html';
+            else showToast('Quotes updated!', 'success');
+        }, 1500);
+    };
+
+    window.addEntity = (type) => showToast(`New ${type} Added, Quote will be recalculated`, 'success');
 });
 
 window.switchCompTab = function(tabId, btnElement) {
@@ -304,4 +407,102 @@ window.switchCompTab = function(tabId, btnElement) {
     
     // 4. Activar el botón clickeado
     if(btnElement) btnElement.classList.add('active');
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. Inicializar Date Picker
+    if(typeof flatpickr !== 'undefined') {
+        flatpickr(".date-picker", { dateFormat: "m/d/Y", maxDate: "today", disableMobile: "true" });
+    }
+
+    // 2. Cálculo de Millas (Editable)
+    const workMiles = document.getElementById('milesWork-1');
+    const annualMiles = document.getElementById('annualMiles-1');
+    
+    if(workMiles && annualMiles) {
+        workMiles.addEventListener('input', function() {
+            const val = parseInt(this.value);
+            // Solo auto-calcular si el campo anual está vacío o el usuario no lo ha tocado manualmente aun
+            // (Para simplificar, recalculamos siempre que cambie work miles, el usuario puede editar despues)
+            if(!isNaN(val)) {
+                annualMiles.value = val * 260; // 260 días laborables
+                // Trigger visual change
+                annualMiles.classList.add('flash-update');
+                setTimeout(() => annualMiles.classList.remove('flash-update'), 500);
+            }
+        });
+    }
+
+    // 3. Validación y Shake en Botón Principal
+    const btnNext = document.getElementById('btnNextStep');
+    if(btnNext) {
+        btnNext.addEventListener('click', function(e) {
+            e.preventDefault();
+            let isValid = true;
+            let firstError = null;
+
+            // Seleccionar campos requeridos visibles
+            const activePanel = document.querySelector('.car-panel.active');
+            const requiredFields = activePanel.querySelectorAll('.validate-req');
+
+            requiredFields.forEach(field => {
+                // Reset estado
+                field.classList.remove('input-error');
+                
+                if(!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('input-error'); // Activa animación CSS Shake
+                    if(!firstError) firstError = field;
+                    
+                    // Remover clase error al escribir
+                    field.addEventListener('input', function() {
+                        this.classList.remove('input-error');
+                    }, {once: true});
+                }
+            });
+
+            if(isValid) {
+                // Éxito: Simular guardado o ir al siguiente paso
+                if(window.showToast) window.showToast("Analysis Complete. Generating Quotes...", "success");
+                setTimeout(() => window.location.href = "quote-14.html", 1500);
+            } else {
+                // Error
+                if(window.showToast) window.showToast("Please fill in the required fields highlighted in red.", "error");
+                if(firstError) firstError.focus();
+            }
+        });
+    }
+});
+
+// Lógica de Tabs y Navegación Interna
+window.switchTab = function(carId, btnElement) {
+    // 1. Mover Indicador
+    const indicator = document.getElementById('tabIndicator');
+    if(indicator && btnElement) {
+        if(carId === 'car-1') indicator.style.transform = 'translateX(0%)';
+        else indicator.style.transform = 'translateX(100%)';
+    }
+
+    // 2. Activar Botón Tab
+    document.querySelectorAll('.car-tab').forEach(b => b.classList.remove('active'));
+    if(btnElement) btnElement.classList.add('active');
+    else {
+        // Si se llama desde botones internos, buscar el tab correspondiente
+        const index = carId === 'car-1' ? 0 : 1;
+        document.querySelectorAll('.car-tab')[index].classList.add('active');
+    }
+
+    // 3. Mostrar Panel
+    document.querySelectorAll('.car-panel').forEach(p => p.style.display = 'none');
+    document.querySelectorAll('.car-panel').forEach(p => p.classList.remove('active'));
+    
+    const target = document.getElementById(`panel-${carId}`);
+    if(target) {
+        target.style.display = 'block';
+        target.classList.add('active');
+    }
+    
+    // Scroll top suave si se cambia de auto
+    document.querySelector('.form-panel-clean').scrollIntoView({behavior: 'smooth', block: 'start'});
 };

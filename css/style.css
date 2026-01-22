@@ -39,7 +39,6 @@ html { scroll-behavior: smooth; }
 body {
     font-family: var(--font-main); background-color: var(--bg-white);
     color: var(--alex-ink-light); line-height: 1.6; font-size: 18px; overflow-x: hidden;
-    /* background-image: radial-gradient(#CBD5E1 1.5px, transparent 1.5px); */
     background-size: 24px 24px;
 }
 h1, h2, h3, h4, h5 { color: var(--alex-ink); font-weight: 900; line-height: 1.1; letter-spacing: -0.5px; }
@@ -896,7 +895,7 @@ video.product-icon { filter: none !important; object-fit: contain; }
    QUOTE TOOL LAYOUT & FORM ELEMENTS
 ============================================= */
 .quote-page-body { background-color: var(--bg-off-white); min-height: 100vh; display: flex; flex-direction: column; }
-.quote-nav { display: flex; justify-content: space-between; align-items: center; padding: 30px 5%; }
+.quote-nav { display: flex; justify-content: space-between; align-items: center; padding: 30px 5% 0; }
 .nav-back-btn { color: var(--alex-blue-accent); font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; transition: transform 0.2s; }
 .nav-back-btn:hover { transform: translateX(-5px); }
 .nav-mini-logo { height: 80px; opacity: 0.8; }
@@ -1530,7 +1529,6 @@ video.product-icon { filter: none !important; object-fit: contain; }
     box-shadow: 10px 10px 0 rgba(44, 62, 80, 0.2);
     padding: 0;
     overflow: hidden;
-    background-image: radial-gradient(#E2E8F0 1px, transparent 1px);
     background-size: 20px 20px; /* Fondo de puntos sutil */
     background-color: #fff;
 }
