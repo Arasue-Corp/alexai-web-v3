@@ -5,499 +5,527 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alex AI - Smart Quote | Step 13 (Specs)</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css"> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="stylesheet" href="../css/style-quote.css"> 
     <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
-
-    <style>
-        /* --- ESTILOS GENERALES (Mismos que Step 11/12) --- */
-        #toast-container { position: fixed; top: 30px; right: 30px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
-        .alex-toast { background: #FEF2F2; border: 2px dashed #EF4444; padding: 16px 24px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); color: #991B1B; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 15px; transform: translateX(100px); opacity: 0; transition: all 0.4s; pointer-events: auto; }
-        .alex-toast.visible { transform: translateX(0); opacity: 1; }
-        .alex-toast i { font-size: 1.2rem; color: #EF4444; }
-
-        .wizard-header { margin-bottom: 25px; }
-        .wizard-message { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-family: 'Inter', sans-serif; }
-        .wizard-section-title { color: var(--alex-blue-accent); font-weight: 900; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
-        .wizard-step-num { color: var(--alex-blue-accent); font-weight: 800; font-size: 1rem; }
-        .wizard-track { height: 8px; background: #E2E8F0; border-radius: 10px; overflow: hidden; }
-        .wizard-fill { height: 100%; background: linear-gradient(90deg, #4A80F0, #5FD4F4); width: 92.8%; transition: width 0.5s; }
-
-        .quote-header-split { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; padding-bottom: 10px; border-bottom: 2px solid #F1F5F9; }
-        .quote-header-split h3 { color: var(--alex-blue-accent); font-size: 2rem; font-weight: 900; margin: 0; line-height: 1; letter-spacing: -0.5px; }
-        .quote-header-split p { color: #64748B; margin: 0; text-align: right; max-width: 55%; font-size: 0.95rem; line-height: 1.4; font-weight: 500; }
-        
-        .driver-tabs-wrapper { display: flex; gap: 8px; margin-bottom: 25px; border-bottom: 2px solid #E2E8F0; padding-bottom: 10px; flex-wrap: wrap; }
-        .driver-tab { background: #F8FAFC; border: 2px solid #E2E8F0; padding: 10px 20px; border-radius: 12px 12px 0 0; cursor: pointer; font-weight: 700; color: var(--alex-ink-light); transition: all 0.2s; display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
-        .driver-tab.active { background: #FFFFFF; border-color: var(--alex-blue-accent); border-bottom-color: #FFFFFF; color: var(--alex-blue-accent); transform: translateY(2px); z-index: 2; box-shadow: 0 -4px 10px rgba(0,0,0,0.03); }
-        .car-panel { display: none; animation: fadeIn 0.3s ease; }
-        .car-panel.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-        .form-section-card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .card-title { font-size: 0.9rem; font-weight: 800; color: var(--alex-blue-accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-
-        .strict-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; align-items: end; }
-        .strict-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; width: 100%; align-items: end; }
-        .form-group { width: 100%; margin-bottom: 15px; }
-        .input-modern-wrapper { width: 100%; }
-        .alex-input-modern { width: 100%; box-sizing: border-box; }
-
-        /* Toggles */
-        .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px dashed #F1F5F9; }
-        .toggle-row:last-child { border-bottom: none; }
-        .toggle-label { font-weight: 700; color: var(--alex-ink); display: flex; align-items: center; gap: 8px; }
-        .toggle-sub { font-size: 0.8rem; color: #94A3B8; font-weight: 500; margin-left: 28px; display: block; }
-        .switch-toggle { position: relative; width: 50px; height: 28px; }
-        .switch-toggle input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #E2E8F0; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        input:checked + .slider { background-color: var(--alex-blue-accent); }
-        input:checked + .slider:before { transform: translateX(22px); }
-
-        .nav-internal-row { display: flex; justify-content: space-between; margin-top: 30px; border-top: 1px solid #F1F5F9; padding-top: 20px; }
-        .btn-internal-nav { background: var(--alex-ink); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-        .btn-internal-nav.prev { background: #E2E8F0; color: var(--alex-ink); }
-
-        .discount-coupon-box { margin-top: 25px; background: #ECFDF5; border: 2px dashed #10B981; border-radius: 12px; padding: 20px; text-align: center; position: relative; overflow: hidden; }
-        .dc-title { font-size: 0.7rem; text-transform: uppercase; font-weight: 800; color: #059669; letter-spacing: 1px; }
-        .dc-amount { font-size: 2rem; font-weight: 900; color: #10B981; line-height: 1; }
-        .dc-sub { font-size: 0.8rem; color: #065F46; font-weight: 600; margin-top: 5px; }
-        .dc-icon { position: absolute; top: 10px; right: 10px; color: rgba(16, 185, 129, 0.2); font-size: 3rem; transform: rotate(15deg); }
-
-        .input-error { animation: shake 0.4s; border-color: #EF4444 !important; background: #FEF2F2 !important; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
-
-        @media (max-width: 768px) { .strict-grid-3, .strict-grid-2 { grid-template-columns: 1fr; gap: 15px; } .quote-header-split { flex-direction: column; align-items: flex-start; } .quote-header-split p { text-align: left; } }
-
-        /* === ESTILOS MODAL PREMIUM === */
-        .modal-overlay-quote {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.65); /* Backdrop oscuro profesional */
-            backdrop-filter: blur(6px); /* Blur moderno */
-            z-index: 20000;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .modal-overlay-quote.active { opacity: 1; pointer-events: auto; }
-
-        .modal-box {
-            background: #FFFFFF; width: 90%; max-width: 460px;
-            border-radius: 28px; padding: 40px 30px;
-            text-align: center; position: relative;
-            transform: scale(0.95) translateY(20px); 
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            border: 1px solid #F1F5F9;
-        }
-        .modal-overlay-quote.active .modal-box { transform: scale(1) translateY(0); }
-
-        /* Icono Regalo con Fondo */
-        .gift-circle {
-            width: 80px; height: 80px; background: #F5F3FF;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 20px;
-        }
-        .modal-gift-icon {
-            font-size: 2.8rem; color: #8B5CF6; 
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-
-        .modal-title { font-size: 1.6rem; font-weight: 900; color: var(--alex-ink); margin-bottom: 12px; line-height: 1.2; letter-spacing: -0.5px; }
-        .modal-desc { color: #64748B; font-size: 1rem; margin-bottom: 25px; line-height: 1.5; font-weight: 500; }
-
-        .perks-list {
-            text-align: left; background: #FFFFFF; padding: 0; margin-bottom: 30px;
-        }
-        .perk-item {
-            display: flex; align-items: center; gap: 15px; margin-bottom: 15px;
-            font-size: 0.95rem; font-weight: 600; color: var(--alex-ink);
-            background: #F8FAFC; padding: 12px 15px; border-radius: 12px; border: 1px solid #F1F5F9;
-        }
-        .perk-item:last-child { margin-bottom: 0; }
-        .perk-icon { color: #10B981; font-size: 1.2rem; }
-
-        /* Botones */
-        .modal-actions { display: flex; flex-direction: column; gap: 12px; }
-        
-        .btn-modal-primary {
-            background: var(--alex-blue-accent); color: white;
-            border: none; padding: 16px; border-radius: 14px; font-weight: 800; font-size: 1rem;
-            cursor: pointer; width: 100%; transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(74, 128, 240, 0.25);
-        }
-        .btn-modal-primary:hover { background: #3B82F6; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(74, 128, 240, 0.35); }
-        
-        .btn-modal-secondary {
-            background: transparent; color: #94A3B8; border: none; padding: 12px;
-            font-weight: 700; cursor: pointer; font-size: 0.95rem; transition: 0.2s;
-        }
-        .btn-modal-secondary:hover { color: var(--alex-ink); }
-
-        /* Inputs Teléfono */
-        .phone-input-group { display: flex; gap: 12px; margin-bottom: 25px; text-align: left; }
-        
-        .country-select { width: 110px; flex-shrink: 0; }
-        .country-select select { 
-            font-size: 1.2rem; padding: 12px; font-weight: 600; 
-            text-align: center; /* Centrar bandera */
-        }
-        
-        .input-phone-main input { font-size: 1.1rem; letter-spacing: 1px; padding: 12px 15px; }
-    </style>
 </head>
-<body class="quote-page-body">
+<body class="bg-body">
 
     <div id="toast-container"></div>
 
     <div id="phoneModal" class="modal-overlay-quote">
-        <div class="modal-box">
+        <div class="modal-box-aurora">
             
             <div id="modalStepA">
-                <div class="gift-circle">
-                    <div class="modal-gift-icon"><i class="fa-solid fa-gift"></i></div>
+                <div class="gift-icon-glow">
+                    <i class="fa-solid fa-gift"></i>
                 </div>
-                <h3 class="modal-title">Unlock VIP Benefits!</h3>
-                <p class="modal-desc">Secure your quote now and get instant access to exclusive perks:</p>
+                <h3 class="aurora-title">Unlock VIP Benefits!</h3>
+                <p class="aurora-desc">Secure your quote now and get instant access to exclusive perks:</p>
                 
-                <div class="perks-list">
+                <div class="perks-list-glass">
                     <div class="perk-item">
-                        <i class="fa-solid fa-tags perk-icon"></i> 
+                        <div class="p-icon"><i class="fa-solid fa-tags"></i></div>
                         <span>Mobile-only discounts unlocked</span>
                     </div>
                     <div class="perk-item">
-                        <i class="fa-solid fa-comment-sms perk-icon"></i> 
+                        <div class="p-icon"><i class="fa-solid fa-comment-sms"></i></div>
                         <span>Instant quote updates via SMS</span>
                     </div>
                     <div class="perk-item">
-                        <i class="fa-solid fa-crown perk-icon"></i> 
+                        <div class="p-icon"><i class="fa-solid fa-crown"></i></div>
                         <span>Priority VIP Agent Support</span>
                     </div>
                 </div>
 
-                <div class="modal-actions">
-                    <button class="btn-modal-primary" id="btnYesPhone">Yes! Unlock My Perks</button>
-                    <button class="btn-modal-secondary" id="btnNoPhone">No thanks, skip to quote</button>
+                <div class="modal-actions-col">
+                    <button class="btn-hero-gradient" id="btnYesPhone">Yes! Unlock My Perks</button>
+                    <button class="btn-text-only" id="btnNoPhone">No thanks, skip to quote</button>
                 </div>
             </div>
 
             <div id="modalStepB" style="display: none;">
-                <div class="gift-circle" style="background:#EFF6FF;">
-                    <div class="modal-gift-icon" style="color:#3B82F6;"><i class="fa-solid fa-mobile-screen"></i></div>
+                <div class="gift-icon-glow blue">
+                    <i class="fa-solid fa-mobile-screen"></i>
                 </div>
-                <h3 class="modal-title">Verify Your Number</h3>
-                <p class="modal-desc">Enter your mobile number to receive your secure access code.</p>
+                <h3 class="aurora-title">Verify Your Number</h3>
+                <p class="aurora-desc">Enter your mobile number to receive your secure access code.</p>
                 
-                <div class="phone-input-group">
-                    <div class="input-modern-wrapper country-select">
-                        <select class="alex-input-modern" id="countryCode">
+                <div class="grid-phone-input">
+                    <div class="input-rich-wrapper country-sel">
+                        <select class="rich-input" id="countryCode">
                             <option value="+1">🇺🇸 +1</option>
                             <option value="+52">🇲🇽 +52</option>
-                            <option value="+34">🇪🇸 +34</option>
-                            <option value="+44">🇬🇧 +44</option>
-                            <option value="+1-CA">🇨🇦 +1</option>
                         </select>
                     </div>
-                    <div class="input-modern-wrapper input-phone-main" style="flex:1;">
-                        <input type="tel" class="alex-input-modern" id="phoneNumber" placeholder="(555) 000-0000" autofocus>
+                    <div class="input-rich-wrapper" style="flex:1;">
+                        <input type="tel" class="rich-input pl-4" id="phoneNumber" placeholder="(555) 000-0000" autofocus>
                     </div>
                 </div>
 
-                <div class="modal-actions">
-                    <button class="btn-modal-primary" id="btnSavePhone">Save & Continue <i class="fa-solid fa-arrow-right"></i></button>
-                    <button class="btn-modal-secondary" id="btnBackToA">Back</button>
+                <div class="modal-actions-col">
+                    <button class="btn-hero-gradient" id="btnSavePhone">Save & Continue <i class="fa-solid fa-arrow-right"></i></button>
+                    <button class="btn-text-only" id="btnBackToA">Back</button>
                 </div>
             </div>
 
         </div>
     </div>
 
+       <div class="top-header">
+        <div class="container top-header-flex">
+            <div class="top-contact">
+                <a href="tel:+1800555ALEX"><i class="fa-solid fa-phone"></i> +1 480 630 9630</a>
+                <a href="mailto:hello@alexai.com"><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</a>
+                <span><i class="fa-solid fa-location-dot"></i> 3101 N Central Ave ste 1174, Phoenix, AZ</span>
+            </div>
+            <div class="top-social">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <div class="container header-wrapper">
+            <a href="https://alexai.cloud/" class="logo-container">
+                <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="site-logo">
+            </a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../quote/quote.html" class="js-trigger-quote">Quote</a></li>
+                    <li class="has-dropdown">
+                        <a href="../index.html#products">Products <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu organic-box">
+                            <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#carriers">Carriers</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+
+                    <li class="mobile-only-nav"><a href="../ambassadors/documents.html">Become an Ambassador</a></li>
+                    <li class="mobile-only-nav"><a href="../quote/quote.html" style="color: var(--alex-blue-accent);">Check Prices</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="../ambassadors/index.html" class="btn btn-outline btn-sm">Become an Ambassador</a>
+                <a href="../quote/quote.html" class="btn btn-solid btn-sm js-trigger-quote">Check Prices</a>
+            </div>
+            
+             <button class="mobile-menu-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        </div>
+    </header>
+
     <nav class="quote-nav">
-        <a href="quote-12.html" class="nav-back-btn">
-            <div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div>
-            <span>Back</span>
-        </a>
-        <div class="nav-brand">
-            <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI" class="nav-mini-logo">
-        </div>
-        <div class="lang-switch-modern">
-            <span class="lang-opt">ES</span>
-            <span class="lang-opt active">EN</span>
-        </div>
+        <a href="quote-12.html" class="nav-back-btn"><div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div><span>Vehicle Usage</span></a>
+        <div class="lang-switch-modern"><span class="lang-opt">ES</span><span class="lang-opt active">EN</span></div>
     </nav>
 
-    <main class="quote-main-content step-layout-wrapper">
-        <div class="ambient-glow glow-1"></div>
-        <div class="ambient-glow glow-2"></div>
+        <div class="main-header">
+            <div class="title-sticker">
+                <h1>Alex AI <span>Smart Compare</span></h1>
+                <span class="title-subtitle">Powered by AI, handled by humans.</span>
+            </div>
+        </div>
 
-        <div class="step-grid-container">
-            
-            <div class="main-form-col">
-                <div class="quote-card-stacked anim-entry">
-                    
-                    <div class="wizard-header">
-                        <div class="wizard-message">
-                            <div class="wizard-section-title"><i class="fa-solid fa-clipboard-list"></i> Asset Details</div>
-                            <div class="wizard-step-num">Step 13 of 14</div>
-                        </div>
-                        <div class="wizard-track">
-                            <div class="wizard-fill"></div>
-                        </div>
-                    </div>
-
-                    <div class="quote-header-split">
-                        <h3>Vehicle Specs</h3>
-                        <p>Specifics about the car's history, value, and usage metrics for accurate valuation.</p>
-                    </div>
-
-                    <div class="driver-tabs-wrapper" id="carTabs">
-                        <div class="driver-tab active" data-target="car-1" onclick="switchTab('car-1')"><i class="fa-solid fa-car-side"></i> Car 1</div>
-                        <div class="driver-tab" data-target="car-2" onclick="switchTab('car-2')"><i class="fa-solid fa-car-side"></i> Car 2</div>
-                    </div>
-            
-                    <form id="quoteFormStep13">
-                        
-                        <div id="panel-car-1" class="car-panel active" data-id="1">
-                            
-                            <div class="form-section-card">
-                                <div class="card-title"><i class="fa-solid fa-key"></i> Operation & Ownership</div>
-                                <div class="strict-grid-2">
-                                    <div class="form-group">
-                                        <label>Purchase Date</label>
-                                        <div class="input-modern-wrapper">
-                                            <i class="fa-regular fa-calendar-check input-icon"></i>
-                                            <input type="text" class="alex-input-modern date-picker validate-req" placeholder="MM/DD/YYYY">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Condition</label>
-                                        <div class="input-modern-wrapper">
-                                            <select class="alex-input-modern validate-req">
-                                                <option value="" disabled selected>Select</option>
-                                                <option value="New">New</option>
-                                                <option value="Used">Used</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Primary Operator</label>
-                                    <div class="input-modern-wrapper">
-                                        <i class="fa-solid fa-user-tag input-icon"></i>
-                                        <select class="alex-input-modern validate-req">
-                                            <option value="Driver 1" selected>Driver 1 (Josue)</option>
-                                            <option value="Driver 2">Driver 2 (Wife)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-section-card">
-                                <div class="card-title"><i class="fa-solid fa-gauge-high"></i> Mileage Metrics</div>
-                                <div class="strict-grid-2">
-                                    <div class="form-group">
-                                        <label>Miles Driven to Work</label>
-                                        <div class="input-modern-wrapper">
-                                            <input type="number" id="milesWork-1" class="alex-input-modern validate-req" placeholder="Daily Miles">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>% Driven to Work</label>
-                                        <div class="input-modern-wrapper">
-                                            <i class="fa-solid fa-percent input-icon"></i>
-                                            <input type="number" class="alex-input-modern validate-req" placeholder="e.g. 60">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="strict-grid-2">
-                                    <div class="form-group">
-                                        <label>Annual Miles</label>
-                                        <div class="input-modern-wrapper">
-                                            <input type="number" id="annualMiles-1" class="alex-input-modern validate-req" placeholder="Auto-calculated">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Current Odometer</label>
-                                        <div class="input-modern-wrapper">
-                                            <input type="number" class="alex-input-modern validate-req" placeholder="Total Miles">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-section-card">
-                                <div class="card-title"><i class="fa-solid fa-circle-info"></i> Vehicle Status</div>
-                                
-                                <div class="toggle-row">
-                                    <div><div class="toggle-label"><i class="fa-solid fa-eye"></i> Monitoring Device?</div><span class="toggle-sub">Tracking installed?</span></div>
-                                    <label class="switch-toggle"><input type="checkbox"><span class="slider"></span></label>
-                                </div>
-                                <div class="toggle-row">
-                                    <div><div class="toggle-label"><i class="fa-solid fa-file-contract"></i> Leased Vehicle?</div><span class="toggle-sub">Under lease?</span></div>
-                                    <label class="switch-toggle"><input type="checkbox"><span class="slider"></span></label>
-                                </div>
-                                <div class="toggle-row">
-                                    <div><div class="toggle-label"><i class="fa-solid fa-car-burst"></i> Salvaged Title?</div><span class="toggle-sub">Total loss declared?</span></div>
-                                    <label class="switch-toggle"><input type="checkbox"><span class="slider"></span></label>
-                                </div>
-                                <div class="toggle-row">
-                                    <div><div class="toggle-label"><i class="fa-solid fa-globe"></i> Grey Market?</div><span class="toggle-sub">Imported vehicle?</span></div>
-                                    <label class="switch-toggle"><input type="checkbox"><span class="slider"></span></label>
-                                </div>
-                            </div>
-
-                            <div class="form-section-card">
-                                <div class="card-title"><i class="fa-solid fa-file-invoice-dollar"></i> Financials & Security</div>
-                                <div class="strict-grid-3">
-                                    <div class="form-group"><label>Purchase Cost</label><div class="input-modern-wrapper"><i class="fa-solid fa-dollar-sign input-icon"></i><input type="number" class="alex-input-modern" placeholder="0.00"></div></div>
-                                    <div class="form-group"><label>MSRP</label><div class="input-modern-wrapper"><i class="fa-solid fa-dollar-sign input-icon"></i><input type="number" class="alex-input-modern" placeholder="0.00"></div></div>
-                                    <div class="form-group"><label>ACV (Current)</label><div class="input-modern-wrapper"><i class="fa-solid fa-dollar-sign input-icon"></i><input type="number" class="alex-input-modern" placeholder="0.00"></div></div>
-                                </div>
-                                <div class="form-group" style="margin-top:10px;">
-                                    <label>Anti-Theft System</label>
-                                    <div class="input-modern-wrapper">
-                                        <i class="fa-solid fa-shield-halved input-icon"></i>
-                                        <select class="alex-input-modern validate-req">
-                                            <option value="Level 1" selected>Anti-Theft level 1</option>
-                                            <option>No Anti-Theft</option>
-                                            <option>Anti-Theft level 2</option>
-                                            <option>Anti-Theft level 3</option>
-                                            <option>Anti-Theft level 4 (Passive)</option>
-                                            <option>Anti-Theft level 5 (GPS)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="nav-internal-row" style="justify-content: flex-end;">
-                                <button type="button" class="btn-internal-nav" onclick="switchTab('car-2')">Next Car <i class="fa-solid fa-arrow-right"></i></button>
-                            </div>
-
-                        </div> 
-
-                        <div id="panel-car-2" class="car-panel" data-id="2">
-                            <h4 style="margin-bottom:20px; color:var(--alex-blue-accent);">Car 2 Specs</h4>
-                            <p style="text-align:center; color:#94A3B8;">(Fields repeated for Car 2)</p>
-                            <div class="nav-internal-row" style="justify-content: space-between;">
-                                <button type="button" class="btn-internal-nav prev" onclick="switchTab('car-1')"><i class="fa-solid fa-chevron-left"></i> Prev Car</button>
-                            </div>
-                        </div>
-
-                        <div class="form-action" style="margin-top: 30px;">
-                            <button type="button" class="btn-glow-anim" id="btnNext"><span>Next Step</span> <i class="fa-solid fa-arrow-right-long"></i></button>
-                            <div class="secure-badge"><i class="fa-solid fa-lock"></i> Specs Encrypted</div>
-                        </div>
-                    </form>
+    <div class="page-wrapper">
+        
+        <div class="wizard-container">
+            <div class="wizard-top">
+                <div class="wizard-title"><i class="fa-solid fa-pen-to-square"></i>Asset Details</div>
+                <div class="wizard-title"><i class="fa-solid fa-flag-checkered"></i></div>
+            </div>
+            <div class="progress-track"><div class="progress-fill" style="width: 92%;"></div></div>
+            <div class="header-split"></div>
+            <header class="brand-page-header">
+                <div class="title-group">
+                    <h1>Vehicle Specs</h1>
+                    <div class="aurora-line"></div> 
                 </div>
-                <div class="card-shadow-layer"></div>
+                <p>Specifics about the car's history, value, and usage metrics for accurate valuation.</p>
+            </header>
+        </div>
+
+        <div class="specs-layout-grid">
+            
+            <div class="main-spec-col">
+                
+                <div class="car-tabs-integrated" id="carTabs">
+                    <button type="button" class="tab-int active" onclick="switchTab('car-1', this)">
+                        <i class="fa-solid fa-car"></i> 2019 NISSAN TITAN
+                        <i class="fa-solid fa-circle t-status pending"></i>
+                    </button>
+                    <button type="button" class="tab-int" onclick="switchTab('car-2', this)">
+                        <i class="fa-solid fa-car-side"></i> 2022 GMC CANYON
+                        <i class="fa-solid fa-circle t-status"></i>
+                    </button>
+                </div>
+
+                <div class="premium-white-card" id="quoteFormStep13">
+                    
+                    <div id="panel-car-1" class="car-panel active" data-id="1">
+                        
+                        <div class="sec-label"><i class="fa-solid fa-key"></i> Operation & Ownership</div>
+                        <div class="grid-2-tight">
+                            <div class="inp-rich-group">
+                                <label>Purchase Date</label>
+                                <div class="input-rich-wrapper">
+                                    <div class="icon-slot"><i class="fa-regular fa-calendar-check"></i></div>
+                                    <input type="text" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY">
+                                </div>
+                            </div>
+                            <div class="inp-rich-group">
+                                <label>Condition</label>
+                                <div class="input-rich-wrapper">
+                                    <div class="icon-slot"><i class="fa-solid fa-star-half-stroke"></i></div>
+                                    <select class="rich-input validate-req">
+                                        <option value="" disabled selected>Select...</option>
+                                        <option value="New">New</option>
+                                        <option value="Used">Used</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inp-rich-group" style="margin-top: 15px;">
+                            <label>Primary Operator</label>
+                            <div class="input-rich-wrapper">
+                                <div class="icon-slot"><i class="fa-solid fa-user-tag"></i></div>
+                                <select class="rich-input validate-req">
+                                    <option value="Driver 1" selected>Driver 1 (Uri)</option>
+                                    <option value="Driver 2">Driver 2 (Eloise)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="divider-hairline"></div>
+
+                        <div class="sec-label"><i class="fa-solid fa-gauge-high"></i> Mileage Metrics</div>
+                        <div class="grid-2-tight">
+                            <div class="inp-rich-group">
+                                <label>Miles Driven to Work</label>
+                                <div class="input-rich-wrapper">
+                                    <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
+                                    <input type="number" id="milesWork-1" class="rich-input validate-req" placeholder="Daily Miles">
+                                </div>
+                            </div>
+                            <div class="inp-rich-group">
+                                <label>% Driven to Work</label>
+                                <div class="input-rich-wrapper">
+                                    <div class="icon-slot"><i class="fa-solid fa-percent"></i></div>
+                                    <input type="number" class="rich-input validate-req" placeholder="e.g. 60">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-2-tight" style="margin-top: 15px;">
+                            <div class="inp-rich-group">
+                                <label>Annual Miles (Est.)</label>
+                                <div class="input-rich-wrapper locked">
+                                    <div class="icon-slot"><i class="fa-solid fa-calculator"></i></div>
+                                    <input type="number" id="annualMiles-1" class="rich-input validate-req" placeholder="Auto-calculated" readonly>
+                                </div>
+                            </div>
+                            <div class="inp-rich-group">
+                                <label>Current Odometer</label>
+                                <div class="input-rich-wrapper">
+                                    <div class="icon-slot"><i class="fa-solid fa-hashtag"></i></div>
+                                    <input type="number" class="rich-input validate-req" placeholder="Total Miles">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="divider-hairline"></div>
+
+                        <div class="sec-label"><i class="fa-solid fa-toggle-on"></i> Vehicle Status</div>
+                        
+                        <div class="toggles-compact-grid">
+                            <label class="toggle-compact">
+                                <input type="checkbox">
+                                <div class="toggle-face">
+                                    <span class="tog-ind"></span>
+                                    <span class="tog-name">Monitoring Device</span>
+                                </div>
+                            </label>
+                            <label class="toggle-compact">
+                                <input type="checkbox">
+                                <div class="toggle-face">
+                                    <span class="tog-ind"></span>
+                                    <span class="tog-name">Leased Vehicle</span>
+                                </div>
+                            </label>
+                            <label class="toggle-compact">
+                                <input type="checkbox">
+                                <div class="toggle-face">
+                                    <span class="tog-ind error"></span> <span class="tog-name">Salvaged Title</span>
+                                </div>
+                            </label>
+                            <label class="toggle-compact">
+                                <input type="checkbox">
+                                <div class="toggle-face">
+                                    <span class="tog-ind"></span>
+                                    <span class="tog-name">Grey Market</span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="divider-hairline"></div>
+
+                        <div class="sec-label"><i class="fa-solid fa-file-invoice-dollar"></i> Financials & Security</div>
+                        <div class="grid-3-tight">
+                            <div class="inp-rich-group">
+                                <label>Purchase Cost</label>
+                                <div class="input-rich-wrapper">
+                                    <span class="currency">$</span>
+                                    <input type="number" class="rich-input" placeholder="0.00">
+                                </div>
+                            </div>
+                            <div class="inp-rich-group">
+                                <label>MSRP</label>
+                                <div class="input-rich-wrapper">
+                                    <span class="currency">$</span>
+                                    <input type="number" class="rich-input" placeholder="0.00">
+                                </div>
+                            </div>
+                            <div class="inp-rich-group">
+                                <label>ACV (Current)</label>
+                                <div class="input-rich-wrapper">
+                                    <span class="currency">$</span>
+                                    <input type="number" class="rich-input" placeholder="0.00">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="inp-rich-group" style="margin-top: 20px;">
+                            <label>Anti-Theft System</label>
+                            <div class="input-rich-wrapper">
+                                <div class="icon-slot"><i class="fa-solid fa-shield-halved"></i></div>
+                                <select class="rich-input validate-req">
+                                    <option value="Level 1" selected>Anti-Theft level 1</option>
+                                    <option>No Anti-Theft</option>
+                                    <option>Anti-Theft level 2</option>
+                                    <option>Anti-Theft level 3</option>
+                                    <option>Anti-Theft level 4 (Passive)</option>
+                                    <option>Anti-Theft level 5 (GPS)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="nav-row-right">
+                            <button type="button" class="btn-nav-outline" onclick="switchTab('car-2')">Next Car <i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+
+                    <div id="panel-car-2" class="car-panel" data-id="2">
+                        <div style="text-align: center; padding: 40px;">
+                            <div class="icon-box-soft blue" style="margin: 0 auto 20px; width: 60px; height: 60px; font-size: 1.5rem;">
+                                <i class="fa-solid fa-car-side"></i>
+                            </div>
+                            <h4 style="color:var(--color-indigo); margin-bottom: 10px;">Car 2 Specs</h4>
+                            <p style="color:#94A3B8; font-size: 0.9rem;">The fields for the GMC Canyon would be repeated here.</p>
+                        </div>
+                        <div class="nav-row-spaced">
+                            <button type="button" class="btn-nav-outline" onclick="switchTab('car-1')"><i class="fa-solid fa-chevron-left"></i> Prev Car</button>
+                        </div>
+                    </div>
+
+                    <div class="hero-action-area">
+                        <div class="secure-badge-modern"><i class="fa-solid fa-lock"></i> Specs Encrypted via SSL</div>
+                        <button type="button" class="btn-hero-gradient" id="btnNext">
+                            Next Step <i class="fa-solid fa-arrow-right-long"></i>
+                        </button>
+                    </div>
+
+                </div>
             </div>
 
-            <aside class="sidebar-col anim-entry" style="animation-delay: 0.2s;">
-                <div class="organic-box sidebar-note taped-note">
-                    <div class="washi-tape"></div>
-                    <h4 class="sidebar-title">Coverage Path</h4>
+            <aside class="config-sidebar">
+                <div class="organic-panel">
+                    <div class="sidebar-title">Coverage Path</div>
                     
-                    <ul class="progress-list-sketch">
-                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Client Information</a></li>
-                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Drivers</a></li>
-                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Violations</a></li>
-                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Additional Info</a></li>
-                        <li class="active"><a href="#"><span class="sketch-circle"></span> Vehicle</a></li>
+                    <ul class="aurora-list">
+                        <li class="done"><i class="fa-solid fa-circle-check"></i> Client Information</li>
+                        <li class="done"><i class="fa-solid fa-circle-check"></i> Drivers</li>
+                        <li class="done"><i class="fa-solid fa-circle-check"></i> Violations</li>
+                        <li class="done"><i class="fa-solid fa-circle-check"></i> Additional Info</li>
+                        <li class="active"><span class="pulse-dot"></span> Vehicle</li>
                     </ul>
-                    
-                    <div class="discount-coupon-box">
-                        <i class="fa-solid fa-tags dc-icon"></i>
-                        <span class="dc-title">Potential Discounts</span>
-                        <span class="dc-amount">6 Found</span>
-                        <span class="dc-sub">Anti-Theft discount likely!</span>
+
+                    <div class="discount-box-vibrant">
+                        <i class="fa-solid fa-tags bg-icon"></i>
+                        <div class="db-title">Potential Discounts</div>
+                        <div class="db-val">6</div>
+                        <div class="db-msg">Anti-Theft likely!</div>
                     </div>
-                    <div class="mini-tip">
-                        <div class="tip-icon">
-                            <i class="fa-regular fa-lightbulb"></i>
-                        </div>
+
+                    <div class="tip-box-vibrant" style="margin-top: 20px;">
+                        <i class="fa-regular fa-lightbulb tip-icon"></i>
                         <div>
-                            <strong>Alex Tip:</strong> Installing a passive anti-theft device (Level 4+) can reduce your comprehensive premium significantly.                        </div>
+                            <strong>Alex Tip:</strong> Installing a passive anti-theft device (Level 4+) can reduce your comprehensive premium significantly.
+                        </div>
                     </div>
                 </div>
             </aside>
-        </div>
-    </main>
 
-    <div id="floating-menu-container"><div class="floating-menu-list organic-box" id="megaMenu"><h5>Quick Navigate</h5><ul><li><a href="#"><i class="fa-solid fa-car"></i> Car Insurance</a></li></ul></div><button class="floating-menu-btn js-toggle-mega-menu"><i class="fa-solid fa-bars-staggered"></i></button></div>
-    <div id="floating-chat-container"><button class="chat-avatar-btn js-trigger-chat"><i class="fa-solid fa-robot"></i></button></div>
+        </div>
+
+    <footer id="contact" class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <a href="../index.html" style="display: block; margin-bottom: 20px;">
+                    <img src="../assets/img/Logo-alexai-main.png" 
+                        alt="Alex AI Insurtech Logo" 
+                        style="max-width: 160px; height: auto; filter: brightness(0) invert(1);">
+                </a>
+                <p style="color: rgba(255,255,255,0.9); font-weight: 500;">
+                    Smart insurance for modern life. Powered by intelligence, driven by humans.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Products</h5>
+                <ul class="footer-links">
+                    <li><a href="../quote/quote.html">Car Insurance</a></li>
+                    <li><a href="../homeowners/index.html">Home Insurance</a></li>
+                    <li><a href="../renters/index.html">Renters Insurance</a></li>
+                    <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Company</h5>
+                <ul class="footer-links">
+                    <li><a href="https://www.instagram.com/alexai.insurtech.usa/">About Us</a></li>
+                    <li><a href="../ambassadors/index.html">Ambassadors</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Contact & Legal</h5>
+                <ul class="footer-links contact-links">
+                    <li><i class="fa-solid fa-phone"></i> +1 480-630-9630</li>
+                    <li><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</li>
+                    <li><a href="../terms-conditions/index.html">Terms of Service</a></li>
+                    <li><a href="../privacy-policy/index.html">Privacy Policy</a></li>
+                </ul>
+                <div class="app-buttons-row" style="display:flex; gap:15px; flex-wrap:wrap;">
+                    <a href="https://apps.apple.com/us/app/alex-ai-insurtech-app/id6752793999" class="btn-app-store">
+                        <i class="fa-brands fa-apple"></i>
+                        <div>
+                            <span class="small-txt">Download on the</span>
+                            <span class="big-txt">App Store</span>
+                        </div>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=cloud.alexai.movil&pcampaignid=web_share" class="btn-app-store">
+                        <i class="fa-brands fa-google-play"></i>
+                        <div>
+                            <span class="small-txt">Get it on</span>
+                            <span class="big-txt">Google Play</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="container copyright-row">
+             <p>&copy; 2026 Alex AI Insurtech. All rights reserved.</p>
+             <div class="social-links">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Alex-AI-Insurtech" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="floating-menu-container">
+        <div class="nav-command-center" id="megaMenu">
+            <div class="cmd-header">
+                <span>Quick Navigate</span>
+                <span class="cmd-badge">MENU</span>
+            </div>
+            <div class="cmd-grid">
+                <a href="../quote/quote.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-car"></i></div>
+                    <span>Car Insurance</span>
+                </a>
+                <a href="../homeowners/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-house"></i></div>
+                    <span>Home Insurance</span>
+                </a>
+                <a href="../renters/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-key"></i></div>
+                    <span>Renters Insurance</span>
+                </a>
+                <a href="../alex-sign/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-file-signature"></i></div>
+                    <span>Alex Sign</span>
+                </a>
+                <a href="../blog/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-newspaper"></i></div>
+                    <span>Blog</span>
+                </a>
+                <a href="../contact/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-headset"></i></div>
+                    <span>Contact Support</span>
+                </a>
+            </div>
+            <div class="cmd-footer">
+                <a href="../index.html">Back to Home <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </div>
+        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open menu">
+            <i class="fa-regular fa-compass"></i>
+        </button>
+    </div>
+
+    <div id="floating-chat-container">
+        <div class="alex-chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div class="agent-info">
+                    <div class="agent-avatar"><i class="fa-solid fa-robot"></i><div class="status-dot"></div></div>
+                    <div class="agent-text">
+                        <span class="name">Alex AI Assistant</span>
+                        <span class="status">Reply time: Instant</span>
+                    </div>
+                </div>
+                <button class="close-chat-btn js-close-chat"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="chat-body">
+                <div class="chat-timestamp">Today, 5:00 PM</div>
+                
+                <div class="msg-row bot">
+                    <div class="msg-bubble">
+                        Hello! I see you're looking at quotes. Do you have any questions about the <strong>Collision Deductible</strong>? 🚗
+                    </div>
+                </div>
+                
+                <div class="chat-suggestions">
+                    <button>Explain Deductibles</button>
+                    <button>Talk to Human</button>
+                </div>
+            </div>
+            
+            <div class="chat-footer">
+                <input type="text" placeholder="Type your question..." class="chat-input">
+                <button class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
+            <i class="fa-solid fa-comment-dots"></i>
+            <span class="online-badge"></span>
+        </button>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="../js/script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            flatpickr(".date-picker", { dateFormat: "m/d/Y", maxDate: "today", disableMobile: "true" });
-
-            window.switchTab = function(carId) {
-                document.querySelectorAll('.driver-tab').forEach(t => t.classList.remove('active'));
-                const tabs = document.querySelectorAll('.driver-tab');
-                tabs.forEach(t => { if(t.getAttribute('data-target') === carId) t.classList.add('active'); });
-                document.querySelectorAll('.car-panel').forEach(p => p.classList.remove('active'));
-                const target = document.getElementById(`panel-${carId}`);
-                if(target) target.classList.add('active');
-            }
-
-            function showToast(message) {
-                const toastContainer = document.getElementById('toast-container');
-                const toast = document.createElement('div');
-                toast.className = 'alex-toast';
-                toast.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> <span>' + message + '</span>';
-                toastContainer.appendChild(toast);
-                requestAnimationFrame(() => toast.classList.add('visible'));
-                setTimeout(() => { toast.classList.remove('visible'); setTimeout(() => toast.remove(), 400); }, 4000);
-            }
-
-            // AUTO CALC
-            const milesWorkInput = document.getElementById('milesWork-1');
-            const annualInput = document.getElementById('annualMiles-1');
-            if(milesWorkInput && annualInput) {
-                milesWorkInput.addEventListener('input', function() {
-                    const val = parseInt(this.value);
-                    if(!isNaN(val) && val > 0) annualInput.value = val * 260;
-                });
-            }
-
-            // MODAL
-            const modal = document.getElementById('phoneModal');
-            const stepA = document.getElementById('modalStepA');
-            const stepB = document.getElementById('modalStepB');
-
-            document.getElementById('btnNext').addEventListener('click', (e) => {
-                e.preventDefault();
-                let isValid = true;
-                const activePanel = document.querySelector('.car-panel.active');
-                const inputs = activePanel.querySelectorAll('.validate-req');
-                inputs.forEach(input => {
-                    input.classList.remove('input-error');
-                    if(!input.value.trim()) { isValid = false; input.classList.add('input-error'); }
-                });
-
-                if(isValid) modal.classList.add('active');
-                else showToast("Please fill in the required vehicle specs.");
-            });
-
-            document.getElementById('btnYesPhone').addEventListener('click', () => { stepA.style.display = 'none'; stepB.style.display = 'block'; });
-            document.getElementById('btnBackToA').addEventListener('click', () => { stepB.style.display = 'none'; stepA.style.display = 'block'; });
-            document.getElementById('btnNoPhone').addEventListener('click', () => {
-                modal.classList.remove('active');
-                setTimeout(() => { alert("Proceeding without phone..."); window.location.href = "quote-14.html"; }, 300);
-            });
-            document.getElementById('btnSavePhone').addEventListener('click', () => {
-                const phone = document.getElementById('phoneNumber').value;
-                if(phone.length < 10) { document.getElementById('phoneNumber').style.border = "2px solid #EF4444"; return; }
-                document.getElementById('btnSavePhone').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-                setTimeout(() => { modal.classList.remove('active'); alert("Saved! Proceeding..."); window.location.href = "quote-14.html"; }, 1000);
-            });
-        });
-    </script>
+    <script src="../js/script-quote.js"></script>
 
 </body>
 </html>

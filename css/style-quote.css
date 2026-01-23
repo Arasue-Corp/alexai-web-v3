@@ -98,7 +98,7 @@ body::before {
 /* =========================================
    2. HEADER AREA
    ========================================= */
-.page-wrapper { max-width: 1400px; margin: 0 auto; padding: 40px 20px 120px; }
+.page-wrapper { max-width: 100%; margin: 0 auto;}
 
 .main-header { text-align: center; position: relative; z-index: 10; }
 
@@ -123,7 +123,7 @@ body::before {
 .wizard-container {
     background: var(--bg-surface); border-radius: var(--radius-card);
     border: 1px solid var(--border-light);
-    padding: 35px 45px; margin-bottom: 40px;
+    padding: 35px 45px 0px 45px; margin-bottom: 40px;
     box-shadow: var(--shadow-sm);
 }
 .wizard-top { display: flex; justify-content: space-between; margin-bottom: 15px; color: var(--color-gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;}
@@ -1407,8 +1407,8 @@ body.bg-matte-brand {
 .highlight { background: #EFF6FF; padding: 10px; border-radius: 10px; border: 1px dashed #BFDBFE; }
 .txt-blue { color: #2563EB; } .txt-red { color: #DC2626; } .txt-warn { color: #D97706; }
 
-.hidden-anim { display: none; }
-.hidden-anim.visible { display: flex; animation: slideDown 0.3s ease; }
+/* .hidden-anim { display: none; }
+.hidden-anim.visible { display: flex; animation: slideDown 0.3s ease; } */
 @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* --- SECTION LABELS --- */
@@ -1438,18 +1438,19 @@ body.bg-matte-brand {
 .alex-toast.danger .t-icon { background: rgba(255,255,255,0.2) !important; color: white !important; }
 .alex-toast.danger .t-msg { color: white !important; }
 
-.alex-toast.warning {
-    background: #FFFBEB !important; 
-    border-left: 6px solid #F59E0B !important; 
-    color: #92400E !important;
+.alex-toast.warning{
+    background: #ef6a18f7;
 }
+
+.alex-toast.warning .t-msg{
+
+    color: #514690 !important;
+
+}
+
 .alex-toast.warning .t-icon { color: #F59E0B !important; background: #FEF3C7 !important; }
 
-.alex-toast.success {
-    background: white !important; 
-    border-left: 6px solid #10B981 !important; 
-    color: #1e293b !important;
-}
+
 .alex-toast.success .t-icon { color: #10B981 !important; background: #ECFDF5 !important; }
 
 .t-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
@@ -1513,458 +1514,213 @@ body.bg-matte-brand {
 }
 
 /* =========================================
-   FIX: STEP 13 LAYOUT REPAIR
+   ADDITIONS FOR STEP 13 (SPECS)
    ========================================= */
 
-/* 1. Arreglo de la Grilla Principal (Layout) */
-.page-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px 120px;
-}
-
-.marketplace-grid {
-    display: grid;
-    grid-template-columns: 1fr 350px; /* Columna Izq (Form) - Columna Der (Sidebar) */
-    gap: 30px;
-    align-items: start;
-}
-
-/* En móviles, que se ponga una debajo de otra */
-@media (max-width: 900px) {
-    .marketplace-grid {
-        grid-template-columns: 1fr;
-    }
-    .config-sidebar {
-        display: none; /* Ocultamos sidebar en móvil para limpiar */
-    }
-}
-
-/* 2. Área del Formulario (Columna Izquierda) */
-.main-form-area {
-    display: flex;
-    flex-direction: column;
-    gap: 25px; /* Espacio entre tarjetas */
-}
-
-/* 3. Estilo de las Tarjetas (Premium Card Fix) */
-.premium-card {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 16px; /* Radio consistente */
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
-    transition: transform 0.2s ease;
-}
-
-.card-head-center {
-    padding: 15px 25px;
-    background: #F8FAFC;
-    border-bottom: 1px solid #F1F5F9;
-}
-
-.head-info h3 {
-    margin: 0;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #0F172A;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.card-body {
-    padding: 25px;
-}
-
-/* 4. Inputs y Grids dentro de las tarjetas */
-.grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.grid-3 {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 15px;
-}
-
-/* Fix para que los inputs no se vean rotos en pantallas pequeñas */
-@media (max-width: 600px) {
-    .grid-2, .grid-3 {
-        grid-template-columns: 1fr; /* Todo a 1 columna */
-    }
-}
-
-.inp-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 0;
-}
-
-.inp-group label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #64748B;
-    text-transform: uppercase;
-}
-
-/* 5. Navegación de Pestañas (Car 1 / Car 2) */
-.veh-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #FFFFFF;
-    padding: 10px;
-    border-radius: 12px;
-    border: 1px solid #E2E8F0;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-}
-
-.veh-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    border: 1px solid #F1F5F9;
-    background: #F8FAFC;
-    color: #64748B;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.2s;
-}
-
-.veh-btn:hover {
-    background: #EFF6FF;
-    color: #009cff;
-    border-color: #BFDBFE;
-}
-
-.veh-name {
-    font-weight: 700;
-    color: #0F172A;
-    font-size: 0.9rem;
-}
-
-/* 6. Paneles Ocultos */
-.car-panel {
-    display: none; /* Oculto por defecto */
-    animation: fadeIn 0.4s ease-out;
-}
-
-.car-panel.active {
-    display: block; /* Solo el activo se ve */
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* 7. Botones de Acción */
-.action-row-right {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
-}
-
-.final-action-area {
-    margin-top: 40px;
-    text-align: center;
-    padding-top: 20px;
-    border-top: 1px dashed #E2E8F0;
-}
-
-.btn-next.active {
-    background: linear-gradient(135deg, #009cff 0%, #0077CC 100%);
-    color: white;
-    padding: 16px 40px;
-    border-radius: 12px;
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 10px 25px -5px rgba(0, 156, 255, 0.4);
-    transition: transform 0.2s;
-}
-
-.btn-next.active:hover {
-    transform: translateY(-2px);
-}
-
-.secure-badge-blue {
-    color: #64748B;
-    font-size: 0.8rem;
-    font-weight: 500;
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-/* =========================================
-   STEP 13: CORPORATE SUPPORT
-   ========================================= */
-
-/* Checkbox Corporativo (Limpio y Azul) */
-.corp-checkbox {
-    appearance: none; -webkit-appearance: none;
-    width: 24px; height: 24px;
-    border: 2px solid #CBD5E1; border-radius: 6px;
-    background: white; cursor: pointer; position: relative;
-    transition: all 0.2s;
-}
-.corp-checkbox:checked {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
-}
-.corp-checkbox:checked::after {
-    content: '\f00c'; font-family: "Font Awesome 6 Free"; font-weight: 900;
-    color: white; font-size: 14px;
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-}
-
-/* Fix para Flatpickr (Calendario) para que coincida con tus inputs */
-.flatpickr-calendar {
-    font-family: 'Poppins', sans-serif;
-    border: 1px solid #E2E8F0;
-    box-shadow: var(--shadow-lg);
-    border-radius: 12px;
-}
-.flatpickr-day.selected {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
-}
-
-/* =========================================
-   AURORA TECH PRO (STEP 13 POLISH)
-   ========================================= */
-
-/* 1. PESTAÑAS DESLIZANTES (Car Switcher) */
+/* --- TABS MODERNOS --- */
 .car-tabs-modern {
-    background: #E2E8F0; /* Fondo gris suave */
-    border-radius: 12px;
-    padding: 5px;
-    display: flex;
-    position: relative;
-    margin-bottom: 25px;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    background: #E2E8F0; border-radius: 12px; padding: 5px;
+    display: flex; position: relative; margin-bottom: 25px;
 }
-
 .car-tab {
-    flex: 1;
-    border: none;
-    background: transparent;
-    padding: 12px;
-    font-weight: 600;
-    color: #64748B;
-    cursor: pointer;
-    z-index: 2; /* Sobre el indicador */
+    flex: 1; border: none; background: transparent; padding: 12px;
+    font-weight: 600; color: #64748B; cursor: pointer; z-index: 2;
     display: flex; align-items: center; justify-content: center; gap: 8px;
     transition: color 0.3s ease;
 }
-
-.car-tab.active {
-    color: var(--color-indigo);
-    font-weight: 700;
-}
-.car-tab i { font-size: 1.1rem; }
-
-/* El indicador blanco que se desliza */
+.car-tab.active { color: var(--color-indigo); font-weight: 700; }
 .tab-indicator {
-    position: absolute;
-    top: 5px; bottom: 5px; left: 5px;
-    width: calc(50% - 5px); /* Asumiendo 2 tabs */
-    background: #FFFFFF;
-    border-radius: 9px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    z-index: 1;
+    position: absolute; top: 5px; bottom: 5px; left: 5px;
+    width: calc(50% - 5px); background: #FFFFFF; border-radius: 9px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.3s ease; z-index: 1;
 }
+/* Logica de JS moverá esto con inline styles, o clases auxiliares */
 
-/* 2. COLUMNA IZQUIERDA (MAIN FORM) - Más atractiva */
+/* --- FORM PANELS & TOGGLES --- */
 .form-panel-glow {
-    border: 1px solid white;
-    box-shadow: 
-        0 4px 6px -1px rgba(0, 0, 0, 0.02), 
-        0 10px 15px -3px rgba(0, 0, 0, 0.03),
-        0 0 0 1px rgba(226, 232, 240, 0.5); /* Borde sutil */
-    padding: 30px;
+    animation: fadeInUp 0.4s ease;
 }
-
-/* Grupos de Sección con Estilo */
-.section-group {
-    background: #F8FAFC;
-    border: 1px solid #F1F5F9;
-    border-radius: 16px;
-    padding: 20px;
-    transition: all 0.3s ease;
-}
-.section-group:hover {
-    background: #FFFFFF;
-    border-color: #E2E8F0;
-    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
-    transform: translateY(-2px);
-}
-
-/* Encabezados de Sección con Iconos */
-.sec-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-.sec-head h4 { margin: 0; font-size: 0.95rem; font-weight: 700; color: var(--color-indigo); text-transform: uppercase; letter-spacing: 0.5px; }
+.car-panel { display: none; }
+.car-panel.active { display: block; }
 
 .icon-box-soft {
     width: 36px; height: 36px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1rem;
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
 }
 .icon-box-soft.blue { background: #EFF6FF; color: var(--color-primary); }
-.icon-box-soft.indigo { background: #EEF2FF; color: var(--color-indigo); }
 .icon-box-soft.purple { background: #F3E8FF; color: #9333EA; }
+.icon-box-soft.indigo { background: #EEF2FF; color: var(--color-indigo); }
 .icon-box-soft.teal { background: #CCFBF1; color: #0D9488; }
 
-/* 3. TOGGLES (SWITCHES) */
-.toggle-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 12px 0; border-bottom: 1px dashed #E2E8F0;
-}
-.toggle-row:last-child { border-bottom: none; }
+.sec-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.sec-head h4 { margin: 0; font-size: 0.95rem; font-weight: 700; color: var(--color-indigo); text-transform: uppercase; }
 
-.t-title { font-weight: 700; color: #334155; display: block; font-size: 0.9rem; }
-.t-desc { font-size: 0.75rem; color: #94A3B8; }
-
-/* Switch CSS */
-.switch-btn { position: relative; display: inline-block; width: 50px; height: 28px; }
-.switch-btn input { opacity: 0; width: 0; height: 0; }
-.slider {
-    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #CBD5E1; transition: .4s;
-}
-.slider:before {
-    position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px;
-    background-color: white; transition: .4s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-.slider.round { border-radius: 34px; }
-.slider.round:before { border-radius: 50%; }
-
-input:checked + .slider { background-color: var(--color-primary); }
-input:checked + .slider.red-theme { background-color: #EF4444; }
-input:checked + .slider:before { transform: translateX(22px); }
-
-/* 4. SIDEBAR VIBRANTE (Llamativo pero Pro) */
-
-/* Caja de Descuento */
-.discount-box-vibrant {
-    background: linear-gradient(135deg, #10B981, #059669);
-    color: white; border-radius: 16px; padding: 25px 20px;
-    position: relative; overflow: hidden;
-    box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
-    text-align: center;
-}
-.discount-box-vibrant .bg-icon {
-    position: absolute; top: -10px; right: -10px; font-size: 5rem;
-    color: white; opacity: 0.15; transform: rotate(15deg);
-}
-.db-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; }
-.db-val { font-size: 2rem; font-weight: 900; margin: 5px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-.db-msg { font-size: 0.85rem; font-weight: 500; opacity: 0.95; line-height: 1.4; }
-
-/* Caja de Tip */
-.tip-box-vibrant {
-    background: #FFFBEB;
-    border-left: 5px solid #F59E0B;
-    border-radius: 8px; padding: 15px;
-    display: flex; gap: 15px;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-}
-.tip-icon { 
-    background: #FEF3C7; width: 32px; height: 32px; border-radius: 50%; 
-    display: flex; align-items: center; justify-content: center; color: #D97706; 
-}
-.tip-content { font-size: 0.85rem; color: #78350F; line-height: 1.5; }
-
-/* Header Vehículo Mini */
-.veh-header-badge {
-    display: flex; align-items: center; gap: 15px;
-    margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid #F1F5F9;
-}
-.veh-logo-mini { height: 30px; opacity: 0.8; }
-.veh-title { margin: 0; font-size: 1rem; font-weight: 800; color: var(--color-indigo); }
-.veh-subtitle { font-size: 0.8rem; color: #64748B; }
-
-/* Fixes */
-.empty-state-icon { font-size: 4rem; color: #E2E8F0; margin-bottom: 15px; }
-.pulse-dot { display: inline-block; width: 8px; height: 8px; background: var(--color-primary); border-radius: 50%; box-shadow: 0 0 0 3px #E0F2FE; margin-right: 5px; }
-.sum-item.active { font-weight: 700; color: var(--color-indigo); }
-
-/* =========================================
-   STEP 13 FINAL ADJUSTMENTS
-   ========================================= */
-
-/* 1. LAYOUT DELGADO */
-.marketplace-grid-slim {
-    display: grid;
-    grid-template-columns: 1fr 280px; /* Sidebar más delgada (Acompañamiento) */
-    gap: 30px;
-    align-items: start;
-}
-
-@media (max-width: 900px) {
-    .marketplace-grid-slim { grid-template-columns: 1fr; }
-    .slim-sidebar { display: none; }
-}
-
-/* 2. FORMULARIO LIMPIO */
-.sec-title-row {
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 15px; padding-bottom: 8px;
-    border-bottom: 1px solid #F1F5F9;
-    font-weight: 700; color: var(--color-indigo); text-transform: uppercase; font-size: 0.85rem;
-}
-.sec-title-row i { font-size: 1rem; }
-
-/* Grid systems */
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-@media (max-width: 768px) { .grid-3, .grid-2 { grid-template-columns: 1fr; } }
-
-/* Toggles en Grid (2x2) */
-.toggles-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 20px 30px;
-}
+/* Grid de Toggles */
+.toggles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 30px; }
 .toggle-item {
     display: flex; justify-content: space-between; align-items: center;
     background: #F8FAFC; padding: 12px 15px; border-radius: 10px;
-    border: 1px solid transparent;
+    border: 1px solid transparent; transition: 0.2s;
 }
 .toggle-item:hover { background: white; border-color: #E2E8F0; box-shadow: var(--shadow-sm); }
 .t-main { display: block; font-weight: 600; font-size: 0.85rem; color: var(--color-dark); }
 .t-sub { font-size: 0.75rem; color: #94A3B8; }
 
-/* 3. NAVEGACIÓN INTERNA (Entre autos) */
-.inner-nav-row {
-    display: flex; justify-content: space-between; margin-top: 30px; padding-top: 20px;
-    border-top: 1px dashed #E2E8F0;
+/* Switch Style */
+.switch-btn { position: relative; display: inline-block; width: 44px; height: 24px; }
+.switch-btn input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #CBD5E1; transition: .4s; }
+.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+.slider.round { border-radius: 34px; }
+.slider.round:before { border-radius: 50%; }
+input:checked + .slider { background-color: var(--color-primary); }
+input:checked + .slider:before { transform: translateX(20px); }
+input:checked + .slider.red-theme { background-color: #EF4444; }
+
+/* --- SIDEBAR LIST --- */
+.aurora-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
+.aurora-list li {
+    padding: 10px 0; border-bottom: 1px dashed #F1F5F9; color: #94A3B8;
+    font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 10px;
 }
-.btn-inner-next, .btn-inner-prev {
-    background: white; border: 1px solid #CBD5E1; color: var(--color-indigo);
-    padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;
-    transition: 0.2s; display: flex; align-items: center; gap: 8px;
+.aurora-list li.done { color: #10B981; }
+.aurora-list li.active { color: var(--color-indigo); font-weight: 700; }
+.pulse-dot { width: 8px; height: 8px; background: var(--color-primary); border-radius: 50%; box-shadow: 0 0 0 3px #E0F2FE; }
+
+/* Boxes */
+.discount-box-vibrant {
+    background: linear-gradient(135deg, #10B981, #059669); color: white;
+    border-radius: 16px; padding: 20px; position: relative; overflow: hidden;
+    box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4); text-align: center;
 }
-.btn-inner-next:hover, .btn-inner-prev:hover {
-    background: #F0F9FF; border-color: var(--color-primary); color: var(--color-primary);
+.discount-box-vibrant .bg-icon { position: absolute; top: -10px; right: -10px; font-size: 4rem; opacity: 0.15; transform: rotate(15deg); }
+.db-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; }
+.db-val { font-size: 2rem; font-weight: 900; margin: 5px 0; }
+.db-msg { font-size: 0.8rem; font-weight: 500; opacity: 0.9; }
+
+.tip-box-vibrant {
+    background: #FFFBEB; border-left: 4px solid #F59E0B;
+    border-radius: 8px; padding: 15px; display: flex; gap: 12px;
+    font-size: 0.85rem; color: #78350F;
+}
+.tip-icon { color: #D97706; font-size: 1.1rem; }
+
+/* --- MODAL AURORA CUSTOM --- */
+.modal-box-aurora {
+    background: #FFFFFF; width: 90%; max-width: 450px;
+    border-radius: 24px; padding: 35px; text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3);
+    border: 1px solid #F8FAFC; transform: scale(0.95); transition: 0.3s;
+}
+.modal-overlay-quote.active .modal-box-aurora { transform: scale(1); }
+
+.gift-icon-glow {
+    width: 70px; height: 70px; background: #F5F3FF; color: #8B5CF6;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; margin: 0 auto 20px; animation: float 3s infinite ease-in-out;
+}
+.gift-icon-glow.blue { background: #EFF6FF; color: var(--color-primary); }
+
+.aurora-title { font-size: 1.5rem; font-weight: 800; color: var(--color-indigo); margin: 0 0 10px 0; }
+.aurora-desc { color: #64748B; font-size: 0.95rem; margin: 0 0 25px 0; }
+
+.perks-list-glass { text-align: left; margin-bottom: 25px; }
+.perk-item {
+    background: #F8FAFC; border: 1px solid #F1F5F9;
+    padding: 12px; border-radius: 12px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 15px; font-weight: 600; color: #334155; font-size: 0.9rem;
+}
+.p-icon { width: 30px; height: 30px; background: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #10B981; box-shadow: var(--shadow-sm); }
+
+.modal-actions-col { display: flex; flex-direction: column; gap: 10px; }
+.btn-text-only { background: none; border: none; color: #94A3B8; font-weight: 600; cursor: pointer; padding: 10px; }
+.btn-text-only:hover { color: var(--color-indigo); }
+
+.grid-phone-input { display: flex; gap: 10px; margin-bottom: 25px; }
+.country-sel { width: 100px; text-align: center; padding-left: 5px; }
+
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+/* Mobile Adaptations */
+@media (max-width: 768px) {
+    .toggles-grid, .grid-3 { grid-template-columns: 1fr; }
 }
 
-/* 4. VALIDACIÓN & SHAKE */
+/* =========================================
+   FIXES STEP 13: SPECS LAYOUT & CONTROLS
+   ========================================= */
+
+/* 1. LAYOUT CORREGIDO (Proporción Áurea para Specs) */
+.specs-layout-grid {
+    display: grid;
+    /* La columna del formulario ocupa el espacio restante (1fr), 
+       la sidebar tiene un ancho fijo y controlado (340px) */
+    grid-template-columns: 1fr 340px; 
+    gap: 40px;
+    align-items: start;
+    position: relative;
+}
+
+/* En tablets/móviles, pasa a una sola columna */
+@media (max-width: 1024px) {
+    .specs-layout-grid { grid-template-columns: 1fr; }
+    .config-sidebar { display: none; } /* O muévela abajo si prefieres */
+}
+
+/* 2. BOTONES DE NAVEGACIÓN (NEXT/PREV CAR) - ESTILO AURORA */
+.btn-nav-outline {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    color: #64748B;
+    padding: 12px 24px;
+    border-radius: var(--radius-btn); /* 10px */
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.btn-nav-outline:hover {
+    border-color: var(--color-primary); /* Electric Blue */
+    color: var(--color-primary);
+    background: #F0F9FF;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 156, 255, 0.15);
+}
+
+.btn-nav-outline i { transition: transform 0.2s; }
+.btn-nav-outline:hover i.fa-arrow-right { transform: translateX(3px); }
+.btn-nav-outline:hover i.fa-chevron-left { transform: translateX(-3px); }
+
+
+/* 3. ALINEACIÓN DE CAMPOS (GRID ROBUSTO) */
+/* Asegura que los campos en grid se alineen verticalmente al top */
+.grid-2, .grid-3 {
+    align-items: start; /* Evita que se estiren de forma extraña */
+}
+
+/* Fix para etiquetas que ocupan 2 líneas: Altura mínima */
+.inp-group label {
+    min-height: 1.2em; 
+    margin-bottom: 8px; /* Un poco más de aire entre label e input */
+    display: block;
+}
+
+/* Clase de utilidad para alinear el botón "Next Car" a la derecha */
+.nav-row-right {
+    display: flex; justify-content: flex-end; margin-top: 25px;
+}
+.nav-row-spaced {
+    display: flex; justify-content: space-between; margin-top: 25px;
+}
+
+/* 4. ANIMACIÓN DE ERROR (SHAKE) */
 .input-error {
-    border-color: #EF4444 !important;
+    border-color: #EF4444 !important; /* Rojo Error */
     background-color: #FEF2F2 !important;
-    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
 }
 
 @keyframes shake {
@@ -1974,9 +1730,715 @@ input:checked + .slider:before { transform: translateX(22px); }
   40%, 60% { transform: translate3d(4px, 0, 0); }
 }
 
-/* 5. SIDEBAR COMPACTA */
-.summary-list.compact .sum-item { padding: 8px 0; font-size: 0.8rem; }
-.discount-box-vibrant.compact { padding: 15px; text-align: left; }
-.discount-box-vibrant.compact .db-val { font-size: 1.5rem; }
-.tip-box-vibrant.compact { padding: 12px; gap: 10px; }
-.tip-icon.mini { width: 24px; height: 24px; font-size: 0.8rem; flex-shrink: 0; }
+/* =========================================
+   PREMIUM UPGRADE (STEP 13 REFACTOR)
+   ========================================= */
+
+/* 1. LAYOUT & CONTAINMENT */
+.specs-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px; /* Sidebar más estrecha para elegancia */
+    gap: 30px;
+    max-width: 1000px; /* IMPORTANTE: Evita que se estire al infinito */
+    margin: 0 auto;
+}
+
+.premium-white-card {
+    background: #FFFFFF;
+    border-radius: 0 0 20px 20px; /* Redondeado abajo (conecta con tabs) */
+    box-shadow: 
+        0 10px 30px -5px rgba(0, 0, 0, 0.04),
+        0 4px 12px -2px rgba(0, 0, 0, 0.02);
+    border: 1px solid #F1F5F9;
+    padding: 35px 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 2. TABS INTEGRADOS (Look de Carpeta/Dashboard) */
+.car-tabs-integrated {
+    display: flex; gap: 5px; margin-bottom: -1px; /* Solape visual */
+    padding: 0 10px;
+}
+.tab-int {
+    background: #F1F5F9; color: #64748B;
+    border: 1px solid #E2E8F0; border-bottom: none;
+    padding: 14px 25px;
+    border-radius: 12px 12px 0 0;
+    font-weight: 600; font-size: 0.85rem;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 10px;
+    position: relative; top: 1px; /* Para tapar el borde de la tarjeta */
+}
+.tab-int.active {
+    background: #FFFFFF; color: var(--color-indigo);
+    font-weight: 700; border-color: #F1F5F9;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.03);
+    z-index: 2;
+}
+.tab-int.active::after {
+    /* Parche blanco para conectar con la tarjeta */
+    content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 4px; background: white;
+}
+.t-status { font-size: 0.7rem; color: #10B981; margin-left: auto; }
+.t-status.pending { color: #F59E0B; }
+
+/* 3. INPUTS "RICH UI" (Iconos integrados) */
+.grid-2-tight { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3-tight { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+
+.inp-rich-group label {
+    font-size: 0.75rem; font-weight: 700; color: #475569;
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; display: block;
+}
+
+.input-rich-wrapper {
+    position: relative;
+    background: #F8FAFC; border: 1px solid #E2E8F0;
+    border-radius: 10px; transition: all 0.2s;
+    display: flex; align-items: center;
+}
+.input-rich-wrapper:focus-within {
+    background: #FFFFFF;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px rgba(0, 156, 255, 0.1);
+}
+.input-rich-wrapper.locked { background: #F1F5F9; opacity: 0.8; }
+
+.icon-slot {
+    width: 40px; display: flex; align-items: center; justify-content: center;
+    color: #94A3B8; font-size: 0.9rem; border-right: 1px solid transparent;
+}
+.input-rich-wrapper:focus-within .icon-slot { color: var(--color-primary); }
+
+.rich-input {
+    width: 100%; border: none; background: transparent;
+    padding: 12px 10px 12px 0; font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem; font-weight: 600; color: #0F172A; outline: none;
+}
+.currency { padding-left: 15px; color: #64748B; font-weight: 600; }
+.pl-4 { padding-left: 5px; }
+
+/* 4. SECCIONES & SEPARADORES */
+.sec-label {
+    font-size: 0.8rem; color: var(--color-indigo); font-weight: 800;
+    margin: 0 0 15px 0; letter-spacing: 0.5px; opacity: 0.9;
+}
+.divider-hairline {
+    height: 1px; background: #F1F5F9; margin: 25px 0;
+}
+
+/* 5. TOGGLES COMPACTOS (Botones seleccionables) */
+.toggles-compact-grid { display: flex; gap: 15px; flex-wrap: wrap; }
+.toggle-compact { cursor: pointer; position: relative; }
+.toggle-compact input { display: none; }
+.toggle-face {
+    background: #FFFFFF; border: 1px solid #E2E8F0;
+    padding: 10px 16px; border-radius: 50px;
+    display: flex; align-items: center; gap: 10px;
+    transition: 0.2s;
+}
+.toggle-compact:hover .toggle-face { border-color: #CBD5E1; }
+.toggle-compact input:checked + .toggle-face {
+    background: #EFF6FF; border-color: var(--color-primary); color: var(--color-primary);
+    box-shadow: 0 2px 5px rgba(0, 156, 255, 0.2);
+}
+.tog-name { font-size: 0.8rem; font-weight: 600; }
+.tog-ind {
+    width: 10px; height: 10px; border-radius: 50%; background: #E2E8F0;
+}
+.toggle-compact input:checked + .toggle-face .tog-ind { background: var(--color-primary); }
+.toggle-compact input:checked + .toggle-face .tog-ind.error { background: #EF4444; }
+
+/* 6. HERO ACTION AREA (Footer Premium) */
+.hero-action-area {
+    margin-top: 30px; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 15px;
+}
+.secure-badge-modern {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #F0FDF4; color: #15803D; /* Verde seguridad suave */
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;
+    border: 1px solid #BBF7D0;
+}
+
+.btn-hero-gradient {
+    width: 100%; max-width: 400px;
+    background: linear-gradient(135deg, #009cff 0%, #4F46E5 100%);
+    color: white; border: none; padding: 18px;
+    border-radius: 14px; font-size: 1rem; font-weight: 800;
+    letter-spacing: 1px; cursor: pointer;
+    box-shadow: 0 10px 30px -5px rgba(79, 70, 229, 0.4);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-hero-gradient:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 20px 40px -5px rgba(79, 70, 229, 0.5);
+}
+
+/* 7. NAVEGACIÓN INTERNA */
+.nav-internal-dock {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 25px; padding-top: 20px;
+    border-top: 1px dashed #E2E8F0;
+}
+.step-counter { font-size: 0.8rem; color: #94A3B8; font-weight: 600; text-transform: uppercase; }
+.btn-pill-outline {
+    background: white; border: 1px solid #E2E8F0; color: #475569;
+    padding: 8px 18px; border-radius: 30px; font-weight: 600; font-size: 0.85rem;
+    cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px;
+}
+.btn-pill-outline:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+/* Mobile */
+@media (max-width: 900px) {
+    .specs-layout-grid { grid-template-columns: 1fr; }
+    .grid-3-tight, .grid-2-tight { grid-template-columns: 1fr; gap: 15px; }
+    .premium-white-card { padding: 25px 20px; }
+}
+
+/* =========================================
+   AURORA TECH: STEP 13 UPDATES
+   ========================================= */
+
+/* =========================================
+   ADDITIONS FOR STEP 13 (SPECS)
+   ========================================= */
+
+/* 1. LAYOUT & CONTAINMENT */
+.specs-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px; /* Sidebar más estrecha para elegancia */
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.premium-white-card {
+    background: #FFFFFF;
+    border-radius: 0 0 20px 20px; /* Redondeado abajo (conecta con tabs) */
+    box-shadow: 
+        0 10px 30px -5px rgba(0, 0, 0, 0.04),
+        0 4px 12px -2px rgba(0, 0, 0, 0.02);
+    border: 1px solid #F1F5F9;
+    padding: 35px 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 2. TABS INTEGRADOS (Look de Carpeta/Dashboard) */
+.car-tabs-integrated {
+    display: flex; gap: 5px; margin-bottom: -1px; /* Solape visual */
+    padding: 0 10px;
+}
+.tab-int {
+    background: #F1F5F9; color: #64748B;
+    border: 1px solid #E2E8F0; border-bottom: none;
+    padding: 14px 25px;
+    border-radius: 12px 12px 0 0;
+    font-weight: 600; font-size: 0.85rem;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 10px;
+    position: relative; top: 1px; /* Para tapar el borde de la tarjeta */
+}
+.tab-int.active {
+    background: #FFFFFF; color: var(--color-indigo);
+    font-weight: 700; border-color: #F1F5F9;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.03);
+    z-index: 2;
+}
+.tab-int.active::after {
+    /* Parche blanco para conectar con la tarjeta */
+    content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 4px; background: white;
+}
+.t-status { font-size: 0.7rem; color: #10B981; margin-left: auto; }
+.t-status.pending { color: #F59E0B; }
+
+/* 3. INPUTS "RICH UI" (Iconos integrados) */
+.grid-2-tight { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3-tight { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+
+.inp-rich-group label {
+    font-size: 0.75rem; font-weight: 700; color: #475569;
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; display: block;
+}
+
+.input-rich-wrapper {
+    position: relative;
+    background: #F8FAFC; border: 1px solid #E2E8F0;
+    border-radius: 10px; transition: all 0.2s;
+    display: flex; align-items: center;
+}
+.input-rich-wrapper:focus-within {
+    background: #FFFFFF;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px rgba(0, 156, 255, 0.1);
+}
+.input-rich-wrapper.locked { background: #F1F5F9; opacity: 0.8; }
+
+.icon-slot {
+    width: 40px; display: flex; align-items: center; justify-content: center;
+    color: #94A3B8; font-size: 0.9rem; border-right: 1px solid transparent;
+}
+.input-rich-wrapper:focus-within .icon-slot { color: var(--color-primary); }
+
+.rich-input {
+    width: 100%; border: none; background: transparent;
+    padding: 12px 10px 12px 0; font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem; font-weight: 600; color: #0F172A; outline: none;
+}
+.currency { padding-left: 15px; color: #64748B; font-weight: 600; }
+.pl-4 { padding-left: 5px; }
+
+/* 4. SECCIONES & SEPARADORES */
+.sec-label {
+    font-size: 0.8rem; color: var(--color-indigo); font-weight: 800;
+    margin: 0 0 15px 0; letter-spacing: 0.5px; opacity: 0.9;
+}
+.divider-hairline {
+    height: 1px; background: #F1F5F9; margin: 25px 0;
+}
+
+/* 5. TOGGLES COMPACTOS (Botones seleccionables) */
+.toggles-compact-grid { display: flex; gap: 15px; flex-wrap: wrap; }
+.toggle-compact { cursor: pointer; position: relative; }
+.toggle-compact input { display: none; }
+.toggle-face {
+    background: #FFFFFF; border: 1px solid #E2E8F0;
+    padding: 10px 16px; border-radius: 50px;
+    display: flex; align-items: center; gap: 10px;
+    transition: 0.2s;
+}
+.toggle-compact:hover .toggle-face { border-color: #CBD5E1; }
+.toggle-compact input:checked + .toggle-face {
+    background: #EFF6FF; border-color: var(--color-primary); color: var(--color-primary);
+    box-shadow: 0 2px 5px rgba(0, 156, 255, 0.2);
+}
+.tog-name { font-size: 0.8rem; font-weight: 600; }
+.tog-ind {
+    width: 10px; height: 10px; border-radius: 50%; background: #E2E8F0;
+}
+.toggle-compact input:checked + .toggle-face .tog-ind { background: var(--color-primary); }
+.toggle-compact input:checked + .toggle-face .tog-ind.error { background: #EF4444; }
+
+/* 6. HERO ACTION AREA (Footer Premium) */
+.hero-action-area {
+    margin-top: 30px; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 15px;
+}
+.secure-badge-modern {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #F0FDF4; color: #15803D; /* Verde seguridad suave */
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;
+    border: 1px solid #BBF7D0;
+}
+
+.btn-hero-gradient {
+    width: 100%; max-width: 400px;
+    background: linear-gradient(135deg, #009cff 0%, #4F46E5 100%);
+    color: white; border: none; padding: 18px;
+    border-radius: 14px; font-size: 1rem; font-weight: 800;
+    letter-spacing: 1px; cursor: pointer;
+    box-shadow: 0 10px 30px -5px rgba(79, 70, 229, 0.4);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-hero-gradient:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 20px 40px -5px rgba(79, 70, 229, 0.5);
+}
+
+/* 7. NAVEGACIÓN INTERNA */
+.btn-nav-outline {
+    background: #FFFFFF; border: 1px solid #E2E8F0; color: #64748B;
+    padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 0.9rem;
+    cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 10px;
+}
+.btn-nav-outline:hover {
+    border-color: var(--color-primary); color: var(--color-primary); background: #F0F9FF;
+}
+.nav-row-right { display: flex; justify-content: flex-end; margin-top: 25px; }
+.nav-row-spaced { display: flex; justify-content: space-between; margin-top: 25px; }
+.input-error { border-color: #EF4444 !important; background-color: #FEF2F2 !important; animation: shake 0.4s; }
+
+/* 8. SIDEBAR STYLES */
+.aurora-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
+.aurora-list li {
+    padding: 10px 0; border-bottom: 1px dashed #F1F5F9; color: #94A3B8;
+    font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 10px;
+}
+.aurora-list li.done { color: #10B981; }
+.aurora-list li.active { color: var(--color-indigo); font-weight: 700; }
+.pulse-dot { width: 8px; height: 8px; background: var(--color-primary); border-radius: 50%; box-shadow: 0 0 0 3px #E0F2FE; }
+
+.discount-box-vibrant {
+    background: linear-gradient(135deg, #10B981, #059669); color: white;
+    border-radius: 16px; padding: 20px; position: relative; overflow: hidden;
+    box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4); text-align: center;
+}
+.discount-box-vibrant .bg-icon { position: absolute; top: -10px; right: -10px; font-size: 4rem; opacity: 0.15; transform: rotate(15deg); }
+.db-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; }
+.db-val { font-size: 2rem; font-weight: 900; margin: 5px 0; }
+.db-msg { font-size: 0.8rem; font-weight: 500; opacity: 0.9; }
+
+.tip-box-vibrant {
+    background: #FFFBEB; border-left: 4px solid #F59E0B;
+    border-radius: 8px; padding: 15px; display: flex; gap: 12px;
+    font-size: 0.85rem; color: #78350F;
+}
+.tip-icon { color: #D97706; font-size: 1.1rem; }
+
+/* 9. AURORA MODAL CUSTOM */
+.modal-box-aurora {
+    background: #FFFFFF; width: 90%; max-width: 450px;
+    border-radius: 24px; padding: 35px; text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3);
+    border: 1px solid #F8FAFC; transform: scale(0.95); transition: 0.3s;
+}
+.modal-overlay-quote.active .modal-box-aurora { transform: scale(1); }
+.gift-icon-glow {
+    width: 70px; height: 70px; background: #F5F3FF; color: #8B5CF6;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; margin: 0 auto 20px; animation: float 3s infinite ease-in-out;
+}
+.gift-icon-glow.blue { background: #EFF6FF; color: var(--color-primary); }
+.aurora-title { font-size: 1.5rem; font-weight: 800; color: var(--color-indigo); margin: 0 0 10px 0; }
+.aurora-desc { color: #64748B; font-size: 0.95rem; margin: 0 0 25px 0; }
+.perks-list-glass { text-align: left; margin-bottom: 25px; }
+.perk-item {
+    background: #F8FAFC; border: 1px solid #F1F5F9;
+    padding: 12px; border-radius: 12px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 15px; font-weight: 600; color: #334155; font-size: 0.9rem;
+}
+.p-icon { width: 30px; height: 30px; background: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #10B981; box-shadow: var(--shadow-sm); }
+.modal-actions-col { display: flex; flex-direction: column; gap: 10px; }
+.btn-text-only { background: none; border: none; color: #94A3B8; font-weight: 600; cursor: pointer; padding: 10px; }
+.btn-text-only:hover { color: var(--color-indigo); }
+.grid-phone-input { display: flex; gap: 10px; margin-bottom: 25px; }
+.country-sel { width: 100px; text-align: center; padding-left: 5px; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@media (max-width: 900px) {
+    .specs-layout-grid { grid-template-columns: 1fr; }
+    .grid-3-tight, .grid-2-tight { grid-template-columns: 1fr; gap: 15px; }
+    .premium-white-card { padding: 25px 20px; }
+}
+
+/* --- ANIMACIÓN SHAKE (ERROR) --- */
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+.input-error {
+    border-color: #EF4444 !important; /* Rojo Error */
+    background-color: #FEF2F2 !important; /* Fondo rojo muy suave */
+    /* La animación se ejecuta una vez por 0.5s */
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    /* Transform-origin para que vibre desde el centro */
+    transform: translate3d(0, 0, 0); 
+    backface-visibility: hidden; 
+    perspective: 1000px;
+}
+
+/* Asegura que las tarjetas de radio se vean bien en grid */
+.grid-2-tight .radio-card-opt {
+    height: 100%; /* Para que tengan la misma altura */
+    align-items: flex-start;
+}
+
+/* Radio Cards (Style Fix for Step 12) */
+.radio-card-opt {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: #FFFFFF; border: 1px solid #E2E8F0; 
+    padding: 15px; border-radius: 12px; cursor: pointer; 
+    transition: all 0.2s; position: relative; height: 100%;
+}
+.radio-card-opt:hover { 
+    border-color: #BFDBFE; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.03); 
+}
+.radio-card-opt:has(input:checked) {
+    background: #F0F9FF; border-color: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(0, 156, 255, 0.15);
+}
+.radio-card-opt input { 
+    margin-top: 4px; accent-color: var(--color-primary); width: 18px; height: 18px; 
+}
+.radio-title { 
+    font-size: 0.9rem; font-weight: 700; color: var(--color-dark); display: block; margin-bottom: 2px;
+}
+.radio-desc { 
+    font-size: 0.75rem; color: #64748B; font-weight: 500; 
+}
+
+/* =========================================
+   ADDITIONS FOR STEP 11 (LIENHOLDER)
+   ========================================= */
+
+/* Animación de Despliegue */
+.hidden-anim { 
+    display: none; 
+    opacity: 0; 
+    transform: translateY(-10px); 
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.hidden-anim.visible { 
+    display: block; 
+    opacity: 1; 
+    transform: translateY(0); 
+}
+
+/* Utilidades rápidas para inputs */
+.mt-3 { margin-top: 15px; }
+.mt-4 { margin-top: 25px; }
+
+/* =========================================
+   ADDITIONS FOR STEP 10 (VEHICLES)
+   ========================================= */
+
+/* Banner de Información (Primary Car) */
+.info-banner-blue {
+    background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF;
+    padding: 12px 15px; border-radius: 10px; font-size: 0.85rem; font-weight: 600;
+    display: flex; align-items: center; gap: 10px;
+}
+
+/* Botón Delete en el Panel */
+.btn-delete-link {
+    background: none; border: none; color: #EF4444; font-weight: 600; font-size: 0.85rem;
+    cursor: pointer; display: flex; align-items: center; gap: 6px; margin-left: auto;
+    padding: 5px 10px; border-radius: 6px; transition: 0.2s;
+}
+.btn-delete-link:hover { background: #FEF2F2; }
+
+/* Botón Add (+) en la barra de tabs */
+.tab-int.add-btn {
+    background: #ECFDF5; color: #059669; border-color: #A7F3D0;
+    width: auto; padding: 0 15px; flex: 0; min-width: 80px;
+}
+.tab-int.add-btn:hover { background: #D1FAE5; }
+
+/* Ajustes de Radio Cards en Grid Pequeño */
+.radio-card-opt.small-p { padding: 10px; }
+.radio-title.center { width: 100%; text-align: center; display: block; }
+
+/* Utilidades */
+.mb-4 { margin-bottom: 25px; }
+.mt-3 { margin-top: 15px; }
+
+/* =========================================
+   ADDITIONS FOR STEP 10 (VEHICLES)
+   ========================================= */
+
+/* Info Banner Premium */
+.info-banner-blue {
+    background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF;
+    padding: 15px 20px; border-radius: 12px; font-size: 0.85rem; 
+    display: flex; align-items: flex-start; gap: 12px; line-height: 1.5;
+}
+.banner-icon { font-size: 1.1rem; color: var(--color-primary); flex-shrink: 0; margin-top: 2px; }
+
+/* Botón Add (+) en la barra de tabs */
+.tab-int.add-btn {
+    background: #F0FDF4; color: #15803D; border-color: #BBF7D0;
+    width: auto; padding: 0 15px; flex: 0; min-width: 90px;
+    margin-left: auto; /* Empuja el botón a la derecha si hay espacio */
+}
+.tab-int.add-btn:hover { background: #DCFCE7; transform: translateY(-1px); }
+
+/* Ajustes de Radio Cards en Grid Pequeño */
+.radio-card-opt.small-p { padding: 8px 12px; }
+.radio-title.center { width: 100%; text-align: center; display: block; font-size: 0.8rem; }
+
+/* Botón Delete Car (Texto Rojo sutil) */
+.btn-delete-link {
+    background: transparent; border: 1px solid #FECACA; color: #EF4444;
+    font-weight: 700; font-size: 0.75rem; cursor: pointer; 
+    display: inline-flex; align-items: center; gap: 6px; 
+    padding: 6px 14px; border-radius: 50px; transition: 0.2s;
+    margin-left: auto; /* Alinear a la derecha */
+}
+.btn-delete-link:hover { background: #FEF2F2; transform: scale(1.05); }
+
+/* Utilidades */
+.mb-4 { margin-bottom: 25px; }
+.mt-3 { margin-top: 15px; }
+.w-100 { width: 100%; }
+.garage-section { display: flex; flex-direction: column; }
+
+/* =========================================
+   FIXED STYLES FOR STEP 10
+   ========================================= */
+
+/* Sidebar Fix (Por si acaso se perdió el estilo global) */
+.organic-panel {
+    background: #FFFFFF; border: 1px solid #F1F5F9;
+    border-radius: 16px; padding: 25px;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.03);
+    position: sticky; top: 100px;
+}
+
+/* Tabs Ajustados */
+.tab-int {
+    min-width: 100px; justify-content: center;
+    transition: all 0.3s ease; white-space: nowrap;
+}
+.tab-txt { font-weight: 600; }
+
+/* Botón Add (+) a la derecha */
+.tab-int.add-btn {
+    background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0;
+    width: auto; min-width: 60px; padding: 0 15px; margin-left: auto;
+}
+.tab-int.add-btn:hover { background: #D1FAE5; transform: translateY(-1px); }
+
+/* Banner Info */
+.info-banner-blue {
+    background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF;
+    padding: 12px 16px; border-radius: 10px; font-size: 0.85rem; 
+    display: flex; align-items: center; gap: 10px; margin-bottom: 25px;
+}
+.banner-icon { color: var(--color-primary); font-size: 1.1rem; }
+
+/* Delete Button (Pill Style) */
+.btn-delete-link {
+    background: #FEF2F2; color: #EF4444; border: 1px solid #FECACA;
+    font-weight: 700; font-size: 0.75rem; cursor: pointer; 
+    display: inline-flex; align-items: center; gap: 6px; 
+    padding: 6px 14px; border-radius: 50px; transition: 0.2s;
+    margin-left: auto;
+}
+.btn-delete-link:hover { background: #FEE2E2; }
+
+/* Radio Cards Compactas */
+.radio-card-opt.small-p { padding: 10px; min-height: auto; align-items: center; justify-content: center; }
+.radio-card-opt.small-p .radio-title { font-size: 0.8rem; margin: 0; }
+.radio-card-opt.small-p input { margin-top: 0; }
+
+/* Utilidades */
+.mb-4 { margin-bottom: 25px; }
+.mt-3 { margin-top: 15px; }
+
+/* =========================================
+   AURORA TOGGLES & PREMIUM ROWS
+   ========================================= */
+
+/* Contenedor de Fila (Switch Label + Toggle) */
+.row-switch-container {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #FFFFFF; border: 1px solid #F1F5F9;
+    padding: 15px; border-radius: 12px; margin-bottom: 15px;
+    transition: 0.2s;
+}
+.row-switch-container.compact { padding: 10px 15px; margin-bottom: 10px; background: #F8FAFC; border: none; }
+.row-switch-container:hover { border-color: #E2E8F0; }
+
+.switch-label-group { display: flex; align-items: center; gap: 12px; }
+.sl-icon { 
+    width: 36px; height: 36px; background: #EFF6FF; color: var(--color-primary);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+}
+.sl-title { font-weight: 600; font-size: 0.9rem; color: var(--color-dark); display: block; }
+.sl-sub { font-size: 0.75rem; color: #94A3B8; }
+
+/* === AURORA SEGMENT TOGGLE (CSS Only) === */
+.aurora-toggle-segment {
+    position: relative; display: flex;
+    background: #E2E8F0; padding: 4px; border-radius: 30px;
+    user-select: none; width: fit-content;
+}
+.aurora-toggle-segment input { display: none; }
+
+.aurora-toggle-segment label {
+    position: relative; z-index: 2;
+    padding: 6px 20px; font-size: 0.85rem; font-weight: 600; color: #64748B;
+    cursor: pointer; transition: color 0.3s ease; text-align: center;
+    min-width: 60px;
+}
+
+/* Highlight (Fondo blanco deslizante) */
+.segment-highlight {
+    position: absolute; top: 4px; left: 4px; bottom: 4px;
+    width: calc(50% - 4px); /* Asume 2 opciones iguales */
+    background: white; border-radius: 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    z-index: 1; pointer-events: none;
+}
+
+/* Lógica de Movimiento del Highlight */
+/* Si el SEGUNDO input está checked, mueve el highlight a la derecha */
+.aurora-toggle-segment input:nth-of-type(2):checked ~ .segment-highlight {
+    transform: translateX(100%);
+}
+
+/* Colores de Texto Activo */
+.aurora-toggle-segment input:checked + label { color: var(--color-indigo); }
+
+/* Versión Small para Extras */
+.aurora-toggle-segment.small { transform: scale(0.9); transform-origin: right center; }
+
+/* Input compact para Custom Equip */
+.compact-input { width: 120px; background: white; border: 1px solid #E2E8F0; }
+
+/* Estilos de Botón Delete */
+.btn-delete-link {
+    background: #FEF2F2; color: #EF4444; border: 1px solid #FECACA;
+    font-weight: 700; font-size: 0.75rem; cursor: pointer; 
+    display: inline-flex; align-items: center; gap: 6px; 
+    padding: 6px 14px; border-radius: 50px; transition: 0.2s;
+    margin-left: auto;
+}
+.btn-delete-link:hover { background: #FEE2E2; }
+
+/* =========================================
+   AURORA MICRO-INTERACTIONS (HOVER EFFECTS)
+   ========================================= */
+
+/* 1. Transiciones Base Suaves (Física Apple/iOS) */
+.premium-white-card,
+.organic-panel,
+.garage-section-box,
+.coverage-group-box {
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Curva de velocidad suave */
+    will-change: transform, box-shadow, border-color;
+}
+
+/* 2. Efecto Sidebar (Flotación evidente) */
+.organic-panel:hover {
+    transform: translateY(-6px); /* Se eleva */
+    box-shadow: 0 20px 40px -5px rgba(81, 70, 144, 0.15); /* Sombra Indigo difusa */
+    border-color: #E0E7FF;
+}
+
+/* 3. Efecto Cajas Internas (Micro-elevación + Borde) */
+.garage-section-box:hover,
+.coverage-group-box:hover {
+    transform: translateY(-3px);
+    background: #FFFFFF; /* Se vuelve blanco puro si era gris */
+    border-color: var(--color-primary); /* Borde Azul Eléctrico */
+    box-shadow: 0 10px 25px -5px rgba(0, 156, 255, 0.1); /* Resplandor Azul */
+}
+
+/* 4. Efecto Tarjeta Principal (Solo Profundidad, sin movimiento brusco) */
+/* Evitamos moverla mucho para no molestar al escribir */
+.premium-white-card:hover {
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.08);
+    border-color: #CBD5E1;
+}
+
+/* 5. Efecto Extra en Inputs (Focus Glow) */
+/* Si ya tienes esto, asegúrate que esté así para consistencia */
+.input-rich-wrapper {
+    transition: 0.3s ease;
+}
+.input-rich-wrapper:hover {
+    border-color: #93C5FD; /* Azul claro al pasar el mouse */
+    background: #FFFFFF;
+}
