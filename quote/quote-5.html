@@ -5,533 +5,380 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alex AI - Smart Quote | Step 5 (Violations)</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css"> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="stylesheet" href="../css/style-quote.css"> 
     <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
-
-    <style>
-
-        /* --- 5. CUPÓN --- */
-        .discount-coupon-box {
-            margin-top: 25px; background: #ECFDF5; border: 2px dashed #10B981; border-radius: 12px;
-            padding: 20px; text-align: center; position: relative; overflow: hidden;
-        }
-        .discount-coupon-box::before, .discount-coupon-box::after {
-            content: ''; position: absolute; top: 50%; width: 20px; height: 20px; background: #fff; border-radius: 50%; transform: translateY(-50%);
-        }
-        .discount-coupon-box::before { left: -12px; border-right: 2px dashed #10B981; }
-        .discount-coupon-box::after { right: -12px; border-left: 2px dashed #10B981; }
-        .dc-title { font-size: 0.7rem; text-transform: uppercase; font-weight: 800; color: #059669; letter-spacing: 1px; display: block; margin-bottom: 5px; }
-        .dc-amount { font-size: 2rem; font-weight: 900; color: #10B981; line-height: 1; display: block; }
-        .dc-sub { font-size: 0.8rem; color: #065F46; font-weight: 600; margin-top: 5px; display: block; }
-        .dc-icon { position: absolute; top: 10px; right: 10px; color: rgba(16, 185, 129, 0.2); font-size: 3rem; transform: rotate(15deg); }
-
-        /* --- ESTILOS ESPECÍFICOS DE VIOLATIONS --- */
-
-        /* TOGGLE INICIAL GRANDE */
-        .violation-toggle-wrapper {
-            background: #F8FAFC; border: 2px solid #E2E8F0; padding: 25px;
-            border-radius: 16px; margin-bottom: 30px; text-align: center;
-        }
-        .violation-question { font-size: 1.2rem; font-weight: 700; color: var(--alex-ink); margin-bottom: 20px; }
-        
-        /* BOTONES RADIO TILE (Yes/No) */
-        .radio-tile-group { display: flex; justify-content: center; gap: 20px; }
-        .radio-tile-group input { display: none; }
-        .radio-tile {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            width: 120px; padding: 15px; border: 2px solid #E2E8F0; border-radius: 12px;
-            cursor: pointer; transition: all 0.2s; background: #FFF;
-        }
-        .radio-tile i { font-size: 1.5rem; margin-bottom: 8px; color: #94A3B8; }
-        .radio-tile span { font-weight: 700; color: #64748B; }
-        
-        .radio-tile-group input:checked + .radio-tile {
-            border-color: var(--alex-blue-accent); background: #EFF6FF; box-shadow: 0 4px 12px rgba(74, 128, 240, 0.15);
-        }
-        .radio-tile-group input:checked + .radio-tile i,
-        .radio-tile-group input:checked + .radio-tile span { color: var(--alex-blue-accent); }
-
-        /* CONTENEDOR DE PESTAÑAS (Igual que Drivers) */
-        .driver-tabs-wrapper { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid #E2E8F0; padding-bottom: 10px; }
-        .driver-tab {
-            background: #F8FAFC; border: 2px solid #E2E8F0; padding: 10px 20px;
-            border-radius: 12px 12px 0 0; cursor: pointer; font-weight: 700; color: var(--alex-ink-light);
-            transition: all 0.2s ease; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;
-        }
-        .driver-tab:hover { background: #EFF6FF; color: var(--alex-blue-accent); }
-        .driver-tab.active {
-            background: #FFFFFF; border-color: var(--alex-blue-accent); border-bottom-color: #FFFFFF;
-            color: var(--alex-blue-accent); transform: translateY(2px); z-index: 2;
-        }
-
-        /* ÁREA DE VIOLACIONES */
-        .violations-container { display: none; } /* Oculto hasta que dice YES */
-        .violations-container.visible { display: block; animation: fadeIn 0.4s ease; }
-
-        .driver-violation-panel { display: none; }
-        .driver-violation-panel.active { display: block; animation: fadeIn 0.3s ease; }
-
-        /* TARJETA DE VIOLACIÓN INDIVIDUAL */
-        .violation-card {
-            background: #FFF; border: 2px solid #E2E8F0; border-left: 5px solid #EF4444; /* Borde rojo warning */
-            border-radius: 12px; padding: 20px; margin-bottom: 20px; position: relative;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: all 0.2s;
-        }
-        .violation-card:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0,0,0,0.05); }
-        
-        .btn-remove-violation {
-            position: absolute; top: 15px; right: 15px;
-            background: #FEF2F2; color: #EF4444; border: none; width: 30px; height: 30px;
-            border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: 0.2s;
-        }
-        .btn-remove-violation:hover { background: #FCA5A5; color: white; }
-
-        /* BOTÓN AÑADIR */
-        .btn-add-violation-row {
-            width: 100%; border: 2px dashed #CBD5E1; background: #F8FAFC; color: #64748B;
-            padding: 15px; border-radius: 12px; font-weight: 700; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s;
-        }
-        .btn-add-violation-row:hover { border-color: var(--alex-blue-accent); color: var(--alex-blue-accent); background: #EFF6FF; }
-
-        /* GRID PARA LOS CAMPOS DE LA TARJETA */
-        .violation-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
-        }
-        .full-width { grid-column: 1 / -1; }
-
-        @media (max-width: 768px) {
-            .violation-grid { grid-template-columns: 1fr; }
-        }
-
-        /* MENSAJE DE ESTADO VACÍO */
-        .empty-state-message {
-            text-align: center; padding: 30px; color: #94A3B8; font-style: italic;
-        }
-
-        /* Wizard & General */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .wizard-header { margin-bottom: 30px; }
-        .wizard-message { font-size: 1.1rem; font-weight: 800; color: var(--alex-blue-accent); margin-bottom: 8px; display: flex; justify-content: space-between; }
-        .wizard-track { height: 10px; background: #E2E8F0; border-radius: 10px; overflow: hidden; }
-        .wizard-fill { height: 100%; background: linear-gradient(90deg, #4A80F0, #5FD4F4); width: 35.7%; transition: width 0.5s; }
-        
-        .input-error { animation: shake 0.4s; border-color: #EF4444 !important; background: #FEF2F2 !important; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
-
-
-        /* --- BOTONES DE NAVEGACIÓN INTERNA (Next/Prev Driver) --- */
-        .nav-internal-row {
-            display: flex;
-            justify-content: space-between; /* Separa los botones a los extremos */
-            margin-top: 20px;
-            border-top: 1px solid #F1F5F9;
-            padding-top: 15px;
-        }
-
-        .btn-internal-nav {
-            background: var(--alex-ink);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.2s;
-        }
-
-        .btn-internal-nav:hover {
-            background: var(--alex-blue-accent);
-            transform: translateX(3px);
-        }
-
-        .btn-internal-nav.prev {
-            background: #E2E8F0;
-            color: var(--alex-ink);
-        }
-
-        .btn-internal-nav.prev:hover {
-            background: #CBD5E1;
-            transform: translateX(-3px);
-        }
-
-
-    </style>
 </head>
-<body class="quote-page-body">
+<body class="bg-body">
+
+    <div id="toast-container"></div>
+
+    <div class="top-header">
+        <div class="container top-header-flex">
+            <div class="top-contact">
+                <a href="tel:+1800555ALEX"><i class="fa-solid fa-phone"></i> +1 480 630 9630</a>
+                <a href="mailto:hello@alexai.com"><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</a>
+                <span><i class="fa-solid fa-location-dot"></i> 3101 N Central Ave ste 1174, Phoenix, AZ</span>
+            </div>
+            <div class="top-social">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <div class="container header-wrapper">
+            <a href="https://alexai.cloud/" class="logo-container">
+                <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="site-logo">
+            </a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../quote/quote.html" class="js-trigger-quote">Quote</a></li>
+                    <li class="has-dropdown">
+                        <a href="../index.html#products">Products <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu organic-box">
+                            <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#carriers">Carriers</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+
+                    <li class="mobile-only-nav"><a href="../ambassadors/documents.html">Become an Ambassador</a></li>
+                    <li class="mobile-only-nav"><a href="../quote/quote.html" style="color: var(--alex-blue-accent);">Check Prices</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="../ambassadors/index.html" class="btn btn-outline btn-sm">Become an Ambassador</a>
+                <a href="../quote/quote.html" class="btn btn-solid btn-sm js-trigger-quote">Check Prices</a>
+            </div>
+            
+             <button class="mobile-menu-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        </div>
+    </header>
 
     <nav class="quote-nav">
-        <a href="quote-4.html" class="nav-back-btn">
-            <div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div>
-            <span>Back</span>
-        </a>
-        <div class="nav-brand">
-            <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI" class="nav-mini-logo">
-        </div>
-        <div class="lang-switch-modern">
-            <span class="lang-opt">ES</span>
-            <span class="lang-opt active">EN</span>
-        </div>
+        <a href="quote-4.html" class="nav-back-btn"><div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div><span>Who is driving?</span></a>
+        <div class="lang-switch-modern"><span class="lang-opt">ES</span><span class="lang-opt active">EN</span></div>
     </nav>
 
-    <main class="quote-main-content step-layout-wrapper">
-        <div class="ambient-glow glow-1"></div>
-        <div class="ambient-glow glow-2"></div>
+        <div class="main-header">
+            <div class="title-sticker">
+                <h1>Alex AI <span>Smart Compare</span></h1>
+                <span class="title-subtitle">Powered by AI, handled by humans.</span>
+            </div>
+        </div>
 
-        <div class="step-grid-container">
-            
-            <div class="main-form-col">
-                <div class="quote-card-stacked anim-entry">
-                    
-                    <div class="wizard-header">
-                        <div class="wizard-message">
-                            <span><i class="fa-solid fa-gavel"></i> Driving History</span>
-                            <span class="step-counter">Step 5 of 14</span>
-                        </div>
-                        <div class="wizard-track">
-                            <div class="wizard-fill"></div>
-                        </div>
-                    </div>
-
-                    <div class="quote-header text-center">
-                        <h3>Accidents or Violations?</h3>
-                        <p>Have any drivers had tickets, accidents, or claims in the last 5 years?</p>
-                    </div>
-
-                    <form id="quoteFormStep5">
-                        
-                        <div class="violation-toggle-wrapper">
-                            <div class="violation-question">Any incidents in the last 5 years?</div>
-                            <div class="radio-tile-group">
-                                <label>
-                                    <input type="radio" name="hasViolations" value="no" checked onchange="toggleViolations(false)">
-                                    <div class="radio-tile">
-                                        <i class="fa-regular fa-face-smile"></i>
-                                        <span>No</span>
-                                    </div>
-                                </label>
-                                <label>
-                                    <input type="radio" name="hasViolations" value="yes" onchange="toggleViolations(true)">
-                                    <div class="radio-tile">
-                                        <i class="fa-solid fa-triangle-exclamation"></i>
-                                        <span>Yes</span>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div id="violationsContainer" class="violations-container">
-                            
-                            <div class="driver-tabs-wrapper" id="driverTabs">
-                                <div class="driver-tab active" onclick="switchTab('d1')">Driver 1</div>
-                                <div class="driver-tab" onclick="switchTab('d2')">Driver 2</div>
-                            </div>
-
-                            <div id="panel-d1" class="driver-violation-panel active">
-                                <div class="empty-state-message" id="empty-d1">No violations added for Driver 1 yet.</div>
-                                <div id="cards-container-d1"></div>
-                                
-                                <button type="button" class="btn-add-violation-row" onclick="addViolationCard('d1')">
-                                    <i class="fa-solid fa-plus"></i> Add Violation for Driver 1
-                                </button>
-
-                                <div class="nav-internal-row" style="justify-content: flex-end;">
-                                    <button type="button" class="btn-internal-nav" onclick="switchTab('d2')">
-                                        Next Driver <i class="fa-solid fa-chevron-right"></i>
-                                    </button>
-                                </div>
-
-                            </div>
-
-                            <div id="panel-d2" class="driver-violation-panel">
-                                <div class="empty-state-message" id="empty-d2">No violations added for Driver 2 yet.</div>
-                                <div id="cards-container-d2"></div>
-                                
-                                <button type="button" class="btn-add-violation-row" onclick="addViolationCard('d2')">
-                                    <i class="fa-solid fa-plus"></i> Add Violation for Driver 2
-                                </button>
-
-                                <div class="nav-internal-row" style="justify-content: space-between;">
-                                <button type="button" class="btn-internal-nav prev" onclick="switchTab('d1')">
-                                    <i class="fa-solid fa-chevron-left"></i> Prev Driver
-                                </button>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="form-action" style="margin-top: 30px;">
-                            <button type="button" class="btn-glow-anim" id="btnNext">
-                                <span>Next Step</span>
-                                <i class="fa-solid fa-arrow-right-long"></i>
-                            </button>
-                            <div class="secure-badge">
-                                <i class="fa-solid fa-lock"></i> History Verification
-                            </div>
-                        </div>
-            
-                    </form>
+    <div class="page-wrapper">
+        
+        <div class="wizard-container">
+            <div class="wizard-top">
+                <div class="wizard-title"><i class="fa-solid fa-id-card"></i>Driving History</div>
+                <div class="wizard-title"><i class="fa-solid fa-flag-checkered"></i></div>
+            </div>
+            <div class="progress-track"><div class="progress-fill" style="width: 35%;"></div></div>
+            <div class="header-split"></div>
+            <header class="brand-page-header">
+                <div class="title-group">
+                    <h1>Accidents or Violations?</h1>
+                    <div class="aurora-line"></div> 
                 </div>
-                <div class="card-shadow-layer"></div>
+                <p>Have any drivers had tickets, accidents, or claims in the last 5 years?</p>
+            </header>
+        </div>
+
+        <div class="specs-layout-grid">
+            
+            <div class="main-spec-col">
+                
+                <div class="car-tabs-integrated" id="driverTabs">
+                    <button type="button" class="tab-int active" onclick="switchDriverTab('d1', this)">
+                        <span class="tab-txt"><i class="fa-solid fa-user"></i> Driver 1</span>
+                    </button>
+                    <button type="button" class="tab-int" onclick="switchDriverTab('d2', this)">
+                        <span class="tab-txt"><i class="fa-solid fa-user-group"></i> Driver 2</span>
+                    </button>
+                </div>
+
+                <div class="premium-white-card" id="quoteFormStep5">
+                    
+                    <div id="panel-d1" class="car-panel active" data-id="d1">
+                        
+                        <div class="info-banner-blue mb-4">
+                            <div class="banner-icon"><i class="fa-solid fa-user-clock"></i></div>
+                            <div><strong>Primary Driver:</strong> Uri Williams</div>
+                        </div>
+
+                        <div class="sec-label"><i class="fa-solid fa-circle-question"></i> Incident Check</div>
+
+                        <div class="row-switch-container">
+                            <div class="switch-label-group">
+                                <div class="sl-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                <div class="sl-text">
+                                    <span class="sl-title">Any incidents in the last 5 years?</span>
+                                    <span class="sl-sub">Tickets, accidents, or claims.</span>
+                                </div>
+                            </div>
+                            <div class="aurora-toggle-segment">
+                                <input type="radio" name="viol_d1" id="viol_d1_yes" value="yes" onchange="toggleDriverViolations('d1', 'yes')">
+                                <label for="viol_d1_yes">Yes</label>
+                                
+                                <input type="radio" name="viol_d1" id="viol_d1_no" value="no" checked onchange="toggleDriverViolations('d1', 'no')">
+                                <label for="viol_d1_no">No</label>
+                                <div class="segment-highlight"></div>
+                            </div>
+                        </div>
+
+                        <div id="viol-wrapper-d1" class="hidden-anim mb-4">
+                            <div class="divider-hairline"></div>
+                            <div id="cards-container-d1"></div>
+                            
+                            <button type="button" class="btn-add-dashed" onclick="addViolationCard('d1')">
+                                <i class="fa-solid fa-plus-circle"></i> Add Violation
+                            </button>
+                        </div>
+
+                        <div class="nav-row-right">
+                            <button type="button" class="btn-nav-outline" onclick="switchDriverTab('d2')">Next Driver <i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+
+                    <div id="panel-d2" class="car-panel" data-id="d2">
+                        
+                        <div class="info-banner-blue mb-4">
+                            <div class="banner-icon"><i class="fa-solid fa-user-group"></i></div>
+                            <div><strong>Driver 2:</strong> Elois Wolf</div>
+                        </div>
+
+                        <div class="sec-label"><i class="fa-solid fa-circle-question"></i> Incident Check</div>
+
+                        <div class="row-switch-container">
+                            <div class="switch-label-group">
+                                <div class="sl-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                <div class="sl-text">
+                                    <span class="sl-title">Any incidents in the last 5 years?</span>
+                                    <span class="sl-sub">Tickets, accidents, or claims.</span>
+                                </div>
+                            </div>
+                            <div class="aurora-toggle-segment">
+                                <input type="radio" name="viol_d2" id="viol_d2_yes" value="yes" onchange="toggleDriverViolations('d2', 'yes')">
+                                <label for="viol_d2_yes">Yes</label>
+                                
+                                <input type="radio" name="viol_d2" id="viol_d2_no" value="no" checked onchange="toggleDriverViolations('d2', 'no')">
+                                <label for="viol_d2_no">No</label>
+                                <div class="segment-highlight"></div>
+                            </div>
+                        </div>
+
+                        <div id="viol-wrapper-d2" class="hidden-anim mb-4">
+                            <div class="divider-hairline"></div>
+                            <div id="cards-container-d2"></div>
+                            
+                            <button type="button" class="btn-add-dashed" onclick="addViolationCard('d2')">
+                                <i class="fa-solid fa-plus-circle"></i> Add Violation
+                            </button>
+                        </div>
+
+                        <div class="nav-row-spaced">
+                            <button type="button" class="btn-nav-outline" onclick="switchDriverTab('d1')"><i class="fa-solid fa-chevron-left"></i> Prev Driver</button>
+                        </div>
+                    </div>
+
+                    <div class="hero-action-area">
+                        <div class="secure-badge-modern"><i class="fa-solid fa-lock"></i> History Verification</div>
+                        <button type="button" class="btn-hero-gradient" id="btnNext">
+                            Next Step <i class="fa-solid fa-arrow-right-long"></i>
+                        </button>
+                    </div>
+
+                </div>
             </div>
 
-            <aside class="sidebar-col anim-entry" style="animation-delay: 0.2s;">
-                <div class="organic-box sidebar-note taped-note">
-                    <div class="washi-tape"></div>
-                    <h4 class="sidebar-title">Coverage Path</h4>
-                    
-                    <ul class="progress-list-sketch">
-                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Client Information</a></li>
-                        <li class="done"><a href="#"><i class="fa-solid fa-check"></i> Drivers</a></li>
-                        <li class="active"><a href="#"><span class="sketch-circle"></span> Violations</a></li>
-                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Additional Info</a></li>
-                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Vehicle</a></li>
+            <aside class="config-sidebar">
+                <div class="organic-panel">
+                    <div class="sidebar-title">Coverage Path</div>
+                    <ul class="aurora-list">
+                        <li class="done"><i class="fa-solid fa-circle-check"></i> Client Information</li>
+                        <li class="done"><i class="fa-solid fa-circle-check"></i> Drivers</li>
+                        <li class="active"><span class="pulse-dot"></span> Violations</li>
+                        <li><i class="fa-regular fa-circle"></i> Additional Info</li>
+                        <li><i class="fa-regular fa-circle"></i> Vehicle</li>
                     </ul>
-
-                    <div class="discount-coupon-box">
-                        <i class="fa-solid fa-tags dc-icon"></i>
-                        <span class="dc-title">Potential Discounts</span>
-                        <span class="dc-amount">4 Found</span>
-                        <span class="dc-sub">Unlock more in next steps!</span>
+                    <div class="discount-box-vibrant">
+                        <i class="fa-solid fa-tags bg-icon"></i>
+                        <div class="db-title">Potential Discounts</div>
+                        <div class="db-val">4</div>
+                        <div class="db-msg">Safe driver check pending...</div>
                     </div>
-                    
-                    <div class="mini-tip">
-                        <div class="tip-icon"><i class="fa-regular fa-lightbulb"></i></div>
+                    <div class="tip-box-vibrant" style="margin-top: 20px;">
+                        <i class="fa-regular fa-lightbulb tip-icon"></i>
                         <div>
-                            <strong>Alex Tip:</strong> Be honest! Carriers run reports anyway. Disclosing incidents now ensures your final price is accurate.
+                            <strong>Alex Tip:</strong> Be honest! Carriers run reports anyway. Disclosing incidents now ensures your final quote is accurate.
                         </div>
                     </div>
                 </div>
             </aside>
+
         </div>
-    </main>
+    <footer id="contact" class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <a href="../index.html" style="display: block; margin-bottom: 20px;">
+                    <img src="../assets/img/Logo-alexai-main.png" 
+                        alt="Alex AI Insurtech Logo" 
+                        style="max-width: 160px; height: auto; filter: brightness(0) invert(1);">
+                </a>
+                <p style="color: rgba(255,255,255,0.9); font-weight: 500;">
+                    Smart insurance for modern life. Powered by intelligence, driven by humans.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Products</h5>
+                <ul class="footer-links">
+                    <li><a href="../quote/quote.html">Car Insurance</a></li>
+                    <li><a href="../homeowners/index.html">Home Insurance</a></li>
+                    <li><a href="../renters/index.html">Renters Insurance</a></li>
+                    <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Company</h5>
+                <ul class="footer-links">
+                    <li><a href="https://www.instagram.com/alexai.insurtech.usa/">About Us</a></li>
+                    <li><a href="../ambassadors/index.html">Ambassadors</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Contact & Legal</h5>
+                <ul class="footer-links contact-links">
+                    <li><i class="fa-solid fa-phone"></i> +1 480-630-9630</li>
+                    <li><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</li>
+                    <li><a href="../terms-conditions/index.html">Terms of Service</a></li>
+                    <li><a href="../privacy-policy/index.html">Privacy Policy</a></li>
+                </ul>
+                <div class="app-buttons-row" style="display:flex; gap:15px; flex-wrap:wrap;">
+                    <a href="https://apps.apple.com/us/app/alex-ai-insurtech-app/id6752793999" class="btn-app-store">
+                        <i class="fa-brands fa-apple"></i>
+                        <div>
+                            <span class="small-txt">Download on the</span>
+                            <span class="big-txt">App Store</span>
+                        </div>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=cloud.alexai.movil&pcampaignid=web_share" class="btn-app-store">
+                        <i class="fa-brands fa-google-play"></i>
+                        <div>
+                            <span class="small-txt">Get it on</span>
+                            <span class="big-txt">Google Play</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="container copyright-row">
+             <p>&copy; 2026 Alex AI Insurtech. All rights reserved.</p>
+             <div class="social-links">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Alex-AI-Insurtech" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
 
     <div id="floating-menu-container">
-        <div class="floating-menu-list organic-box" id="megaMenu">
-            <h5>Quick Navigate</h5>
-            <ul><li><a href="#"><i class="fa-solid fa-car"></i> Car Insurance</a></li></ul>
+        <div class="nav-command-center" id="megaMenu">
+            <div class="cmd-header">
+                <span>Quick Navigate</span>
+                <span class="cmd-badge">MENU</span>
+            </div>
+            <div class="cmd-grid">
+                <a href="../quote/quote.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-car"></i></div>
+                    <span>Car Insurance</span>
+                </a>
+                <a href="../homeowners/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-house"></i></div>
+                    <span>Home Insurance</span>
+                </a>
+                <a href="../renters/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-key"></i></div>
+                    <span>Renters Insurance</span>
+                </a>
+                <a href="../alex-sign/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-file-signature"></i></div>
+                    <span>Alex Sign</span>
+                </a>
+                <a href="../blog/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-newspaper"></i></div>
+                    <span>Blog</span>
+                </a>
+                <a href="../contact/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-headset"></i></div>
+                    <span>Contact Support</span>
+                </a>
+            </div>
+            <div class="cmd-footer">
+                <a href="../index.html">Back to Home <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
         </div>
-        <button class="floating-menu-btn js-toggle-mega-menu"><i class="fa-solid fa-bars-staggered"></i></button>
+        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open menu">
+            <i class="fa-regular fa-compass"></i>
+        </button>
     </div>
+
     <div id="floating-chat-container">
-        <button class="chat-avatar-btn js-trigger-chat"><i class="fa-solid fa-robot"></i></button>
+        <div class="alex-chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div class="agent-info">
+                    <div class="agent-avatar"><i class="fa-solid fa-robot"></i><div class="status-dot"></div></div>
+                    <div class="agent-text">
+                        <span class="name">Alex AI Assistant</span>
+                        <span class="status">Reply time: Instant</span>
+                    </div>
+                </div>
+                <button class="close-chat-btn js-close-chat"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="chat-body">
+                <div class="chat-timestamp">Today, 5:00 PM</div>
+                
+                <div class="msg-row bot">
+                    <div class="msg-bubble">
+                        Hello! I see you're looking at quotes. Do you have any questions about the <strong>Collision Deductible</strong>? 🚗
+                    </div>
+                </div>
+                
+                <div class="chat-suggestions">
+                    <button>Explain Deductibles</button>
+                    <button>Talk to Human</button>
+                </div>
+            </div>
+            
+            <div class="chat-footer">
+                <input type="text" placeholder="Type your question..." class="chat-input">
+                <button class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
+            <i class="fa-solid fa-comment-dots"></i>
+            <span class="online-badge"></span>
+        </button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="../js/script.js"></script>
-    <script>
-        // --- 1. GLOBAL TOGGLE VISIBILITY ---
-        function toggleViolations(show) {
-            const container = document.getElementById('violationsContainer');
-            if(show) {
-                container.classList.add('visible');
-                // Si es la primera vez y no hay violations, agregar una automática al Driver 1 para UX
-                const d1Container = document.getElementById('cards-container-d1');
-                if(d1Container.children.length === 0) {
-                    addViolationCard('d1');
-                }
-            } else {
-                container.classList.remove('visible');
-                // Opcional: Limpiar o advertir si había datos
-            }
-        }
+    <script src="../js/script-quote.js"></script>
 
-        // --- 2. TAB SWITCHING ---
-        window.switchTab = function(driverId) {
-            // Tabs visual
-            document.querySelectorAll('.driver-tab').forEach(t => t.classList.remove('active'));
-            // Encontrar el tab clickeado (esto es una simplificación, en producción usar IDs únicos)
-            // Aquí iteramos buscando el onclick que coincida
-            const tabs = document.querySelectorAll('.driver-tab');
-            tabs.forEach(t => {
-                if(t.getAttribute('onclick').includes(driverId)) t.classList.add('active');
-            });
-
-            // Panels visibility
-            document.querySelectorAll('.driver-violation-panel').forEach(p => p.classList.remove('active'));
-            document.getElementById(`panel-${driverId}`).classList.add('active');
-        }
-
-        // --- 3. ADD VIOLATION CARD (DYNAMIC HTML) ---
-        window.addViolationCard = function(driverId) {
-            const container = document.getElementById(`cards-container-${driverId}`);
-            const emptyState = document.getElementById(`empty-${driverId}`);
-            
-            if(emptyState) emptyState.style.display = 'none';
-
-            const cardId = 'viol-' + Date.now(); // Unique ID
-            
-            const card = document.createElement('div');
-            card.className = 'violation-card anim-entry';
-            card.id = cardId;
-            
-            // LISTA DE VIOLACIONES (Resumida para el ejemplo, pero incluye todas las categorias principales)
-            const violationsOptions = `
-                <option value="" disabled selected>Select Violation Type...</option>
-                <optgroup label="Accidents">
-                    <option>Accident, At-Fault</option>
-                    <option>Accident, Not At-Fault</option>
-                    <option>Accident with Pedestrian</option>
-                </optgroup>
-                <optgroup label="Major Violations">
-                    <option>DUI/DWI Alcohol or Drugs</option>
-                    <option>Reckless Driving</option>
-                    <option>Driving Suspended/Revoked</option>
-                    <option>Leaving Scene / Hit-and-Run</option>
-                </optgroup>
-                <optgroup label="Speeding">
-                    <option>Speeding</option>
-                    <option>Speeding in School Zone</option>
-                    <option>Excessive Acceleration</option>
-                </optgroup>
-                <optgroup label="Traffic Violations">
-                    <option>Failure to Stop (Red Light/Stop Sign)</option>
-                    <option>Failure to Yield</option>
-                    <option>Improper Lane Change</option>
-                    <option>Following Too Close</option>
-                    <option>Distracted Driving / Cell Phone</option>
-                </optgroup>
-                <optgroup label="Other">
-                    <option>Comprehensive Claim (Glass/Theft)</option>
-                    <option>Towing / Roadside Claim</option>
-                    <option>Ticket - Other Moving Violation</option>
-                </optgroup>
-            `;
-
-            card.innerHTML = `
-                <button type="button" class="btn-remove-violation" onclick="removeCard('${cardId}', '${driverId}')" title="Remove">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-                
-                <div class="violation-grid">
-                    <div class="form-group full-width">
-                        <label>Description / Violation Type</label>
-                        <div class="input-modern-wrapper">
-                            <select class="alex-input-modern validate-req">
-                                ${violationsOptions}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Occurrence Date</label>
-                        <div class="input-modern-wrapper">
-                            <i class="fa-regular fa-calendar input-icon"></i>
-                            <input type="text" class="alex-input-modern date-picker validate-req" placeholder="MM/DD/YYYY">
-                        </div>
-                    </div>
-
-                    <div class="form-group" style="display:flex; gap:10px;">
-                        <div style="flex:1;">
-                            <label>Years</label>
-                            <div class="input-modern-wrapper" style="background:#F1F5F9;">
-                                <input type="text" class="alex-input-modern" readonly placeholder="--" style="text-align:center;">
-                            </div>
-                        </div>
-                        <div style="flex:1;">
-                            <label>Months</label>
-                            <div class="input-modern-wrapper" style="background:#F1F5F9;">
-                                <input type="text" class="alex-input-modern" readonly placeholder="--" style="text-align:center;">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Payout Amount 1 (BI/PD)</label>
-                        <div class="input-modern-wrapper">
-                            <i class="fa-solid fa-dollar-sign input-icon"></i>
-                            <input type="number" class="alex-input-modern" placeholder="0.00">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Payout Amount 2 (Collision)</label>
-                        <div class="input-modern-wrapper">
-                            <i class="fa-solid fa-dollar-sign input-icon"></i>
-                            <input type="number" class="alex-input-modern" placeholder="0.00">
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            container.appendChild(card);
-
-            // Init date picker for this card
-            flatpickr(card.querySelector('.date-picker'), {
-                dateFormat: "m/d/Y", maxDate: "today", disableMobile: "true",
-                onChange: function(selectedDates) {
-                    if(selectedDates[0]) {
-                        // Calculate Time Since Logic
-                        const now = new Date();
-                        const diff = new Date(now - selectedDates[0]);
-                        const years = Math.abs(diff.getUTCFullYear() - 1970);
-                        const months = diff.getUTCMonth();
-                        
-                        const inputs = card.querySelectorAll('input[readonly]');
-                        inputs[0].value = years;
-                        inputs[1].value = months;
-                    }
-                }
-            });
-        }
-
-        // --- 4. REMOVE CARD ---
-        window.removeCard = function(cardId, driverId) {
-            const card = document.getElementById(cardId);
-            if(card) card.remove();
-            
-            const container = document.getElementById(`cards-container-${driverId}`);
-            if(container.children.length === 0) {
-                document.getElementById(`empty-${driverId}`).style.display = 'block';
-            }
-        }
-
-        // --- 5. NEXT STEP VALIDATION ---
-        document.getElementById('btnNext').addEventListener('click', (e) => {
-            e.preventDefault();
-            const btn = e.target.closest('button');
-            const hasViolations = document.querySelector('input[name="hasViolations"]:checked').value;
-
-            if(hasViolations === 'yes') {
-                // Validar que si dice YES, haya al menos una card válida
-                const visibleContainer = document.querySelector('.driver-violation-panel.active');
-                // Si tienes tabs, podrías querer validar todos los drivers, aquí validamos el activo por simpleza o todos
-                const allCards = document.querySelectorAll('.violation-card');
-                
-                if(allCards.length === 0) {
-                    alert("Please add at least one violation or select 'No'.");
-                    return;
-                }
-
-                let isValid = true;
-                document.querySelectorAll('.validate-req').forEach(input => {
-                    if(input.closest('.violation-card') && !input.value) {
-                        isValid = false;
-                        input.classList.add('input-error');
-                    } else {
-                        input.classList.remove('input-error');
-                    }
-                });
-
-                if(!isValid) return;
-            }
-
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-            setTimeout(() => {
-                alert("History Saved. Moving to Step 6.");
-                window.location.href = "quote-6.html";
-                btn.innerHTML = 'Next Step <i class="fa-solid fa-arrow-right-long"></i>';
-            }, 1000);
-        });
-
-    </script>
 </body>
 </html>

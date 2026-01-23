@@ -2442,3 +2442,274 @@ input:checked + .slider.red-theme { background-color: #EF4444; }
     border-color: #93C5FD; /* Azul claro al pasar el mouse */
     background: #FFFFFF;
 }
+
+/* =========================================
+   AURORA TECH V2 - LICENSING EFFECTS (STEP 7)
+   ========================================= */
+
+/* Contenedor relativo para el overlay */
+.license-block-wrapper {
+    position: relative;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.4s ease;
+    border: 1px solid transparent;
+}
+
+/* Estado Deshabilitado (Foreign Selected) */
+.license-block-wrapper.disabled {
+    background: #F8FAFC;
+    border: 1px dashed #E2E8F0;
+    opacity: 0.8;
+}
+
+/* Inputs dentro del bloque deshabilitado */
+.license-block-wrapper.disabled .input-rich-wrapper {
+    background: #F1F5F9;
+    pointer-events: none; /* Bloquea clicks */
+    border-color: #E2E8F0;
+}
+.license-block-wrapper.disabled .icon-slot { color: #CBD5E1; }
+.license-block-wrapper.disabled input { color: #94A3B8; }
+
+/* El Overlay del Sello */
+.stamp-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255, 255, 255, 0.4); /* Glassmorphism */
+    backdrop-filter: blur(2px);
+    border-radius: 12px;
+    
+    /* Oculto por defecto */
+    opacity: 0; pointer-events: none; visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Mostrar Overlay */
+.license-block-wrapper.disabled .stamp-overlay {
+    opacity: 1; pointer-events: auto; visibility: visible;
+}
+
+/* El Sello Gráfico */
+.stamp-box {
+    border: 3px solid var(--color-indigo);
+    color: var(--color-indigo);
+    font-size: 1.5rem; font-weight: 900;
+    padding: 10px 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 10px;
+    transform: rotate(-10deg) scale(1.5);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 30px rgba(81, 70, 144, 0.2);
+}
+
+/* Animación de Estampado */
+.license-block-wrapper.disabled .stamp-box {
+    opacity: 1;
+    transform: rotate(-10deg) scale(1);
+}
+
+/* =========================================
+   ANIMACIONES DE TRANSICIÓN (NEXT/PREV)
+   ========================================= */
+
+/* Clase base para el panel */
+.car-panel {
+    display: none; /* Oculto por defecto */
+    opacity: 0;
+    /* Eliminamos la animación 'fadeIn' genérica anterior para usar las específicas */
+    animation: none; 
+}
+
+.car-panel.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Animación: Salida (Se va rápido y se achica un poco) */
+.anim-exit {
+    animation: fadeOutScale 0.2s ease-in forwards;
+    pointer-events: none; /* Evitar clics mientras sale */
+}
+
+/* Animación: Entrada desde la Derecha (Next) */
+.anim-enter-next {
+    display: block;
+    animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Animación: Entrada desde la Izquierda (Prev) */
+.anim-enter-prev {
+    display: block;
+    animation: slideInLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- KEYFRAMES --- */
+
+@keyframes fadeOutScale {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.98); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* =========================================
+   AURORA GLOBAL ANIMATION ENGINE
+   ========================================= */
+
+/* Estado base para todos los paneles (Drivers, Cars, etc.) */
+.driver-panel, .car-panel {
+    display: none; 
+    opacity: 0;
+    /* La animación se controla via clases JS ahora */
+    transition: none; 
+}
+
+.driver-panel.active, .car-panel.active {
+    display: block;
+    opacity: 1;
+}
+
+/* --- CLASES DE ANIMACIÓN --- */
+
+/* Salida: Se desvanece y se achica ligeramente */
+.anim-exit-left {
+    animation: slideOutLeft 0.3s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+    pointer-events: none;
+}
+.anim-exit-right {
+    animation: slideOutRight 0.3s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+    pointer-events: none;
+}
+
+/* Entrada: Entra deslizándose */
+.anim-enter-left {
+    display: block !important;
+    animation: slideInLeft 0.4s cubic-bezier(0.0, 0.0, 0.2, 1) forwards;
+}
+.anim-enter-right {
+    display: block !important;
+    animation: slideInRight 0.4s cubic-bezier(0.0, 0.0, 0.2, 1) forwards;
+}
+
+/* --- KEYFRAMES --- */
+@keyframes slideOutLeft {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-20px); }
+}
+@keyframes slideOutRight {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(20px); }
+}
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* =========================================
+   AURORA TECH V2 - VIOLATIONS (STEP 5)
+   ========================================= */
+
+/* Tarjeta de Violación Individual */
+.violation-card-wrapper {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-left: 4px solid #EF4444; /* Borde rojo de alerta */
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    transition: all 0.3s ease;
+}
+.violation-card-wrapper:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    border-color: #CBD5E1;
+}
+
+/* Botón Borrar (X) */
+.btn-remove-card {
+    position: absolute; top: 15px; right: 15px;
+    width: 32px; height: 32px;
+    border-radius: 50%; border: none;
+    background: #FEF2F2; color: #EF4444;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: 0.2s;
+}
+.btn-remove-card:hover {
+    background: #FCA5A5; color: white;
+}
+
+/* Botón Añadir (Dashed) */
+.btn-add-dashed {
+    width: 100%;
+    border: 2px dashed #CBD5E1;
+    background: #F8FAFC;
+    color: #64748B;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 700; font-size: 0.9rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: all 0.3s ease;
+    margin-bottom: 25px;
+}
+.btn-add-dashed:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: #EFF6FF;
+}
+
+/* Estado Vacío (Mensaje) */
+.empty-state-msg {
+    text-align: center; color: #94A3B8; font-style: italic; padding: 20px;
+}
+
+/* =========================================
+   FIX VISIBILIDAD STEP 5 & GENERAL
+   ========================================= */
+
+/* 1. Asegurar que el contenedor de violaciones sea visible */
+#violationsContainer.visible,
+.hidden-anim.visible {
+    display: block !important;
+    animation: fadeInSlide 0.4s ease-out forwards;
+}
+
+/* 2. Definir la animación de entrada */
+@keyframes fadeInSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 3. REFUERZO CRÍTICO: Paneles Internos */
+/* Esto arregla el problema de "contenido invisible" dentro del contenedor */
+.car-panel.active,
+.driver-violation-panel.active {
+    display: block !important;
+    opacity: 1 !important; /* Forzamos opacidad 1 */
+    transform: translateX(0) !important;
+}
