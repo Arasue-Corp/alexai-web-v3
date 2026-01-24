@@ -121,10 +121,13 @@ body::before {
 
 /* Wizard Progress Bar */
 .wizard-container {
-    background: var(--bg-surface); border-radius: var(--radius-card);
-    border: 1px solid var(--border-light);
-    padding: 35px 45px 0px 45px; margin-bottom: 40px;
-    box-shadow: var(--shadow-sm);
+   background: var(--bg-surface); border-radius: var(--radius-card);
+   border: 1px solid var(--border-light);
+   padding: 35px 45px 0px 45px; 
+   margin-bottom: 40px;
+   margin-left:15%;
+   margin-right:15%;
+   box-shadow: var(--shadow-sm);
 }
 .wizard-top { display: flex; justify-content: space-between; margin-bottom: 15px; color: var(--color-gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;}
 .wizard-title { font-size: 1rem; color: var(--color-indigo); display: flex; align-items: center; gap: 10px; font-weight: 700; text-transform: none; }
@@ -2712,4 +2715,5 @@ input:checked + .slider.red-theme { background-color: #EF4444; }
     display: block !important;
     opacity: 1 !important; /* Forzamos opacidad 1 */
     transform: translateX(0) !important;
+
 }
