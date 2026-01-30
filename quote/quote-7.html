@@ -117,185 +117,207 @@
                             <div><strong>Primary Applicant:</strong> Uri Williams</div>
                         </div>
 
-                        <div id="us-block-d1" class="license-block-wrapper">
-                            
-                            <div class="stamp-overlay">
-                                <div class="stamp-box">NOT APPLICABLE</div>
+                        <div class="license-block-wrapper">
+
+                            <div id="us-block-d1" class="premium-group license-block-wrapper">
+
+                                <div class="stamp-overlay">
+                                    <div class="stamp-box">NOT APPLICABLE</div>
+                                </div>
+
+                                <div class="pg-header">
+                                    <div class="pg-header-badge blue">
+                                        <i class="fa-solid fa-flag-usa"></i> US & STATE HISTORY
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
+
+                                <div class="grid-2-tight">
+                                    <div class="inp-rich-group">
+                                        <label>Licensed in US Since</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-calendar-check"></i></div>
+                                            <input type="text" class="rich-input date-picker master-date calc-years validate-req" data-driver="d1" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>Years Active</label>
+                                        <div class="input-rich-wrapper locked compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-calculator"></i></div>
+                                            <input type="text" class="rich-input years-calc" placeholder="0" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="grid-2-tight mt-3">
+                                    <div class="inp-rich-group">
+                                        <label>Licensed in Current State</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-map-location-dot"></i></div>
+                                            <input type="text" class="rich-input date-picker slave-date calc-years validate-req" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>State Years</label>
+                                        <div class="input-rich-wrapper locked compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                                            <input type="text" class="rich-input years-calc" placeholder="0" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="grid-2-tight mt-3">
+                                    <div class="inp-rich-group">
+                                        <label>US Driving Experience Start</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
+                                            <input type="text" class="rich-input date-picker slave-date calc-years validate-req" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>Total Years</label>
+                                        <div class="input-rich-wrapper locked compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-hourglass-start"></i></div>
+                                            <input type="text" class="rich-input years-calc" placeholder="0" readonly>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="sec-label"><i class="fa-solid fa-flag-usa"></i> US & State History</div>
+                            <div class="premium-group">
 
-                            <div class="grid-2-tight">
-                                <div class="inp-rich-group">
-                                    <label>Licensed in US Since</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-regular fa-calendar-check"></i></div>
-                                        <input type="text" class="rich-input date-picker master-date calc-years validate-req" data-driver="d1" placeholder="MM/DD/YYYY">
+                                    <div class="pg-header">
+                                        <div class="pg-header-badge teal">
+                                            <i class="fa-solid fa-globe"></i> INTERNATIONAL LICENSE
+                                        </div>
+                                        <div class="pg-header-line"></div>
+                                    </div>
+
+                                <div class="inp-rich-group mb-4">
+                                    <label>Do you have a foreign license?</label>
+                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                                <div class="icon-slot"><i class="fa-solid fa-passport"></i></div>
+                                        <select class="rich-input foreign-select validate-req" onchange="toggleForeign('d1', this.value)">
+                                            <option value="None" selected>No, US License Only</option>
+                                            <option value="International">International Permit</option>
+                                            <option value="Mexico">Mexico License</option>
+                                            <option value="Canada">Canada License</option>
+                                            <option value="Matricula">Matricula Consular</option>
+                                            <option value="Other">Other</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="inp-rich-group">
-                                    <label>Years Active</label>
-                                    <div class="input-rich-wrapper locked">
-                                        <div class="icon-slot"><i class="fa-solid fa-calculator"></i></div>
-                                        <input type="text" class="rich-input years-calc" placeholder="0" readonly>
+
+                                <div id="foreign-section-d1" class="hidden-anim mb-4">
+                                    <div class="info-banner-blue" style="background:#F0FDF4; border-color:#BBF7D0; color:#166534;">
+                                        <i class="fa-solid fa-check-circle"></i> International experience may qualify for credit.
+                                    </div>
+                                    <div class="grid-2-tight mt-3">
+                                        <div class="inp-rich-group">
+                                            <label>Original License Date</label>
+                                            <div class="input-rich-wrapper compact-premium theme-teal">
+                                                <div class="icon-slot"><i class="fa-solid fa-calendar-day"></i></div>
+                                                <input type="text" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY">
+                                            </div>
+                                        </div>
+                                        <div class="inp-rich-group">
+                                            <label>Country of Origin</label>
+                                            <div class="input-rich-wrapper compact-premium theme-teal">
+                                                <div class="icon-slot"><i class="fa-solid fa-earth-americas"></i></div>
+                                                <input type="text" class="rich-input validate-req" placeholder="e.g. Spain">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="grid-2-tight mt-3">
-                                <div class="inp-rich-group">
-                                    <label>Licensed in Current State</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-map-location-dot"></i></div>
-                                        <input type="text" class="rich-input date-picker slave-date calc-years validate-req" placeholder="MM/DD/YYYY">
-                                    </div>
-                                </div>
-                                <div class="inp-rich-group">
-                                    <label>State Years</label>
-                                    <div class="input-rich-wrapper locked">
-                                        <div class="icon-slot"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                                        <input type="text" class="rich-input years-calc" placeholder="0" readonly>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="premium-group">
 
-                            <div class="grid-2-tight mt-3">
-                                <div class="inp-rich-group">
-                                    <label>US Driving Experience Start</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
-                                        <input type="text" class="rich-input date-picker slave-date calc-years validate-req" placeholder="MM/DD/YYYY">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge blue">
+                                        <i class="fa-solid fa-gavel"></i> FILINGS & STATUS
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
+
+                                <div class="row-switch-container">
+                                    <div class="switch-label-group">
+                                        <div class="sl-icon"><i class="fa-solid fa-file-contract"></i></div>
+                                        <div class="sl-text">
+                                            <span class="sl-title">SR-22 Filing?</span>
+                                            <span class="sl-sub">Certificate of Financial Responsibility?</span>
+                                        </div>
+                                    </div>
+                                    <div class="aurora-toggle-segment">
+                                        <input type="radio" name="sr22_d1" id="sr22_d1_yes" value="yes" onchange="toggleSection('sr22-d1', 'yes')">
+                                        <label for="sr22_d1_yes">Yes</label>
+                                        <input type="radio" name="sr22_d1" id="sr22_d1_no" value="no" checked onchange="toggleSection('sr22-d1', 'no')">
+                                        <label for="sr22_d1_no">No</label>
+                                        <div class="segment-highlight"></div>
                                     </div>
                                 </div>
-                                <div class="inp-rich-group">
-                                    <label>Total Years</label>
-                                    <div class="input-rich-wrapper locked">
-                                        <div class="icon-slot"><i class="fa-solid fa-hourglass-start"></i></div>
-                                        <input type="text" class="rich-input years-calc" placeholder="0" readonly>
+
+                                <div id="sr22-d1" class="hidden-anim mb-4">
+                                    <div class="inp-rich-group">
+                                        <label>Filing Reason</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                                <div class="icon-slot"><i class="fa-solid fa-circle-exclamation"></i></div>
+                                            <select class="rich-input validate-req">
+                                                <option value="" disabled selected>Select Reason</option>
+                                                <option>DUI / DWI</option>
+                                                <option>No Insurance / Lapse</option>
+                                                <option>Too many points</option>
+                                                <option>Judgement / Accident</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row-switch-container">
+                                    <div class="switch-label-group">
+                                        <div class="sl-icon" style="color:#EF4444; background:#FEF2F2;"><i class="fa-solid fa-ban"></i></div>
+                                        <div class="sl-text">
+                                            <span class="sl-title">License Suspended?</span>
+                                            <span class="sl-sub">Is your license currently suspended?</span>
+                                        </div>
+                                    </div>
+                                    <div class="aurora-toggle-segment">
+                                        <input type="radio" name="susp_d1" id="susp_d1_yes" value="yes" onchange="toggleSection('susp-d1', 'yes')">
+                                        <label for="susp_d1_yes">Yes</label>
+                                        <input type="radio" name="susp_d1" id="susp_d1_no" value="no" checked onchange="toggleSection('susp-d1', 'no')">
+                                        <label for="susp_d1_no">No</label>
+                                        <div class="segment-highlight"></div>
+                                    </div>
+                                </div>
+
+                                <div id="susp-d1" class="hidden-anim mb-4">
+                                    <div class="inp-rich-group mb-3">
+                                        <label>Suspension Date</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                                <div class="icon-slot"><i class="fa-solid fa-calendar-xmark"></i></div>
+                                            <input type="text" class="rich-input date-picker calc-elapsed validate-req" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid-2-tight">
+                                        <div class="inp-rich-group">
+                                            <label>Years Elapsed</label>
+                                            <div class="input-rich-wrapper locked">
+                                                <input type="text" class="rich-input years-elapsed" placeholder="0" readonly style="text-align:center; font-weight:700;">
+                                            </div>
+                                        </div>
+                                        <div class="inp-rich-group">
+                                            <label>Months Elapsed</label>
+                                            <div class="input-rich-wrapper locked">
+                                                <input type="text" class="rich-input months-elapsed" placeholder="0" readonly style="text-align:center; font-weight:700;">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="divider-hairline"></div>
 
-                        <div class="sec-label"><i class="fa-solid fa-globe"></i> International License</div>
-
-                        <div class="inp-rich-group mb-4">
-                            <label>Do you have a foreign license?</label>
-                            <div class="input-rich-wrapper">
-                                <div class="icon-slot"><i class="fa-solid fa-passport"></i></div>
-                                <select class="rich-input foreign-select validate-req" onchange="toggleForeign('d1', this.value)">
-                                    <option value="None" selected>No, US License Only</option>
-                                    <option value="International">International Permit</option>
-                                    <option value="Mexico">Mexico License</option>
-                                    <option value="Canada">Canada License</option>
-                                    <option value="Matricula">Matricula Consular</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div id="foreign-section-d1" class="hidden-anim mb-4">
-                            <div class="info-banner-blue" style="background:#F0FDF4; border-color:#BBF7D0; color:#166534;">
-                                <i class="fa-solid fa-check-circle"></i> International experience may qualify for credit.
-                            </div>
-                            <div class="grid-2-tight mt-3">
-                                <div class="inp-rich-group">
-                                    <label>Original License Date</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-calendar-day"></i></div>
-                                        <input type="text" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY">
-                                    </div>
-                                </div>
-                                <div class="inp-rich-group">
-                                    <label>Country of Origin</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-earth-americas"></i></div>
-                                        <input type="text" class="rich-input validate-req" placeholder="e.g. Spain">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="divider-hairline"></div>
-
-                        <div class="sec-label"><i class="fa-solid fa-gavel"></i> Filings & Status</div>
-
-                        <div class="row-switch-container">
-                            <div class="switch-label-group">
-                                <div class="sl-icon"><i class="fa-solid fa-file-contract"></i></div>
-                                <div class="sl-text">
-                                    <span class="sl-title">SR-22 Filing?</span>
-                                    <span class="sl-sub">Certificate of Financial Responsibility?</span>
-                                </div>
-                            </div>
-                            <div class="aurora-toggle-segment">
-                                <input type="radio" name="sr22_d1" id="sr22_d1_yes" value="yes" onchange="toggleSection('sr22-d1', 'yes')">
-                                <label for="sr22_d1_yes">Yes</label>
-                                <input type="radio" name="sr22_d1" id="sr22_d1_no" value="no" checked onchange="toggleSection('sr22-d1', 'no')">
-                                <label for="sr22_d1_no">No</label>
-                                <div class="segment-highlight"></div>
-                            </div>
-                        </div>
-
-                        <div id="sr22-d1" class="hidden-anim mb-4">
-                            <div class="inp-rich-group">
-                                <label>Filing Reason</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-solid fa-circle-exclamation"></i></div>
-                                    <select class="rich-input validate-req">
-                                        <option value="" disabled selected>Select Reason</option>
-                                        <option>DUI / DWI</option>
-                                        <option>No Insurance / Lapse</option>
-                                        <option>Too many points</option>
-                                        <option>Judgement / Accident</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row-switch-container">
-                            <div class="switch-label-group">
-                                <div class="sl-icon" style="color:#EF4444; background:#FEF2F2;"><i class="fa-solid fa-ban"></i></div>
-                                <div class="sl-text">
-                                    <span class="sl-title">License Suspended?</span>
-                                    <span class="sl-sub">Is your license currently suspended?</span>
-                                </div>
-                            </div>
-                            <div class="aurora-toggle-segment">
-                                <input type="radio" name="susp_d1" id="susp_d1_yes" value="yes" onchange="toggleSection('susp-d1', 'yes')">
-                                <label for="susp_d1_yes">Yes</label>
-                                <input type="radio" name="susp_d1" id="susp_d1_no" value="no" checked onchange="toggleSection('susp-d1', 'no')">
-                                <label for="susp_d1_no">No</label>
-                                <div class="segment-highlight"></div>
-                            </div>
-                        </div>
-
-                        <div id="susp-d1" class="hidden-anim mb-4">
-                            <div class="inp-rich-group mb-3">
-                                <label>Suspension Date</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-solid fa-calendar-xmark"></i></div>
-                                    <input type="text" class="rich-input date-picker calc-elapsed validate-req" placeholder="MM/DD/YYYY">
-                                </div>
-                            </div>
-                            
-                            <div class="grid-2-tight">
-                                <div class="inp-rich-group">
-                                    <label>Years Elapsed</label>
-                                    <div class="input-rich-wrapper locked">
-                                        <input type="text" class="rich-input years-elapsed" placeholder="0" readonly style="text-align:center; font-weight:700;">
-                                    </div>
-                                </div>
-                                <div class="inp-rich-group">
-                                    <label>Months Elapsed</label>
-                                    <div class="input-rich-wrapper locked">
-                                        <input type="text" class="rich-input months-elapsed" placeholder="0" readonly style="text-align:center; font-weight:700;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="nav-row-right">
                             <button type="button" class="btn-nav-outline" onclick="switchDriverTab('d2')">Next Driver <i class="fa-solid fa-arrow-right"></i></button>
@@ -307,185 +329,210 @@
                             <div class="banner-icon"><i class="fa-solid fa-user-group"></i></div>
                             <div><strong>Driver 2:</strong> Elois Wolf</div>
                         </div>
-                        <div id="us-block-d2" class="license-block-wrapper">
+
+                        <div class="license-block-wrapper">
                             
-                            <div class="stamp-overlay">
-                                <div class="stamp-box">NOT APPLICABLE</div>
+                            <div id="us-block-d2" class="premium-group license-block-wrapper">
+
+                                <div class="stamp-overlay">
+                                    <div class="stamp-box">NOT APPLICABLE</div>
+                                </div>
+
+
+                                <div class="pg-header">
+                                    <div class="pg-header-badge blue">
+                                        <i class="fa-solid fa-flag-usa"></i> US & STATE HISTORY
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
+
+                                <div class="grid-2-tight">
+                                    <div class="inp-rich-group">
+                                        <label>Licensed in US Since</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-calendar-check"></i></div>
+                                            <input type="text" class="rich-input date-picker master-date calc-years validate-req" data-driver="d2" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>Years Active</label>
+                                        <div class="input-rich-wrapper locked compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-calculator"></i></div>
+                                            <input type="text" class="rich-input years-calc" placeholder="0" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="grid-2-tight mt-3">
+                                    <div class="inp-rich-group">
+                                        <label>Licensed in Current State</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-map-location-dot"></i></div>
+                                            <input type="text" class="rich-input date-picker slave-date calc-years validate-req" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>State Years</label>
+                                        <div class="input-rich-wrapper locked compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                                            <input type="text" class="rich-input years-calc" placeholder="0" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="grid-2-tight mt-3">
+                                    <div class="inp-rich-group">
+                                        <label>US Driving Experience Start</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
+                                            <input type="text" class="rich-input date-picker slave-date calc-years validate-req" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>Total Years</label>
+                                        <div class="input-rich-wrapper locked compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-hourglass-start"></i></div>
+                                            <input type="text" class="rich-input years-calc" placeholder="0" readonly>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="sec-label"><i class="fa-solid fa-flag-usa"></i> US & State History</div>
+                            <div class="premium-group">
 
-                            <div class="grid-2-tight">
-                                <div class="inp-rich-group">
-                                    <label>Licensed in US Since</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-regular fa-calendar-check"></i></div>
-                                        <input type="text" class="rich-input date-picker master-date calc-years validate-req" data-driver="d1" placeholder="MM/DD/YYYY">
+                                    <div class="pg-header">
+                                        <div class="pg-header-badge teal">
+                                            <i class="fa-solid fa-globe"></i> INTERNATIONAL LICENSE
+                                        </div>
+                                        <div class="pg-header-line"></div>
+                                    </div>
+
+                                <div class="inp-rich-group mb-4">
+                                    <label>Do you have a foreign license?</label>
+                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                                <div class="icon-slot"><i class="fa-solid fa-passport"></i></div>
+                                        <select class="rich-input foreign-select validate-req" onchange="toggleForeign('d2', this.value)">
+                                            <option value="None" selected>No, US License Only</option>
+                                            <option value="International">International Permit</option>
+                                            <option value="Mexico">Mexico License</option>
+                                            <option value="Canada">Canada License</option>
+                                            <option value="Matricula">Matricula Consular</option>
+                                            <option value="Other">Other</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="inp-rich-group">
-                                    <label>Years Active</label>
-                                    <div class="input-rich-wrapper locked">
-                                        <div class="icon-slot"><i class="fa-solid fa-calculator"></i></div>
-                                        <input type="text" class="rich-input years-calc" placeholder="0" readonly>
+
+                                <div id="foreign-section-d2" class="hidden-anim mb-4">
+                                    <div class="info-banner-blue" style="background:#F0FDF4; border-color:#BBF7D0; color:#166534;">
+                                        <i class="fa-solid fa-check-circle"></i> International experience may qualify for credit.
+                                    </div>
+                                    <div class="grid-2-tight mt-3">
+                                        <div class="inp-rich-group">
+                                            <label>Original License Date</label>
+                                            <div class="input-rich-wrapper compact-premium theme-teal">
+                                                <div class="icon-slot"><i class="fa-solid fa-calendar-day"></i></div>
+                                                <input type="text" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY">
+                                            </div>
+                                        </div>
+                                        <div class="inp-rich-group">
+                                            <label>Country of Origin</label>
+                                            <div class="input-rich-wrapper compact-premium theme-teal">
+                                                <div class="icon-slot"><i class="fa-solid fa-earth-americas"></i></div>
+                                                <input type="text" class="rich-input validate-req" placeholder="e.g. Spain">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="grid-2-tight mt-3">
-                                <div class="inp-rich-group">
-                                    <label>Licensed in Current State</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-map-location-dot"></i></div>
-                                        <input type="text" class="rich-input date-picker slave-date calc-years validate-req" placeholder="MM/DD/YYYY">
+                            <div class="premium-group">
+
+                                <div class="pg-header">
+                                    <div class="pg-header-badge blue">
+                                        <i class="fa-solid fa-gavel"></i> FILINGS & STATUS
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
+
+                                <div class="row-switch-container">
+                                    <div class="switch-label-group">
+                                        <div class="sl-icon"><i class="fa-solid fa-file-contract"></i></div>
+                                        <div class="sl-text">
+                                            <span class="sl-title">SR-22 Filing?</span>
+                                            <span class="sl-sub">Certificate of Financial Responsibility?</span>
+                                        </div>
+                                    </div>
+                                    <div class="aurora-toggle-segment">
+                                        <input type="radio" name="sr22_d2" id="sr22_d2_yes" value="yes" onchange="toggleSection('sr22-d2', 'yes')">
+                                        <label for="sr22_d2_yes">Yes</label>
+                                        <input type="radio" name="sr22_d2" id="sr22_d2_no" value="no" checked onchange="toggleSection('sr22-d2', 'no')">
+                                        <label for="sr22_d2_no">No</label>
+                                        <div class="segment-highlight"></div>
                                     </div>
                                 </div>
-                                <div class="inp-rich-group">
-                                    <label>State Years</label>
-                                    <div class="input-rich-wrapper locked">
-                                        <div class="icon-slot"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                                        <input type="text" class="rich-input years-calc" placeholder="0" readonly>
+
+                                <div id="sr22-d2" class="hidden-anim mb-4">
+                                    <div class="inp-rich-group">
+                                        <label>Filing Reason</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                                <div class="icon-slot"><i class="fa-solid fa-circle-exclamation"></i></div>
+                                            <select class="rich-input validate-req">
+                                                <option value="" disabled selected>Select Reason</option>
+                                                <option>DUI / DWI</option>
+                                                <option>No Insurance / Lapse</option>
+                                                <option>Too many points</option>
+                                                <option>Judgement / Accident</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row-switch-container">
+                                    <div class="switch-label-group">
+                                        <div class="sl-icon" style="color:#EF4444; background:#FEF2F2;"><i class="fa-solid fa-ban"></i></div>
+                                        <div class="sl-text">
+                                            <span class="sl-title">License Suspended?</span>
+                                            <span class="sl-sub">Is your license currently suspended?</span>
+                                        </div>
+                                    </div>
+                                    <div class="aurora-toggle-segment">
+                                        <input type="radio" name="susp_d2" id="susp_d2_yes" value="yes" onchange="toggleSection('susp-d2', 'yes')">
+                                        <label for="susp_d2_yes">Yes</label>
+                                        <input type="radio" name="susp_d2" id="susp_d2_no" value="no" checked onchange="toggleSection('susp-d2', 'no')">
+                                        <label for="susp_d2_no">No</label>
+                                        <div class="segment-highlight"></div>
+                                    </div>
+                                </div>
+
+                                <div id="susp-d2" class="hidden-anim mb-4">
+                                    <div class="inp-rich-group mb-3">
+                                        <label>Suspension Date</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                                <div class="icon-slot"><i class="fa-solid fa-calendar-xmark"></i></div>
+                                            <input type="text" class="rich-input date-picker calc-elapsed validate-req" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid-2-tight">
+                                        <div class="inp-rich-group">
+                                            <label>Years Elapsed</label>
+                                            <div class="input-rich-wrapper locked">
+                                                <input type="text" class="rich-input years-elapsed" placeholder="0" readonly style="text-align:center; font-weight:700;">
+                                            </div>
+                                        </div>
+                                        <div class="inp-rich-group">
+                                            <label>Months Elapsed</label>
+                                            <div class="input-rich-wrapper locked">
+                                                <input type="text" class="rich-input months-elapsed" placeholder="0" readonly style="text-align:center; font-weight:700;">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="grid-2-tight mt-3">
-                                <div class="inp-rich-group">
-                                    <label>US Driving Experience Start</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
-                                        <input type="text" class="rich-input date-picker slave-date calc-years validate-req" placeholder="MM/DD/YYYY">
-                                    </div>
-                                </div>
-                                <div class="inp-rich-group">
-                                    <label>Total Years</label>
-                                    <div class="input-rich-wrapper locked">
-                                        <div class="icon-slot"><i class="fa-solid fa-hourglass-start"></i></div>
-                                        <input type="text" class="rich-input years-calc" placeholder="0" readonly>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
 
-                        <div class="divider-hairline"></div>
-
-                        <div class="sec-label"><i class="fa-solid fa-globe"></i> International License</div>
-
-                        <div class="inp-rich-group mb-4">
-                            <label>Do you have a foreign license?</label>
-                            <div class="input-rich-wrapper">
-                                <div class="icon-slot"><i class="fa-solid fa-passport"></i></div>
-                                <select class="rich-input foreign-select validate-req" onchange="toggleForeign('d1', this.value)">
-                                    <option value="None" selected>No, US License Only</option>
-                                    <option value="International">International Permit</option>
-                                    <option value="Mexico">Mexico License</option>
-                                    <option value="Canada">Canada License</option>
-                                    <option value="Matricula">Matricula Consular</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div id="foreign-section-d2" class="hidden-anim mb-4">
-                            <div class="info-banner-blue" style="background:#F0FDF4; border-color:#BBF7D0; color:#166534;">
-                                <i class="fa-solid fa-check-circle"></i> International experience may qualify for credit.
-                            </div>
-                            <div class="grid-2-tight mt-3">
-                                <div class="inp-rich-group">
-                                    <label>Original License Date</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-calendar-day"></i></div>
-                                        <input type="text" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY">
-                                    </div>
-                                </div>
-                                <div class="inp-rich-group">
-                                    <label>Country of Origin</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-earth-americas"></i></div>
-                                        <input type="text" class="rich-input validate-req" placeholder="e.g. Spain">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="divider-hairline"></div>
-
-                        <div class="sec-label"><i class="fa-solid fa-gavel"></i> Filings & Status</div>
-
-                        <div class="row-switch-container">
-                            <div class="switch-label-group">
-                                <div class="sl-icon"><i class="fa-solid fa-file-contract"></i></div>
-                                <div class="sl-text">
-                                    <span class="sl-title">SR-22 Filing?</span>
-                                    <span class="sl-sub">Certificate of Financial Responsibility?</span>
-                                </div>
-                            </div>
-                            <div class="aurora-toggle-segment">
-                                <input type="radio" name="sr22_d2" id="sr22_d2_yes" value="yes" onchange="toggleSection('sr22-d2', 'yes')">
-                                <label for="sr22_d2_yes">Yes</label>
-                                <input type="radio" name="sr22_d2" id="sr22_d2_no" value="no" checked onchange="toggleSection('sr22-d2', 'no')">
-                                <label for="sr22_d2_no">No</label>
-                                <div class="segment-highlight"></div>
-                            </div>
-                        </div>
-
-                        <div id="sr22-d2" class="hidden-anim mb-4">
-                            <div class="inp-rich-group">
-                                <label>Filing Reason</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-solid fa-circle-exclamation"></i></div>
-                                    <select class="rich-input validate-req">
-                                        <option value="" disabled selected>Select Reason</option>
-                                        <option>DUI / DWI</option>
-                                        <option>No Insurance / Lapse</option>
-                                        <option>Too many points</option>
-                                        <option>Judgement / Accident</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row-switch-container">
-                            <div class="switch-label-group">
-                                <div class="sl-icon" style="color:#EF4444; background:#FEF2F2;"><i class="fa-solid fa-ban"></i></div>
-                                <div class="sl-text">
-                                    <span class="sl-title">License Suspended?</span>
-                                    <span class="sl-sub">Is your license currently suspended?</span>
-                                </div>
-                            </div>
-                            <div class="aurora-toggle-segment">
-                                <input type="radio" name="susp_d2" id="susp_d2_yes" value="yes" onchange="toggleSection('susp-d2', 'yes')">
-                                <label for="susp_d1_yes">Yes</label>
-                                <input type="radio" name="susp_d2" id="susp_d2_no" value="no" checked onchange="toggleSection('susp-d2', 'no')">
-                                <label for="susp_d2_no">No</label>
-                                <div class="segment-highlight"></div>
-                            </div>
-                        </div>
-
-                        <div id="susp-d2" class="hidden-anim mb-4">
-                            <div class="inp-rich-group mb-3">
-                                <label>Suspension Date</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-solid fa-calendar-xmark"></i></div>
-                                    <input type="text" class="rich-input date-picker calc-elapsed validate-req" placeholder="MM/DD/YYYY">
-                                </div>
-                            </div>
-                            
-                            <div class="grid-2-tight">
-                                <div class="inp-rich-group">
-                                    <label>Years Elapsed</label>
-                                    <div class="input-rich-wrapper locked">
-                                        <input type="text" class="rich-input years-elapsed" placeholder="0" readonly style="text-align:center; font-weight:700;">
-                                    </div>
-                                </div>
-                                <div class="inp-rich-group">
-                                    <label>Months Elapsed</label>
-                                    <div class="input-rich-wrapper locked">
-                                        <input type="text" class="rich-input months-elapsed" placeholder="0" readonly style="text-align:center; font-weight:700;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="nav-row-spaced">
                             <button type="button" class="btn-nav-outline" onclick="switchDriverTab('d1')"><i class="fa-solid fa-chevron-left"></i> Prev Driver</button>
                         </div>
@@ -526,8 +573,9 @@
                     </div>
                 </div>
             </aside>
-
         </div>
+    </div>
+    
     <footer id="contact" class="site-footer">
         <div class="container footer-grid">
             <div class="footer-col brand-col">

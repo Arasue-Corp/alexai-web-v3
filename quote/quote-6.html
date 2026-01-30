@@ -117,129 +117,142 @@
                             <div><strong>Primary Applicant:</strong> Uri Williams</div>
                         </div>
 
-                        <div class="sec-label"><i class="fa-solid fa-circle-question"></i> Current Status</div>
+                        <div class="premium-group">
 
-                        <div class="row-switch-container">
-                            <div class="switch-label-group">
-                                <div class="sl-icon"><i class="fa-solid fa-car-on"></i></div>
-                                <div class="sl-text">
-                                    <span class="sl-title">Do you have car insurance?</span>
-                                    <span class="sl-sub">Currently active policy in your name.</span>
+                            <div class="pg-header">
+                                <div class="pg-header-badge blue">
+                                    <i class="fa-solid fa-circle-question"></i> CURRENT STATUS
                                 </div>
+                                <div class="pg-header-line"></div>
                             </div>
-                            <div class="aurora-toggle-segment">
-                                <input type="radio" name="hasIns_d1" id="ins_d1_yes" value="yes" onchange="toggleHistory('d1', 'yes')">
-                                <label for="ins_d1_yes">Yes</label>
-                                
-                                <input type="radio" name="hasIns_d1" id="ins_d1_no" value="no" checked onchange="toggleHistory('d1', 'no')">
-                                <label for="ins_d1_no">No</label>
-                                
-                                <div class="segment-highlight"></div>
-                            </div>
-                        </div>
 
-                        <div id="history-wrapper-d1" class="hidden-anim mb-4">
-                            
-                            <div class="divider-hairline"></div>
-                            <div class="sec-label"><i class="fa-solid fa-file-invoice"></i> Policy Details</div>
-
-                            <div class="grid-2-tight">
-                                <div class="inp-rich-group">
-                                    <label>Policy Start Date</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-regular fa-calendar-check"></i></div>
-                                        <input type="text" class="rich-input date-picker-past" placeholder="MM/DD/YYYY">
+                            <div class="row-switch-container">
+                                <div class="switch-label-group">
+                                    <div class="sl-icon"><i class="fa-solid fa-car-on"></i></div>
+                                    <div class="sl-text">
+                                        <span class="sl-title">Do you have car insurance?</span>
+                                        <span class="sl-sub">Currently active policy in your name.</span>
                                     </div>
                                 </div>
-                                <div class="inp-rich-group">
-                                    <label>Expiration Date</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-regular fa-calendar-xmark"></i></div>
-                                        <input type="text" class="rich-input date-picker-future" placeholder="MM/DD/YYYY">
+                                <div class="aurora-toggle-segment">
+                                    <input type="radio" name="hasIns_d1" id="ins_d1_yes" value="yes" onchange="toggleHistory('d1', 'yes')">
+                                    <label for="ins_d1_yes">Yes</label>
+                                    
+                                    <input type="radio" name="hasIns_d1" id="ins_d1_no" value="no" checked onchange="toggleHistory('d1', 'no')">
+                                    <label for="ins_d1_no">No</label>
+                                    
+                                    <div class="segment-highlight"></div>
+                                </div>
+                            </div>
+
+                            <div id="history-wrapper-d1" class="hidden-anim mb-4">
+                                
+                                <div class="divider-hairline"></div>
+                                    <div class="pg-header">
+                                        <div class="pg-header-badge teal">
+                                            <i class="fa-solid fa-file-invoice"></i> POLICY DETAILS
+                                        </div>
+                                        <div class="pg-header-line"></div>
+                                    </div>
+
+                                <div class="grid-2-tight">
+                                    <div class="inp-rich-group">
+                                        <label>Policy Start Date</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-calendar-check"></i></div>
+                                            <input type="text" class="rich-input date-picker-past" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>Expiration Date</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-calendar-xmark"></i></div>
+                                            <input type="text" class="rich-input date-picker-future" placeholder="MM/DD/YYYY">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="inp-rich-group mt-3">
-                                <label>Prior Carrier</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
-                                    <select class="rich-input">
-                                        <option value="" disabled selected>Select Carrier</option>
-                                        <option>GEICO</option>
-                                        <option>Progressive</option>
-                                        <option>State Farm</option>
-                                        <option>Allstate</option>
-                                        <option>Liberty Mutual</option>
-                                        <option>Nationwide</option>
-                                        <option>Farmers</option>
-                                        <option>AAA</option>
-                                        <option>Other Standard</option>
-                                        <option>Other Non-Standard</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="grid-2-tight mt-3">
-                                <div class="inp-rich-group">
-                                    <label>Liability Limits</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-scale-balanced"></i></div>
+                                <div class="inp-rich-group mt-3">
+                                    <label>Prior Carrier</label>
+                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
                                         <select class="rich-input">
-                                            <option value="" disabled selected>Select</option>
-                                            <option>15/30/10 (State Min)</option>
-                                            <option>25/50/25</option>
-                                            <option>50/100/50</option>
-                                            <option>100/300/100 (Recommended)</option>
-                                            <option>250/500/100</option>
+                                            <option value="" disabled selected>Select Carrier</option>
+                                            <option>GEICO</option>
+                                            <option>Progressive</option>
+                                            <option>State Farm</option>
+                                            <option>Allstate</option>
+                                            <option>Liberty Mutual</option>
+                                            <option>Nationwide</option>
+                                            <option>Farmers</option>
+                                            <option>AAA</option>
+                                            <option>Other Standard</option>
+                                            <option>Other Non-Standard</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="inp-rich-group">
-                                    <label>Prior Transfer Level</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-layer-group"></i></div>
-                                        <select class="rich-input">
-                                            <option value="" disabled selected>Select Level</option>
-                                            <option>No Prior Transfer</option>
-                                            <option>Prior Transfer Level 1</option>
-                                            <option>Prior Transfer Level 2</option>
-                                            <option>Prior Transfer Level 3</option>
-                                        </select>
+
+                                <div class="grid-2-tight mt-3">
+                                    <div class="inp-rich-group">
+                                        <label>Liability Limits</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-scale-balanced"></i></div>
+                                            <select class="rich-input">
+                                                <option value="" disabled selected>Select</option>
+                                                <option>15/30/10 (State Min)</option>
+                                                <option>25/50/25</option>
+                                                <option>50/100/50</option>
+                                                <option>100/300/100 (Recommended)</option>
+                                                <option>250/500/100</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>Prior Transfer Level</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-layer-group"></i></div>
+                                            <select class="rich-input">
+                                                <option value="" disabled selected>Select Level</option>
+                                                <option>No Prior Transfer</option>
+                                                <option>Prior Transfer Level 1</option>
+                                                <option>Prior Transfer Level 2</option>
+                                                <option>Prior Transfer Level 3</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <div class="divider-hairline"></div>
+
+                                <div class="extras-list-container">
+                                    <div class="row-switch-container compact">
+                                        <div class="switch-label-group">
+                                            <div class="sl-text"><span class="sl-title">Prior in Agency?</span></div>
+                                        </div>
+                                        <div class="aurora-toggle-segment small">
+                                            <input type="radio" name="agency_d1" id="agency_d1_yes" value="yes">
+                                            <label for="agency_d1_yes">Yes</label>
+                                            <input type="radio" name="agency_d1" id="agency_d1_no" value="no" checked>
+                                            <label for="agency_d1_no">No</label>
+                                            <div class="segment-highlight"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-switch-container compact">
+                                        <div class="switch-label-group">
+                                            <div class="sl-text"><span class="sl-title">On Parent's Policy?</span></div>
+                                        </div>
+                                        <div class="aurora-toggle-segment small">
+                                            <input type="radio" name="parent_d1" id="parent_d1_yes" value="yes">
+                                            <label for="parent_d1_yes">Yes</label>
+                                            <input type="radio" name="parent_d1" id="parent_d1_no" value="no" checked>
+                                            <label for="parent_d1_no">No</label>
+                                            <div class="segment-highlight"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-
-                            <div class="divider-hairline"></div>
-
-                            <div class="extras-list-container">
-                                <div class="row-switch-container compact">
-                                    <div class="switch-label-group">
-                                        <div class="sl-text"><span class="sl-title">Prior in Agency?</span></div>
-                                    </div>
-                                    <div class="aurora-toggle-segment small">
-                                        <input type="radio" name="agency_d1" id="agency_d1_yes" value="yes">
-                                        <label for="agency_d1_yes">Yes</label>
-                                        <input type="radio" name="agency_d1" id="agency_d1_no" value="no" checked>
-                                        <label for="agency_d1_no">No</label>
-                                        <div class="segment-highlight"></div>
-                                    </div>
-                                </div>
-
-                                <div class="row-switch-container compact">
-                                    <div class="switch-label-group">
-                                        <div class="sl-text"><span class="sl-title">On Parent's Policy?</span></div>
-                                    </div>
-                                    <div class="aurora-toggle-segment small">
-                                        <input type="radio" name="parent_d1" id="parent_d1_yes" value="yes">
-                                        <label for="parent_d1_yes">Yes</label>
-                                        <input type="radio" name="parent_d1" id="parent_d1_no" value="no" checked>
-                                        <label for="parent_d1_no">No</label>
-                                        <div class="segment-highlight"></div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
 
                         <div class="nav-row-right">
@@ -254,128 +267,144 @@
                             <div><strong>Driver 2:</strong> Elois Wolf</div>
                         </div>
 
-                        <div class="sec-label"><i class="fa-solid fa-circle-question"></i> Current Status</div>
+                        <div class="premium-group">
 
-                        <div class="row-switch-container">
-                            <div class="switch-label-group">
-                                <div class="sl-icon"><i class="fa-solid fa-car-on"></i></div>
-                                <div class="sl-text">
-                                    <span class="sl-title">Do you have car insurance?</span>
-                                    <span class="sl-sub">Currently active policy in your name.</span>
+                            <div class="pg-header">
+                                <div class="pg-header-badge blue">
+                                    <i class="fa-solid fa-circle-question"></i> CURRENT STATUS
                                 </div>
+                                <div class="pg-header-line"></div>
                             </div>
-                            <div class="aurora-toggle-segment">
-                                <input type="radio" name="hasIns_d2" id="ins_d2_yes" value="yes" onchange="toggleHistory('d2', 'yes')">
-                                <label for="ins_d2_yes">Yes</label>
-                                <input type="radio" name="hasIns_d2" id="ins_d2_no" value="no" checked onchange="toggleHistory('d2', 'no')">
-                                <label for="ins_d2_no">No</label>
-                                <div class="segment-highlight"></div>
-                            </div>
-                        </div>
-
-                        <div id="history-wrapper-d2" class="hidden-anim mb-4">
                             
-                            <div class="divider-hairline"></div>
-                            <div class="sec-label"><i class="fa-solid fa-file-invoice"></i> Policy Details</div>
 
-                            <div class="grid-2-tight">
-                                <div class="inp-rich-group">
-                                    <label>Policy Start Date</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-regular fa-calendar-check"></i></div>
-                                        <input type="text" class="rich-input date-picker-past" placeholder="MM/DD/YYYY">
+                            <div class="row-switch-container">
+                                <div class="switch-label-group">
+                                    <div class="sl-icon"><i class="fa-solid fa-car-on"></i></div>
+                                    <div class="sl-text">
+                                        <span class="sl-title">Do you have car insurance?</span>
+                                        <span class="sl-sub">Currently active policy in your name.</span>
                                     </div>
                                 </div>
-                                <div class="inp-rich-group">
-                                    <label>Expiration Date</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-regular fa-calendar-xmark"></i></div>
-                                        <input type="text" class="rich-input date-picker-future" placeholder="MM/DD/YYYY">
-                                    </div>
+                                <div class="aurora-toggle-segment">
+                                    <input type="radio" name="hasIns_d2" id="ins_d2_yes" value="yes" onchange="toggleHistory('d2', 'yes')">
+                                    <label for="ins_d2_yes">Yes</label>
+                                    <input type="radio" name="hasIns_d2" id="ins_d2_no" value="no" checked onchange="toggleHistory('d2', 'no')">
+                                    <label for="ins_d2_no">No</label>
+                                    <div class="segment-highlight"></div>
                                 </div>
                             </div>
 
-                            <div class="inp-rich-group mt-3">
-                                <label>Prior Carrier</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
-                                    <select class="rich-input">
-                                        <option value="" disabled selected>Select Carrier</option>
-                                        <option>GEICO</option>
-                                        <option>Progressive</option>
-                                        <option>State Farm</option>
-                                        <option>Allstate</option>
-                                        <option>Liberty Mutual</option>
-                                        <option>Nationwide</option>
-                                        <option>Farmers</option>
-                                        <option>AAA</option>
-                                        <option>Other Standard</option>
-                                        <option>Other Non-Standard</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <div id="history-wrapper-d2" class="hidden-anim mb-4">
+                                
+                                <div class="divider-hairline"></div>
 
-                            <div class="grid-2-tight mt-3">
-                                <div class="inp-rich-group">
-                                    <label>Liability Limits</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-scale-balanced"></i></div>
+                                    <div class="pg-header">
+                                        <div class="pg-header-badge blue">
+                                            <i class="fa-solid fa-file-invoice"></i> POLICY DETAILS
+                                        </div>
+                                        <div class="pg-header-line"></div>
+                                    </div>
+
+                                <div class="grid-2-tight">
+                                    <div class="inp-rich-group">
+                                        <label>Policy Start Date</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-calendar-check"></i></div>
+                                            <input type="text" class="rich-input date-picker-past" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>Expiration Date</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-calendar-xmark"></i></div>
+                                            <input type="text" class="rich-input date-picker-future" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="inp-rich-group mt-3">
+                                    <label>Prior Carrier</label>
+                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
                                         <select class="rich-input">
-                                            <option value="" disabled selected>Select</option>
-                                            <option>15/30/10 (State Min)</option>
-                                            <option>25/50/25</option>
-                                            <option>50/100/50</option>
-                                            <option>100/300/100 (Recommended)</option>
-                                            <option>250/500/100</option>
+                                            <option value="" disabled selected>Select Carrier</option>
+                                            <option>GEICO</option>
+                                            <option>Progressive</option>
+                                            <option>State Farm</option>
+                                            <option>Allstate</option>
+                                            <option>Liberty Mutual</option>
+                                            <option>Nationwide</option>
+                                            <option>Farmers</option>
+                                            <option>AAA</option>
+                                            <option>Other Standard</option>
+                                            <option>Other Non-Standard</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="inp-rich-group">
-                                    <label>Prior Transfer Level</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-layer-group"></i></div>
-                                        <select class="rich-input">
-                                            <option value="" disabled selected>Select Level</option>
-                                            <option>No Prior Transfer</option>
-                                            <option>Prior Transfer Level 1</option>
-                                            <option>Prior Transfer Level 2</option>
-                                            <option>Prior Transfer Level 3</option>
-                                        </select>
+
+                                <div class="grid-2-tight mt-3">
+                                    <div class="inp-rich-group">
+                                        <label>Liability Limits</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-scale-balanced"></i></div>
+                                            <select class="rich-input">
+                                                <option value="" disabled selected>Select</option>
+                                                <option>15/30/10 (State Min)</option>
+                                                <option>25/50/25</option>
+                                                <option>50/100/50</option>
+                                                <option>100/300/100 (Recommended)</option>
+                                                <option>250/500/100</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>Prior Transfer Level</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-layer-group"></i></div>
+                                            <select class="rich-input">
+                                                <option value="" disabled selected>Select Level</option>
+                                                <option>No Prior Transfer</option>
+                                                <option>Prior Transfer Level 1</option>
+                                                <option>Prior Transfer Level 2</option>
+                                                <option>Prior Transfer Level 3</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <div class="divider-hairline"></div>
+
+                                <div class="extras-list-container">
+                                    <div class="row-switch-container compact">
+                                        <div class="switch-label-group">
+                                            <div class="sl-text"><span class="sl-title">Prior in Agency?</span></div>
+                                        </div>
+                                        <div class="aurora-toggle-segment small">
+                                            <input type="radio" name="agency_d2" id="agency_d2_yes" value="yes">
+                                            <label for="agency_d2_yes">Yes</label>
+                                            <input type="radio" name="agency_d2" id="agency_d2_no" value="no" checked>
+                                            <label for="agency_d2_no">No</label>
+                                            <div class="segment-highlight"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-switch-container compact">
+                                        <div class="switch-label-group">
+                                            <div class="sl-text"><span class="sl-title">On Parent's Policy?</span></div>
+                                        </div>
+                                        <div class="aurora-toggle-segment small">
+                                            <input type="radio" name="parent_d2" id="parent_d2_yes" value="yes">
+                                            <label for="parent_d2_yes">Yes</label>
+                                            <input type="radio" name="parent_d2" id="parent_d2_no" value="no" checked>
+                                            <label for="parent_d2_no">No</label>
+                                            <div class="segment-highlight"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-
-                            <div class="divider-hairline"></div>
-
-                            <div class="extras-list-container">
-                                <div class="row-switch-container compact">
-                                    <div class="switch-label-group">
-                                        <div class="sl-text"><span class="sl-title">Prior in Agency?</span></div>
-                                    </div>
-                                    <div class="aurora-toggle-segment small">
-                                        <input type="radio" name="agency_d2" id="agency_d2_yes" value="yes">
-                                        <label for="agency_d2_yes">Yes</label>
-                                        <input type="radio" name="agency_d2" id="agency_d2_no" value="no" checked>
-                                        <label for="agency_d2_no">No</label>
-                                        <div class="segment-highlight"></div>
-                                    </div>
-                                </div>
-
-                                <div class="row-switch-container compact">
-                                    <div class="switch-label-group">
-                                        <div class="sl-text"><span class="sl-title">On Parent's Policy?</span></div>
-                                    </div>
-                                    <div class="aurora-toggle-segment small">
-                                        <input type="radio" name="parent_d2" id="parent_d2_yes" value="yes">
-                                        <label for="parent_d2_yes">Yes</label>
-                                        <input type="radio" name="parent_d2" id="parent_d2_no" value="no" checked>
-                                        <label for="parent_d2_no">No</label>
-                                        <div class="segment-highlight"></div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
+
 
                         <div class="nav-row-spaced">
                             <button type="button" class="btn-nav-outline" onclick="switchDriverTab('d1')"><i class="fa-solid fa-chevron-left"></i> Prev Driver</button>
@@ -383,7 +412,7 @@
                     </div>
 
                     <div class="hero-action-area">
-                        <div class="secure-badge-modern"><i class="fa-solid fa-shield-halved"></i> Data Encrypted</div>
+                        <div class="secure-badge-modern"><i class="fa-solid fa-shield-halved"></i> License Data Encrypted</div>
                         <button type="button" class="btn-hero-gradient" id="btnNext">
                             Next Step <i class="fa-solid fa-arrow-right-long"></i>
                         </button>
@@ -419,8 +448,8 @@
                     </div>
                 </div>
             </aside>
-
         </div>
+    </div>
 
     <footer id="contact" class="site-footer">
         <div class="container footer-grid">

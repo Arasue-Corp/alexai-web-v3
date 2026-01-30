@@ -121,13 +121,19 @@ body::before {
 
 /* Wizard Progress Bar */
 .wizard-container {
-   background: var(--bg-surface); border-radius: var(--radius-card);
-   border: 1px solid var(--border-light);
-   padding: 35px 45px 0px 45px; 
-   margin-bottom: 40px;
-   margin-left:15%;
-   margin-right:15%;
-   box-shadow: var(--shadow-sm);
+    background: var(--bg-surface); border-radius: var(--radius-card);
+    border: 1px solid var(--border-light);
+    padding: 35px 45px 0px 45px; margin-bottom: 40px;
+    box-shadow: var(--shadow-sm);
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+@media (max-width: 900px) {
+    .wizard-container{
+        margin-left: 0px;
+        margin-right: 0px;
+    }
 }
 .wizard-top { display: flex; justify-content: space-between; margin-bottom: 15px; color: var(--color-gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;}
 .wizard-title { font-size: 1rem; color: var(--color-indigo); display: flex; align-items: center; gap: 10px; font-weight: 700; text-transform: none; }
@@ -155,6 +161,11 @@ body::before {
     /* overflow: hidden; */
     text-overflow: ellipsis;
 }
+
+/* =========================================
+/* PANTALLA 14 PANTALLA DE OFERTAS */
+/* =========================================
+
 
 /* =========================================
    3. SIDEBARS (Clean & Professional)
@@ -538,7 +549,7 @@ body::before {
     padding: 16px 20px;
     
     /* El gradiente corporativo, pero translúcido */
-    background: linear-gradient(135deg, rgba(30, 27, 75, 0.95) 0%, rgba(59, 130, 246, 0.9) 100%);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.9) 0%, rgba(91, 3, 153, 0.95) 100%);
     
     /* Blur para integrarse con el fondo */
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -732,6 +743,13 @@ body::before {
     opacity: 0;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     pointer-events: none;
+
+    text-transform: lowercase; /* Convierte todo a minúsculas primero */
+
+}
+
+.tooltip-text::first-letter{
+    text-transform: uppercase; /* Convierte solo la primera letra a mayúscula */
 }
 
 /* El triangulito (flecha) abajo */
@@ -1089,7 +1107,7 @@ body::before {
 .offer-card { overflow: hidden; } /* Asegura que el tag corte perfecto con la tarjeta */
 
 /* =========================================
-   18. AURORA BRAND CHECKOUT (NO BLACKS)
+   PANTALLA 15. AURORA BRAND CHECKOUT (NO BLACKS)
    ========================================= */
 
 /* --- PALETA EXTENDIDA (Basada en tu marca) --- */
@@ -1301,7 +1319,7 @@ body.bg-matte-brand {
 
 
 /* =========================================
-   34. EXECUTIVE CLEAN FIX
+   PANTALLA 16. EXECUTIVE CLEAN FIX
    ========================================= */
 
 * { box-sizing: border-box; }
@@ -1517,7 +1535,7 @@ body.bg-matte-brand {
 }
 
 /* =========================================
-   ADDITIONS FOR STEP 13 (SPECS)
+   PANTALLA 13. ADDITIONS FOR STEP 13 (SPECS)
    ========================================= */
 
 /* --- TABS MODERNOS --- */
@@ -1753,7 +1771,7 @@ input:checked + .slider.red-theme { background-color: #EF4444; }
         0 10px 30px -5px rgba(0, 0, 0, 0.04),
         0 4px 12px -2px rgba(0, 0, 0, 0.02);
     border: 1px solid #F1F5F9;
-    padding: 35px 40px;
+    padding: 35px 30px;
     position: relative;
     overflow: hidden;
 }
@@ -1927,7 +1945,7 @@ input:checked + .slider.red-theme { background-color: #EF4444; }
         0 10px 30px -5px rgba(0, 0, 0, 0.04),
         0 4px 12px -2px rgba(0, 0, 0, 0.02);
     border: 1px solid #F1F5F9;
-    padding: 35px 40px;
+    padding: 35px 30px;
     position: relative;
     overflow: hidden;
 }
@@ -2181,7 +2199,7 @@ input:checked + .slider.red-theme { background-color: #EF4444; }
 }
 
 /* =========================================
-   ADDITIONS FOR STEP 11 (LIENHOLDER)
+   PANTALLA 11. ADDITIONS FOR STEP 11 (LIENHOLDER)
    ========================================= */
 
 /* Animación de Despliegue */
@@ -2202,7 +2220,7 @@ input:checked + .slider.red-theme { background-color: #EF4444; }
 .mt-4 { margin-top: 25px; }
 
 /* =========================================
-   ADDITIONS FOR STEP 10 (VEHICLES)
+  PANTALLA 10. ADDITIONS FOR STEP 10 (VEHICLES)
    ========================================= */
 
 /* Banner de Información (Primary Car) */
@@ -2447,16 +2465,16 @@ input:checked + .slider.red-theme { background-color: #EF4444; }
 }
 
 /* =========================================
-   AURORA TECH V2 - LICENSING EFFECTS (STEP 7)
+  PANTALLA 7. AURORA TECH V2 - LICENSING EFFECTS (STEP 7)
    ========================================= */
 
 /* Contenedor relativo para el overlay */
 .license-block-wrapper {
     position: relative;
     border-radius: 12px;
-    padding: 20px;
     transition: all 0.4s ease;
     border: 1px solid transparent;
+    max-width: 100%;
 }
 
 /* Estado Deshabilitado (Foreign Selected) */
@@ -2715,5 +2733,780 @@ input:checked + .slider.red-theme { background-color: #EF4444; }
     display: block !important;
     opacity: 1 !important; /* Forzamos opacidad 1 */
     transform: translateX(0) !important;
-
 }
+
+/* =========================================
+   AURORA TECH V2 - DRIVERS (STEP 4)
+   ========================================= */
+
+/* =========================================
+   FIX EXCLUDED: TABS & FIELDS
+   ========================================= */
+
+/* 1. PESTAÑA EXCLUIDA (Naranja/Amarillo + Texto) */
+.tab-int.tab-excluded {
+    background-color: #FFF7ED !important; /* Fondo Naranja muy suave */
+    border-color: #FDBA74 !important;     /* Borde Naranja */
+    color: #C2410C !important;            /* Texto Naranja oscuro */
+}
+
+.tab-int.tab-excluded .status-dot {
+    background-color: #F97316 !important; /* Punto Naranja */
+    box-shadow: 0 0 0 2px #FFEDD5;
+}
+
+.tab-int.tab-excluded i {
+    color: #F97316 !important;
+}
+
+/* 2. ZONA DE EXCLUSIÓN (Contenedor de campos bloqueados) */
+.exclusion-zone {
+    position: relative;
+    border-radius: 12px;
+    padding: 15px; /* Un poco de aire */
+    margin: -15px; /* Compensar padding para que no descuadre */
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+/* Estado Activo de la Zona (Solo esta parte se raya) */
+.exclusion-zone.active {
+    background-image: repeating-linear-gradient(
+        45deg,
+        #FFF7ED,
+        #FFF7ED 10px,
+        #FFEDD5 10px,
+        #FFEDD5 20px
+    );
+    border-color: #FDBA74;
+}
+
+.driver-excluded-state {
+    position: relative;
+    /* Fondo rayado de advertencia sutil */
+    background-image: repeating-linear-gradient(
+        45deg,
+        #FFF5F5,
+        #FFF5F5 10px,
+        #FEF2F2 10px,
+        #FEF2F2 20px
+    );
+    border: 2px solid #FCA5A5 !important;
+    transition: all 0.3s ease;
+    pointer-events: auto !important;
+}
+
+/* 3. BLOQUEO QUIRÚRGICO (Solo campos específicos) */
+.input-rich-wrapper.is-locked-excluded {
+    background-color: #F3F4F6 !important;
+    border-color: #D1D5DB !important;
+    opacity: 0.7;
+    pointer-events: none !important;
+    filter: grayscale(100%);
+}
+
+.input-rich-wrapper.is-locked-excluded input,
+.input-rich-wrapper.is-locked-excluded select {
+    color: #94A3B8 !important;
+}
+
+.watermark-excluded {
+    position: absolute; 
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-10deg);
+    font-size: 3.5rem; font-weight: 900; 
+    color: rgba(249, 115, 22, 0.15); /* Naranja transparente */
+    border: 5px solid rgba(249, 115, 22, 0.15);
+    padding: 10px 30px; border-radius: 16px;
+    pointer-events: none !important;
+    z-index: 10; 
+    display: none; 
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.exclusion-zone.active .watermark-excluded { display: block; }
+
+.driver-excluded-state .watermark-excluded { display: block; }
+
+/* Botón Borrar en Header (Estilo Píldora) */
+.delete-pill-btn {
+    background: #FEF2F2; color: #EF4444; border: 1px solid #FECACA;
+    padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+    cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px;
+}
+.delete-pill-btn:hover { background: #FEE2E2; transform: translateY(-1px); }
+
+/* Ajuste Grid 3 Columnas */
+.grid-3-tight {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px;
+}
+@media (max-width: 768px) {
+    .grid-3-tight { grid-template-columns: 1fr; }
+}
+
+/* 3. BOTÓN ADD FIJO (Estilo Grande y Claro) */
+.btn-add-driver-static {
+    width: 100%;
+    background: #FFFFFF;
+    border: 2px dashed #CBD5E1;
+    color: #64748B;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: all 0.2s ease;
+}
+.btn-add-driver-static:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: #EFF6FF;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* =========================================
+   FIX VISIBILIDAD Y TOASTS (STEP 4)
+   ========================================= */
+
+/* 1. VISIBILIDAD DE PANELES (Logic-based) */
+.car-panel {
+    display: none; opacity: 0; transform: scale(0.98);
+}
+.car-panel.active {
+    display: block; opacity: 1; transform: scale(1);
+}
+
+@keyframes slideInPanel {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 2. ESTILO DE TOAST INTEGRADO (Garantizado) */
+.alex-toast-popup {
+    position: fixed; top: 20px; right: 20px; z-index: 999999;
+    padding: 16px 24px; border-radius: 12px; font-weight: 600;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 12px;
+    font-family: sans-serif; animation: slideInToast 0.3s ease-out forwards;
+}
+.alex-toast-success { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
+.alex-toast-warning { background: #FEF2F2; color: #991B1B; border: 1px solid #FECACA; }
+.alex-toast-info { background: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE; }
+
+@keyframes slideInToast {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+
+/* =========================================
+   2. PAGE TRANSITIONS (Entrada/Salida de Pantalla)
+   ========================================= */
+/* Clase que añadiremos al body o wrapper al cargar */
+.page-enter-active {
+    animation: pageSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Clase que añadiremos antes de irnos */
+.page-exit-active {
+    animation: pageSlideOut 0.3s ease-in forwards;
+}
+
+@keyframes pageSlideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pageSlideOut {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-20px); }
+}
+
+
+/* =========================================
+   AURORA MOTION ENGINE (SMOOTH FADE)
+   ========================================= */
+
+/* Estado base de los paneles */
+.car-panel {
+    display: none;
+    opacity: 0;
+    transform: scale(0.98); /* Empieza un poco más pequeño */
+    transition: none; /* JS controla la animación */
+}
+
+/* Panel Activo */
+.car-panel.active {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* --- CLASES DE ANIMACIÓN (High Performance) --- */
+
+/* Salida: Se desvanece rápido y se achica un poco */
+.anim-out {
+    animation: fadeOutZoom 0.2s ease-in forwards;
+    pointer-events: none; /* Evita clicks fantasma */
+}
+
+/* Entrada: Aparece y crece suavemente */
+.anim-in {
+    display: block !important;
+    animation: fadeInZoom 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- KEYFRAMES --- */
+
+.anim-out { animation: fadeOutZoom 0.2s ease-in forwards; pointer-events: none; }
+.anim-in { display: block !important; animation: fadeInZoom 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+@keyframes fadeOutZoom {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.98); }
+}
+@keyframes fadeInZoom {
+    0% { opacity: 0; transform: scale(1.02); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* --- PAGE TRANSITION (Entre Pantallas) --- */
+/* Transición de Página Global */
+body.page-exit { animation: pageExitAnim 0.3s ease-in forwards; }
+body.page-enter { animation: pageEnterAnim 0.4s ease-out forwards; }
+
+@keyframes pageExitAnim { to { opacity: 0; transform: translateX(-20px); } }
+@keyframes pageEnterAnim { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+/* --- PREMIUM GROUPING --- */
+
+/* Contenedor de Grupo Sutil */
+.group-box {
+    background: #F8FAFC; /* --bg-off-white */
+    border: 1px solid #E2E8F0; /* --border-light */
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.group-box:hover {
+    border-color: #CBD5E1;
+    background: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03); /* Sombra muy suave al pasar mouse */
+}
+
+/* Cabecera del Grupo */
+.gb-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #475569; /* --alex-ink-light */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.gb-header i {
+    color: #009cff; /* --alex-blue-base */
+    font-size: 1.1rem;
+}
+
+/* Variante Verde para Protección Personal */
+.gb-header.header-green i {
+    color: #10B981; /* --color-success */
+}
+
+/* Tooltip icono (?) */
+.tooltip-icon {
+    margin-left: auto;
+    color: #94A3B8;
+    cursor: help;
+    transition: color 0.2s;
+}
+.tooltip-icon:hover { color: #009cff; }
+
+/* Sección Destacada (Fecha) */
+.section-highlight {
+    margin-bottom: 25px;
+}
+.badge-optional {
+    float: right;
+    font-size: 0.7rem;
+    background: #EFF6FF;
+    color: #009cff;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+/* --- ANIMACIONES DE ENTRADA (Cascada) --- */
+.anim-entry {
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- STEP 3 --- */
+
+/* --- PREMIUM GROUPING --- */
+
+/* Contenedor de Grupo Sutil */
+.group-box {
+    background: #F8FAFC; /* --bg-off-white */
+    border: 1px solid #E2E8F0; /* --border-light */
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.group-box:hover {
+    border-color: #CBD5E1;
+    background: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03); /* Sombra muy suave al pasar mouse */
+}
+
+/* Cabecera del Grupo */
+.gb-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #475569; /* --alex-ink-light */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.gb-header i {
+    color: #009cff; /* --alex-blue-base */
+    font-size: 1.1rem;
+}
+
+/* Variante Verde para Protección Personal */
+.gb-header.header-green i {
+    color: #10B981; /* --color-success */
+}
+
+/* Tooltip icono (?) */
+.tooltip-icon {
+    margin-left: auto;
+    color: #94A3B8;
+    cursor: help;
+    transition: color 0.2s;
+}
+.tooltip-icon:hover { color: #009cff; }
+
+/* Sección Destacada (Fecha) */
+.section-highlight {
+    margin-bottom: 25px;
+}
+.badge-optional {
+    float: right;
+    font-size: 0.7rem;
+    background: #EFF6FF;
+    color: #009cff;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+/* --- ANIMACIONES DE ENTRADA (Cascada) --- */
+.anim-entry {
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- PREMIUM CORPORATE MODULES --- */
+
+/* Contenedor Principal del Grupo */
+.premium-group {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0; /* Borde gris limpio */
+    border-radius: 8px; /* Radio ajustado */
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02); 
+    transition: border-color 0.3s ease;
+    max-width: 100%;
+}
+
+.premium-group:hover {
+    border-color: #CBD5E1; 
+}
+
+/* Encabezados de Grupo (Badge + Línea) */
+.pg-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    gap: 15px;
+}
+
+.pg-header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+/* Colores de Badges */
+.pg-header-badge.blue {
+    background: #EFF6FF; /* Azul muy claro */
+    color: #009cff;
+}
+.pg-header-badge.teal {
+    background: #ECFDF5; /* Verde muy claro */
+    color: #10B981;
+}
+
+/* Línea decorativa fina */
+.pg-header-line {
+    flex-grow: 1;
+    height: 1px;
+    background: #F1F5F9;
+}
+
+/* --- ESTILO ESPECIAL PARA LA CAJA DE FECHA (Single Row) --- */
+.premium-group.single-row {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+}
+
+.pg-icon-box {
+    width: 40px;
+    height: 40px;
+    background: var(--brand-indigo); /* Azul Oscuro Executive */
+    color: #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin-right: 15px;
+}
+
+.pg-content-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.pg-title-main {
+    display: block;
+    font-weight: 700;
+    color: #1E293B;
+    font-size: 0.95rem;
+}
+.pg-subtitle {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.pg-input-area { width: 180px; }
+
+
+/* --- INPUTS CORPORATIVOS (Compact Premium) --- */
+.lbl-premium {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569; 
+    margin-bottom: 6px;
+    display: block;
+}
+
+.input-rich-wrapper.compact-premium {
+    height: 46px; /* Altura controlada */
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px; /* Radio pequeño */
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+    box-shadow: none; 
+}
+
+/* Foco: Borde azul sólido */
+.input-rich-wrapper.compact-premium:focus-within {
+    border-color: #009cff;
+    box-shadow: 0 0 0 1px #009cff; 
+}
+
+/* ERROR STATE (Para que funcione el JS de validación) */
+.input-rich-wrapper.compact-premium.input-error {
+    border-color: #EF4444;
+    box-shadow: 0 0 0 1px #EF4444;
+    animation: shake 0.4s ease-in-out;
+}
+
+.rich-input {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #0F172A;
+}
+
+.chevron-slot {
+    font-size: 0.75rem;
+    color: #94A3B8;
+}
+
+/* Animaciones */
+.anim-entry {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUpPrecise 0.5s ease-out forwards;
+}
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+
+@keyframes fadeUpPrecise {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .premium-group.single-row { flex-direction: column; align-items: flex-start; }
+    .pg-content-row { flex-direction: column; align-items: flex-start; width: 100%; }
+    .pg-input-area { width: 100%; margin-top: 10px; }
+}
+
+/* --- NUEVO: ICONOS TEMÁTICOS EN INPUTS --- */
+
+/* Ajustamos el padding del input para dejar espacio al icono */
+.input-rich-wrapper.compact-premium {
+    padding-left: 10px; /* Reducimos padding base */
+    gap: 10px; /* Espacio entre icono y texto */
+}
+
+/* El contenedor del Icono */
+.icon-slot {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+/* TEMA AZUL (Liability) */
+.theme-blue .icon-slot {
+    color: #94A3B8; /* Gris al reposo */
+    background: transparent;
+}
+/* Al hacer foco, se vuelve Azul Alex AI */
+.theme-blue:focus-within .icon-slot {
+    color: #009cff;
+    background: rgba(0, 156, 255, 0.1); /* Fondo azul muy suave */
+}
+
+/* TEMA TEAL (Protección Personal) */
+.theme-teal .icon-slot {
+    color: #94A3B8;
+    background: transparent;
+}
+/* Al hacer foco, se vuelve Verde/Teal */
+.theme-teal:focus-within .icon-slot {
+    color: #10B981;
+    background: rgba(16, 185, 129, 0.1);
+}
+
+/* --- WAIVER MODAL (Legal Design) --- */
+
+.modal-backdrop {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.6); /* Slate 900 con opacidad */
+    backdrop-filter: blur(4px); /* Efecto vidrio borroso */
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-backdrop.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-card-waiver {
+    background: #FFFFFF;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    transform: translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid #E2E8F0;
+}
+
+.modal-backdrop.is-visible .modal-card-waiver {
+    transform: translateY(0);
+}
+
+/* Header del Modal */
+.waiver-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.warning-icon-box {
+    width: 50px; height: 50px;
+    background: #FEF2F2; /* Rojo muy claro */
+    color: #DC2626; /* Rojo alerta */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.waiver-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1E293B;
+    margin: 0;
+}
+
+/* Cuerpo del Texto */
+.waiver-body p {
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.legal-note {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: #64748B;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+/* Botones */
+.waiver-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+/* Botón "Volver" (Primary - Queremos que den click aquí) */
+.btn-waiver-secondary {
+    background: #009cff;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-waiver-secondary:hover { background: #0077CC; }
+
+/* Botón "Aceptar riesgo" (Secondary/Danger) */
+.btn-waiver-danger {
+    background: transparent;
+    color: #64748B;
+    border: 1px solid #E2E8F0;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-waiver-danger:hover {
+    background: #FEF2F2;
+    color: #DC2626;
+    border-color: #FECACA;
+}
+
+/* STEP 1 */
+.legal-flex-row {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+.custom-check-wrapper {
+    position: relative;
+    top: 2px;
+}
+/* Estilo simple para el checkbox si no usas uno personalizado global */
+.custom-check-wrapper input[type="checkbox"] {
+    width: 18px; height: 18px;
+    accent-color: #009cff;
+    cursor: pointer;
+}
+.custom-check-wrapper.input-error input {
+    outline: 2px solid #EF4444;
+}
+
+.legal-txt { font-size: 0.85rem; color: #475569; line-height: 1.5; margin: 0; }
+.legal-txt a { color: #009cff; text-decoration: none; font-weight: 600; }
+.legal-sub { display: block; font-size: 0.75rem; color: #94A3B8; margin-top: 4px; }
+

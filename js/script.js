@@ -688,3 +688,42 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleRentersFields(); // Ejecutar lógica inicial
     }
 });
+
+/* ================================================================
+   FIX FINAL: FLOTANTES ALINEADOS A LA DERECHA
+   ================================================================ */
+window.addEventListener("load", function() {
+    
+    // 1. LIMPIEZA DE "JAULAS" (Evita que se peguen al fondo)
+    const targets = [document.documentElement, document.body];
+    const killStyles = [
+        ['transform', 'none'], ['filter', 'none'], ['perspective', 'none'],
+        ['backdrop-filter', 'none'], ['contain', 'none'], 
+        ['will-change', 'auto'], ['animation', 'none']
+    ];
+
+    targets.forEach(el => {
+        killStyles.forEach(([prop, val]) => el.style.setProperty(prop, val, 'important'));
+    });
+
+    // 2. POSICIONAMIENTO VISUAL (Ambos a la derecha)
+    const chat = document.getElementById('floating-chat-container');
+    const menu = document.getElementById('floating-menu-container');
+
+    // Estilo base obligatorio para flotar
+    const commonStyle = "position: fixed !important; z-index: 2147483647 !important; display: flex !important; transform: none !important; top: auto !important; left: auto !important;";
+
+    if (chat) {
+        if(chat.parentElement !== document.body) document.body.appendChild(chat);
+        // CHAT: Abajo del todo a la derecha
+        chat.style.cssText = `${commonStyle} bottom: 30px !important; right: 30px !important;`;
+    }
+
+    if (menu) {
+        if(menu.parentElement !== document.body) document.body.appendChild(menu);
+        // MENÚ: Mismo lado (derecha), pero 70px más arriba para no tapar el chat
+        menu.style.cssText = `${commonStyle} bottom: 100px !important; right: 30px !important;`;
+    }
+
+    console.log("🚀 Alex AI: Botones flotantes alineados a la derecha.");
+});

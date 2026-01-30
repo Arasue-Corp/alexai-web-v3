@@ -3,441 +3,514 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex AI - Smart Quote | Step 3</title>
+    <title>Alex AI - Smart Quote | Step 3 (Coverages)</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
     <link rel="stylesheet" href="../css/style.css"> 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
-
-    <style>
-        /* --- 1. ESTILOS DE VALIDACIÓN --- */
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
-            20%, 40%, 60%, 80% { transform: translateX(4px); }
-        }
-
-        .input-error {
-            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
-            border-color: #EF4444 !important; 
-            background-color: #FEF2F2 !important;
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
-        }
-
-        /* --- 2. TOOLTIPS --- */
-        .input-label-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-        .tooltip-container { position: relative; display: inline-block; cursor: help; }
-        .tooltip-icon { color: #94A3B8; font-size: 0.9rem; transition: color 0.2s; }
-        .tooltip-icon:hover { color: var(--alex-blue-accent); }
-
-        .tooltip-content {
-            visibility: hidden; width: 240px; background-color: #FFFFFF; color: var(--alex-ink);
-            text-align: left; border-radius: 12px; padding: 12px; position: absolute;
-            z-index: 100; bottom: 125%; left: 50%; transform: translateX(-50%);
-            border: 2px solid var(--alex-ink); box-shadow: 4px 4px 0 rgba(74, 128, 240, 0.2);
-            font-size: 0.8rem; font-weight: 500; opacity: 0; transition: opacity 0.3s;
-        }
-        .tooltip-content::after {
-            content: ""; position: absolute; top: 100%; left: 50%; margin-left: -8px;
-            border-width: 8px; border-style: solid; border-color: var(--alex-ink) transparent transparent transparent;
-        }
-        .tooltip-container:hover .tooltip-content { visibility: visible; opacity: 1; }
-        @media (max-width: 600px) { .tooltip-content { width: 180px; left: -20px; transform: translateX(0); } .tooltip-content::after { left: 30px; } }
-
-        /* --- 3. MOBILE CHAT FIX --- */
-        @media (max-width: 768px) {
-            #chatGreeting { display: none !important; }
-            #floating-chat-container { bottom: 85px !important; right: 20px !important; } 
-        }
-
-        /* --- 4. WIZARD --- */
-        .wizard-header { margin-bottom: 30px; text-align: left; }
-        .wizard-message { font-size: 1.1rem; font-weight: 800; color: var(--alex-blue-accent); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .step-counter { font-size: 0.8rem; color: var(--alex-ink-light); background: #E2E8F0; padding: 4px 10px; border-radius: 12px; }
-        .wizard-track { height: 10px; background: #E2E8F0; border-radius: 10px; overflow: hidden; position: relative; }
-        .wizard-fill { height: 100%; background: linear-gradient(90deg, #4A80F0, #5FD4F4); border-radius: 10px; transition: width 0.5s; }
-        
-        .progress-list-sketch li a { text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px; padding: 6px 0; font-weight: 500; }
-        .progress-list-sketch li.active a { color: var(--alex-blue-accent); font-weight: 800; }
-        .progress-list-sketch li.pending a { color: #EF4444; opacity: 0.7; }
-        .progress-list-sketch li.done a { text-decoration: line-through; text-decoration-color: #10B981; color: #94A3B8; }
-
-        /* --- 5. CUPÓN --- */
-        .discount-coupon-box {
-            margin-top: 25px; background: #ECFDF5; border: 2px dashed #10B981; border-radius: 12px;
-            padding: 20px; text-align: center; position: relative; overflow: hidden;
-        }
-        .discount-coupon-box::before, .discount-coupon-box::after {
-            content: ''; position: absolute; top: 50%; width: 20px; height: 20px; background: #fff; border-radius: 50%; transform: translateY(-50%);
-        }
-        .discount-coupon-box::before { left: -12px; border-right: 2px dashed #10B981; }
-        .discount-coupon-box::after { right: -12px; border-left: 2px dashed #10B981; }
-        .dc-title { font-size: 0.7rem; text-transform: uppercase; font-weight: 800; color: #059669; letter-spacing: 1px; display: block; margin-bottom: 5px; }
-        .dc-amount { font-size: 2rem; font-weight: 900; color: #10B981; line-height: 1; display: block; }
-        .dc-sub { font-size: 0.8rem; color: #065F46; font-weight: 600; margin-top: 5px; display: block; }
-        .dc-icon { position: absolute; top: 10px; right: 10px; color: rgba(16, 185, 129, 0.2); font-size: 3rem; transform: rotate(15deg); }
-
-        /* Flatpickr Custom */
-        .flatpickr-calendar { border-radius: 16px; border: 2px solid var(--alex-ink); box-shadow: 5px 5px 0 rgba(0,0,0,0.1); }
-        .flatpickr-day.selected { background: var(--alex-blue-accent); border-color: var(--alex-blue-accent); }
-    </style>
+    <link rel="stylesheet" href="../css/style-quote.css"> 
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
 </head>
-<body class="quote-page-body">
+<body class="bg-body">
+
+    <div id="toast-container"></div>
+
+    <div class="top-header">
+        <div class="container top-header-flex">
+            <div class="top-contact">
+                <a href="tel:+1800555ALEX"><i class="fa-solid fa-phone"></i> +1 480 630 9630</a>
+                <a href="mailto:hello@alexai.com"><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</a>
+                <span><i class="fa-solid fa-location-dot"></i> 3101 N Central Ave ste 1174, Phoenix, AZ</span>
+            </div>
+            <div class="top-social">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <div class="container header-wrapper">
+            <a href="https://alexai.cloud/" class="logo-container">
+                <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="site-logo">
+            </a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../quote/quote.html" class="js-trigger-quote">Quote</a></li>
+                    <li class="has-dropdown">
+                        <a href="../index.html#products">Products <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="dropdown-menu organic-box">
+                            <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#carriers">Carriers</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+
+                    <li class="mobile-only-nav"><a href="../ambassadors/documents.html">Become an Ambassador</a></li>
+                    <li class="mobile-only-nav"><a href="../quote/quote.html" style="color: var(--alex-blue-accent);">Check Prices</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="../ambassadors/index.html" class="btn btn-outline btn-sm">Become an Ambassador</a>
+                <a href="../quote/quote.html" class="btn btn-solid btn-sm js-trigger-quote">Check Prices</a>
+            </div>
+            
+             <button class="mobile-menu-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        </div>
+    </header>
 
     <nav class="quote-nav">
-        <a href="quote-2.html" class="nav-back-btn">
-            <div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div>
-            <span>Back</span>
-        </a>
-        <div class="nav-brand">
-            <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI" class="nav-mini-logo">
-        </div>
-        <div class="lang-switch-modern">
-            <span class="lang-opt">ES</span>
-            <span class="lang-opt active">EN</span>
-        </div>
+        <a href="quote-2.html" class="nav-back-btn"><div class="icon-circle"><i class="fa-solid fa-arrow-left"></i></div><span> Location Details</span></a>
+        <div class="lang-switch-modern"><span class="lang-opt">ES</span><span class="lang-opt active">EN</span></div>
     </nav>
 
-    <main class="quote-main-content step-layout-wrapper">
-        <div class="ambient-glow glow-1"></div>
-        <div class="ambient-glow glow-2"></div>
-        <div class="ambient-glow glow-3"></div>
+        <div class="main-header">
+            <div class="title-sticker">
+                <h1>Alex AI <span>Smart Compare</span></h1>
+                <span class="title-subtitle">Powered by AI, handled by humans.</span>
+            </div>
+        </div>
 
-        <div class="step-grid-container">
-            
-            <div class="main-form-col">
-                <div class="quote-card-stacked anim-entry">
-                    
-                    <div class="wizard-header">
-                        <div class="wizard-message">
-                            <span><i class="fa-solid fa-shield-heart"></i> Customize Protection</span>
-                            <span class="step-counter">Step 3 of 14</span>
-                        </div>
-                        <div class="wizard-track">
-                            <div class="wizard-fill" style="width: 21.4%;"></div>
-                        </div>
-                    </div>
+    <div class="page-wrapper">
 
-                    <div class="quote-header text-center">
-                        <h3>Define your limits.</h3>
-                        <p>Choose the coverage levels that fit your needs.</p>
-                    </div>
-            
-                    <form id="quoteFormStep3">
-                        
-                        <div class="form-group">
-                            <div class="input-label-row">
-                                <label for="effDate">Effective Date</label>
-                                <div class="tooltip-container">
-                                    <i class="fa-solid fa-circle-question tooltip-icon"></i>
-                                    <span class="tooltip-content">When do you want your new policy to start? Usually today or tomorrow.</span>
-                                </div>
-                            </div>
-                            <div class="input-modern-wrapper">
-                                <i class="fa-regular fa-calendar-check input-icon"></i>
-                                <input type="text" id="effDate" class="alex-input-modern date-picker validate-req" placeholder="Select Start Date">
-                            </div>
-                        </div>
-
-                        <div class="form-row-2" style="display: flex; gap: 20px; flex-wrap: wrap;">
-                            <div class="form-group flex-grow">
-                                <div class="input-label-row">
-                                    <label for="covBI">Liability BI</label>
-                                    <div class="tooltip-container">
-                                        <i class="fa-solid fa-circle-question tooltip-icon"></i>
-                                        <span class="tooltip-content"><strong>Bodily Injury:</strong> Pays for injuries to <em>others</em> when you are at fault in an accident.</span>
-                                    </div>
-                                </div>
-                                <div class="input-modern-wrapper">
-                                    <i class="fa-solid fa-user-injured input-icon"></i>
-                                    <select id="covBI" class="alex-input-modern validate-req">
-                                        <option value="" disabled selected>Select Limit</option>
-                                        <option value="25/50">25/50</option>
-                                        <option value="50/100">50/100</option>
-                                        <option value="100/300">100/300</option>
-                                        <option value="250/500">250/500</option>
-                                        <option value="300/500">300/500</option>
-                                        <option value="500/500">500/500</option>
-                                        <option value="500/1mil">500/1 mil</option>
-                                        <option value="1mil/1mil">1 mil/1 mil</option>
-                                        <option value="5mil/5mil">5 mil/5 mil</option>
-                                        <option value="100CSL">100 CSL</option>
-                                        <option value="300CSL">300 CSL</option>
-                                        <option value="500CSL">500 CSL</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group flex-grow">
-                                <div class="input-label-row">
-                                    <label for="covPD">Liability PD</label>
-                                    <div class="tooltip-container">
-                                        <i class="fa-solid fa-circle-question tooltip-icon"></i>
-                                        <span class="tooltip-content"><strong>Property Damage:</strong> Pays for damage to <em>others'</em> cars or property when you are at fault.</span>
-                                    </div>
-                                </div>
-                                <div class="input-modern-wrapper">
-                                    <i class="fa-solid fa-car-burst input-icon"></i>
-                                    <select id="covPD" class="alex-input-modern validate-req">
-                                        <option value="" disabled selected>Select Limit</option>
-                                        <option value="15">15</option>
-                                        <option value="20">20</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                        <option value="250">250</option>
-                                        <option value="500">500</option>
-                                        <option value="1mil">1 mil</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="input-label-row">
-                                <label for="covMed">Medical Payments</label>
-                                <div class="tooltip-container">
-                                    <i class="fa-solid fa-circle-question tooltip-icon"></i>
-                                    <span class="tooltip-content">Pays medical bills for <strong>you and your passengers</strong> regardless of who caused the accident.</span>
-                                </div>
-                            </div>
-                            <div class="input-modern-wrapper">
-                                <i class="fa-solid fa-briefcase-medical input-icon"></i>
-                                <select id="covMed" class="alex-input-modern validate-req">
-                                    <option value="" disabled selected>Select Limit</option>
-                                    <option value="No Coverage">No coverage</option>
-                                    <option value="500">500</option>
-                                    <option value="1000">1000</option>
-                                    <option value="2000">2000</option>
-                                    <option value="2500">2500</option>
-                                    <option value="5000">5000</option>
-                                    <option value="10000">10000</option>
-                                    <option value="25000">25000</option>
-                                    <option value="50000">50000</option>
-                                    <option value="100000">100000</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-row-2" style="display: flex; gap: 20px; flex-wrap: wrap;">
-                            <div class="form-group flex-grow">
-                                <div class="input-label-row">
-                                    <label for="covUM">Uninsured BI</label>
-                                    <div class="tooltip-container">
-                                        <i class="fa-solid fa-circle-question tooltip-icon"></i>
-                                        <span class="tooltip-content">Protects you if you are hit by a driver who has <strong>NO insurance</strong>.</span>
-                                    </div>
-                                </div>
-                                <div class="input-modern-wrapper">
-                                    <i class="fa-solid fa-user-slash input-icon"></i>
-                                    <select id="covUM" class="alex-input-modern validate-req">
-                                        <option value="" disabled selected>Select Limit</option>
-                                        <option value="No Coverage">No coverage</option>
-                                        <option value="25/50">25/50</option>
-                                        <option value="50/100">50/100</option>
-                                        <option value="100/300">100/300</option>
-                                        <option value="250/500">250/500</option>
-                                        <option value="300/500">300/500</option>
-                                        <option value="500/500">500/500</option>
-                                        <option value="500/1000">500/1000</option>
-                                        <option value="1000/1000">1000/1000</option>
-                                        <option value="100CSL">100 CSL</option>
-                                        <option value="300CSL">300 CSL</option>
-                                        <option value="500CSL">500 CSL</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group flex-grow">
-                                <div class="input-label-row">
-                                    <label for="covUIM">Underinsured BI</label>
-                                    <div class="tooltip-container">
-                                        <i class="fa-solid fa-circle-question tooltip-icon"></i>
-                                        <span class="tooltip-content">Protects you if the other driver has insurance, but <strong>not enough</strong> to cover your bills.</span>
-                                    </div>
-                                </div>
-                                <div class="input-modern-wrapper">
-                                    <i class="fa-solid fa-user-clock input-icon"></i>
-                                    <select id="covUIM" class="alex-input-modern validate-req">
-                                        <option value="" disabled selected>Select Limit</option>
-                                        <option value="No Coverage">No coverage</option>
-                                        <option value="25/50">25/50</option>
-                                        <option value="50/100">50/100</option>
-                                        <option value="100/300">100/300</option>
-                                        <option value="250/500">250/500</option>
-                                        <option value="300/500">300/500</option>
-                                        <option value="500/500">500/500</option>
-                                        <option value="500/1000">500/1000</option>
-                                        <option value="1000/1000">1000/1000</option>
-                                        <option value="100CSL">100 CSL</option>
-                                        <option value="300CSL">300 CSL</option>
-                                        <option value="500CSL">500 CSL</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="input-label-row">
-                                <label for="covDeath">Accidental Death</label>
-                                <div class="tooltip-container">
-                                    <i class="fa-solid fa-circle-question tooltip-icon"></i>
-                                    <span class="tooltip-content">Pays a benefit to your beneficiaries if a covered accident results in death.</span>
-                                </div>
-                            </div>
-                            <div class="input-modern-wrapper">
-                                <i class="fa-solid fa-heart-pulse input-icon"></i>
-                                <select id="covDeath" class="alex-input-modern validate-req">
-                                    <option value="" disabled selected>Select Limit</option>
-                                    <option value="No Coverage">No coverage</option>
-                                    <option value="1000">1000</option>
-                                    <option value="2000">2000</option>
-                                    <option value="3000">3000</option>
-                                    <option value="4000">4000</option>
-                                    <option value="5000">5000</option>
-                                    <option value="6000">6000</option>
-                                    <option value="7000">7000</option>
-                                    <option value="8000">8000</option>
-                                    <option value="9000">9000</option>
-                                    <option value="10000">10000</option>
-                                </select>
-                            </div>
-                        </div>
-            
-                        <div class="form-action" style="margin-top: 30px;">
-                            <button type="button" class="btn-glow-anim" id="btnNext">
-                                <span>Next Step</span>
-                                <i class="fa-solid fa-arrow-right-long"></i>
-                            </button>
-                            <div class="secure-badge">
-                                <i class="fa-solid fa-check-shield"></i> Coverage Selection Saved
-                            </div>
-                        </div>
-            
-                    </form>
+        <div class="wizard-container">
+            <div class="wizard-top">
+                <div class="wizard-title"><i class="fa-solid fa-shield-heart"></i>Customize Protection</div>
+                <div class="wizard-title"><i class="fa-solid fa-flag-checkered"></i></div>
+            </div>
+            <div class="progress-track"><div class="progress-fill" style="width: 21%;"></div></div>
+            <div class="header-split"></div>
+            <header class="brand-page-header">
+                <div class="title-group">
+                    <h1>Define Your Limits</h1>
+                    <div class="aurora-line"></div> 
                 </div>
-                <div class="card-shadow-layer"></div>
+                <p>Choose the coverage levels that fit your needs.</p>
+            </header>
+        </div>
+
+        <div class="specs-layout-grid">
+            <div class="main-spec-col">
+                <div class="premium-white-card" id="quoteFormStep3">
+                    <div id="carFormsContainer">
+                        <div class="car-panel active" id="panel-car-1" data-id="1">
+                            
+                            <div class="premium-group single-row anim-entry">
+                                <div class="pg-icon-box">
+                                    <i class="fa-regular fa-calendar-check"></i>
+                                </div>
+                                <div class="pg-content-row">
+                                    <div class="pg-labels">
+                                        <span class="pg-title-main">Effective Date</span>
+                                        <span class="pg-subtitle">Policy Start</span>
+                                    </div>
+                                    <div class="pg-input-area">
+                                        <div class="input-rich-wrapper compact-premium">
+                                            <input type="text" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="premium-group anim-entry delay-1">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge blue">
+                                        <i class="fa-solid fa-scale-balanced"></i> MANDATORY
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
+                                
+                                <div class="grid-2-tight">
+                                    <div class="inp-rich-group">
+                                        <label class="cov-label">
+                                            Bodily Injury (BI) 
+                                            <i class="fa-solid fa-circle-info tooltip-icon">
+                                                <span class="tooltip-text" style="font-style: normal;">Pays if you injure someone else in an accident. Required by law.</span>
+                                            </i>
+                                        </label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-user-injured"></i></div>
+                                            <select class="rich-input validate-req">
+                                                <option value="" disabled selected>Select Limit</option>
+                                                <option value="25/50">25/50</option>
+                                                <option value="50/100">50/100</option>
+                                                <option value="100/300">100/300</option>
+                                                <option value="250/500">250/500</option>
+                                                <option value="300/500">300/500</option>
+                                                <option value="500/500">500/500</option>
+                                                <option value="500/1mil">500/1 mil</option>
+                                                <option value="1mil/1mil">1 mil/1 mil</option>
+                                                <option value="5mil/5mil">5 mil/5 mil</option>
+                                                <option value="100CSL">100 CSL</option>
+                                                <option value="300CSL">300 CSL</option>
+                                                <option value="500CSL">500 CSL</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="inp-rich-group">
+                                        <label class="cov-label">
+                                            Property Damage (PD)
+                                            <i class="fa-solid fa-circle-info tooltip-icon">
+                                                <span class="tooltip-text" style="font-style: normal;">Pays for damage you cause to others' cars or property (fences, signs).</span>
+                                            </i>
+                                        </label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-car-burst"></i></div>
+                                            <select class="rich-input validate-req">
+                                                <option value="" disabled selected>Select Limit</option>
+                                                <option value="15">15</option>
+                                                <option value="20">20</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                                <option value="250">250</option>
+                                                <option value="500">500</option>
+                                                <option value="1mil">1 mil</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="premium-group anim-entry delay-2">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge teal">
+                                        <i class="fa-solid fa-shield-halved"></i> YOUR PROTECTION
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
+
+                                <div class="grid-2-tight">
+                                    <div class="inp-rich-group">
+                                        <label class="cov-label">
+                                            Uninsured Motorist BI
+                                            <i class="fa-solid fa-circle-info tooltip-icon">
+                                                <span class="tooltip-text" style="font-style: normal;">Pays for YOUR injuries if hit by a driver with no insurance.</span>
+                                            </i>
+                                        </label>                                        
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-user-shield"></i></div>
+                                            <select class="rich-input validate-req" id="inputUM">
+                                                <option value="" disabled selected>Select Limit</option>
+                                                <option value="No Coverage">No coverage</option>
+                                                <option value="25/50">25/50</option>
+                                                <option value="50/100">50/100</option>
+                                                <option value="100/300">100/300</option>
+                                                <option value="250/500">250/500</option>
+                                                <option value="300/500">300/500</option>
+                                                <option value="500/500">500/500</option>
+                                                <option value="500/1000">500/1000</option>
+                                                <option value="1000/1000">1000/1000</option>
+                                                <option value="100CSL">100 CSL</option>
+                                                <option value="300CSL">300 CSL</option>
+                                                <option value="500CSL">500 CSL</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="inp-rich-group">
+                                        <label class="cov-label">
+                                            Underinsured Motorist BI
+                                            <i class="fa-solid fa-circle-info tooltip-icon">
+                                                <span class="tooltip-text" style="font-style: normal;">Pays if the at-fault driver has insurance, but not enough to cover your bills.</span>
+                                            </i>
+                                        </label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-umbrella"></i></div>
+                                            <select class="rich-input validate-req" id="inputUIM">
+                                                <option value="" disabled selected>Select Limit</option>
+                                                <option value="No Coverage">No coverage</option>
+                                                <option value="25/50">25/50</option>
+                                                <option value="50/100">50/100</option>
+                                                <option value="100/300">100/300</option>
+                                                <option value="250/500">250/500</option>
+                                                <option value="300/500">300/500</option>
+                                                <option value="500/500">500/500</option>
+                                                <option value="500/1000">500/1000</option>
+                                                <option value="1000/1000">1000/1000</option>
+                                                <option value="100CSL">100 CSL</option>
+                                                <option value="300CSL">300 CSL</option>
+                                                <option value="500CSL">500 CSL</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="inp-rich-group">
+                                        <label class="cov-label">
+                                            Medical Payments
+                                            <i class="fa-solid fa-circle-info tooltip-icon">
+                                                <span class="tooltip-text" style="font-style: normal;">Pays for immediate medical expenses for you/passengers, regardless of fault.</span>
+                                            </i>
+                                        </label>                                        
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-briefcase-medical"></i></div>
+                                            <select class="rich-input validate-req">
+                                                <option value="" disabled selected>Select Limit</option>
+                                                <option value="No Coverage">No coverage</option>
+                                                <option value="500">500</option>
+                                                <option value="1000">1000</option>
+                                                <option value="2000">2000</option>
+                                                <option value="2500">2500</option>
+                                                <option value="5000">5000</option>
+                                                <option value="10000">10000</option>
+                                                <option value="25000">25000</option>
+                                                <option value="50000">50000</option>
+                                                <option value="100000">100000</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="inp-rich-group">
+                                        <label class="cov-label">
+                                            Accidental Death
+                                            <i class="fa-solid fa-circle-info tooltip-icon">
+                                                <span class="tooltip-text" style="font-style: normal;">Provides a benefit to beneficiaries in case of a fatal auto accident.</span>
+                                            </i>
+                                        </label>                                            
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-heart-pulse"></i></div>
+                                            <select class="rich-input validate-req">
+                                                <option value="" disabled selected>Select Limit</option>
+                                                <option value="No Coverage">No coverage</option>
+                                                <option value="1000">1000</option>
+                                                <option value="2000">2000</option>
+                                                <option value="3000">3000</option>
+                                                <option value="4000">4000</option>
+                                                <option value="5000">5000</option>
+                                                <option value="6000">6000</option>
+                                                <option value="7000">7000</option>
+                                                <option value="8000">8000</option>
+                                                <option value="9000">9000</option>
+                                                <option value="10000">10000</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-action-area">
+                        <div class="secure-badge-modern"><i class="fa-solid fa-lock"></i> SSL Encrypted Data</div>
+                        <button type="button" class="btn-hero-gradient" id="btnNext" style="border-radius: 8px;">
+                            Next Step <i class="fa-solid fa-arrow-right-long"></i>
+                        </button>
+                    </div>
+
+                </div>
             </div>
 
-            <aside class="sidebar-col anim-entry" style="animation-delay: 0.2s;">
-                <div class="organic-box sidebar-note taped-note">
-                    <div class="washi-tape"></div>
-                    <h4 class="sidebar-title">Coverage Path</h4>
-                    
-                    <ul class="progress-list-sketch">
-                        <li class="active"><a href="#"><span class="sketch-circle"></span> Client Information</a></li>
-                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Drivers</a></li>
-                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Violations</a></li>
-                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Additional Info</a></li>
-                        <li class="pending"><a href="#"><i class="fa-regular fa-circle"></i> Vehicle</a></li>
+            <aside class="config-sidebar">
+                <div class="organic-panel">
+                    <div class="sidebar-title">Coverage Path</div>
+                    <ul class="aurora-list">
+                        <li class="active"><span class="pulse-dot"></span> Client Information</li>
+                        <li><i class="fa-regular fa-circle"></i> Drivers</li>
+                        <li><i class="fa-regular fa-circle"></i> Violations</li>
+                        <li><i class="fa-regular fa-circle"></i> Additional Info</li>
+                        <li><i class="fa-regular fa-circle"></i> Vehicle</li>
                     </ul>
-                    
-                    <div class="discount-coupon-box">
-                        <i class="fa-solid fa-tags dc-icon"></i>
-                        <span class="dc-title">Potential Discounts</span>
-                        <span class="dc-amount">3 Found</span>
-                        <span class="dc-sub">Custom limits unlocked!</span>
+                    <div class="discount-box-vibrant">
+                        <i class="fa-solid fa-tags bg-icon"></i>
+                        <div class="db-title">Potential Discounts</div>
+                        <div class="db-val">3</div>
+                        <div class="db-msg">Custom limits unlocked!</div>
                     </div>
-
-                    <div class="mini-tip">
-                        <div class="tip-icon"><i class="fa-regular fa-lightbulb"></i></div>
+                    <div class="tip-box-vibrant" style="margin-top: 20px;">
+                        <i class="fa-regular fa-lightbulb tip-icon"></i>
                         <div>
                             <strong>Alex Tip:</strong> Choosing higher limits (like 100/300) often costs just a few dollars more but offers much better protection.
                         </div>
                     </div>
                 </div>
             </aside>
+        </div>
+    </div>
+
+    <div id="waiverModal" class="modal-backdrop">
+        <div class="modal-card-waiver">
+            <div class="waiver-header">
+                <div class="warning-icon-box">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3>Uninsured / Underinsured Motorist Waiver</h3>
+            </div>
+            
+            <div class="waiver-body">
+                <p><strong>Are you sure you want to decline this coverage?</strong></p>
+                <p>By selecting <em>"No Coverage"</em> or leaving this field blank, you acknowledge that you will be financially responsible for your own medical bills if you are hit by a driver who has no insurance.</p>
+                <div class="legal-note">
+                    <i class="fa-solid fa-scale-balanced"></i> Acknowledgment of Risk pursuant to State Insurance Laws.
+                </div>
+            </div>
+
+            <div class="waiver-actions">
+                <button id="btnReturnToCoverages" class="btn-waiver-secondary">
+                    <i class="fa-solid fa-arrow-left"></i> Go Back & Add Coverage
+                </button>
+                <button id="btnConfirmWaiver" class="btn-waiver-danger">
+                    I Understand, Proceed <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact" class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <a href="../index.html" style="display: block; margin-bottom: 20px;">
+                    <img src="../assets/img/Logo-alexai-main.png" 
+                        alt="Alex AI Insurtech Logo" 
+                        style="max-width: 160px; height: auto; filter: brightness(0) invert(1);">
+                </a>
+                <p style="color: rgba(255,255,255,0.9); font-weight: 500;">
+                    Smart insurance for modern life. Powered by intelligence, driven by humans.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Products</h5>
+                <ul class="footer-links">
+                    <li><a href="../quote/quote.html">Car Insurance</a></li>
+                    <li><a href="../homeowners/index.html">Home Insurance</a></li>
+                    <li><a href="../renters/index.html">Renters Insurance</a></li>
+                    <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Company</h5>
+                <ul class="footer-links">
+                    <li><a href="https://www.instagram.com/alexai.insurtech.usa/">About Us</a></li>
+                    <li><a href="../ambassadors/index.html">Ambassadors</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../contact/index.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 style="color: white;">Contact & Legal</h5>
+                <ul class="footer-links contact-links">
+                    <li><i class="fa-solid fa-phone"></i> +1 480-630-9630</li>
+                    <li><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</li>
+                    <li><a href="../terms-conditions/index.html">Terms of Service</a></li>
+                    <li><a href="../privacy-policy/index.html">Privacy Policy</a></li>
+                </ul>
+                <div class="app-buttons-row" style="display:flex; gap:15px; flex-wrap:wrap;">
+                    <a href="https://apps.apple.com/us/app/alex-ai-insurtech-app/id6752793999" class="btn-app-store">
+                        <i class="fa-brands fa-apple"></i>
+                        <div>
+                            <span class="small-txt">Download on the</span>
+                            <span class="big-txt">App Store</span>
+                        </div>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=cloud.alexai.movil&pcampaignid=web_share" class="btn-app-store">
+                        <i class="fa-brands fa-google-play"></i>
+                        <div>
+                            <span class="small-txt">Get it on</span>
+                            <span class="big-txt">Google Play</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
 
         </div>
-    </main>
+        <div class="container copyright-row">
+             <p>&copy; 2026 Alex AI Insurtech. All rights reserved.</p>
+             <div class="social-links">
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Alex-AI-Insurtech" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
 
     <div id="floating-menu-container">
-        <div class="floating-menu-list organic-box" id="megaMenu">
-            <h5>Quick Navigate</h5>
-            <ul>
-                <li><a href="../quote/quote.html"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
-                <li><a href="../homeowners/index.html"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
-                <li><a href="../renters/index.html"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
-                <li><a href="../alex-sign/index.html"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
-                <li class=\"divider\"></li>
-                <li><a href="../blog/index.html"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
-                <li><a href="../contact/index.html"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
-            </ul>
+        <div class="nav-command-center" id="megaMenu">
+            <div class="cmd-header">
+                <span>Quick Navigate</span>
+                <span class="cmd-badge">MENU</span>
+            </div>
+            <div class="cmd-grid">
+                <a href="../quote/quote.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-car"></i></div>
+                    <span>Car Insurance</span>
+                </a>
+                <a href="../homeowners/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-house"></i></div>
+                    <span>Home Insurance</span>
+                </a>
+                <a href="../renters/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-key"></i></div>
+                    <span>Renters Insurance</span>
+                </a>
+                <a href="../alex-sign/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-file-signature"></i></div>
+                    <span>Alex Sign</span>
+                </a>
+                <a href="../blog/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-newspaper"></i></div>
+                    <span>Blog</span>
+                </a>
+                <a href="../contact/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-headset"></i></div>
+                    <span>Contact Support</span>
+                </a>
+            </div>
+            <div class="cmd-footer">
+                <a href="../index.html">Back to Home <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
         </div>
-        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open quick menu">
-            <i class="fa-solid fa-bars-staggered"></i>
+        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open menu">
+            <i class="fa-regular fa-compass"></i>
         </button>
     </div>
 
     <div id="floating-chat-container">
-        <div class="chat-bubble organic-box" id="chatGreeting">
-            <strong>Alex AI says:</strong><br> 👋 Limits confused you? Ask me!
+        <div class="alex-chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div class="agent-info">
+                    <div class="agent-avatar"><i class="fa-solid fa-robot"></i><div class="status-dot"></div></div>
+                    <div class="agent-text">
+                        <span class="name">Alex AI Assistant</span>
+                        <span class="status">Reply time: Instant</span>
+                    </div>
+                </div>
+                <button class="close-chat-btn js-close-chat"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="chat-body">
+                <div class="chat-timestamp">Today, 5:00 PM</div>
+                
+                <div class="msg-row bot">
+                    <div class="msg-bubble">
+                        Hello! I see you're looking at quotes. Do you have any questions about the <strong>Collision Deductible</strong>? 🚗
+                    </div>
+                </div>
+                
+                <div class="chat-suggestions">
+                    <button>Explain Deductibles</button>
+                    <button>Talk to Human</button>
+                </div>
+            </div>
+            
+            <div class="chat-footer">
+                <input type="text" placeholder="Type your question..." class="chat-input">
+                <button class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
         </div>
+
         <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
-            <i class="fa-solid fa-robot"></i>
+            <i class="fa-solid fa-comment-dots"></i>
+            <span class="online-badge"></span>
         </button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="../js/script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            // 1. Calendario Effective Date (minDate: hoy)
-            flatpickr(".date-picker", {
-                dateFormat: "m/d/Y",
-                minDate: "today",
-                altInput: true,
-                altFormat: "F j, Y",
-                disableMobile: "true"
-            });
-
-            // 2. Validación Next Step
-            const btnNext = document.getElementById('btnNext');
-
-            if(btnNext) {
-                btnNext.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const requiredFields = document.querySelectorAll('.validate-req');
-                    let isValid = true;
-                    let firstError = null;
-
-                    requiredFields.forEach(field => {
-                        field.classList.remove('input-error');
-                        
-                        if (!field.value.trim()) {
-                            isValid = false;
-                            void field.offsetWidth; 
-                            field.classList.add('input-error');
-                            if(!firstError) firstError = field;
-                        }
-                    });
-
-                    if (!isValid) {
-                        if(firstError) firstError.focus();
-                    } else {
-                        // ÉXITO
-                        const originalText = btnNext.innerHTML;
-                        btnNext.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving Limits...';
-                        
-                        setTimeout(() => {
-                            // PASO 4
-                            alert("Coverage Saved! Moving to Step 4.");
-                            window.location.href = "quote-4.html";
-                            btnNext.innerHTML = 'Next Step <i class="fa-solid fa-arrow-right-long"></i>';
-                        }, 1000);
-                    }
-                });
-            }
-
-            // 3. Limpiar errores
-            document.querySelectorAll('.validate-req').forEach(input => {
-                input.addEventListener('input', function() {
-                    if(this.value.trim()) this.classList.remove('input-error');
-                });
-            });
-        });
-    </script>
+    <script src="../js/script-quote.js"></script>
 </body>
 </html>

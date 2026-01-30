@@ -8,14 +8,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css"> 
     <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../css/style-quote.css">
+    <link rel="stylesheet" href="../css/style-quote.css">    
 </head>
 
 <body class="bg-matte-brand">
 
     <div id="toast-container"></div>
 
-       <div class="top-header">
+    <div class="top-header">
         <div class="container top-header-flex">
             <div class="top-contact">
                 <a href="tel:+1800555ALEX"><i class="fa-solid fa-phone"></i> +1 480 630 9630</a>
@@ -75,11 +75,7 @@
         <div class="lang-switch-modern"><span class="lang-opt">ES</span><span class="lang-opt active">EN</span></div>
     </nav>
 
-
-
-    <main class="brand-wrapper">
-        
-        
+    <main class="brand-wrapper">       
         <header class="brand-page-header">
             <div class="title-group">
                 <h1>Final Policy Review</h1>
@@ -239,7 +235,6 @@
                 </div>
             </div>
         </nav>
-
     </main>
 
     <footer id="contact" class="site-footer">
@@ -297,7 +292,6 @@
                     </a>
                 </div>
             </div>
-
         </div>
         <div class="container copyright-row">
              <p>&copy; 2026 Alex AI Insurtech. All rights reserved.</p>
@@ -389,7 +383,82 @@
             <span class="online-badge"></span>
         </button>
     </div>
+
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
+
+    <script>
+    (function() {
+        console.clear();
+        console.log("%c🕵️‍♂️ INICIANDO DIAGNÓSTICO DE ALEX AI...", "color: cyan; font-size: 16px; font-weight: bold; background: #333; padding: 5px;");
+
+        // ---------------------------------------------------------
+        // 1. BÚSQUEDA DE "TRAMPAS" CSS (La Jaula Invisible)
+        // ---------------------------------------------------------
+        const floater = document.getElementById('floating-chat-container');
+        
+        if (!floater) {
+            console.error("❌ ERROR CRÍTICO: El div '#floating-chat-container' NO EXISTE en el HTML. Revisa que no lo hayas borrado.");
+        } else {
+            console.log("✅ El contenedor del chat existe. Buscando padres conflictivos...");
+            
+            let parent = floater.parentElement;
+            let foundTrap = false;
+
+            while (parent && parent !== document) {
+                const style = window.getComputedStyle(parent);
+                const tag = parent.tagName.toLowerCase();
+                const cls = parent.className ? `.${parent.className.replace(/ /g, '.')}` : '';
+                const id = parent.id ? `#${parent.id}` : '';
+                const name = `${tag}${id}${cls}`;
+
+                // Propiedades que rompen position: fixed
+                const trapProps = [];
+                if (style.transform !== 'none') trapProps.push(`transform: ${style.transform}`);
+                if (style.filter !== 'none') trapProps.push(`filter: ${style.filter}`);
+                if (style.perspective !== 'none') trapProps.push(`perspective: ${style.perspective}`);
+                if (style.backdropFilter !== 'none') trapProps.push(`backdrop-filter: ${style.backdropFilter}`);
+                if (style.contain === 'paint' || style.contain === 'content' || style.contain === 'strict') trapProps.push(`contain: ${style.contain}`);
+                if (style.willChange !== 'auto' && (style.willChange.includes('transform') || style.willChange.includes('opacity'))) trapProps.push(`will-change: ${style.willChange}`);
+
+                if (trapProps.length > 0) {
+                    foundTrap = true;
+                    console.group(`🚨 CULPABLE ENCONTRADO: <${name}>`);
+                    console.error(`Este elemento está rompiendo tus botones flotantes.`);
+                    console.warn(`Propiedades conflictivas: \n👉 ${trapProps.join('\n👉 ')}`);
+                    console.log("Solución: Aplica 'transform: none !important' (u otra propiedad) a este elemento.");
+                    console.groupEnd();
+                }
+                parent = parent.parentElement;
+            }
+
+            if (!foundTrap) {
+                console.log("✅ No se encontraron trampas CSS en los padres. El CSS parece limpio.");
+            }
+        }
+
+        // ---------------------------------------------------------
+        // 2. BÚSQUEDA DE ERRORES LÓGICOS (Crash de JS)
+        // ---------------------------------------------------------
+        console.log("%c🔍 VERIFICANDO SCRIPT CRASH...", "color: yellow; font-weight: bold;");
+        
+        // Elementos que script-quote.js intenta buscar
+        const criticalElements = ['btnNext', 'quoteFormStep4', 'btnAddDriverTop'];
+        const missingElements = [];
+
+        criticalElements.forEach(id => {
+            if (!document.getElementById(id)) missingElements.push(id);
+        });
+
+        if (missingElements.length > 0) {
+            console.warn(`⚠️ AVISO: Faltan elementos ID: [${missingElements.join(', ')}]`);
+            console.warn("Si tu archivo 'script-quote.js' intenta hacer 'document.getElementById(...).addEventListener' a estos elementos sin verificar si existen, EL SCRIPT CRASHEARÁ AQUÍ y todo lo que esté debajo dejará de funcionar.");
+        } else {
+            console.log("✅ Todos los elementos críticos para el script existen.");
+        }
+
+    })();
+</script>
+
 </body>
 </html>

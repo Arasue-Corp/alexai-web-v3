@@ -376,7 +376,7 @@ html, body {
 /* --- LAYOUT GENERAL --- */
 #floating-menu-container,
 #floating-chat-container {
-    position: fixed; right: 25px; z-index: 1200;
+    position: fixed !important; right: 25px; z-index: 1200 !important;
     display: flex; flex-direction: column; align-items: flex-end;
 }
 

@@ -113,65 +113,83 @@
                         
                         <div class="info-banner-blue mb-4">
                             <div class="banner-icon"><i class="fa-solid fa-circle-user"></i></div>
-                            <div><strong>Primary Driver:</strong> Uri Williams (Age 30)</div>
+                            <div><strong>Primary Driver:</strong> Uri Williams</div>
                         </div>
 
-                        <div class="sec-label"><i class="fa-solid fa-stopwatch"></i> Usage Frequency</div>
+                        <div class="premium-group">
+                            <div class="pg-header">
+                                <div class="pg-header-badge blue">
+                                    <i class="fa-solid fa-stopwatch"></i> USAGE FREQUENCY
+                                </div>
+                                <div class="pg-header-line"></div>
+                            </div>
 
-                        <div class="row-switch-container">
-                            <div class="switch-label-group">
-                                <div class="sl-icon"><i class="fa-regular fa-clock"></i></div>
-                                <div class="sl-text">
-                                    <span class="sl-title">Occasional Operator?</span>
-                                    <span class="sl-sub">Driven less than 25% of time?</span>
+                            <div class="row-switch-container">
+                                <div class="switch-label-group">
+                                    <div class="sl-icon"><i class="fa-regular fa-clock"></i></div>
+                                    <div class="sl-text">
+                                        <span class="sl-title">Occasional Operator?</span>
+                                        <span class="sl-sub">Driven less than 25% of time?</span>
+                                    </div>
+                                </div>
+                                <div class="aurora-toggle-segment">
+                                    <input type="radio" name="occ_d1" id="occ_d1_yes" value="yes">
+                                    <label for="occ_d1_yes">Yes</label>
+                                    
+                                    <input type="radio" name="occ_d1" id="occ_d1_no" value="no" checked>
+                                    <label for="occ_d1_no">No</label>
+                                    
+                                    <div class="segment-highlight"></div>
                                 </div>
                             </div>
-                            <div class="aurora-toggle-segment">
-                                <input type="radio" name="occ_d1" id="occ_d1_yes" value="yes">
-                                <label for="occ_d1_yes">Yes</label>
-                                
-                                <input type="radio" name="occ_d1" id="occ_d1_no" value="no" checked>
-                                <label for="occ_d1_no">No</label>
-                                
-                                <div class="segment-highlight"></div>
-                            </div>
                         </div>
 
-                        <div class="divider-hairline"></div>
-
-                        <div class="sec-label"><i class="fa-solid fa-route"></i> Commute</div>
-
-                        <div class="inp-rich-group">
-                            <label>Daily Round-Trip Commute</label>
-                            <div class="input-rich-wrapper">
-                                <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
-                                <input type="number" class="rich-input validate-req" placeholder="e.g. 20">
-                                <span class="currency" style="padding-right:15px; padding-left:0; color:#94A3B8; font-size:0.8rem;">Miles</span>
+                        <div class="premium-group">
+                            <div class="pg-header">
+                                <div class="pg-header-badge teal">
+                                    <i class="fa-solid fa-route"></i> COMMUTE
+                                </div>
+                                <div class="pg-header-line"></div>
                             </div>
-                        </div>
 
-                        <div class="divider-hairline"></div>
-
-                        <div class="sec-label"><i class="fa-solid fa-house-chimney-user"></i> Household</div>
-
-                        <div class="row-switch-container">
-                            <div class="switch-label-group">
-                                <div class="sl-icon"><i class="fa-solid fa-baby-carriage"></i></div>
-                                <div class="sl-text">
-                                    <span class="sl-title">Single Parent?</span>
-                                    <span class="sl-sub">Do you have dependent children?</span>
+                            <div class="inp-rich-group">
+                                <label>Daily Round-Trip Commute</label>
+                                <div class="input-rich-wrapper compact-premium theme-teal">
+                                    <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
+                                    <input type="number" class="rich-input validate-req" placeholder="e.g. 20">
+                                    <span class="currency" style="padding-right:15px; padding-left:0; color:#94A3B8; font-size:0.8rem;">Miles</span>
                                 </div>
                             </div>
-                            <div class="aurora-toggle-segment">
-                                <input type="radio" name="sp_d1" id="sp_d1_yes" value="yes">
-                                <label for="sp_d1_yes">Yes</label>
-                                
-                                <input type="radio" name="sp_d1" id="sp_d1_no" value="no" checked>
-                                <label for="sp_d1_no">No</label>
-                                
-                                <div class="segment-highlight"></div>
+                        </div>
+
+                        <div class="premium-group">
+                            <div class="pg-header">
+                                <div class="pg-header-badge blue">
+                                    <i class="fa-solid fa-house-chimney-user"></i> HOUSEHOLD
+                                </div>
+                                <div class="pg-header-line"></div>
+                            </div>
+
+                            <div class="row-switch-container">
+                                <div class="switch-label-group">
+                                    <div class="sl-icon"><i class="fa-solid fa-baby-carriage"></i></div>
+                                    <div class="sl-text">
+                                        <span class="sl-title">Single Parent?</span>
+                                        <span class="sl-sub">Do you have dependent children?</span>
+                                    </div>
+                                </div>
+                                <div class="aurora-toggle-segment">
+                                    <input type="radio" name="sp_d1" id="sp_d1_yes" value="yes">
+                                    <label for="sp_d1_yes">Yes</label>
+                                    
+                                    <input type="radio" name="sp_d1" id="sp_d1_no" value="no" checked>
+                                    <label for="sp_d1_no">No</label>
+                                    
+                                    <div class="segment-highlight"></div>
+                                </div>
                             </div>
                         </div>
+
 
                         <div class="nav-row-right">
                             <button type="button" class="btn-nav-outline" onclick="switchDriverTab('d2')">Next Driver <i class="fa-solid fa-arrow-right"></i></button>
@@ -185,46 +203,77 @@
                             <div><strong>Driver 2:</strong> Elois Wolf</div>
                         </div>
 
-                        <div class="sec-label"><i class="fa-solid fa-stopwatch"></i> Usage Frequency</div>
-
-                        <div class="row-switch-container">
-                            <div class="switch-label-group">
-                                <div class="sl-icon"><i class="fa-regular fa-clock"></i></div>
-                                <div class="sl-text"><span class="sl-title">Occasional Operator?</span></div>
+                        <div class="premium-group">
+                            <div class="pg-header">
+                                <div class="pg-header-badge blue">
+                                    <i class="fa-solid fa-stopwatch"></i> USAGE FREQUENCY
+                                </div>
+                                <div class="pg-header-line"></div>
                             </div>
-                            <div class="aurora-toggle-segment">
-                                <input type="radio" name="occ_d2" id="occ_d2_yes" value="yes"><label for="occ_d2_yes">Yes</label>
-                                <input type="radio" name="occ_d2" id="occ_d2_no" value="no" checked><label for="occ_d2_no">No</label>
-                                <div class="segment-highlight"></div>
+
+                            <div class="row-switch-container">
+                                <div class="switch-label-group">
+                                    <div class="sl-icon"><i class="fa-regular fa-clock"></i></div>
+                                    <div class="sl-text">
+                                        <span class="sl-title">Occasional Operator?</span>
+                                        <span class="sl-sub">Driven less than 25% of time?</span>
+                                    </div>
+                                </div>
+                                <div class="aurora-toggle-segment">
+                                    <input type="radio" name="occ_d2" id="occ_d2_yes" value="yes">
+                                    <label for="occ_d2_yes">Yes</label>
+                                    
+                                    <input type="radio" name="occ_d2" id="occ_d2_no" value="no" checked>
+                                    <label for="occ_d2_no">No</label>
+                                    
+                                    <div class="segment-highlight"></div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="divider-hairline"></div>
+                        <div class="premium-group">
+                            <div class="pg-header">
+                                <div class="pg-header-badge teal">
+                                    <i class="fa-solid fa-route"></i> COMMUTE
+                                </div>
+                                <div class="pg-header-line"></div>
+                            </div>
 
-                        <div class="sec-label"><i class="fa-solid fa-route"></i> Commute</div>
-
-                        <div class="inp-rich-group">
-                            <label>Daily Round-Trip Commute</label>
-                            <div class="input-rich-wrapper">
-                                <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
-                                <input type="number" class="rich-input validate-req" placeholder="e.g. 15">
-                                <span class="currency" style="padding-right:15px; padding-left:0; color:#94A3B8; font-size:0.8rem;">Miles</span>
+                            <div class="inp-rich-group">
+                                <label>Daily Round-Trip Commute</label>
+                                <div class="input-rich-wrapper compact-premium theme-teal">
+                                    <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
+                                    <input type="number" class="rich-input validate-req" placeholder="e.g. 20">
+                                    <span class="currency" style="padding-right:15px; padding-left:0; color:#94A3B8; font-size:0.8rem;">Miles</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="divider-hairline"></div>
-
-                        <div class="sec-label"><i class="fa-solid fa-house-chimney-user"></i> Household</div>
-
-                        <div class="row-switch-container">
-                            <div class="switch-label-group">
-                                <div class="sl-icon"><i class="fa-solid fa-baby-carriage"></i></div>
-                                <div class="sl-text"><span class="sl-title">Single Parent?</span></div>
+                        <div class="premium-group">
+                            <div class="pg-header">
+                                <div class="pg-header-badge blue">
+                                    <i class="fa-solid fa-house-chimney-user"></i> HOUSEHOLD
+                                </div>
+                                <div class="pg-header-line"></div>
                             </div>
-                            <div class="aurora-toggle-segment">
-                                <input type="radio" name="sp_d2" id="sp_d2_yes" value="yes"><label for="sp_d2_yes">Yes</label>
-                                <input type="radio" name="sp_d2" id="sp_d2_no" value="no" checked><label for="sp_d2_no">No</label>
-                                <div class="segment-highlight"></div>
+
+                            <div class="row-switch-container">
+                                <div class="switch-label-group">
+                                    <div class="sl-icon"><i class="fa-solid fa-baby-carriage"></i></div>
+                                    <div class="sl-text">
+                                        <span class="sl-title">Single Parent?</span>
+                                        <span class="sl-sub">Do you have dependent children?</span>
+                                    </div>
+                                </div>
+                                <div class="aurora-toggle-segment">
+                                    <input type="radio" name="sp_d2" id="sp_d2_yes" value="yes">
+                                    <label for="sp_d2_yes">Yes</label>
+                                    
+                                    <input type="radio" name="sp_d2" id="sp_d2_no" value="no" checked>
+                                    <label for="sp_d2_no">No</label>
+                                    
+                                    <div class="segment-highlight"></div>
+                                </div>
                             </div>
                         </div>
 
@@ -270,8 +319,8 @@
                     </div>
                 </div>
             </aside>
-
         </div>
+    </div>
 
     <footer id="contact" class="site-footer">
         <div class="container footer-grid">

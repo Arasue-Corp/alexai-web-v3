@@ -116,26 +116,36 @@
                             <div class="banner-icon"><i class="fa-solid fa-user-clock"></i></div>
                             <div><strong>Primary Driver:</strong> Uri Williams</div>
                         </div>
+                        
+                        <div class="premium-group">
 
-                        <div class="sec-label"><i class="fa-solid fa-circle-question"></i> Incident Check</div>
+                            <div class="pg-header">
+                                <div class="pg-header-badge blue">
+                                    <i class="fa-solid fa-circle-question"></i> INCIDENT CHECK
+                                </div>
+                                <div class="pg-header-line"></div>
+                            </div>
 
-                        <div class="row-switch-container">
-                            <div class="switch-label-group">
-                                <div class="sl-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                                <div class="sl-text">
-                                    <span class="sl-title">Any incidents in the last 5 years?</span>
-                                    <span class="sl-sub">Tickets, accidents, or claims.</span>
+                            <div class="row-switch-container">
+                                <div class="switch-label-group">
+                                    <div class="sl-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="sl-text">
+                                        <span class="sl-title">Any incidents in the last 5 years?</span>
+                                        <span class="sl-sub">Tickets, accidents, or claims.</span>
+                                    </div>
+                                </div>
+                                <div class="aurora-toggle-segment">
+                                    <input type="radio" name="viol_d1" id="viol_d1_yes" value="yes" onchange="toggleDriverViolations('d1', 'yes')">
+                                    <label for="viol_d1_yes">Yes</label>
+                                    
+                                    <input type="radio" name="viol_d1" id="viol_d1_no" value="no" checked onchange="toggleDriverViolations('d1', 'no')">
+                                    <label for="viol_d1_no">No</label>
+                                    <div class="segment-highlight"></div>
                                 </div>
                             </div>
-                            <div class="aurora-toggle-segment">
-                                <input type="radio" name="viol_d1" id="viol_d1_yes" value="yes" onchange="toggleDriverViolations('d1', 'yes')">
-                                <label for="viol_d1_yes">Yes</label>
-                                
-                                <input type="radio" name="viol_d1" id="viol_d1_no" value="no" checked onchange="toggleDriverViolations('d1', 'no')">
-                                <label for="viol_d1_no">No</label>
-                                <div class="segment-highlight"></div>
-                            </div>
+
                         </div>
+
 
                         <div id="viol-wrapper-d1" class="hidden-anim mb-4">
                             <div class="divider-hairline"></div>
@@ -158,25 +168,34 @@
                             <div><strong>Driver 2:</strong> Elois Wolf</div>
                         </div>
 
-                        <div class="sec-label"><i class="fa-solid fa-circle-question"></i> Incident Check</div>
+                        <div class="premium-group">
 
-                        <div class="row-switch-container">
-                            <div class="switch-label-group">
-                                <div class="sl-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                                <div class="sl-text">
-                                    <span class="sl-title">Any incidents in the last 5 years?</span>
-                                    <span class="sl-sub">Tickets, accidents, or claims.</span>
+                            <div class="pg-header">
+                                <div class="pg-header-badge blue">
+                                    <i class="fa-solid fa-circle-question"></i> INCIDENT CHECK
+                                </div>
+                                <div class="pg-header-line"></div>
+                            </div>
+
+                            <div class="row-switch-container">
+                                <div class="switch-label-group">
+                                    <div class="sl-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="sl-text">
+                                        <span class="sl-title">Any incidents in the last 5 years?</span>
+                                        <span class="sl-sub">Tickets, accidents, or claims.</span>
+                                    </div>
+                                </div>
+                                <div class="aurora-toggle-segment">
+                                    <input type="radio" name="viol_d2" id="viol_d2_yes" value="yes" onchange="toggleDriverViolations('d2', 'yes')">
+                                    <label for="viol_d2_yes">Yes</label>
+                                    
+                                    <input type="radio" name="viol_d2" id="viol_d2_no" value="no" checked onchange="toggleDriverViolations('d2', 'no')">
+                                    <label for="viol_d2_no">No</label>
+                                    <div class="segment-highlight"></div>
                                 </div>
                             </div>
-                            <div class="aurora-toggle-segment">
-                                <input type="radio" name="viol_d2" id="viol_d2_yes" value="yes" onchange="toggleDriverViolations('d2', 'yes')">
-                                <label for="viol_d2_yes">Yes</label>
-                                
-                                <input type="radio" name="viol_d2" id="viol_d2_no" value="no" checked onchange="toggleDriverViolations('d2', 'no')">
-                                <label for="viol_d2_no">No</label>
-                                <div class="segment-highlight"></div>
-                            </div>
                         </div>
+
 
                         <div id="viol-wrapper-d2" class="hidden-anim mb-4">
                             <div class="divider-hairline"></div>
@@ -226,8 +245,9 @@
                     </div>
                 </div>
             </aside>
-
         </div>
+    </div>
+    
     <footer id="contact" class="site-footer">
         <div class="container footer-grid">
             <div class="footer-col brand-col">

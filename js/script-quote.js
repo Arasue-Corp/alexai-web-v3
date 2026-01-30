@@ -5,40 +5,38 @@
  * @param {HTMLElement} nextPanel - El panel que entra.
  * @param {string} direction - 'next' (entra derecha) o 'prev' (entra izquierda).
  */
-window.auroraTransition = function(currentPanel, nextPanel, direction = 'next') {
-    if (!currentPanel || !nextPanel || currentPanel === nextPanel) return;
+// --- MOTOR DE ANIMACIÓN MEJORADO (FADE SCALE) ---
+    window.auroraTransition = function(currentPanel, nextPanel) {
+        if (!currentPanel || !nextPanel) return;
+        if (currentPanel === nextPanel) return;
 
-    // 1. Bloquear interacción rápida (opcional, previene doble clic)
-    nextPanel.style.pointerEvents = 'none';
+        // 1. Bloquear interacción rápida durante la transición
+        nextPanel.style.pointerEvents = 'none';
 
-    // 2. Definir clases según dirección
-    // Si voy a 'next', el actual sale a la izquierda (exit-left) y el nuevo entra por la derecha (enter-right)
-    const exitClass = direction === 'next' ? 'anim-exit-left' : 'anim-exit-right';
-    const enterClass = direction === 'next' ? 'anim-enter-right' : 'anim-enter-left';
+        // 2. FASE SALIDA (Rápida)
+        currentPanel.classList.remove('active', 'anim-in');
+        currentPanel.classList.add('anim-out');
 
-    // 3. Ejecutar Salida
-    currentPanel.classList.remove('active');
-    currentPanel.classList.add(exitClass);
-
-    // 4. Ejecutar Entrada (Con ligero delay para solapamiento elegante)
-    setTimeout(() => {
-        // Limpiar panel anterior
-        currentPanel.style.display = 'none';
-        currentPanel.classList.remove(exitClass);
-
-        // Preparar panel nuevo
-        nextPanel.style.display = 'block';
-        nextPanel.classList.add(enterClass);
-        nextPanel.classList.add('active');
-
-        // Limpieza final
+        // 3. FASE ENTRADA (Coordinada)
+        // Esperamos 150ms (casi al final de la salida) para que se sienta fluido
         setTimeout(() => {
-            nextPanel.classList.remove(enterClass);
-            nextPanel.style.pointerEvents = 'auto'; // Reactivar interacción
-        }, 400); // Debe coincidir con la duración CSS
+            // Ocultar completamente el viejo
+            currentPanel.style.display = 'none';
+            currentPanel.classList.remove('anim-out');
 
-    }, 250); // Tiempo de espera antes de que entre el nuevo (aprox 80% de la animación de salida)
-};
+            // Mostrar y animar el nuevo
+            nextPanel.style.display = 'block';
+            nextPanel.classList.add('active');
+            nextPanel.classList.add('anim-in');
+
+            // Limpieza final
+            setTimeout(() => {
+                nextPanel.classList.remove('anim-in');
+                nextPanel.style.pointerEvents = 'auto'; // Reactivar clicks
+            }, 350); // Duración de fadeInZoom
+
+        }, 150); 
+    };
 
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -541,56 +539,58 @@ if(document.getElementById('quoteFormStep13')) {
     const stepB = document.getElementById('modalStepB');
 
 // Validación "Next Step" con Shake + Auto-Scroll
-    document.getElementById('btnNext').addEventListener('click', (e) => {
-        e.preventDefault();
-        let isValid = true;
-        let firstError = null; // Variable para guardar el primer campo fallido
-        
-        // Seleccionamos solo el panel visible (Car 1 o Car 2)
-        const activePanel = document.querySelector('.car-panel.active');
-        const inputs = activePanel.querySelectorAll('.validate-req');
-        
-        inputs.forEach(input => {
-            const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
+    if (btnNext) {
+        btnNext.addEventListener('click', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            let firstError = null; // Variable para guardar el primer campo fallido
             
-            // 1. Limpiamos estado previo
-            wrapper.classList.remove('input-error');
+            // Seleccionamos solo el panel visible (Car 1 o Car 2)
+            const activePanel = document.querySelector('.car-panel.active');
+            const inputs = activePanel.querySelectorAll('.validate-req');
             
-            // 2. Validamos
-            if(!input.value.trim()) { 
-                isValid = false; 
+            inputs.forEach(input => {
+                const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
                 
-                // Truco para reiniciar la animación shake
-                void wrapper.offsetWidth; 
+                // 1. Limpiamos estado previo
+                wrapper.classList.remove('input-error');
                 
-                // 3. Aplicamos error
-                wrapper.classList.add('input-error');
+                // 2. Validamos
+                if(!input.value.trim()) { 
+                    isValid = false; 
+                    
+                    // Truco para reiniciar la animación shake
+                    void wrapper.offsetWidth; 
+                    
+                    // 3. Aplicamos error
+                    wrapper.classList.add('input-error');
 
-                // 4. Si es el primer error que encontramos, lo guardamos
-                if (firstError === null) {
-                    firstError = wrapper;
+                    // 4. Si es el primer error que encontramos, lo guardamos
+                    if (firstError === null) {
+                        firstError = wrapper;
+                    }
+                }
+            });
+
+            if(isValid) {
+                modal.classList.add('active');
+            } else {
+                showToast("Please fill in the required vehicle specs.", "warning");
+                
+                // 5. SCROLL AUTOMÁTICO AL PRIMER ERROR
+                if (firstError) {
+                    firstError.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' // Lo centra en la pantalla para que no quede tapado por el header
+                    });
+                    
+                    // Opcional: Darle foco al input interno para que pueda escribir ya
+                    const inputInside = firstError.querySelector('input, select');
+                    if(inputInside) inputInside.focus({preventScroll: true});
                 }
             }
         });
-
-        if(isValid) {
-            modal.classList.add('active');
-        } else {
-            showToast("Please fill in the required vehicle specs.", "warning");
-            
-            // 5. SCROLL AUTOMÁTICO AL PRIMER ERROR
-            if (firstError) {
-                firstError.scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'center' // Lo centra en la pantalla para que no quede tapado por el header
-                });
-                
-                // Opcional: Darle foco al input interno para que pueda escribir ya
-                const inputInside = firstError.querySelector('input, select');
-                if(inputInside) inputInside.focus({preventScroll: true});
-            }
-        }
-    });
+    }
 
     // Flujo del Modal
     document.getElementById('btnYesPhone').addEventListener('click', () => { 
@@ -690,43 +690,45 @@ if(document.getElementById('quoteFormStep12')) {
     };
 
     // 2. VALIDATION & NEXT STEP
-    document.getElementById('btnNext').addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        let isValid = true;
-        let firstError = null;
-        
-        // Validamos el panel visible para no bloquear si el usuario va paso a paso
-        const activePanel = document.querySelector('.car-panel.active');
-        const selects = activePanel.querySelectorAll('.validate-req');
-        
-        selects.forEach(input => {
-            const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
-            wrapper.classList.remove('input-error');
+    if (btnNext) {
+        btnNext.addEventListener('click', (e) => {
+            e.preventDefault();
             
-            if(!input.value) {
-                isValid = false;
-                void wrapper.offsetWidth; 
-                wrapper.classList.add('input-error');
-                if (firstError === null) firstError = wrapper;
+            let isValid = true;
+            let firstError = null;
+            
+            // Validamos el panel visible para no bloquear si el usuario va paso a paso
+            const activePanel = document.querySelector('.car-panel.active');
+            const selects = activePanel.querySelectorAll('.validate-req');
+            
+            selects.forEach(input => {
+                const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
+                wrapper.classList.remove('input-error');
+                
+                if(!input.value) {
+                    isValid = false;
+                    void wrapper.offsetWidth; 
+                    wrapper.classList.add('input-error');
+                    if (firstError === null) firstError = wrapper;
+                }
+            });
+
+            if(isValid) {
+                const btn = document.getElementById('btnNext');
+                
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+                
+                setTimeout(() => {
+                    window.location.href = "quote-13.html";
+                }, 800);
+            } else {
+                showToast("Please select the Vehicle Usage.", "warning");
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
             }
         });
-
-        if(isValid) {
-            const btn = document.getElementById('btnNext');
-            
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-            
-            setTimeout(() => {
-                window.location.href = "quote-13.html";
-            }, 800);
-        } else {
-            showToast("Please select the Vehicle Usage.", "warning");
-            if (firstError) {
-                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }
-    });
+    }
 }
 
 /* =========================================
@@ -790,50 +792,52 @@ if(document.getElementById('quoteFormStep11')) {
     };
 
     // 3. VALIDATION
-    document.getElementById('btnNext').addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        let isValid = true;
-        let firstError = null;
-        
-        // Obtenemos panel activo e ID
-        const activePanel = document.querySelector('.car-panel.active');
-        const id = activePanel.getAttribute('data-id');
-        
-        // Verificamos si se seleccionó Lease/Loan
-        const finOption = document.querySelector(`input[name="fin_${id}"]:checked`);
-        const finValue = finOption ? finOption.value : 'none';
-
-        if(finValue !== 'none') {
-            // Solo validamos los campos internos si NO es "None"
-            const requiredInputs = activePanel.querySelectorAll('.validate-cond');
+    if (btnNext) {
+        btnNext.addEventListener('click', (e) => {
+            e.preventDefault();
             
-            requiredInputs.forEach(input => {
-                const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
-                wrapper.classList.remove('input-error');
-                
-                if(!input.value.trim()) {
-                    isValid = false;
-                    void wrapper.offsetWidth;
-                    wrapper.classList.add('input-error');
-                    if (firstError === null) firstError = wrapper;
-                }
-            });
-        }
+            let isValid = true;
+            let firstError = null;
+            
+            // Obtenemos panel activo e ID
+            const activePanel = document.querySelector('.car-panel.active');
+            const id = activePanel.getAttribute('data-id');
+            
+            // Verificamos si se seleccionó Lease/Loan
+            const finOption = document.querySelector(`input[name="fin_${id}"]:checked`);
+            const finValue = finOption ? finOption.value : 'none';
 
-        if(isValid) {
-            const btn = document.getElementById('btnNext');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-            setTimeout(() => {
-                window.location.href = "quote-12.html";
-            }, 800);
-        } else {
-            showToast("Please fill in the Lienholder details.", "warning");
-            if (firstError) {
-                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if(finValue !== 'none') {
+                // Solo validamos los campos internos si NO es "None"
+                const requiredInputs = activePanel.querySelectorAll('.validate-cond');
+                
+                requiredInputs.forEach(input => {
+                    const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
+                    wrapper.classList.remove('input-error');
+                    
+                    if(!input.value.trim()) {
+                        isValid = false;
+                        void wrapper.offsetWidth;
+                        wrapper.classList.add('input-error');
+                        if (firstError === null) firstError = wrapper;
+                    }
+                });
             }
-        }
-    });
+
+            if(isValid) {
+                const btn = document.getElementById('btnNext');
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+                setTimeout(() => {
+                    window.location.href = "quote-12.html";
+                }, 800);
+            } else {
+                showToast("Please fill in the Lienholder details.", "warning");
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+    }
 }
 
 /* =========================================
@@ -1092,31 +1096,33 @@ if(document.getElementById('quoteFormStep10')) {
     }
 
     // VALIDATION
-    document.getElementById('btnNext').addEventListener('click', (e) => {
-        e.preventDefault();
-        let isValid = true;
-        let firstError = null;
-        const activePanel = document.querySelector('.car-panel.active');
-        const reqInputs = activePanel.querySelectorAll('.validate-req');
-        
-        reqInputs.forEach(input => {
-            const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
-            wrapper.classList.remove('input-error');
-            if(!input.value.trim()) {
-                isValid = false; void wrapper.offsetWidth; wrapper.classList.add('input-error');
-                if (firstError === null) firstError = wrapper;
+    if (btnNext) {
+        btnNext.addEventListener('click', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            let firstError = null;
+            const activePanel = document.querySelector('.car-panel.active');
+            const reqInputs = activePanel.querySelectorAll('.validate-req');
+            
+            reqInputs.forEach(input => {
+                const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
+                wrapper.classList.remove('input-error');
+                if(!input.value.trim()) {
+                    isValid = false; void wrapper.offsetWidth; wrapper.classList.add('input-error');
+                    if (firstError === null) firstError = wrapper;
+                }
+            });
+
+            if(isValid) {
+                const btn = document.getElementById('btnNext');
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+                setTimeout(() => { window.location.href = "quote-11.html"; }, 800);
+            } else {
+                window.showToast("Please complete the required vehicle fields.", "warning");
+                if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         });
-
-        if(isValid) {
-            const btn = document.getElementById('btnNext');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
-            setTimeout(() => { window.location.href = "quote-11.html"; }, 800);
-        } else {
-            window.showToast("Please complete the required vehicle fields.", "warning");
-            if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    });
+    }
     
     // Inicializar visibilidad botones al carga (para Car 1)
     // Nota: Necesitas añadir manualmente el botón "Next Car" a tu HTML estático del Car 1 con la clase .btn-next-car
@@ -1154,40 +1160,42 @@ if(document.getElementById('quoteFormStep9')) {
     };
 
     // 2. VALIDATION & NEXT STEP
-    document.getElementById('btnNext').addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        let isValid = true;
-        let firstError = null;
-        
-        // Validate active panel
-        const activePanel = document.querySelector('.car-panel.active');
-        const inputs = activePanel.querySelectorAll('.validate-req');
-        
-        inputs.forEach(input => {
-            const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
-            wrapper.classList.remove('input-error');
+    if (btnNext) {
+        btnNext.addEventListener('click', (e) => {
+            e.preventDefault();
             
-            if(!input.value.trim()) {
-                isValid = false;
-                void wrapper.offsetWidth; 
-                wrapper.classList.add('input-error');
-                if (firstError === null) firstError = wrapper;
+            let isValid = true;
+            let firstError = null;
+            
+            // Validate active panel
+            const activePanel = document.querySelector('.car-panel.active');
+            const inputs = activePanel.querySelectorAll('.validate-req');
+            
+            inputs.forEach(input => {
+                const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
+                wrapper.classList.remove('input-error');
+                
+                if(!input.value.trim()) {
+                    isValid = false;
+                    void wrapper.offsetWidth; 
+                    wrapper.classList.add('input-error');
+                    if (firstError === null) firstError = wrapper;
+                }
+            });
+
+            if(isValid) {
+                const btn = document.getElementById('btnNext');
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+                
+                setTimeout(() => {
+                    window.location.href = "quote-10.html";
+                }, 800);
+            } else {
+                window.showToast("Please enter daily commute miles.", "warning");
+                if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         });
-
-        if(isValid) {
-            const btn = document.getElementById('btnNext');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-            
-            setTimeout(() => {
-                window.location.href = "quote-10.html";
-            }, 800);
-        } else {
-            window.showToast("Please enter daily commute miles.", "warning");
-            if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    });
+    }
 }
 
 /* =========================================
@@ -1257,37 +1265,39 @@ if(document.getElementById('quoteFormStep8')) {
     };
 
     // 3. VALIDATION
-    document.getElementById('btnNext').addEventListener('click', (e) => {
-        e.preventDefault();
-        let isValid = true;
-        let firstError = null;
-        
-        const activePanel = document.querySelector('.car-panel.active');
-        const inputs = activePanel.querySelectorAll('.validate-req');
-        
-        inputs.forEach(input => {
-            const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
-            wrapper.classList.remove('input-error');
+    if (btnNext) {
+        btnNext.addEventListener('click', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            let firstError = null;
             
-            if(!input.value.trim()) {
-                isValid = false;
-                void wrapper.offsetWidth;
-                wrapper.classList.add('input-error');
-                if (firstError === null) firstError = wrapper;
+            const activePanel = document.querySelector('.car-panel.active');
+            const inputs = activePanel.querySelectorAll('.validate-req');
+            
+            inputs.forEach(input => {
+                const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
+                wrapper.classList.remove('input-error');
+                
+                if(!input.value.trim()) {
+                    isValid = false;
+                    void wrapper.offsetWidth;
+                    wrapper.classList.add('input-error');
+                    if (firstError === null) firstError = wrapper;
+                }
+            });
+
+            if(isValid) {
+                const btn = document.getElementById('btnNext');
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+                setTimeout(() => {
+                    window.location.href = "quote-9.html";
+                }, 800);
+            } else {
+                window.showToast("Please fill in employment details.", "warning");
+                if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         });
-
-        if(isValid) {
-            const btn = document.getElementById('btnNext');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-            setTimeout(() => {
-                window.location.href = "quote-9.html";
-            }, 800);
-        } else {
-            window.showToast("Please fill in employment details.", "warning");
-            if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    });
+    } 
 }
 
 /* =========================================
@@ -1445,43 +1455,45 @@ if(document.getElementById('quoteFormStep7')) {
     };
 
     // 5. VALIDATION
-    document.getElementById('btnNext').addEventListener('click', (e) => {
-        e.preventDefault();
-        let isValid = true;
-        let firstError = null;
-        
-        const activePanel = document.querySelector('.car-panel.active');
-        // Seleccionamos solo los inputs marcados como requeridos
-        const inputs = activePanel.querySelectorAll('.validate-req');
-        
-        inputs.forEach(input => {
-            // TRUCO: offsetParent es null si el elemento (o su padre) tiene display: none
-            // Esto asegura que NO validemos campos ocultos
-            if(input.offsetParent !== null) { 
-                const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
-                wrapper.classList.remove('input-error');
-                
-                // Validar si está vacío o si es un select sin valor
-                if(!input.value.trim() || input.value === "") {
-                    isValid = false;
-                    void wrapper.offsetWidth; // Shake animation reset
-                    wrapper.classList.add('input-error');
-                    if (firstError === null) firstError = wrapper;
+    if (btnNext) {
+        btnNext.addEventListener('click', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            let firstError = null;
+            
+            const activePanel = document.querySelector('.car-panel.active');
+            // Seleccionamos solo los inputs marcados como requeridos
+            const inputs = activePanel.querySelectorAll('.validate-req');
+            
+            inputs.forEach(input => {
+                // TRUCO: offsetParent es null si el elemento (o su padre) tiene display: none
+                // Esto asegura que NO validemos campos ocultos
+                if(input.offsetParent !== null) { 
+                    const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
+                    wrapper.classList.remove('input-error');
+                    
+                    // Validar si está vacío o si es un select sin valor
+                    if(!input.value.trim() || input.value === "") {
+                        isValid = false;
+                        void wrapper.offsetWidth; // Shake animation reset
+                        wrapper.classList.add('input-error');
+                        if (firstError === null) firstError = wrapper;
+                    }
                 }
+            });
+
+            if(isValid) {
+                const btn = document.getElementById('btnNext');
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+                setTimeout(() => {
+                    window.location.href = "quote-8.html";
+                }, 800);
+            } else {
+                window.showToast("Please fill in all required fields.", "warning");
+                if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         });
-
-        if(isValid) {
-            const btn = document.getElementById('btnNext');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
-            setTimeout(() => {
-                window.location.href = "quote-8.html";
-            }, 800);
-        } else {
-            window.showToast("Please fill in all required fields.", "warning");
-            if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    });
+    }
 }
 
 /* =========================================
@@ -1538,40 +1550,42 @@ if(document.getElementById('quoteFormStep6')) {
     };
 
     // 4. VALIDATION
-    document.getElementById('btnNext').addEventListener('click', (e) => {
-        e.preventDefault();
-        let isValid = true;
-        let firstError = null;
-        
-        const activePanel = document.querySelector('.car-panel.active');
-        // Validar solo inputs visibles con la clase validate-req
-        const inputs = activePanel.querySelectorAll('.validate-req');
-        
-        inputs.forEach(input => {
-            if(input.offsetParent !== null) { // Check visibility
-                const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
-                wrapper.classList.remove('input-error');
-                
-                if(!input.value.trim() || input.value === "") {
-                    isValid = false;
-                    void wrapper.offsetWidth;
-                    wrapper.classList.add('input-error');
-                    if (firstError === null) firstError = wrapper;
+    if (btnNext) {
+        btnNext.addEventListener('click', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            let firstError = null;
+            
+            const activePanel = document.querySelector('.car-panel.active');
+            // Validar solo inputs visibles con la clase validate-req
+            const inputs = activePanel.querySelectorAll('.validate-req');
+            
+            inputs.forEach(input => {
+                if(input.offsetParent !== null) { // Check visibility
+                    const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
+                    wrapper.classList.remove('input-error');
+                    
+                    if(!input.value.trim() || input.value === "") {
+                        isValid = false;
+                        void wrapper.offsetWidth;
+                        wrapper.classList.add('input-error');
+                        if (firstError === null) firstError = wrapper;
+                    }
                 }
+            });
+
+            if(isValid) {
+                const btn = document.getElementById('btnNext');
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+                setTimeout(() => {
+                    window.location.href = "quote-7.html";
+                }, 800);
+            } else {
+                window.showToast("Please fill in all required fields.", "warning");
+                if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         });
-
-        if(isValid) {
-            const btn = document.getElementById('btnNext');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-            setTimeout(() => {
-                window.location.href = "quote-7.html";
-            }, 800);
-        } else {
-            window.showToast("Please fill in insurance history.", "warning");
-            if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    });
+    }
 }
 
 /* =========================================
@@ -1640,8 +1654,8 @@ if(document.getElementById('quoteFormStep5')) {
                 <div class="grid-2-tight">
                     <div class="inp-rich-group" style="grid-column: 1 / -1;">
                         <label>Violation Type</label>
-                        <div class="input-rich-wrapper">
-                            <div class="icon-slot"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-triangle-exclamation"></i></div>
                             <select class="rich-input validate-req">
                                 <option value="" disabled selected>Select Type...</option>
                                 <optgroup label="Accidents">
@@ -1664,8 +1678,8 @@ if(document.getElementById('quoteFormStep5')) {
 
                     <div class="inp-rich-group">
                         <label>Date</label>
-                        <div class="input-rich-wrapper">
-                            <div class="icon-slot"><i class="fa-regular fa-calendar"></i></div>
+                        <div class="input-rich-wrapper compact-premium theme-blue">
+                            <div class="icon-slot"><i class="fa-solid fa-calendar"></i></div>
                             <input type="text" class="rich-input date-picker calc-elapsed validate-req" placeholder="MM/DD/YYYY">
                         </div>
                     </div>
@@ -1686,7 +1700,7 @@ if(document.getElementById('quoteFormStep5')) {
 
                     <div class="inp-rich-group">
                         <label>Payout (BI/PD)</label>
-                        <div class="input-rich-wrapper">
+                        <div class="input-rich-wrapper compact-premium theme-blue">
                             <div class="icon-slot"><i class="fa-solid fa-dollar-sign"></i></div>
                             <input type="number" class="rich-input validate-req" placeholder="0">
                         </div>
@@ -1694,7 +1708,7 @@ if(document.getElementById('quoteFormStep5')) {
 
                     <div class="inp-rich-group">
                         <label>Payout (Coll)</label>
-                        <div class="input-rich-wrapper">
+                        <div class="input-rich-wrapper compact-premium theme-blue">
                             <div class="icon-slot"><i class="fa-solid fa-dollar-sign"></i></div>
                             <input type="number" class="rich-input validate-req" placeholder="0">
                         </div>
@@ -1752,55 +1766,794 @@ if(document.getElementById('quoteFormStep5')) {
     };
 
     // 5. VALIDATION GLOBAL
-    document.getElementById('btnNext').addEventListener('click', (e) => {
+    if (btnNext) {
+        btnNext.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            let isValid = true;
+            let firstError = null;
+
+            // Validar AMBOS conductores (D1 y D2)
+            ['d1', 'd2'].forEach(driverId => {
+                const hasViol = document.querySelector(`input[name="viol_${driverId}"]:checked`).value;
+                
+                if(hasViol === 'yes') {
+                    const wrapper = document.getElementById(`viol-wrapper-${driverId}`);
+                    
+                    // 1. Validar que haya al menos una tarjeta
+                    const cards = wrapper.querySelectorAll('.violation-card-wrapper');
+                    if(cards.length === 0) {
+                        isValid = false;
+                        window.showToast(`Please add a violation for Driver ${driverId === 'd1' ? '1' : '2'} or select 'No'.`, "warning");
+                        // Cambiar al tab del error
+                        switchDriverTab(driverId);
+                        return; 
+                    }
+
+                    // 2. Validar inputs dentro de las tarjetas
+                    const inputs = wrapper.querySelectorAll('.validate-req');
+                    inputs.forEach(input => {
+                        const group = input.closest('.input-rich-wrapper');
+                        group.classList.remove('input-error');
+                        
+                        if(!input.value.trim()) {
+                            isValid = false;
+                            group.classList.add('input-error');
+                            if(!firstError) {
+                                firstError = group;
+                                // Cambiar al tab donde está el error
+                                switchDriverTab(driverId); 
+                            }
+                        }
+                    });
+                }
+            });
+
+            if(isValid) {
+                const btn = document.getElementById('btnNext');
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+                setTimeout(() => { window.location.href = "quote-6.html"; }, 800);
+            } else if (firstError) {
+                window.showToast("Please fill in missing violation details.", "warning");
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    }
+}
+
+/* =========================================
+   LOGIC FOR STEP 4 (DRIVERS) - FINAL ANIMATED
+   ========================================= */
+
+// --- 0. GLOBAL PAGE ANIMATION HANDLER (Ejecutar al inicio) ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Animación de Entrada
+    const wrapper = document.querySelector('.page-wrapper') || document.body;
+    wrapper.classList.add('page-enter-active');
+});
+
+// Función para navegar con animación de salida
+window.navigateToNextStep = function(url) {
+    const wrapper = document.querySelector('.page-wrapper') || document.body;
+    wrapper.classList.remove('page-enter-active');
+    wrapper.classList.add('page-exit-active');
+    
+    // Esperar 300ms (duración de la animación) antes de cambiar
+    setTimeout(() => {
+        window.location.href = url;
+    }, 300);
+};
+
+
+if(document.getElementById('quoteFormStep4')) {
+
+    const tabsContainer = document.getElementById('driverTabs');
+    const container = document.getElementById('driverFormsContainer');
+    const maxDrivers = 6;
+
+    // --- 1. TOAST HELPER ---
+    window.showLocalToast = function(message, type = 'success') {
+        if(typeof window.showToast === 'function') {
+            window.showToast(message, type);
+            return;
+        }
+        // Fallback básico
+        alert(message);
+    };
+
+    // --- 2. AURORA TRANSITION (Tabs) ---
+    window.auroraTransition = function(currentPanel, nextPanel) {
+        if (!currentPanel || !nextPanel || currentPanel === nextPanel) return;
+        nextPanel.style.pointerEvents = 'none'; 
+        currentPanel.classList.remove('active', 'anim-in');
+        currentPanel.classList.add('anim-out');
+        setTimeout(() => {
+            currentPanel.style.display = 'none';
+            currentPanel.classList.remove('anim-out');
+            nextPanel.style.display = 'block';
+            nextPanel.classList.add('active');
+            nextPanel.classList.add('anim-in');
+            setTimeout(() => {
+                nextPanel.classList.remove('anim-in');
+                nextPanel.style.pointerEvents = 'auto';
+            }, 350);
+        }, 150);
+    };
+
+    // --- 3. SWITCH TABS ---
+    window.switchDriverTab = function(driverId, btnElement) {
+        const targetPanel = document.getElementById(`panel-${driverId}`);
+        if (!targetPanel) return;
+
+        // Visual Tabs
+        document.querySelectorAll('.tab-int').forEach(t => t.classList.remove('active'));
+        if(btnElement && btnElement.classList.contains('tab-int')) {
+            btnElement.classList.add('active');
+        } else {
+            const tab = document.getElementById(`tab-${driverId}`);
+            if(tab) tab.classList.add('active');
+        }
+
+        // Panels
+        const currentPanel = document.querySelector('.car-panel.active');
+        if (!currentPanel) {
+            document.querySelectorAll('.car-panel').forEach(p => { p.style.display = 'none'; p.classList.remove('active'); });
+            targetPanel.style.display = 'block';
+            setTimeout(() => targetPanel.classList.add('active'), 10);
+            return;
+        }
+        window.auroraTransition(currentPanel, targetPanel);
+    };
+
+    // --- 4. EXCLUDE DRIVER (REFINADO: ORANGE TAB & ZONAL BLOCK) ---
+    window.toggleExclude = function(id, action) {
+        const panel = document.getElementById(`panel-d${id}`);
+        const tab = document.getElementById(`tab-d${id}`);
+        
+        // Buscamos la zona específica dentro del panel
+        const zone = panel.querySelector('.exclusion-zone');
+        // Y los campos a bloquear (que están dentro de la zona)
+        const fieldsToLock = panel.querySelectorAll('.field-lock-target'); 
+        
+        if(action === 'yes') {
+            // 1. Activar Zona Visual (Solo abajo)
+            if(zone) zone.classList.add('active');
+            
+            // 2. Modificar Tab (Naranja + Texto)
+            if(tab) {
+                tab.classList.add('tab-excluded');
+                const span = tab.querySelector('.tab-txt');
+                // Evitar duplicar texto si ya existe
+                if(span && !span.innerHTML.includes('Excluded')) {
+                    span.setAttribute('data-original-text', span.innerHTML); // Guardar original
+                    span.innerHTML += ' <span style="font-size:0.75rem; opacity:0.8;">(Excluded)</span>';
+                }
+                const icon = tab.querySelector('i');
+                if(icon) icon.className = 'fa-solid fa-user-slash';
+            }
+            
+            // 3. Bloquear Inputs
+            fieldsToLock.forEach(wrapper => {
+                wrapper.classList.add('is-locked-excluded');
+                const input = wrapper.querySelector('input, select');
+                if(input) {
+                    input.classList.remove('validate-req'); 
+                    input.disabled = true;
+                    if(input.tagName === 'SELECT') input.selectedIndex = 0;
+                    else input.value = ''; 
+                }
+            });
+            window.showLocalToast(`Driver ${id} Excluded.`, "warning");
+
+        } else {
+            // RESTAURAR
+            if(zone) zone.classList.remove('active');
+            
+            if(tab) {
+                tab.classList.remove('tab-excluded');
+                const span = tab.querySelector('.tab-txt');
+                // Restaurar texto original (sin "(Excluded)")
+                if(span && span.hasAttribute('data-original-text')) {
+                    span.innerHTML = span.getAttribute('data-original-text');
+                }
+                const icon = tab.querySelector('i');
+                if(icon) icon.className = 'fa-solid fa-user';
+            }
+            
+            fieldsToLock.forEach(wrapper => {
+                wrapper.classList.remove('is-locked-excluded');
+                const input = wrapper.querySelector('input, select');
+                if(input) {
+                    input.classList.add('validate-req'); 
+                    input.disabled = false; 
+                }
+            });
+            window.showLocalToast(`Driver ${id} Included.`, "success");
+        }
+    };
+
+    // --- 5. TEMPLATE GENERATOR (CON ZONA DE EXCLUSIÓN) ---
+    window.getDriverTemplate = function(id) {
+        const isPrimary = (id === 1);
+        
+        const prevButtonHTML = id > 1 ? 
+            `<button type="button" class="btn-nav-outline btn-prev-driver" onclick="window.switchDriverTab('d${id-1}')"><i class="fa-solid fa-chevron-left"></i> Prev Driver</button>` 
+            : `<div></div>`;
+
+        // Switch de exclusión (Solo para D2+)
+        const excludeToggleHTML = isPrimary ? '' : `
+            <div class="row-switch-container compact" style="margin:0; padding:5px 15px; border:none; background:transparent;">
+                <span style="font-size:0.85rem; font-weight:600; color:#64748B; margin-right:10px;">Exclude?</span>
+                <div class="aurora-toggle-segment small">
+                    <input type="radio" name="exclude_d${id}" id="ex_d${id}_yes" value="yes" onchange="window.toggleExclude(${id}, 'yes')"><label for="ex_d${id}_yes">Yes</label>
+                    <input type="radio" name="exclude_d${id}" id="ex_d${id}_no" value="no" checked onchange="window.toggleExclude(${id}, 'no')"><label for="ex_d${id}_no">No</label>
+                    <div class="segment-highlight"></div>
+                </div>
+            </div>`;
+
+        const removeBtnHTML = isPrimary ? '' : `
+            <button type="button" class="delete-pill-btn" onclick="window.deleteDriver(${id})"><i class="fa-solid fa-trash-can"></i> Remove</button>`;
+
+        let relationshipHTML = isPrimary ? 
+            `<div class="input-rich-wrapper locked field-lock-target"><div class="icon-slot"><i class="fa-solid fa-link"></i></div><select class="rich-input" disabled><option selected>Insured (Self)</option></select></div>` :
+            `<div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-link"></i></div><select class="rich-input validate-req"><option value="" disabled selected>Select Relation</option><option>Spouse</option><option>Child</option><option>Other</option></select></div>`;
+
+        const bannerHTML = isPrimary 
+            ? `<div class="info-banner-blue mb-4"><div class="banner-icon"><i class="fa-solid fa-circle-info"></i></div><div><strong>Primary Driver:</strong> Main applicant. Cannot be excluded.</div></div>`
+            : `<div class="info-banner-blue mb-4" style="background:#F0FDF4; border-color:#BBF7D0; color:#15803D;"><div class="banner-icon" style="color:#15803D;"><i class="fa-solid fa-user-plus"></i></div><div><strong>Additional Driver:</strong> Household member.</div></div>`;
+
+        return `
+            <div class="panel-header-row" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                ${excludeToggleHTML}
+                ${removeBtnHTML}
+            </div>
+            
+            ${bannerHTML}
+
+            <div class="premium-group">
+
+
+                <div class="pg-header">
+                    <div class="pg-header-badge blue">
+                        <i class="fa-solid fa-id-card"></i> PERSONAL DETAILS
+                    </div>
+                    <div class="pg-header-line"></div>
+                </div>
+                
+                <div class="grid-3-tight mb-4">
+                    <div class="inp-rich-group"><label>First Name</label><div class="input-rich-wrapper compact-premium theme-blue"><div class="icon-slot"><i class="fa-solid fa-user"></i></div><input type="text" class="rich-input validate-req" placeholder="Name" oninput="window.updateTabName(${id}, this.value)"></div></div>
+                    <div class="inp-rich-group"><label>Middle</label><div class="input-rich-wrapper"><input type="text" class="rich-input" placeholder="M.I." style="text-align:center;"></div></div>
+                    <div class="inp-rich-group"><label>Last Name</label><div class="input-rich-wrapper compact-premium theme-blue"><div class="icon-slot"><i class="fa-solid fa-font"></i></div><input type="text" class="rich-input validate-req" placeholder="Last Name"></div></div>
+                </div>
+
+                <div class="grid-3-tight">
+                    <div class="inp-rich-group"><label>Date of Birth</label><div class="input-rich-wrapper compact-premium theme-blue"><div class="icon-slot"><i class="fa-solid fa-calendar"></i></div><input type="text" class="rich-input date-picker-dob validate-req" placeholder="MM/DD/YYYY"></div></div>
+                    <div class="inp-rich-group"><label>Age</label><div class="input-rich-wrapper locked"><input type="text" class="rich-input age-display" placeholder="--" readonly style="text-align:center;"></div></div>
+                    <div class="inp-rich-group"><label>Gender</label><div class="input-rich-wrapper compact-premium theme-blue"><div class="icon-slot"><i class="fa-solid fa-venus-mars"></i></div><select class="rich-input validate-req"><option value="" disabled selected>Select</option><option>Male</option><option>Female</option></select></div></div>
+                </div>
+
+            </div>
+
+            <div class="exclusion-zone">
+
+                <div class="premium-group">
+
+                    <div class="watermark-excluded">EXCLUDED</div> 
+                    <div class="pg-header">
+                        <div class="pg-header-badge teal">
+                            <i class="fa-solid fa-users"></i> RELATIONSHIP & LICENSE
+                        </div>
+                        <div class="pg-header-line"></div>
+                    </div>
+
+                    <div class="grid-2-tight">
+                        <div class="inp-rich-group">
+                            <label>Marital Status</label>
+                            <div class="input-rich-wrapper compact-premium theme-teal">
+                                 <div class="icon-slot"><i class="fa-solid fa-ring"></i></div><select class="rich-input validate-req"><option value="" disabled selected>Select</option><option>Single</option><option>Married</option><option>Divorced</option></select></div>
+                        </div>
+                        <div class="inp-rich-group">
+                            <label>Relationship</label>
+                            ${relationshipHTML}
+                        </div>
+                    </div>
+
+                    <div class="inp-rich-group mt-3">
+                        <label>License Number</label>
+                        <div class="input-rich-wrapper compact-premium theme-teal">
+                            <div class="icon-slot"><i class="fa-solid fa-id-card"></i></div><input type="text" class="rich-input validate-req" placeholder="Enter DL Number"></div>
+                    </div>
+                </div>    
+            </div>
+            <div class="nav-row-right" style="justify-content: space-between;">
+                ${prevButtonHTML}
+                <button type="button" class="btn-nav-outline btn-next-driver" onclick="window.switchDriverTab('d${id+1}')">Next Driver <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        `;
+    };
+
+    // --- 6. ADD DRIVER ---
+    window.addNewDriverGlobal = function() {
+        const currentTabs = document.querySelectorAll('.tab-int:not(.add-btn)');
+        const count = currentTabs.length;
+        if(count >= maxDrivers) { window.showLocalToast("Maximum drivers reached.", "warning"); return; }
+        
+        const newId = count + 1;
+        const newTab = document.createElement('button');
+        newTab.type = 'button'; newTab.className = 'tab-int'; newTab.id = `tab-d${newId}`;
+        newTab.innerHTML = `<span class="tab-txt"><i class="fa-solid fa-user"></i> Driver ${newId}</span>`;
+        newTab.setAttribute('onclick', `window.switchDriverTab('d${newId}', this)`);
+        
+        const btnTop = document.getElementById('btnAddDriverTop');
+        if(btnTop) tabsContainer.insertBefore(newTab, btnTop); else tabsContainer.appendChild(newTab);
+
+        const newPanel = document.createElement('div');
+        newPanel.className = 'car-panel'; newPanel.id = `panel-d${newId}`; newPanel.setAttribute('data-id', newId);
+        newPanel.innerHTML = window.getDriverTemplate(newId);
+        container.appendChild(newPanel);
+
+        window.initDriverDatePickers(newPanel);
+        window.updateNavButtons();
+        window.switchDriverTab(`d${newId}`, newTab);
+        window.showLocalToast(`Driver ${newId} added successfully.`, "success");
+    };
+
+    // Conectar botones
+    const btnTop = document.getElementById('btnAddDriverTop');
+    const btnBottom = document.getElementById('btnAddDriverBottom');
+    if(btnTop) btnTop.onclick = window.addNewDriverGlobal;
+    if(btnBottom) btnBottom.onclick = window.addNewDriverGlobal;
+
+    // --- 7. DELETE DRIVER ---
+    window.deleteDriver = function(id) {
+        if(id == 1) { window.showLocalToast("Cannot remove primary driver.", "warning"); return; }
+        document.getElementById(`tab-d${id}`).remove();
+        document.getElementById(`panel-d${id}`).remove();
+
+        const tabs = document.querySelectorAll('.tab-int:not(.add-btn)');
+        const panels = container.querySelectorAll('.car-panel');
+        
+        tabs.forEach((t, i) => {
+            if(i === 0) return; // Skip D1
+            const num = i + 1;
+            t.id = `tab-d${num}`;
+            t.setAttribute('onclick', `window.switchDriverTab('d${num}', this)`);
+            
+            // IMPORTANTE: Restaurar nombre limpio al reindexar, o mantener el (Excluded) si lo estaba
+            // Aquí simplificamos regenerando el nombre base, la lógica de estado se perdería al reindexar 
+            // a menos que guardemos estado. Para simplicidad UI, reseteamos el visual.
+            t.querySelector('.tab-txt').innerHTML = `<i class="fa-solid fa-user"></i> Driver ${num}`;
+            t.classList.remove('tab-excluded');
+            t.querySelector('.status-dot').className = 'status-dot success';
+
+            const p = panels[i];
+            p.id = `panel-d${num}`; p.setAttribute('data-id', num);
+            
+            // Limpiar estado visual de exclusión al mover paneles (se complica si no)
+            // Una solución ideal regeneraría el HTML, pero aquí solo movemos IDs.
+            // Aseguramos que los botones internos apunten al nuevo ID.
+            const exYes = p.querySelector(`input[value="yes"]`);
+            if(exYes) { 
+                exYes.name = `exclude_d${num}`; exYes.setAttribute('onchange', `window.toggleExclude(${num}, 'yes')`);
+            }
+            const exNo = p.querySelector(`input[value="no"]`);
+            if(exNo) {
+                exNo.name = `exclude_d${num}`; exNo.setAttribute('onchange', `window.toggleExclude(${num}, 'no')`);
+            }
+            
+            const btnDel = p.querySelector('.delete-pill-btn');
+            if(btnDel) btnDel.setAttribute('onclick', `window.deleteDriver(${num})`);
+        });
+
+        window.updateNavButtons();
+        window.switchDriverTab('d1');
+        window.showLocalToast("Driver removed.", "warning");
+    };
+
+    // --- 8. UTILS ---
+    window.updateNavButtons = function() {
+        const panels = document.querySelectorAll('.car-panel');
+        panels.forEach((p, i) => {
+            const btn = p.querySelector('.btn-next-driver');
+            if(btn) {
+                if(i < panels.length - 1) {
+                    btn.style.display = 'inline-flex';
+                    btn.setAttribute('onclick', `window.switchDriverTab('d${i+2}')`);
+                } else btn.style.display = 'none';
+            }
+        });
+    };
+
+    window.updateTabName = function(id, name) {
+        const t = document.getElementById(`tab-d${id}`);
+        if(t) {
+            // Mantener estado visual de exclusión si existe
+            const isExcluded = t.classList.contains('tab-excluded');
+            const suffix = isExcluded ? ' <span style="font-size:0.75rem; opacity:0.8;">(Excluded)</span>' : '';
+            const icon = isExcluded ? '<i class="fa-solid fa-user-slash"></i>' : '<i class="fa-solid fa-user"></i>';
+            
+            t.querySelector('.tab-txt').innerHTML = name.trim() ? `${icon} ${name}${suffix}` : `${icon} Driver ${id}${suffix}`;
+        }
+    };
+
+    window.initDriverDatePickers = function(scope) {
+        const t = scope || document;
+        if(typeof flatpickr !== 'undefined') {
+            flatpickr(t.querySelectorAll(".date-picker-dob"), {
+                dateFormat: "m/d/Y", maxDate: "today", disableMobile: "true",
+                onChange: function(dates, str, inst) {
+                    if(dates[0]) {
+                        const age = new Date().getFullYear() - dates[0].getFullYear();
+                        inst.element.closest('.grid-3-tight').querySelector('.age-display').value = age;
+                    }
+                }
+            });
+        }
+    };
+    initDriverDatePickers();
+
+    // --- 9. SUBMIT ---
+    if (document.getElementById('btnNext')) {
+        document.getElementById('btnNext').addEventListener('click', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            const activePanel = document.querySelector('.car-panel.active');
+            
+            activePanel.querySelectorAll('.validate-req').forEach(inp => {
+                if(!inp.disabled && !inp.value.trim()) {
+                    isValid = false;
+                    inp.closest('.input-rich-wrapper').classList.add('input-error');
+                } else {
+                    inp.closest('.input-rich-wrapper').classList.remove('input-error');
+                }
+            });
+
+            if(isValid) {
+                const btn = document.getElementById('btnNext');
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+                if(window.animateAndNavigate) {
+                    window.animateAndNavigate("quote-5.html");
+                } else {
+                    window.location.href = "quote-5.html";
+                }
+            } else {
+                window.showLocalToast("Please complete required fields.", "warning");
+            }
+        });
+    }
+
+    // Inicializar
+    window.updateNavButtons();
+}
+
+/* =========================================
+   LOGIC FOR STEP 3 (Quote 3) - WITH WAIVER MODAL
+   ========================================= */
+window.addEventListener('load', function() {
+    const step3Container = document.getElementById('quoteFormStep3');
+    let btnNext = document.getElementById('btnNext');
+
+    // Elementos del Modal
+    const modal = document.getElementById('waiverModal');
+    const btnReturn = document.getElementById('btnReturnToCoverages');
+    const btnConfirm = document.getElementById('btnConfirmWaiver');
+
+    if (!btnNext || !step3Container) return;
+
+    // 1. ACTIVAR CALENDARIO (Flatpickr)
+    if (typeof flatpickr !== 'undefined') {
+        const dateInput = step3Container.querySelector('.date-picker');
+        if (dateInput) {
+            flatpickr(dateInput, {
+                dateFormat: "m/d/Y",
+                minDate: "today",
+                defaultDate: "today",
+                disableMobile: "true",
+                onChange: function(selectedDates, dateStr, instance) {
+                    const wrapper = instance.element.closest('.input-rich-wrapper');
+                    if(wrapper) wrapper.classList.remove('input-error');
+                }
+            });
+        }
+    }
+
+    // 2. VALIDACIÓN VISUAL (Al cambiar inputs)
+    // Incluimos tanto los validate-req como los UM/UIM
+    const allInputs = step3Container.querySelectorAll('select, input');
+    allInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            if(this.value && this.value !== "") {
+                const wrapper = this.closest('.input-rich-wrapper') || this.parentElement;
+                if(wrapper) wrapper.classList.remove('input-error');
+            }
+        });
+    });
+
+    // 3. LÓGICA DEL BOTÓN NEXT
+    btnNext.onclick = function(e) {
+        e.preventDefault();
+        
+        let isBasicValid = true;
+        let firstError = null;
+
+        // A) Validar campos estrictamente requeridos (Fecha, Liability, etc)
+        const activePanel = step3Container.querySelector('.car-panel.active') || step3Container;
+        const requiredFields = activePanel.querySelectorAll('.validate-req');
+
+        requiredFields.forEach(field => {
+            const wrapper = field.closest('.input-rich-wrapper') || field.parentElement;
+            if(wrapper) wrapper.classList.remove('input-error');
+
+            if (!field.value || field.value.trim() === "") {
+                isBasicValid = false;
+                if(wrapper) {
+                    void wrapper.offsetWidth; 
+                    wrapper.classList.add('input-error');
+                }
+                if(!firstError) firstError = field;
+            }
+        });
+
+        if (!isBasicValid) {
+            // Si falta lo básico, error normal
+            if(typeof window.showToast === 'function') window.showToast("Please complete mandatory fields.", "warning");
+            else alert("Please complete mandatory fields.");
+
+            if(firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if(firstError.classList.contains('date-picker') && firstError._flatpickr) firstError._flatpickr.open();
+                else firstError.focus({preventScroll: true});
+            }
+            return; // Detenemos aquí
+        }
+
+        // B) CHEQUEO DE WAIVER (Uninsured / Underinsured)
+        // Buscamos los inputs específicos por ID
+        const inputUM = document.getElementById('inputUM');
+        const inputUIM = document.getElementById('inputUIM');
+        
+        let needsWaiver = false;
+
+        // Lógica: Si está vacío ("") O si es explícitamente "No Coverage" -> Activar Modal
+        if (inputUM && (inputUM.value === "" || inputUM.value === "No Coverage")) needsWaiver = true;
+        if (inputUIM && (inputUIM.value === "" || inputUIM.value === "No Coverage")) needsWaiver = true;
+
+        if (needsWaiver) {
+            // Mostrar Modal
+            if(modal) modal.classList.add('is-visible');
+        } else {
+            // Todo lleno correctamente -> Avanzar
+            goToNextPage();
+        }
+    };
+
+    // 4. LÓGICA DEL MODAL
+    if(btnReturn) {
+        btnReturn.onclick = function() {
+            // Cerrar modal y quedarse aquí
+            modal.classList.remove('is-visible');
+            
+            // Opcional: Hacer scroll a la sección de protección para que elijan
+            const umSection = document.getElementById('inputUM');
+            if(umSection) {
+                umSection.closest('.premium-group').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Resaltar visualmente
+                umSection.closest('.input-rich-wrapper').classList.add('input-error');
+            }
+        };
+    }
+
+    if(btnConfirm) {
+        btnConfirm.onclick = function() {
+            // Aceptar riesgo -> Cerrar modal y avanzar
+            modal.classList.remove('is-visible');
+            goToNextPage();
+        };
+    }
+
+    // Función auxiliar para avanzar
+    function goToNextPage() {
+        btnNext.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
+        btnNext.style.pointerEvents = 'none';
+        
+        setTimeout(() => {
+            window.location.href = "quote-4.html";
+        }, 800);
+    }
+});
+
+/* =========================================
+   LOGIC FOR STEP 2 (Address) - UPDATED
+   ========================================= */
+window.initStep2Logic = function() {
+    const stepContainer = document.getElementById('quoteFormStep2');
+    const btnNext = document.getElementById('btnNext');
+
+    if (!stepContainer || !btnNext) return;
+
+    // 1. CALENDARIO DE MUDANZA (Fechas Pasadas)
+    if (typeof flatpickr !== 'undefined') {
+        const pastDateInput = stepContainer.querySelector('.date-picker-past');
+        if (pastDateInput) {
+            flatpickr(pastDateInput, {
+                dateFormat: "m/d/Y",
+                maxDate: "today", // Importante: Solo permite hoy o antes
+                disableMobile: "true",
+                onChange: function(selectedDates, dateStr, instance) {
+                    const wrapper = instance.element.closest('.input-rich-wrapper');
+                    if(wrapper) wrapper.classList.remove('input-error');
+                }
+            });
+        }
+    }
+
+    // 2. VALIDACIÓN Y AVANCE
+    btnNext.onclick = function(e) {
         e.preventDefault();
         
         let isValid = true;
         let firstError = null;
+        
+        const requiredFields = stepContainer.querySelectorAll('.validate-req');
 
-        // Validar AMBOS conductores (D1 y D2)
-        ['d1', 'd2'].forEach(driverId => {
-            const hasViol = document.querySelector(`input[name="viol_${driverId}"]:checked`).value;
-            
-            if(hasViol === 'yes') {
-                const wrapper = document.getElementById(`viol-wrapper-${driverId}`);
-                
-                // 1. Validar que haya al menos una tarjeta
-                const cards = wrapper.querySelectorAll('.violation-card-wrapper');
-                if(cards.length === 0) {
-                    isValid = false;
-                    window.showToast(`Please add a violation for Driver ${driverId === 'd1' ? '1' : '2'} or select 'No'.`, "warning");
-                    // Cambiar al tab del error
-                    switchDriverTab(driverId);
-                    return; 
+        requiredFields.forEach(field => {
+            const wrapper = field.closest('.input-rich-wrapper') || field.parentElement;
+            if(wrapper) wrapper.classList.remove('input-error');
+
+            if (!field.value || field.value.trim() === "") {
+                isValid = false;
+                if(wrapper) {
+                    void wrapper.offsetWidth; // Reflow para reiniciar animación
+                    wrapper.classList.add('input-error');
                 }
-
-                // 2. Validar inputs dentro de las tarjetas
-                const inputs = wrapper.querySelectorAll('.validate-req');
-                inputs.forEach(input => {
-                    const group = input.closest('.input-rich-wrapper');
-                    group.classList.remove('input-error');
-                    
-                    if(!input.value.trim()) {
-                        isValid = false;
-                        group.classList.add('input-error');
-                        if(!firstError) {
-                            firstError = group;
-                            // Cambiar al tab donde está el error
-                            switchDriverTab(driverId); 
-                        }
-                    }
-                });
+                if(!firstError) firstError = field;
             }
         });
 
-        if(isValid) {
-            const btn = document.getElementById('btnNext');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
-            setTimeout(() => { window.location.href = "quote-6.html"; }, 800);
-        } else if (firstError) {
-            window.showToast("Please fill in missing violation details.", "warning");
-            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (!isValid) {
+            if(typeof window.showToast === 'function') window.showToast("Please complete your address details.", "warning");
+            else alert("Please complete your address details.");
+
+            if(firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Abrir calendario si es fecha
+                if(firstError.classList.contains('date-picker-past') && firstError._flatpickr) {
+                    firstError._flatpickr.open();
+                } else {
+                    firstError.focus({preventScroll: true});
+                }
+            }
+        } else {
+            // Éxito
+            btnNext.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Verifying...';
+            btnNext.style.pointerEvents = 'none';
+            
+            setTimeout(() => {
+                window.location.href = "quote-3.html";
+            }, 800);
         }
+    };
+
+    // 3. Limpieza visual de errores
+    const allInputs = stepContainer.querySelectorAll('input, select');
+    allInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            if(this.value.trim()) {
+                const wrapper = this.closest('.input-rich-wrapper');
+                if(wrapper) wrapper.classList.remove('input-error');
+            }
+        });
+    });
+};
+
+// STEP 1
+
+document.addEventListener('DOMContentLoaded', function() {
+// Elementos
+const modal = document.getElementById('quotesModal');
+const btnNext = document.getElementById('btnNext');
+const emailInput = document.getElementById('email');
+const emailSpan = document.getElementById('userEmailSpan');
+
+// Botones Modal
+const btnStartNew = document.querySelector('.js-start-new');
+const btnCancel = document.querySelector('.js-close-modal');
+
+// --- LÓGICA PRINCIPAL DEL CLIC ---
+if(btnNext) {
+    btnNext.addEventListener('click', function(e) {
+        e.preventDefault(); 
+        
+        // 1. VALIDACIÓN
+        const requiredFields = document.querySelectorAll('.validate-req');
+        let isValid = true;
+        let firstError = null;
+
+        requiredFields.forEach(field => {
+            // Limpiar error previo (buscando el wrapper correcto)
+            const wrapper = field.closest('.input-rich-wrapper') || field.parentElement; // Soporte para nuevo y viejo
+            if(wrapper) wrapper.classList.remove('input-error');
+            
+            let isEmpty = false;
+            if(field.type === 'checkbox') {
+                isEmpty = !field.checked;
+            } else {
+                isEmpty = !field.value.trim();
+            }
+
+            if (isEmpty) {
+                isValid = false;
+                
+                // Aplicar estilo de error al wrapper premium
+                const target = field.closest('.input-rich-wrapper') || field;
+                
+                void target.offsetWidth; // Reiniciar animación
+                target.classList.add('input-error');
+                
+                // Si es checkbox, quizás el wrapper padre
+                if(field.type === 'checkbox') {
+                    const checkWrapper = field.closest('.custom-check-wrapper') || field;
+                    checkWrapper.classList.add('input-error'); 
+                }
+
+                if(!firstError) firstError = field;
+            }
+        });
+
+        // Si hay error, detener y enfocar
+        if (!isValid) {
+            if(firstError) firstError.focus();
+            return;
+        }
+
+        // 2. ÉXITO -> SIMULAR CARGA Y MOSTRAR MODAL
+        const originalText = btnNext.innerHTML;
+        btnNext.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking Account...';
+        btnNext.style.pointerEvents = 'none';
+        
+        setTimeout(() => {
+            // Restaurar botón
+            btnNext.innerHTML = originalText;
+            btnNext.style.pointerEvents = 'auto';
+            
+            // Poner correo en el modal
+            if(emailInput.value) emailSpan.textContent = emailInput.value;
+            
+            // ABRIR MODAL (Usando clase is-visible del nuevo CSS)
+            if(modal) modal.classList.add('is-visible'); 
+        }, 800);
     });
 }
+
+// --- CERRAR MODAL ---
+const closeModal = () => {
+    if(modal) modal.classList.remove('is-visible');
+};
+
+if(btnCancel) btnCancel.addEventListener('click', closeModal);
+
+// --- BOTÓN START NEW QUOTE ---
+if(btnStartNew) {
+    btnStartNew.addEventListener('click', () => {
+        btnStartNew.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating...';
+        setTimeout(() => {
+            window.location.href = "quote-2.html"; 
+        }, 800);
+    });
+}
+
+// --- LIMPIAR ERRORES AL ESCRIBIR ---
+document.querySelectorAll('.validate-req').forEach(input => {
+    input.addEventListener('input', function() {
+        const wrapper = this.closest('.input-rich-wrapper');
+        if(wrapper) wrapper.classList.remove('input-error');
+    });
+    if(input.type === 'checkbox') {
+        input.addEventListener('change', function() {
+            const checkWrapper = this.closest('.custom-check-wrapper') || this;
+            checkWrapper.classList.remove('input-error');
+        });
+    }
+});
+});
+
