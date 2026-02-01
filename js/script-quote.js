@@ -1031,7 +1031,7 @@ if(document.getElementById('quoteFormStep10')) {
         }
         updateNavVisibility(); // Actualizar botones
         switchTab('car-1');
-        window.showToast("Vehicle list updated.", "info");
+        window.showToast("Vehicle list updated.", "warning");
     };
 
     // TEMPLATE PREMIUM (CON BOTONES PREV Y NEXT)
@@ -1041,51 +1041,75 @@ if(document.getElementById('quoteFormStep10')) {
                 <button type="button" class="btn-delete-link" onclick="deleteCar(${id})"><i class="fa-solid fa-trash-can"></i> Delete Vehicle ${id}</button>
             </div>
 
-            <div class="sec-label"><i class="fa-solid fa-fingerprint"></i> Identification</div>
-            <div class="inp-rich-group mb-4"><label>Vehicle Identification Number (VIN)</label><div class="input-rich-wrapper"><div class="icon-slot"><i class="fa-solid fa-barcode"></i></div><input type="text" class="rich-input validate-req" placeholder="17 Characters"></div></div>
-            <div class="grid-3-tight">
-                <div class="inp-rich-group"><label>Model Year</label><div class="input-rich-wrapper"><div class="icon-slot"><i class="fa-regular fa-calendar"></i></div><select class="rich-input validate-req" id="year-${id}"></select></div></div>
-                <div class="inp-rich-group"><label>Make</label><div class="input-rich-wrapper"><div class="icon-slot"><i class="fa-solid fa-tag"></i></div><select class="rich-input validate-req" id="make-${id}" onchange="updateTabName(${id}, this.value)"></select></div></div>
-                <div class="inp-rich-group"><label>Model</label><div class="input-rich-wrapper"><div class="icon-slot"><i class="fa-solid fa-car-side"></i></div><select class="rich-input validate-req"><option value="" disabled selected>Select</option><option>Model A</option><option>Model B</option></select></div></div>
+            <div class="premium-group">
+                <div class="pg-header">
+                    <div class="pg-header-badge blue">
+                        <i class="fa-solid fa-fingerprint"></i> IDENTIFICATION
+                    </div>
+                    <div class="pg-header-line"></div>
+                </div>            
+
+                <div class="inp-rich-group mb-4">
+                    <label>Vehicle Identification Number (VIN)</label>
+                    <div class="input-rich-wrapper compact-premium theme-blue">
+                        <div class="icon-slot"><i class="fa-solid fa-barcode"></i></div>
+                        <input type="text" class="rich-input validate-req" placeholder="17 Characters" style="letter-spacing: 2px; font-weight: 700; text-transform: uppercase;">
+                    </div>
+                </div>
+
+                <div class="grid-3-tight">
+                    <div class="inp-rich-group"><label>Model Year</label><div class="input-rich-wrapper compact-premium theme-blue"><div class="icon-slot"><i class="fa-regular fa-calendar"></i></div><select class="rich-input validate-req" id="year-${id}"></select></div></div>
+                    <div class="inp-rich-group"><label>Make</label><div class="input-rich-wrapper compact-premium theme-blue"><div class="icon-slot"><i class="fa-solid fa-tag"></i></div><select class="rich-input validate-req" id="make-${id}" onchange="updateTabName(${id}, this.value)"></select></div></div>
+                    <div class="inp-rich-group"><label>Model</label><div class="input-rich-wrapper compact-premium theme-blue"><div class="icon-slot"><i class="fa-solid fa-car-side"></i></div><select class="rich-input validate-req"><option value="" disabled selected>Select</option><option>Model A</option><option>Model B</option></select></div></div>
+                </div>
+
+                <div class="divider-hairline"></div>
+
+                <div class="row-switch-container">
+                    <div class="switch-label-group">
+                        <div class="sl-icon"><i class="fa-solid fa-location-dot"></i></div><div class="sl-text"><span class="sl-title">Garaging Address</span><span class="sl-sub">Same as home?</span></div></div>
+                    <div class="aurora-toggle-segment">
+                        <input type="radio" name="garage_${id}" id="g${id}_yes" value="yes" checked onchange="toggleGarage(${id}, 'no')"><label for="g${id}_yes">Yes</label>
+                        <input type="radio" name="garage_${id}" id="g${id}_no" value="no" onchange="toggleGarage(${id}, 'yes')"><label for="g${id}_no">No</label>
+                        <div class="segment-highlight"></div>
+                    </div>
+                </div>
+                <div id="garage-addr-${id}" class="hidden-anim mt-3 w-100"><div class="inp-rich-group"><label>Alternate Address</label><div class="input-rich-wrapper"><div class="icon-slot"><i class="fa-solid fa-map-location-dot"></i></div><input type="text" class="rich-input" placeholder="Enter Address"></div></div></div>
             </div>
 
-            <div class="divider-hairline"></div>
+            <div class="premium-group">
+                <div class="pg-header">
+                    <div class="pg-header-badge teal">
+                        <i class="fa-solid fa-shield-halved"></i> COVERAGE CONFIGURATION
+                    </div>
+                    <div class="pg-header-line"></div>
+                </div>
 
-            <div class="row-switch-container">
-                <div class="switch-label-group"><div class="sl-icon"><i class="fa-solid fa-location-dot"></i></div><div class="sl-text"><span class="sl-title">Garaging Address</span><span class="sl-sub">Same as home?</span></div></div>
-                <div class="aurora-toggle-segment">
-                    <input type="radio" name="garage_${id}" id="g${id}_yes" value="yes" checked onchange="toggleGarage(${id}, 'no')"><label for="g${id}_yes">Yes</label>
-                    <input type="radio" name="garage_${id}" id="g${id}_no" value="no" onchange="toggleGarage(${id}, 'yes')"><label for="g${id}_no">No</label>
-                    <div class="segment-highlight"></div>
+                <div class="grid-2-tight">
+                    <div class="inp-rich-group"><label>Comprehensive</label><div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-cloud-showers-heavy"></i></div><select class="rich-input"><option>$500 ded</option><option>$1000 ded</option><option>No Cov</option></select></div></div>
+                    <div class="inp-rich-group"><label>Collision</label><div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-car-burst"></i></div><select class="rich-input"><option>$500 ded</option><option>$1000 ded</option><option>No Cov</option></select></div></div>
                 </div>
-            </div>
-            <div id="garage-addr-${id}" class="hidden-anim mt-3 w-100"><div class="inp-rich-group"><label>Alternate Address</label><div class="input-rich-wrapper"><div class="icon-slot"><i class="fa-solid fa-map-location-dot"></i></div><input type="text" class="rich-input" placeholder="Enter Address"></div></div></div>
+                <div class="grid-2-tight mt-3">
+                    <div class="inp-rich-group"><label>Towing</label><div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-truck-pickup"></i></div><select class="rich-input"><option>No Cov</option><option>$50</option></select></div></div>
+                    <div class="inp-rich-group"><label>Rental</label><div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-key"></i></div><select class="rich-input"><option>No Cov</option><option>$30/day</option></select></div></div>
+                </div>
 
-            <div class="divider-hairline"></div>
-            <div class="sec-label"><i class="fa-solid fa-shield-halved"></i> Coverage Configuration</div>
-            <div class="grid-2-tight">
-                <div class="inp-rich-group"><label>Comprehensive</label><div class="input-rich-wrapper"><select class="rich-input"><option>$500 ded</option><option>$1000 ded</option><option>No Cov</option></select></div></div>
-                <div class="inp-rich-group"><label>Collision</label><div class="input-rich-wrapper"><select class="rich-input"><option>$500 ded</option><option>$1000 ded</option><option>No Cov</option></select></div></div>
-            </div>
-            <div class="grid-2-tight mt-3">
-                <div class="inp-rich-group"><label>Towing</label><div class="input-rich-wrapper"><select class="rich-input"><option>No Cov</option><option>$50</option></select></div></div>
-                <div class="inp-rich-group"><label>Rental</label><div class="input-rich-wrapper"><select class="rich-input"><option>No Cov</option><option>$30/day</option></select></div></div>
+                <div class="extras-list-container mt-4">
+                    <div class="row-switch-container compact">
+                        <div class="switch-label-group"><div class="sl-text"><span class="sl-title">Gap Coverage</span></div></div>
+                        <div class="aurora-toggle-segment small"><input type="radio" name="gap_${id}" id="gap${id}_yes" value="yes"><label for="gap${id}_yes">Yes</label><input type="radio" name="gap_${id}" id="gap${id}_no" value="no" checked><label for="gap${id}_no">No</label><div class="segment-highlight"></div></div>
+                    </div>
+                    <div class="row-switch-container compact">
+                        <div class="switch-label-group"><div class="sl-text"><span class="sl-title">Safety Features</span></div></div>
+                        <div class="aurora-toggle-segment small"><input type="radio" name="safe_${id}" id="safe${id}_yes" value="yes"><label for="safe${id}_yes">Yes</label><input type="radio" name="safe_${id}" id="safe${id}_no" value="no" checked><label for="safe${id}_no">No</label><div class="segment-highlight"></div></div>
+                    </div>
+                    <div class="row-switch-container compact">
+                        <div class="switch-label-group"><div class="sl-text"><span class="sl-title">Custom Equipment</span></div></div>
+                        <div class="input-rich-wrapper compact-input"><span class="currency">$</span><input type="number" class="rich-input" placeholder="0"></div>
+                    </div>
+                </div>
             </div>
 
-            <div class="extras-list-container mt-4">
-                <div class="row-switch-container compact">
-                    <div class="switch-label-group"><div class="sl-text"><span class="sl-title">Gap Coverage</span></div></div>
-                    <div class="aurora-toggle-segment small"><input type="radio" name="gap_${id}" id="gap${id}_yes" value="yes"><label for="gap${id}_yes">Yes</label><input type="radio" name="gap_${id}" id="gap${id}_no" value="no" checked><label for="gap${id}_no">No</label><div class="segment-highlight"></div></div>
-                </div>
-                <div class="row-switch-container compact">
-                    <div class="switch-label-group"><div class="sl-text"><span class="sl-title">Safety Features</span></div></div>
-                    <div class="aurora-toggle-segment small"><input type="radio" name="safe_${id}" id="safe${id}_yes" value="yes"><label for="safe${id}_yes">Yes</label><input type="radio" name="safe_${id}" id="safe${id}_no" value="no" checked><label for="safe${id}_no">No</label><div class="segment-highlight"></div></div>
-                </div>
-                <div class="row-switch-container compact">
-                    <div class="switch-label-group"><div class="sl-text"><span class="sl-title">Custom Equipment</span></div></div>
-                    <div class="input-rich-wrapper compact-input"><span class="currency">$</span><input type="number" class="rich-input" placeholder="0"></div>
-                </div>
-            </div>
 
             <div class="nav-internal-row" style="margin-top:25px; display:flex; justify-content:space-between;">
                 <button type="button" class="btn-nav-outline" onclick="switchTab('car-${id-1}')"><i class="fa-solid fa-chevron-left"></i> Prev Car</button>
