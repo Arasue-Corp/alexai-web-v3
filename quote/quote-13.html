@@ -173,147 +173,179 @@
                     
                     <div id="panel-car-1" class="car-panel active" data-id="1">
                         
-                        <div class="sec-label"><i class="fa-solid fa-key"></i> Operation & Ownership</div>
-                        <div class="grid-2-tight">
-                            <div class="inp-rich-group">
-                                <label>Purchase Date</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-regular fa-calendar-check"></i></div>
-                                    <input type="text" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY">
+                        <div class="premium-group">
+                            <div class="pg-header">
+                                <div class="pg-header-badge blue">
+                                    <i class="fa-solid fa-key"></i> OPERATION & OWNERSHIP
+                                </div>
+                                <div class="pg-header-line"></div>
+                            </div>
+
+                            <div class="grid-2-tight">
+                                <div class="inp-rich-group">
+                                    <label>Purchase Date</label>
+                                    <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-regular fa-calendar-check"></i></div>
+                                        <input type="text" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY">
+                                    </div>
+                                </div>
+                                <div class="inp-rich-group">
+                                    <label>Condition</label>
+                                    <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-star-half-stroke"></i></div>
+                                        <select class="rich-input validate-req">
+                                            <option value="" disabled selected>Select...</option>
+                                            <option value="New">New</option>
+                                            <option value="Used">Used</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="inp-rich-group">
-                                <label>Condition</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-solid fa-star-half-stroke"></i></div>
+                            <div class="inp-rich-group" style="margin-top: 15px;">
+                                <label>Primary Operator</label>
+                                <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-user-tag"></i></div>
                                     <select class="rich-input validate-req">
-                                        <option value="" disabled selected>Select...</option>
-                                        <option value="New">New</option>
-                                        <option value="Used">Used</option>
+                                        <option value="Driver 1" selected>Driver 1 (Uri)</option>
+                                        <option value="Driver 2">Driver 2 (Eloise)</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        <div class="inp-rich-group" style="margin-top: 15px;">
-                            <label>Primary Operator</label>
-                            <div class="input-rich-wrapper">
-                                <div class="icon-slot"><i class="fa-solid fa-user-tag"></i></div>
-                                <select class="rich-input validate-req">
-                                    <option value="Driver 1" selected>Driver 1 (Uri)</option>
-                                    <option value="Driver 2">Driver 2 (Eloise)</option>
-                                </select>
-                            </div>
-                        </div>
 
                         <div class="divider-hairline"></div>
 
-                        <div class="sec-label"><i class="fa-solid fa-gauge-high"></i> Mileage Metrics</div>
-                        <div class="grid-2-tight">
-                            <div class="inp-rich-group">
-                                <label>Miles Driven to Work</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
-                                    <input type="number" id="milesWork-1" class="rich-input validate-req" placeholder="Daily Miles">
+                        <div class="premium-group">
+                            <div class="pg-header">
+                                <div class="pg-header-badge teal">
+                                    <i class="fa-solid fa-gauge-high"></i> MILEAGE METRICS
+                                </div>
+                                <div class="pg-header-line"></div>
+                            </div>
+
+                            <div class="grid-2-tight">
+                                <div class="inp-rich-group">
+                                    <label>Miles Driven to Work</label>
+                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
+                                        <input type="number" id="milesWork-1" class="rich-input validate-req" placeholder="Daily Miles">
+                                    </div>
+                                </div>
+                                <div class="inp-rich-group">
+                                    <label>% Driven to Work</label>
+                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-percent"></i></div>
+                                        <input type="number" class="rich-input validate-req" placeholder="e.g. 60">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="inp-rich-group">
-                                <label>% Driven to Work</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-solid fa-percent"></i></div>
-                                    <input type="number" class="rich-input validate-req" placeholder="e.g. 60">
+                            <div class="grid-2-tight" style="margin-top: 15px;">
+                                <div class="inp-rich-group">
+                                    <label>Annual Miles (Est.)</label>
+                                    <div class="input-rich-wrapper compact-premium theme-teal locked">
+                                            <div class="icon-slot"><i class="fa-solid fa-calculator"></i></div>
+                                        <input type="number" id="annualMiles-1" class="rich-input validate-req" placeholder="Auto-calculated" readonly>
+                                    </div>
+                                </div>
+                                <div class="inp-rich-group">
+                                    <label>Current Odometer</label>
+                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-hashtag"></i></div>
+                                        <input type="number" class="rich-input validate-req" placeholder="Total Miles">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="grid-2-tight" style="margin-top: 15px;">
-                            <div class="inp-rich-group">
-                                <label>Annual Miles (Est.)</label>
-                                <div class="input-rich-wrapper locked">
-                                    <div class="icon-slot"><i class="fa-solid fa-calculator"></i></div>
-                                    <input type="number" id="annualMiles-1" class="rich-input validate-req" placeholder="Auto-calculated" readonly>
-                                </div>
-                            </div>
-                            <div class="inp-rich-group">
-                                <label>Current Odometer</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-solid fa-hashtag"></i></div>
-                                    <input type="number" class="rich-input validate-req" placeholder="Total Miles">
-                                </div>
-                            </div>
-                        </div>
+                        </div>    
 
                         <div class="divider-hairline"></div>
 
-                        <div class="sec-label"><i class="fa-solid fa-toggle-on"></i> Vehicle Status</div>
+                        <div class="premium-group">
+                            <div class="pg-header">
+                                <div class="pg-header-badge blue">
+                                    <i class="fa-solid fa-toggle-on"></i> VEHICLE STATUS
+                                </div>
+                                <div class="pg-header-line"></div>
+                            </div>
                         
-                        <div class="toggles-compact-grid">
-                            <label class="toggle-compact">
-                                <input type="checkbox">
-                                <div class="toggle-face">
-                                    <span class="tog-ind"></span>
-                                    <span class="tog-name">Monitoring Device</span>
-                                </div>
-                            </label>
-                            <label class="toggle-compact">
-                                <input type="checkbox">
-                                <div class="toggle-face">
-                                    <span class="tog-ind"></span>
-                                    <span class="tog-name">Leased Vehicle</span>
-                                </div>
-                            </label>
-                            <label class="toggle-compact">
-                                <input type="checkbox">
-                                <div class="toggle-face">
-                                    <span class="tog-ind error"></span> <span class="tog-name">Salvaged Title</span>
-                                </div>
-                            </label>
-                            <label class="toggle-compact">
-                                <input type="checkbox">
-                                <div class="toggle-face">
-                                    <span class="tog-ind"></span>
-                                    <span class="tog-name">Grey Market</span>
-                                </div>
-                            </label>
+                            <div class="toggles-compact-grid">
+                                <label class="toggle-compact">
+                                    <input type="checkbox">
+                                    <div class="toggle-face">
+                                        <span class="tog-ind"></span>
+                                        <span class="tog-name">Monitoring Device</span>
+                                    </div>
+                                </label>
+                                <label class="toggle-compact">
+                                    <input type="checkbox">
+                                    <div class="toggle-face">
+                                        <span class="tog-ind"></span>
+                                        <span class="tog-name">Leased Vehicle</span>
+                                    </div>
+                                </label>
+                                <label class="toggle-compact">
+                                    <input type="checkbox">
+                                    <div class="toggle-face">
+                                        <span class="tog-ind error"></span> <span class="tog-name">Salvaged Title</span>
+                                    </div>
+                                </label>
+                                <label class="toggle-compact">
+                                    <input type="checkbox">
+                                    <div class="toggle-face">
+                                        <span class="tog-ind"></span>
+                                        <span class="tog-name">Grey Market</span>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
+
 
                         <div class="divider-hairline"></div>
 
-                        <div class="sec-label"><i class="fa-solid fa-file-invoice-dollar"></i> Financials & Security</div>
-                        <div class="grid-3-tight">
-                            <div class="inp-rich-group">
-                                <label>Purchase Cost</label>
-                                <div class="input-rich-wrapper">
-                                    <span class="currency">$</span>
-                                    <input type="number" class="rich-input" placeholder="0.00">
+                        <div class="premium-group">
+                            <div class="pg-header">
+                                <div class="pg-header-badge teal">
+                                    <i class="fa-solid fa-file-invoice-dollar"></i> FINANCIALS & SECURITY
+                                </div>
+                                <div class="pg-header-line"></div>
+                            </div>
+
+                            <div class="grid-3-tight">
+                                <div class="inp-rich-group">
+                                    <label>Purchase Cost</label>
+                                    <div class="input-rich-wrapper">
+                                        <span class="currency">$</span>
+                                        <input type="number" class="rich-input" placeholder="0.00">
+                                    </div>
+                                </div>
+                                <div class="inp-rich-group">
+                                    <label>MSRP</label>
+                                    <div class="input-rich-wrapper">
+                                        <span class="currency">$</span>
+                                        <input type="number" class="rich-input" placeholder="0.00">
+                                    </div>
+                                </div>
+                                <div class="inp-rich-group">
+                                    <label>ACV (Current)</label>
+                                    <div class="input-rich-wrapper">
+                                        <span class="currency">$</span>
+                                        <input type="number" class="rich-input" placeholder="0.00">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="inp-rich-group">
-                                <label>MSRP</label>
-                                <div class="input-rich-wrapper">
-                                    <span class="currency">$</span>
-                                    <input type="number" class="rich-input" placeholder="0.00">
+
+                            <div class="inp-rich-group" style="margin-top: 20px;">
+                                <label>Anti-Theft System</label>
+                                <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-shield-halved"></i></div>
+                                    <select class="rich-input validate-req">
+                                        <option value="Level 1" selected>Anti-Theft level 1</option>
+                                        <option>No Anti-Theft</option>
+                                        <option>Anti-Theft level 2</option>
+                                        <option>Anti-Theft level 3</option>
+                                        <option>Anti-Theft level 4 (Passive)</option>
+                                        <option>Anti-Theft level 5 (GPS)</option>
+                                    </select>
                                 </div>
-                            </div>
-                            <div class="inp-rich-group">
-                                <label>ACV (Current)</label>
-                                <div class="input-rich-wrapper">
-                                    <span class="currency">$</span>
-                                    <input type="number" class="rich-input" placeholder="0.00">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="inp-rich-group" style="margin-top: 20px;">
-                            <label>Anti-Theft System</label>
-                            <div class="input-rich-wrapper">
-                                <div class="icon-slot"><i class="fa-solid fa-shield-halved"></i></div>
-                                <select class="rich-input validate-req">
-                                    <option value="Level 1" selected>Anti-Theft level 1</option>
-                                    <option>No Anti-Theft</option>
-                                    <option>Anti-Theft level 2</option>
-                                    <option>Anti-Theft level 3</option>
-                                    <option>Anti-Theft level 4 (Passive)</option>
-                                    <option>Anti-Theft level 5 (GPS)</option>
-                                </select>
                             </div>
                         </div>
 

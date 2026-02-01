@@ -118,165 +118,176 @@
                                 <div><strong>Primary Vehicle:</strong> This determines base rates and cannot be removed.</div>
                             </div>
 
-                            <div class="sec-label"><i class="fa-solid fa-fingerprint"></i> Identification</div>
+                            <div class="premium-group">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge blue">
+                                        <i class="fa-solid fa-fingerprint"></i> IDENTIFICATION
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
 
-                            <div class="inp-rich-group mb-4">
-                                <label>Vehicle Identification Number (VIN)</label>
-                                <div class="input-rich-wrapper">
+                                <div class="inp-rich-group mb-4">
+                                    <label>Vehicle Identification Number (VIN)</label>
+                                <div class="input-rich-wrapper compact-premium theme-blue">
                                     <div class="icon-slot"><i class="fa-solid fa-barcode"></i></div>
-                                    <input type="text" class="rich-input validate-req" placeholder="17 Characters" style="letter-spacing: 2px; font-weight: 700; text-transform: uppercase;">
+                                        <input type="text" class="rich-input validate-req" placeholder="17 Characters" style="letter-spacing: 2px; font-weight: 700; text-transform: uppercase;">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="grid-3-tight">
-                                <div class="inp-rich-group">
-                                    <label>Model Year</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-regular fa-calendar"></i></div>
-                                        <select class="rich-input validate-req" id="year-1">
-                                            <option value="" disabled selected>Select</option>
-                                        </select>
+                                <div class="grid-3-tight">
+                                    <div class="inp-rich-group">
+                                        <label>Model Year</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-regular fa-calendar"></i></div>
+                                            <select class="rich-input validate-req" id="year-1">
+                                                <option value="" disabled selected>Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>Make</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-tag"></i></div>
+                                            <select class="rich-input validate-req" id="make-1" onchange="updateTabName(1, this.value)">
+                                                <option value="" disabled selected>Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>Model</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-car-side"></i></div>
+                                            <select class="rich-input validate-req">
+                                                <option value="" disabled selected>Select</option>
+                                                <option>Camry</option><option>Corolla</option><option>RAV4</option><option>Other</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="inp-rich-group">
-                                    <label>Make</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-tag"></i></div>
-                                        <select class="rich-input validate-req" id="make-1" onchange="updateTabName(1, this.value)">
-                                            <option value="" disabled selected>Select</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="inp-rich-group">
-                                    <label>Model</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-car-side"></i></div>
-                                        <select class="rich-input validate-req">
-                                            <option value="" disabled selected>Select</option>
-                                            <option>Camry</option><option>Corolla</option><option>RAV4</option><option>Other</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="divider-hairline"></div>
+                                <div class="divider-hairline"></div>
 
-                            <div class="row-switch-container">
-                                <div class="switch-label-group">
-                                    <div class="sl-icon"><i class="fa-solid fa-location-dot"></i></div>
-                                    <div class="sl-text">
-                                        <span class="sl-title">Garaging Address</span>
-                                        <span class="sl-sub">Same as home address?</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="aurora-toggle-segment">
-                                    <input type="radio" name="garage_1" id="g1_yes" value="yes" checked onchange="toggleGarage(1, 'no')">
-                                    <label for="g1_yes">Yes</label>
-                                    
-                                    <input type="radio" name="garage_1" id="g1_no" value="no" onchange="toggleGarage(1, 'yes')">
-                                    <label for="g1_no">No</label>
-                                    
-                                    <div class="segment-highlight"></div>
-                                </div>
-                            </div>
-                            
-                            <div id="garage-addr-1" class="hidden-anim mt-3">
-                                <div class="inp-rich-group">
-                                    <label>Alternate Address</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-map-location-dot"></i></div>
-                                        <input type="text" class="rich-input validate-cond" placeholder="Enter Street, City, Zip">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="divider-hairline"></div>
-
-                            <div class="sec-label"><i class="fa-solid fa-shield-halved"></i> Coverage Configuration</div>
-                            
-                            <div class="grid-2-tight">
-                                <div class="inp-rich-group">
-                                    <label>Comprehensive</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-cloud-showers-heavy"></i></div>
-                                        <select class="rich-input">
-                                            <option>No Coverage</option>
-                                            <option selected>$500 deductible</option>
-                                            <option>$1000 deductible</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="inp-rich-group">
-                                    <label>Collision</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-car-burst"></i></div>
-                                        <select class="rich-input">
-                                            <option>No Coverage</option>
-                                            <option selected>$500 deductible</option>
-                                            <option>$1000 deductible</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="grid-2-tight mt-3">
-                                <div class="inp-rich-group">
-                                    <label>Towing</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-truck-pickup"></i></div>
-                                        <select class="rich-input"><option>No Coverage</option><option selected>$50</option><option>$75</option></select>
-                                    </div>
-                                </div>
-                                <div class="inp-rich-group">
-                                    <label>Rental</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-key"></i></div>
-                                        <select class="rich-input"><option>No Coverage</option><option selected>$30 / day</option></select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="divider-hairline"></div>
-
-                            <div class="extras-list-container">
-                                
-                                <div class="row-switch-container compact">
+                                <div class="row-switch-container">
                                     <div class="switch-label-group">
-                                        <div class="sl-text"><span class="sl-title">Gap Coverage</span></div>
+                                        <div class="sl-icon"><i class="fa-solid fa-location-dot"></i></div>
+                                        <div class="sl-text">
+                                            <span class="sl-title">Garaging Address</span>
+                                            <span class="sl-sub">Same as home address?</span>
+                                        </div>
                                     </div>
-                                    <div class="aurora-toggle-segment small">
-                                        <input type="radio" name="gap_1" id="gap1_yes" value="yes">
-                                        <label for="gap1_yes">Yes</label>
-                                        <input type="radio" name="gap_1" id="gap1_no" value="no" checked>
-                                        <label for="gap1_no">No</label>
+                                    
+                                    <div class="aurora-toggle-segment">
+                                        <input type="radio" name="garage_1" id="g1_yes" value="yes" checked onchange="toggleGarage(1, 'no')">
+                                        <label for="g1_yes">Yes</label>
+                                        
+                                        <input type="radio" name="garage_1" id="g1_no" value="no" onchange="toggleGarage(1, 'yes')">
+                                        <label for="g1_no">No</label>
+                                        
                                         <div class="segment-highlight"></div>
                                     </div>
                                 </div>
-
-                                <div class="row-switch-container compact">
-                                    <div class="switch-label-group">
-                                        <div class="sl-text"><span class="sl-title">Safety Features</span></div>
+                                
+                                <div id="garage-addr-1" class="hidden-anim mt-3">
+                                    <div class="inp-rich-group">
+                                        <label>Alternate Address</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-map-location-dot"></i></div>
+                                            <input type="text" class="rich-input validate-cond" placeholder="Enter Street, City, Zip">
+                                        </div>
                                     </div>
-                                    <div class="aurora-toggle-segment small">
-                                        <input type="radio" name="safe_1" id="safe1_yes" value="yes">
-                                        <label for="safe1_yes">Yes</label>
-                                        <input type="radio" name="safe_1" id="safe1_no" value="no" checked>
-                                        <label for="safe1_no">No</label>
-                                        <div class="segment-highlight"></div>
+                                </div>
+                            </div>
+
+                            <div class="premium-group">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge teal">
+                                        <i class="fa-solid fa-shield-halved"></i> COVERAGE CONFIGURATION
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
+                            
+                                <div class="grid-2-tight">
+                                    <div class="inp-rich-group">
+                                        <label>Comprehensive</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-cloud-showers-heavy"></i></div>
+                                            <select class="rich-input">
+                                                <option>No Coverage</option>
+                                                <option selected>$500 deductible</option>
+                                                <option>$1000 deductible</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>Collision</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-car-burst"></i></div>
+                                            <select class="rich-input">
+                                                <option>No Coverage</option>
+                                                <option selected>$500 deductible</option>
+                                                <option>$1000 deductible</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="row-switch-container compact">
-                                    <div class="switch-label-group">
-                                        <div class="sl-text"><span class="sl-title">Custom Equipment</span></div>
+                                <div class="grid-2-tight mt-3">
+                                    <div class="inp-rich-group">
+                                        <label>Towing</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-truck-pickup"></i></div>
+                                            <select class="rich-input"><option>No Coverage</option><option selected>$50</option><option>$75</option></select>
+                                        </div>
                                     </div>
-                                    <div class="input-rich-wrapper compact-input">
-                                        <span class="currency">$</span>
-                                        <input type="number" class="rich-input" placeholder="0">
+                                    <div class="inp-rich-group">
+                                        <label>Rental</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-key"></i></div>
+                                            <select class="rich-input"><option>No Coverage</option><option selected>$30 / day</option></select>
+                                        </div>
                                     </div>
                                 </div>
 
+                            <div class="divider-hairline"></div>
+
+                                <div class="extras-list-container">
+                                    
+                                    <div class="row-switch-container compact">
+                                        <div class="switch-label-group">
+                                            <div class="sl-text"><span class="sl-title">Gap Coverage</span></div>
+                                        </div>
+                                        <div class="aurora-toggle-segment small">
+                                            <input type="radio" name="gap_1" id="gap1_yes" value="yes">
+                                            <label for="gap1_yes">Yes</label>
+                                            <input type="radio" name="gap_1" id="gap1_no" value="no" checked>
+                                            <label for="gap1_no">No</label>
+                                            <div class="segment-highlight"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-switch-container compact">
+                                        <div class="switch-label-group">
+                                            <div class="sl-text"><span class="sl-title">Safety Features</span></div>
+                                        </div>
+                                        <div class="aurora-toggle-segment small">
+                                            <input type="radio" name="safe_1" id="safe1_yes" value="yes">
+                                            <label for="safe1_yes">Yes</label>
+                                            <input type="radio" name="safe_1" id="safe1_no" value="no" checked>
+                                            <label for="safe1_no">No</label>
+                                            <div class="segment-highlight"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-switch-container compact">
+                                        <div class="switch-label-group">
+                                            <div class="sl-text"><span class="sl-title">Custom Equipment</span></div>
+                                        </div>
+                                        <div class="input-rich-wrapper compact-input">
+                                            <span class="currency">$</span>
+                                            <input type="number" class="rich-input" placeholder="0">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="nav-row-right" style="justify-content:space-between; display:flex;">

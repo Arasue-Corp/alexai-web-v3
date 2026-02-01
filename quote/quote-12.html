@@ -112,46 +112,62 @@
                     
                     <div id="panel-car-1" class="car-panel active" data-id="1">
                         
-                        <div class="sec-label"><i class="fa-solid fa-briefcase"></i> Primary Purpose</div>
-                        
-                        <div class="inp-rich-group">
-                            <label>Vehicle Usage</label>
-                            <div class="input-rich-wrapper">
-                                <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
-                                <select class="rich-input validate-req">
-                                    <option value="" disabled selected>Select Usage...</option>
-                                    <option value="Pleasure">Pleasure (No Work Commute)</option>
-                                    <option value="Work/School">Work/School Commute</option>
-                                    <option value="Business">Business Use</option>
-                                    <option value="Artisan">Artisan / Contractor</option>
-                                    <option value="Farm">Farm Use</option>
-                                </select>
+                        <div class="premium-group">
+                            <div class="pg-header">
+                                <div class="pg-header-badge blue">
+                                    <i class="fa-solid fa-briefcase"></i> PRIMARY PURPOSE
+                                </div>
+                                <div class="pg-header-line"></div>
                             </div>
-                            <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 8px; display: flex; align-items: center; gap: 6px;">
-                                <i class="fa-solid fa-circle-info"></i> "Pleasure" means the car is not driven to work or school.
+                        
+                            <div class="inp-rich-group">
+                                <label>Vehicle Usage</label>
+                                <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
+                                    <select class="rich-input validate-req">
+                                        <option value="" disabled selected>Select Usage...</option>
+                                        <option value="Pleasure">Pleasure (No Work Commute)</option>
+                                        <option value="Work/School">Work/School Commute</option>
+                                        <option value="Business">Business Use</option>
+                                        <option value="Artisan">Artisan / Contractor</option>
+                                        <option value="Farm">Farm Use</option>
+                                    </select>
+                                </div>
+                                <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 8px; display: flex; align-items: center; gap: 6px;">
+                                    <i class="fa-solid fa-circle-info"></i> "Pleasure" means the car is not driven to work or school.
+                                </div>
                             </div>
                         </div>
+
 
                         <div class="divider-hairline"></div>
 
-                        <div class="sec-label"><i class="fa-solid fa-car-on"></i> Ride Share Activities</div>
+                        <div class="premium-group">
+                            <div class="pg-header">
+                                <div class="pg-header-badge teal">
+                                    <i class="fa-solid fa-car-on"></i> RISE SHARE ACTIVITIES
+                                </div>
+                                <div class="pg-header-line"></div>
+                            </div>
                         
-                        <div class="grid-2-tight">
-                            <label class="radio-card-opt">
-                                <input type="radio" name="ride_1" value="yes">
-                                <div class="radio-content">
-                                    <span class="radio-title">Yes, I do Rideshare</span>
-                                    <span class="radio-desc">Uber, Lyft, DoorDash, etc.</span>
-                                </div>
-                            </label>
-                            <label class="radio-card-opt">
-                                <input type="radio" name="ride_1" value="no" checked>
-                                <div class="radio-content">
-                                    <span class="radio-title">No Rideshare</span>
-                                    <span class="radio-desc">Personal use only.</span>
-                                </div>
-                            </label>
+                            <div class="grid-2-tight">
+                                <label class="radio-card-opt">
+                                    <input type="radio" name="ride_1" value="yes">
+                                    <div class="radio-content">
+                                        <span class="radio-title">Yes, I do Rideshare</span>
+                                        <span class="radio-desc">Uber, Lyft, DoorDash, etc.</span>
+                                    </div>
+                                </label>
+                                <label class="radio-card-opt">
+                                    <input type="radio" name="ride_1" value="no" checked>
+                                    <div class="radio-content">
+                                        <span class="radio-title">No Rideshare</span>
+                                        <span class="radio-desc">Personal use only.</span>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
+  
 
                         <div class="nav-row-right">
                             <button type="button" class="btn-nav-outline" onclick="switchTab('car-2')">Next Car <i class="fa-solid fa-arrow-right"></i></button>
@@ -160,42 +176,62 @@
 
                     <div id="panel-car-2" class="car-panel" data-id="2">
                         
-                        <div class="sec-label"><i class="fa-solid fa-briefcase"></i> Primary Purpose (Car 2)</div>
+                        <div class="premium-group">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge blue">
+                                        <i class="fa-solid fa-briefcase"></i> PRIMARY PURPOSE (CAR 2)
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
                         
-                        <div class="inp-rich-group">
-                            <label>Vehicle Usage</label>
-                            <div class="input-rich-wrapper">
-                                <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
-                                <select class="rich-input validate-req">
-                                    <option value="" disabled selected>Select Usage...</option>
-                                    <option value="Pleasure">Pleasure (No Work Commute)</option>
-                                    <option value="Work/School">Work/School Commute</option>
-                                    <option value="Business">Business Use</option>
-                                    <option value="Artisan">Artisan / Contractor</option>
-                                    <option value="Farm">Farm Use</option>
-                                </select>
+                        
+                            <div class="inp-rich-group">
+                                <label>Vehicle Usage</label>
+                                <div class="input-rich-wrapper compact-premium theme-blue">
+                                    <div class="icon-slot"><i class="fa-solid fa-road"></i></div>
+                                    <select class="rich-input validate-req">
+                                        <option value="" disabled selected>Select Usage...</option>
+                                        <option value="Pleasure">Pleasure (No Work Commute)</option>
+                                        <option value="Work/School">Work/School Commute</option>
+                                        <option value="Business">Business Use</option>
+                                        <option value="Artisan">Artisan / Contractor</option>
+                                        <option value="Farm">Farm Use</option>
+                                    </select>
+                                </div>
+                                <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 8px; display: flex; align-items: center; gap: 6px;">
+                                    <i class="fa-solid fa-circle-info"></i> "Pleasure" means the car is not driven to work or school.
+                                </div>
                             </div>
                         </div>
 
+
                         <div class="divider-hairline"></div>
 
-                        <div class="sec-label"><i class="fa-solid fa-car-on"></i> Ride Share Activities</div>
+                        <div class="premium-group">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge teal">
+                                        <i class="fa-solid fa-briefcase"></i> RIDE SHARE ACTIVITIES
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
                         
-                        <div class="grid-2-tight">
-                            <label class="radio-card-opt">
-                                <input type="radio" name="ride_2" value="yes"> <div class="radio-content">
-                                    <span class="radio-title">Yes, I do Rideshare</span>
-                                    <span class="radio-desc">Uber, Lyft, DoorDash, etc.</span>
-                                </div>
-                            </label>
-                            <label class="radio-card-opt">
-                                <input type="radio" name="ride_2" value="no" checked>
-                                <div class="radio-content">
-                                    <span class="radio-title">No Rideshare</span>
-                                    <span class="radio-desc">Personal use only.</span>
-                                </div>
-                            </label>
+                            <div class="grid-2-tight">
+                                <label class="radio-card-opt">
+                                    <input type="radio" name="ride_2" value="yes"> <div class="radio-content">
+                                        <span class="radio-title">Yes, I do Rideshare</span>
+                                        <span class="radio-desc">Uber, Lyft, DoorDash, etc.</span>
+                                    </div>
+                                </label>
+                                <label class="radio-card-opt">
+                                    <input type="radio" name="ride_2" value="no" checked>
+                                    <div class="radio-content">
+                                        <span class="radio-title">No Rideshare</span>
+                                        <span class="radio-desc">Personal use only.</span>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
+
 
                         <div class="nav-row-spaced">
                             <button type="button" class="btn-nav-outline" onclick="switchTab('car-1')"><i class="fa-solid fa-chevron-left"></i> Prev Car</button>

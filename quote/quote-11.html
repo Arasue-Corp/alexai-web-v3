@@ -113,102 +113,119 @@
                     
                     <div id="panel-car-1" class="car-panel active" data-id="1">
                         
-                        <div class="sec-label"><i class="fa-solid fa-sack-dollar"></i> Do you finance or lease your vehicle?</div>
+                        <div class="premium-group">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge blue">
+                                        <i class="fa-solid fa-sack-dollar"></i> DO YOU FINANCE OR LEASE YOUR VEHICLE?
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
                         
-                        <div class="grid-3-tight">
-                            <label class="radio-card-opt">
-                                <input type="radio" name="fin_1" value="none" checked onchange="toggleFinance(1, 'none')">
-                                <div class="radio-content">
-                                    <span class="radio-title">None</span>
-                                    <span class="radio-desc">Paid Off / Owned</span>
-                                </div>
-                            </label>
-                            <label class="radio-card-opt">
-                                <input type="radio" name="fin_1" value="lease" onchange="toggleFinance(1, 'show')">
-                                <div class="radio-content">
-                                    <span class="radio-title">Lease</span>
-                                    <span class="radio-desc">Leasing Co.</span>
-                                </div>
-                            </label>
-                            <label class="radio-card-opt">
-                                <input type="radio" name="fin_1" value="loan" onchange="toggleFinance(1, 'show')">
-                                <div class="radio-content">
-                                    <span class="radio-title">Loan</span>
-                                    <span class="radio-desc">Bank Financed</span>
-                                </div>
-                            </label>
+                            <div class="grid-3-tight">
+                                <label class="radio-card-opt">
+                                    <input type="radio" name="fin_1" value="none" checked onchange="toggleFinance(1, 'none')">
+                                    <div class="radio-content">
+                                        <span class="radio-title">None</span>
+                                        <span class="radio-desc">Paid Off / Owned</span>
+                                    </div>
+                                </label>
+                                <label class="radio-card-opt">
+                                    <input type="radio" name="fin_1" value="lease" onchange="toggleFinance(1, 'show')">
+                                    <div class="radio-content">
+                                        <span class="radio-title">Lease</span>
+                                        <span class="radio-desc">Leasing Co.</span>
+                                    </div>
+                                </label>
+                                <label class="radio-card-opt">
+                                    <input type="radio" name="fin_1" value="loan" onchange="toggleFinance(1, 'show')">
+                                    <div class="radio-content">
+                                        <span class="radio-title">Loan</span>
+                                        <span class="radio-desc">Bank Financed</span>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
+
 
                         <div id="finance-details-1" class="hidden-anim mt-4">
                             <div class="divider-hairline"></div>
-                            <div class="sec-label"><i class="fa-solid fa-building-columns"></i> Institution Details</div>
+
+                            <div class="premium-group">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge teal">
+                                        <i class="fa-solid fa-building-columns"></i> INSTITUTION DETAILS
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
                             
-                            <div class="inp-rich-group">
-                                <label>Institution Name</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
-                                    <input type="text" class="rich-input validate-cond" placeholder="Bank or Leasing Company Name">
+                                <div class="inp-rich-group">
+                                    <label>Institution Name</label>
+                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                        <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
+                                        <input type="text" class="rich-input validate-cond" placeholder="Bank or Leasing Company Name">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="inp-rich-group mt-3">
-                                <label>Mailing Address</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-solid fa-location-dot"></i></div>
-                                    <input type="text" class="rich-input validate-cond" placeholder="Street Address">
+                                <div class="inp-rich-group mt-3">
+                                    <label>Mailing Address</label>
+                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                        <div class="icon-slot"><i class="fa-solid fa-location-dot"></i></div>
+                                        <input type="text" class="rich-input validate-cond" placeholder="Street Address">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="grid-3-tight mt-3">
-                                <div class="inp-rich-group">
-                                    <label>Zip Code</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-map-pin"></i></div>
-                                        <input type="text" class="rich-input validate-cond" placeholder="12345">
+                                <div class="grid-3-tight mt-3">
+                                    <div class="inp-rich-group">
+                                        <label>Zip Code</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-map-pin"></i></div>
+                                            <input type="text" class="rich-input validate-cond" placeholder="12345">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>State</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-flag-usa"></i></div>
+                                            <select class="rich-input validate-cond">
+                                                <option value="" disabled selected>Select</option>
+                                                <option>AZ</option><option>CA</option><option>TX</option><option>FL</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>City</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-city"></i></div>
+                                            <select class="rich-input validate-cond">
+                                                <option value="" disabled selected>Select</option>
+                                                <option>Phoenix</option><option>Tucson</option><option>Mesa</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="inp-rich-group">
-                                    <label>State</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-flag-usa"></i></div>
-                                        <select class="rich-input validate-cond">
-                                            <option value="" disabled selected>Select</option>
-                                            <option>AZ</option><option>CA</option><option>TX</option><option>FL</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="inp-rich-group">
-                                    <label>City</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-city"></i></div>
-                                        <select class="rich-input validate-cond">
-                                            <option value="" disabled selected>Select</option>
-                                            <option>Phoenix</option><option>Tucson</option><option>Mesa</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="grid-2-tight mt-3">
-                                <div class="inp-rich-group">
-                                    <label>County</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-map"></i></div>
-                                        <select class="rich-input validate-cond">
-                                            <option value="" disabled selected>Select</option>
-                                            <option>Maricopa</option><option>Pima</option><option>Other</option>
-                                        </select>
+                                <div class="grid-2-tight mt-3">
+                                    <div class="inp-rich-group">
+                                        <label>County</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-map"></i></div>
+                                            <select class="rich-input validate-cond">
+                                                <option value="" disabled selected>Select</option>
+                                                <option>Maricopa</option><option>Pima</option><option>Other</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="inp-rich-group">
-                                    <label>Phone Number</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-phone"></i></div>
-                                        <input type="tel" class="rich-input validate-cond" placeholder="(555) 000-0000">
+                                    <div class="inp-rich-group">
+                                        <label>Phone Number</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-phone"></i></div>
+                                            <input type="tel" class="rich-input validate-cond" placeholder="(555) 000-0000">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="nav-row-right">
                             <button type="button" class="btn-nav-outline" onclick="switchTab('car-2')">Next Car <i class="fa-solid fa-arrow-right"></i></button>
@@ -216,102 +233,120 @@
                     </div>
 
                     <div id="panel-car-2" class="car-panel" data-id="2">
-                        <div class="sec-label"><i class="fa-solid fa-sack-dollar"></i> Ownership Status (Car 2)</div>
+
+                        <div class="premium-group">
+                            <div class="pg-header">
+                                <div class="pg-header-badge blue">
+                                    <i class="fa-solid fa-sack-dollar"></i> OWNERSHIP STATUS (CAR 2)
+                                </div>
+                                <div class="pg-header-line"></div>
+                            </div>
                         
-                        <div class="grid-3-tight">
-                            <label class="radio-card-opt">
-                                <input type="radio" name="fin_2" value="none" checked onchange="toggleFinance(2, 'none')">
-                                <div class="radio-content">
-                                    <span class="radio-title">None</span>
-                                    <span class="radio-desc">Paid Off / Owned</span>
-                                </div>
-                            </label>
-                            <label class="radio-card-opt">
-                                <input type="radio" name="fin_2" value="lease" onchange="toggleFinance(2, 'show')">
-                                <div class="radio-content">
-                                    <span class="radio-title">Lease</span>
-                                    <span class="radio-desc">Leasing Co.</span>
-                                </div>
-                            </label>
-                            <label class="radio-card-opt">
-                                <input type="radio" name="fin_2" value="loan" onchange="toggleFinance(2, 'show')">
-                                <div class="radio-content">
-                                    <span class="radio-title">Loan</span>
-                                    <span class="radio-desc">Bank Financed</span>
-                                </div>
-                            </label>
+                            <div class="grid-3-tight">
+                                <label class="radio-card-opt">
+                                    <input type="radio" name="fin_2" value="none" checked onchange="toggleFinance(2, 'none')">
+                                    <div class="radio-content">
+                                        <span class="radio-title">None</span>
+                                        <span class="radio-desc">Paid Off / Owned</span>
+                                    </div>
+                                </label>
+                                <label class="radio-card-opt">
+                                    <input type="radio" name="fin_2" value="lease" onchange="toggleFinance(2, 'show')">
+                                    <div class="radio-content">
+                                        <span class="radio-title">Lease</span>
+                                        <span class="radio-desc">Leasing Co.</span>
+                                    </div>
+                                </label>
+                                <label class="radio-card-opt">
+                                    <input type="radio" name="fin_2" value="loan" onchange="toggleFinance(2, 'show')">
+                                    <div class="radio-content">
+                                        <span class="radio-title">Loan</span>
+                                        <span class="radio-desc">Bank Financed</span>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
+
 
                         <div id="finance-details-2" class="hidden-anim mt-4">
                             <div class="divider-hairline"></div>
-                            <div class="sec-label"><i class="fa-solid fa-building-columns"></i> Institution Details</div>
+
+                            <div class="premium-group">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge teal">
+                                        <i class="fa-solid fa-building-columns"></i> INSTITUTION DETAILS
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
                             
-                            <div class="inp-rich-group">
-                                <label>Institution Name</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
-                                    <input type="text" class="rich-input validate-cond" placeholder="Bank Name">
+                                <div class="inp-rich-group">
+                                    <label>Institution Name</label>
+                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
+                                        <input type="text" class="rich-input validate-cond" placeholder="Bank Name">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="inp-rich-group mt-3">
-                                <label>Mailing Address</label>
-                                <div class="input-rich-wrapper">
-                                    <div class="icon-slot"><i class="fa-solid fa-location-dot"></i></div>
-                                    <input type="text" class="rich-input validate-cond" placeholder="Street Address">
+                                <div class="inp-rich-group mt-3">
+                                    <label>Mailing Address</label>
+                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-location-dot"></i></div>
+                                        <input type="text" class="rich-input validate-cond" placeholder="Street Address">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="grid-3-tight mt-3">
-                                <div class="inp-rich-group">
-                                    <label>Zip Code</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-map-pin"></i></div>
-                                        <input type="text" class="rich-input validate-cond" placeholder="12345">
+                                <div class="grid-3-tight mt-3">
+                                    <div class="inp-rich-group">
+                                        <label>Zip Code</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-map-pin"></i></div>
+                                            <input type="text" class="rich-input validate-cond" placeholder="12345">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>State</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-flag-usa"></i></div>
+                                            <select class="rich-input validate-cond">
+                                                <option value="" disabled selected>Select</option>
+                                                <option>AZ</option><option>CA</option><option>TX</option><option>FL</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label>City</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-city"></i></div>
+                                            <select class="rich-input validate-cond">
+                                                <option value="" disabled selected>Select</option>
+                                                <option>Phoenix</option><option>Tucson</option><option>Mesa</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="inp-rich-group">
-                                    <label>State</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-flag-usa"></i></div>
-                                        <select class="rich-input validate-cond">
-                                            <option value="" disabled selected>Select</option>
-                                            <option>AZ</option><option>CA</option><option>TX</option><option>FL</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="inp-rich-group">
-                                    <label>City</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-city"></i></div>
-                                        <select class="rich-input validate-cond">
-                                            <option value="" disabled selected>Select</option>
-                                            <option>Phoenix</option><option>Tucson</option><option>Mesa</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="grid-2-tight mt-3">
-                                <div class="inp-rich-group">
-                                    <label>County</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-map"></i></div>
-                                        <select class="rich-input validate-cond">
-                                            <option value="" disabled selected>Select</option>
-                                            <option>Maricopa</option><option>Pima</option><option>Other</option>
-                                        </select>
+                                <div class="grid-2-tight mt-3">
+                                    <div class="inp-rich-group">
+                                        <label>County</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-map"></i></div>
+                                            <select class="rich-input validate-cond">
+                                                <option value="" disabled selected>Select</option>
+                                                <option>Maricopa</option><option>Pima</option><option>Other</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="inp-rich-group">
-                                    <label>Phone Number</label>
-                                    <div class="input-rich-wrapper">
-                                        <div class="icon-slot"><i class="fa-solid fa-phone"></i></div>
-                                        <input type="tel" class="rich-input validate-cond" placeholder="(555) 000-0000">
+                                    <div class="inp-rich-group">
+                                        <label>Phone Number</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-phone"></i></div>
+                                            <input type="tel" class="rich-input validate-cond" placeholder="(555) 000-0000">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="nav-row-spaced">
                             <button type="button" class="btn-nav-outline" onclick="switchTab('car-1')"><i class="fa-solid fa-chevron-left"></i> Prev Car</button>
