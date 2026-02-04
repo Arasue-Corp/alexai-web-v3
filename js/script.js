@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initFAQAccordion();
     
     // 2. Lógica del Home (Video y Productos)
-    if(document.getElementById('heroVideoElement')) {
+    if(document.querySelector('.js-hover-video')) {
         initQuoteTransition();
         initProductTriggers();
         initProductVideos();
@@ -727,3 +727,4 @@ window.addEventListener("load", function() {
 
     console.log("🚀 Alex AI: Botones flotantes alineados a la derecha.");
 });
+

@@ -3,347 +3,608 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document Signing - Alex AI Insurtech</title>
-    <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
+    <title>Alex AI Insurtech - Ambassador Program</title>
+    <meta name="description" content="AI-powered insurance, handled by humans. Get smart protection in 90 seconds.">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="stylesheet" href="../css/ambassador.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style-quote.css">
     <link rel="stylesheet" href="../css/style.css">
 
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+
     <script>
         const SUPABASE_URL = 'https://pddukinvrrmibnxfunuw.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBkZHVraW52cnJtaWJueGZ1bnV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM0MDYwMTYsImV4cCI6MjA3ODk4MjAxNn0.1-NioXXntQALwJL5nAoGyX6hysG3QsZu7Qg-hsJAzdY';
         const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         window.supabase = client;
     </script>
+
 </head>
-<body class="quote-page-body">
+<body class="bg-body">
 
-    <div class="ambient-glow glow-1"></div>
-    <div class="ambient-glow glow-3"></div>
-    <div id="transition-overlay"></div>
+    <div id="toast-container"></div>
 
-   <div class="top-header">
-        <div class="container top-header-flex">
-            <div class="top-contact">
-                <a href="tel:+1800555ALEX"><i class="fa-solid fa-phone"></i> +1 480 630 9630</a>
-                <a href="mailto:hello@alexai.com"><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</a>
-                <span><i class="fa-solid fa-location-dot"></i> 3101 N Central Ave ste 1174, Phoenix, AZ</span>
+    <div class="top-header-aurora">
+        <div class="container top-bar-flex">
+            
+            <div class="top-info-group">
+                <a href="tel:+14806309630" class="top-link glass-hover">
+                    <i class="fa-solid fa-phone pulse-icon"></i> 
+                    <span>+1 480 630 9630</span>
+                </a>
+                
+                <span class="divider-vertical"></span>
+                
+                <a href="mailto:hello@alexai.cloud" class="top-link glass-hover">
+                    <i class="fa-solid fa-envelope"></i> 
+                    <span>hello@alexai.cloud</span>
+                </a>
+
+                <span class="divider-vertical desktop-only"></span>
+                <div class="top-location desktop-only">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>3101 N Central Ave ste 1174, Phoenix, AZ</span>
+                </div>
             </div>
-            <div class="top-social">
-                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+
+            <div class="top-social-group">
+                <span class="social-label desktop-only">Connect:</span>
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" target="_blank" class="social-btn" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" target="_blank" class="social-btn" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
             </div>
         </div>
+        
+        <div class="aurora-border-glow"></div>
     </div>
 
-    <header class="site-header">
-        <div class="container header-wrapper">
-            <a href="https://alexai.cloud/" class="logo-container">
+   <header class="site-header glass-navbar">
+        <div class="container nav-container">
+            
+            <a href="https://alexai.cloud/" class="brand-logo">
                 <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="site-logo">
             </a>
-            
-                        <nav class="main-nav">
-                <ul>
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../quote/quote.html" class="js-trigger-quote">Quote</a></li>
-                    <li class="has-dropdown">
-                        <a href="../index.html#products">Products <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
-                        <ul class="dropdown-menu organic-box">
-                            <li><a href="../alex-sign/index.html">Alex Sign</a></li>
-                            <li><a href="../homeowners/index.html">Homeowners Insurance</a></li>
-                            <li><a href="../renters/index.html">Renters Insurance</a></li>
-                            <li><a href="../contact/index.html">Others Insurance</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="../index.html#carriers">Carriers</a></li>
-                    <li><a href="../blog/index.html">Blog</a></li>
-                    <li><a href="../contact/index.html">Contact</a></li>
 
-                    <li class="mobile-only-nav"><a href="../ambassadors/documents.html">Become an Ambassador</a></li>
-                    <li class="mobile-only-nav"><a href="../quote/quote.html" style="color: var(--alex-blue-accent);">Check Prices</a></li>
+            <nav class="nav-center desktop-only">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-item active">Home</a></li>
+                    <li><a href="../quote/quote.html" class="nav-item">Quote</a></li>
+                    
+                    <li class="nav-dropdown-group">
+                        <button class="nav-item dropdown-btn">
+                            Products <i class="fa-solid fa-angle-down arrow-indicator"></i>
+                        </button>
+                        
+                        <div class="dropdown-glass-panel">
+                            <div class="dropdown-grid">
+                                <a href="../alex-sign/index.html" class="dd-card">
+                                    <div class="icon-tile tile-blue"><i class="fa-solid fa-signature"></i></div>
+                                    <div class="dd-info"><span class="dd-title">Alex Sign</span><span class="dd-desc">Digital signatures</span></div>
+                                </a>
+                                <a href="../homeowners/index.html" class="dd-card">
+                                    <div class="icon-tile tile-indigo"><i class="fa-solid fa-house-chimney"></i></div>
+                                    <div class="dd-info"><span class="dd-title">Homeowners</span><span class="dd-desc">Property protection</span></div>
+                                </a>
+                                <a href="../renters/index.html" class="dd-card">
+                                    <div class="icon-tile tile-cyan"><i class="fa-solid fa-key"></i></div>
+                                    <div class="dd-info"><span class="dd-title">Renters</span><span class="dd-desc">Apartment coverage</span></div>
+                                </a>
+                                <a href="../contact/index.html" class="dd-card">
+                                    <div class="icon-tile tile-purple"><i class="fa-solid fa-shield-halved"></i></div>
+                                    <div class="dd-info"><span class="dd-title">Others</span><span class="dd-desc">Custom plans</span></div>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li><a href="../index.html#carriers" class="nav-item">Carriers</a></li>
+                    <li><a href="../blog/index.html" class="nav-item">Blog</a></li>
+                    <li><a href="../contact/index.html" class="nav-item">Contact</a></li>
+
                 </ul>
             </nav>
 
-            <div class="header-actions">
-                <a href="../ambassadors/index.html" class="btn btn-outline btn-sm">Become an Ambassador</a>
-                <a href="../quote/quote.html" class="btn btn-solid btn-sm js-trigger-quote">Check Prices</a>
+            <div class="nav-actions">
+                
+                <a href="../ambassadors/documents.html" class="btn-view-aurora desktop-only">
+                    Become an Ambassador
+                </a>
+
+                <span class="divider-vertical desktop-only"></span>
+
+                <a href="../quote/quote.html" class="btn-aurora-gradient js-trigger-quote">
+                    <span>Check Prices</span>
+                    <i class="fa-solid fa-arrow-right-long btn-icon-anim"></i>
+                </a>
+                
+                <button class="mobile-toggle-btn mobile-only" onclick="toggleMobileMenu()" aria-label="Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
-            
-             <button class="mobile-menu-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        </div>
+
+        <div class="mobile-menu-dropdown" id="mobileMenu">
+            <ul class="mobile-list">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../quote/quote.html">Quote</a></li>
+                <li><a href="../ambassadors/documents.html" style="color: var(--c-blue);">Become an Ambassador</a></li>
+                <li class="divider-horizontal"></li>
+                <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                <li><a href="../homeowners/index.html">Homeowners</a></li>
+                <li><a href="../renters/index.html">Renters</a></li>
+                <li class="divider-horizontal"></li>
+                <li><a href="../contact/index.html">Contact</a></li>
+            </ul>
         </div>
     </header>
 
-    <div class="layout-container">
-
-        <div class="main-header">
-            <div class="title-sticker">
-                <h1>Sign & <span>Upload</span></h1>
-                <span class="title-subtitle">Required Documents</span>
+    <main>    
+        <section class="legal-hero">
+            <div class="legal-hero-bg"></div>
+            <div class="container position-relative z-2">
+                <div class="d-flex flex-column align-items-center text-center">
+                    <div class="badge-legal-tech mb-3">
+                        <i class="fa-solid fa-file-signature"></i> Ambassador Program
+                    </div>
+                    <h1 class="display-legal-title">
+                        Document <span class="text-gradient-tech">Upload Center</span>
+                    </h1>
+                    <div class="legal-meta-row">
+                        <div class="pg-header-badge blue">
+                            <span class="dot-pulse"></span> Personal & Business
+                        </div>
+                        <div class="meta-item status-active">
+                            <span class="dot-pulse"></span> Applications Open
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
+        <br>
 
-        <div class="sketch-card">
-            
-            <form id="documents-form" novalidate>
+        <div class="specs-layout-grid">
+            <div class="main-spec-col">
                 
-                <div class="form-step active" style="display:block;">
-                    <h2 style="font-size:1.3rem; margin-bottom:20px;">1. Download Templates</h2>
+                <div class="premium-white-card">
+                    <div class="aurora-card-form">
+                        
+                        <form id="documents-form" novalidate>
+                            <div class="car-panel active">
+                            
+                                <div class="form-section">
+                                        <div class="premium-group">
+
+                                        <div class="pg-header">
+                                            <div class="pg-header-badge blue">
+                                                <i class="fa-solid fa-file-pdf"></i> 1. Download Templates
+                                            </div>
+                                            <div class="pg-header-line"></div>
+                                        </div>
+                                        
+                                        <div class="download-zone-premium">
+                                            <div class="dz-content">
+                                                <div class="dz-icon-circle">
+                                                    <i class="fa-solid fa-cloud-arrow-down"></i>
+                                                </div>
+                                                
+                                                <div class="dz-text">
+                                                    <h4>Download Templates</h4>
+                                                    <p>Please download the official agreements below. You can sign them manually or digitally before uploading.</p>
+                                                </div>
+
+                                                <div class="dz-actions">
+                                                    <a href="../assets/files/Agreement_Ambassador_Program_V2__personal.pdf" download="Ambassador_Agreement.pdf" class="btn-download-card">
+                                                        <div class="btn-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                                                        <span>Agreement</span>
+                                                    </a>
+                                                    
+                                                    <a href="../assets/files/Annex_1_Ambassador_Program_V2__personal.pdf" download="Ambassador_Annex.pdf" class="btn-download-card">
+                                                        <div class="btn-icon"><i class="fa-solid fa-file-contract"></i></div>
+                                                        <span>Annex 1</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="divider-hairline"></div>
+
+                                <div class="form-section">
+                                    
+                                    <div class="premium-group">
+                                        <div class="pg-header">
+                                            <div class="pg-header-badge teal">
+                                                <i class="fa-solid fa-user"></i> 2. Your Information
+                                            </div>
+                                            <div class="pg-header-line"></div>
+                                        </div>
+
+                                        <div class="grid-2-tight mb-4">
+                                            <div class="inp-rich-group">
+                                                <label for="user-name">First Name</label>
+                                                <div class="input-rich-wrapper compact-premium theme-teal">
+                                                    <div class="icon-slot"><i class="fa-solid fa-user"></i></div>
+                                                    <input type="text" class="rich-input validate-req" placeholder="e.g. John" id="user-name"">
+                                                </div>
+                                            </div>
+                                            <div class="inp-rich-group">
+                                                <label for="user-lastname">Last Name</label>
+                                                <div class="input-rich-wrapper compact-premium theme-teal">
+                                                    <div class="icon-slot"><i class="fa-solid fa-font"></i></div>
+                                                    <input type="text" class="rich-input validate-req" placeholder="e.g. Doe" id="user-lastname">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="grid-2-tight">
+                                            <div class="inp-rich-group">
+                                                <label for="user-dob">Date of Birth</label>
+                                                <div class="input-rich-wrapper compact-premium theme-blue">
+                                                    <div class="icon-slot"><i class="fa-solid fa-calendar"></i></div>
+                                                    <input type="text" class="rich-input date-picker-dob validate-req" placeholder="MM/DD/YYYY" id="user-dob">
+                                                </div>
+                                            </div>
+                                            <div class="inp-rich-group">
+                                                <label for="user-email">Email Address</label>
+                                                <div class="input-rich-wrapper compact-premium theme-teal">
+                                                    <div class="icon-slot"><i class="fa-regular fa-envelope"></i></div>
+                                                    <input type="email" class="rich-input validate-req" placeholder="you@example.com" id="user-email">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="grid-2-tight">
+                                            <div class="inp-rich-group">
+                                                <label for="user-phone">Phone Number</label>
+                                                <div class="input-rich-wrapper compact-premium theme-teal">
+                                                    <div class="icon-slot"><i class="fa-solid fa-phone"></i></div>
+                                                    <input type="tel" class="rich-input validate-req" placeholder="(123) 456 7890" id="user-phone">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="divider-hairline"></div>
+
+                                <div class="form-section">
+                                    <div class="premium-group">
+
+                                        <div class="pg-header">
+                                            <div class="pg-header-badge blue">
+                                                <i class="fa-solid fa-file-signature"></i> 3. Upload Signed Copies
+                                            </div>
+                                            <div class="pg-header-line"></div>
+                                        </div>
+                                    <p class="text-sm mb-4">Supported formats: PDF, JPG, PNG. Max size 10MB.</p>
+
+                                    <div class="upload-zones-grid">
+                                        
+                                        <div class="file-drop-zone-premium" id="zone-agreement">
+                                            <input type="file" id="file-agreement" accept=".pdf, .png, .jpg, .jpeg" required class="file-input-hidden">
+                                            
+                                            <div class="drop-content">
+                                                <div class="icon-upload-circle">
+                                                    <i class="fa-solid fa-file-signature"></i>
+                                                </div>
+                                                <div class="text-area">
+                                                    <strong class="file-label">Signed Agreement*</strong>
+                                                    <span class="file-status">Click to browse or drop file</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="file-drop-zone-premium" id="zone-annex">
+                                            <input type="file" id="file-annex" accept=".pdf, .png, .jpg, .jpeg" required class="file-input-hidden">
+                                            
+                                            <div class="drop-content">
+                                                <div class="icon-upload-circle">
+                                                    <i class="fa-solid fa-file-contract"></i>
+                                                </div>
+                                                <div class="text-area">
+                                                    <strong class="file-label">Signed Annex*</strong>
+                                                    <span class="file-status">Click to browse or drop file</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                            <p id="form-error" class="error-msg hidden"><i class="fa-solid fa-circle-exclamation"></i> Please fill all required fields.</p>
+
+                            <div class="hero-action-area">
+                                <button type="submit" id="submit-btn" class="btn-hero-gradient">
+                                    <span>Submit Documents</span> <i class="fa-solid fa-arrow-right"></i>
+                                    <div class="loader hidden"></div>
+                                </button>
+                                <div class="secure-badge-modern">
+                                    <i class="fa-solid fa-lock"></i> 256-bit SSL Encrypted
+                                </div>
+                                <div class="divider-hairline"></div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <br>
+            </div>
+            
+                <aside class="config-sidebar">
+                    <div class="organic-panel">
+                        <div class="sidebar-title">Your Progress</div>
+                        <ul class="aurora-list">
+                            <li class="active"><span class="pulse-dot"></span> Personal Info</li>
+                            <li><i class="fa-regular fa-circle"></i> Wallet Setup</li>
+                            <li><i class="fa-regular fa-circle"></i> Certification</li>
+                            <li><i class="fa-regular fa-circle"></i> Activation</li>
+                        </ul>
+                        <div class="sidebar-title">Highlights</div>
+                        <div style="display:flex; gap:10px; margin-bottom:12px; font-size:0.9rem; color:#514690;"><i class="fa-solid fa-check-circle" style="color: #10B981;"></i>
+                            <span>
+                                <strong>$25 Per Referral</strong>
+                                <br>
+                                Earn everytime someone buys.
+                            </span>
+                        </div>
+                        <div style="display:flex; gap:10px; margin-bottom:12px; font-size:0.9rem; color:#514690;"><i class="fa-solid fa-check-circle" style="color: #10B981;"></i>
+                            <span>
+                                <strong>Unlimited Cap</strong>
+                                <br>
+                                No limit to your earnings.
+                            </span>
+                        </div>
+                        <div></div>
+
+
+                        <div class="tip-box-vibrant" style="margin-top: 20px;">
+                            <i class="fa-regular fa-lightbulb tip-icon"></i>
+                            <div>
+                                <strong>Alex Tip:</strong> Use your inner circle. Your first 5 sales ($125) usually come from family & friends who already trust you.
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+        </div>
+
+
+    </main>
+
+    <div id="success-modal" class="modal-backdrop hidden">
+        <div class="modal-card-premium">
+            <button id="modal-close-btn" class="modal-close">&times;</button>
+            <div class="modal-icon-success">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h2 style="color: var(--color-indigo);">Submission Received!</h2>
+            <p style="color: #64748B; margin-bottom: 25px;">Your documents have been securely uploaded. Our team will review them and contact you shortly to finalize your ambassador status.</p>
+            <button id="btn-finish" class="btn-hero-gradient" style="width:100%;">Return to Home</button>
+        </div>
+    </div>
+
+    <footer class="footer-aurora">
+        <div class="footer-light-mesh"></div>
+
+        <div class="container">
+            <div class="footer-grid">
+                
+                <div class="footer-col brand-col">
+                    <a href="../index.html" class="footer-logo">
+                        <img src="../assets/img/Logo-alexai-main-white.png" alt="Alex AI Logo" class="footer-logo-img">
+                    </a>
+                    <p class="footer-tagline">
+                        Smart insurance for modern life. Powered by intelligence, driven by humans.
+                    </p>
+                    <div class="footer-social-mini">
+                        <a href="https://www.facebook.com/people/Alexai-Insurtech-USA/61573922245346/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/alexai.insurtech.usa/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/channel/UCphdQNb7AT5jauTFKYgSh9g" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@alexaiinsurtech" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+
+
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Products</h4>
+                    <ul class="footer-links">
+                        <li><a href="../quote/quote.html">Car Insurance</a></li>
+                        <li><a href="../homeowners/index.html">Home Insurance</a></li>
+                        <li><a href="../renters/index.html">Renters Insurance</a></li>
+                        <li><a href="../alex-sign/index.html">Alex Sign <span class="badge-new">New</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://www.instagram.com/alexai.insurtech.usa/" target="_blank">About Us</a></li>
+                        <li><a href="../ambassadors/documents.html">Ambassadors</a></li>
+                        <li><a href="../blog/index.html">Blog</a></li>
+                        <li><a href="../contact/index.html">Contact Support</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="footer-col contact-col">
+                    <h4 class="footer-heading">Contact & Access</h4>
                     
-                    <div class="paypal-box" style="padding: 30px; margin-bottom:40px;">
-                        <i class="fa-solid fa-file-arrow-down" style="font-size:3rem; color:#003087; margin-bottom:15px;"></i>
-                        <p style="font-size:0.9rem; margin-bottom:20px;">Download the agreements, sign them, and scan/photo them.</p>
-                        
-                        <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
-                            <a href="../assets/files/Agreement_Ambassador_Program_V2__personal.pdf" download="Ambassador_Agreement.pdf" class="button-secondary" style="background:white; border-color:#003087; color:#003087; font-size:0.9rem; padding:12px 20px;">
-                                <i class="fa-solid fa-download"></i> Agreement PDF
-                            </a>
-                            <a href="../assets/files/Annex_1_Ambassador_Program_V2__personal.pdf" download="Ambassador_Annex.pdf" class="button-secondary" style="background:white; border-color:#003087; color:#003087; font-size:0.9rem; padding:12px 20px;">
-                                <i class="fa-solid fa-download"></i> Annex PDF
-                            </a>
-                        </div>
-                    </div>
+                    <ul class="contact-list">
+                        <li>
+                            <i class="fa-solid fa-phone"></i> 
+                            <a href="tel:+14806309630">+1 480-630-9630</a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i> 
+                            <a href="mailto:hello@alexai.cloud">hello@alexai.cloud</a>
+                        </li>
+                    </ul>
 
-                    <hr class="form-divider" style="border-top:2px dashed #E2E8F0; margin:30px 0;">
-
-                    <h2 style="font-size:1.3rem; margin-bottom:20px;">2. Your Information</h2>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="user-name">First Name*</label>
-                            <input type="text" id="user-name" required placeholder="Ex: Jonathan">
-                        </div>
-                        <div class="form-group">
-                            <label for="user-lastname">Last Name*</label>
-                            <input type="text" id="user-lastname" required placeholder="Ex: Smith">
-                        </div>
-                        <div class="form-group">
-                            <label for="user-dob">Date of Birth*</label>
-                            <input type="date" id="user-dob" required style="font-family: 'Inter', sans-serif;">
-                        </div>
-                        <div class="form-group">
-                            <label for="user-phone">Phone*</label>
-                            <input type="tel" id="user-phone" required placeholder="(555) 000-0000">
-                        </div>
-                    </div>
-                    <div class="form-group" style="margin-bottom:30px;">
-                        <label for="user-email">Email*</label>
-                        <input type="email" id="user-email" required placeholder="you@example.com">
-                    </div>
-
-                    <hr class="form-divider" style="border-top:2px dashed #E2E8F0; margin:30px 0;">
-
-                    <h2 style="font-size:1.3rem; margin-bottom:10px;">3. Upload Signed Copies</h2>
-                    <p style="font-size:0.9rem; color:#64748B; margin-bottom:20px;">Accepted formats: PDF, JPG, PNG.</p>
-
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;" class="upload-grid-responsive">
-                        
-                        <div class="file-upload-box">
-                            <i class="fa-solid fa-file-signature" style="font-size:2rem; color:#4A80F0; margin-bottom:10px;"></i>
-                            <span style="font-weight:800; color:#2C3E50; display:block;">Signed Agreement*</span>
-                            <span style="font-size:0.75rem; color:#94A3B8; margin-top:5px;">Click to browse</span>
-                            <input type="file" id="file-agreement" accept=".pdf, .png, .jpg, .jpeg" required class="file-upload-input">
-                        </div>
-
-                        <div class="file-upload-box">
-                            <i class="fa-solid fa-file-contract" style="font-size:2rem; color:#4A80F0; margin-bottom:10px;"></i>
-                            <span style="font-weight:800; color:#2C3E50; display:block;">Signed Annex*</span>
-                            <span style="font-size:0.75rem; color:#94A3B8; margin-top:5px;">Click to browse</span>
-                            <input type="file" id="file-annex" accept=".pdf, .png, .jpg, .jpeg" required class="file-upload-input">
-                        </div>
-                    </div>
-
-                    <p id="form-error" class="error-message hidden"></p>
-
-                    <div class="form-navigation">
-                        <button type="submit" id="submit-btn" class="btn-glow-anim generate-btn" style="width:100%;">
-                            Submit Documents <i class="fa-solid fa-cloud-arrow-up"></i>
-                            <span class="loader hidden"></span>
-                        </button>
+                    <div class="footer-app-buttons">
+                        <a href="https://apps.apple.com/us/app/alex-ai-insurtech-app/id6752793999" target="_blank">
+                            <button class="btn-footer-store">
+                                <i class="fa-brands fa-apple"></i>
+                                <div class="store-text">
+                                    <span>Download on</span>
+                                    <strong>App Store</strong>
+                                </div>
+                            </button>
+                        </a>
+                        <a href="https://play.google.com/store/apps/details?id=cloud.alexai.movil&pcampaignid=web_share" target="_blank">
+                            <button class="btn-footer-store">
+                                <i class="fa-brands fa-google-play"></i>
+                                <div class="store-text">
+                                    <span>Get it on</span>
+                                    <strong>Google Play</strong>
+                                </div>
+                            </button>
+                        </a>
                     </div>
                 </div>
 
-            </form>
+            </div>
         </div>
 
-        <aside class="sidebar-column">
-            
-            <div class="taped-paper">
-                <div class="tape-top"></div>
-                <div class="widget-title">INSTRUCTIONS</div>
-                <ul class="progress-track" style="margin-top:15px;">
-                    <li class="active"><i class="fa-solid fa-1" style="color:var(--alex-blue);"></i> Download PDFs</li>
-                    <li class="active"><i class="fa-solid fa-2" style="color:var(--alex-blue);"></i> Print & Sign</li>
-                    <li class="active"><i class="fa-solid fa-3" style="color:var(--alex-blue);"></i> Scan or Photo</li>
-                    <li class="active"><i class="fa-solid fa-4" style="color:var(--alex-blue);"></i> Upload Here</li>
-                </ul>
-            </div>
-
-            <div class="note-widget">
-                <div class="push-pin"></div>
-                <h4 style="margin:0 0 10px 0; color:#854D0E;">🔒 Secure Upload</h4>
-                <p style="font-size:0.9rem; color:#854D0E; margin:0;">
-                    Your documents are encrypted and stored securely. We only use them for legal compliance.
-                </p>
-            </div>
-
-        </aside>
-
-    </div>
-
-    <div id="success-modal" class="modal-overlay-ambassador hidden">
-        <div class="modal-content">
-            <div class="modal-tape"></div>
-            
-            <button id="modal-close-btn" aria-label="Close" style="position:absolute; top:15px; right:20px; border:none; background:none; font-size:2rem; color:#CBD5E1; cursor:pointer; transition:0.2s;">&times;</button>
-            
-            <div class="success-stamp" style="border-color:#10B981; background:#ECFDF5; color:#10B981;">
-                <i class="fa-regular fa-paper-plane" style="transform: translate(-2px, 2px);"></i>
-            </div>
-            
-            <h2 style="color:var(--alex-ink); margin-bottom:15px;">All Set!</h2>
-            
-            <p style="font-size:1rem; color:#64748B; line-height:1.6; margin-bottom:10px;">
-                Your documents have been securely received.
-            </p>
-            
-            <p style="font-size:1.1rem; color:var(--alex-blue); font-weight:700; margin-bottom:0;">
-                We will contact you shortly<br>to confirm your activation.
-            </p>
-            
-            <button id="btn-finish" class="btn-glow-anim" style="margin-top: 30px; width: 100%;">
-                Got it!
-            </button>
-        </div>
-    </div>
-
-<footer id="contact" class="site-footer">
-        <div class="container footer-grid">
-            <div class="footer-col brand-col">
-                <a href="../index.html" style="display: block; margin-bottom: 20px;">
-                    <img src="../assets/img/Logo-alexai-main.png" 
-                        alt="Alex AI Insurtech Logo" 
-                        style="max-width: 160px; height: auto; filter: brightness(0) invert(1);">
-                </a>
-                <p style="color: rgba(255,255,255,0.9); font-weight: 500;">
-                    Smart insurance for modern life. Powered by intelligence, driven by humans.
-                </p>
-            </div>
-            <div class="footer-col">
-                <h5 style="color: white;">Products</h5>
-                <ul class="footer-links">
-                    <li><a href="../quote/quote.html">Car Insurance</a></li>
-                    <li><a href="../homeowners/index.html">Home Insurance</a></li>
-                    <li><a href="../renters/index.html">Renters Insurance</a></li>
-                    <li><a href="../alex-sign/index.html">Alex Sign</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h5 style="color: white;">Company</h5>
-                <ul class="footer-links">
-                    <li><a href="https://www.instagram.com/alexai.insurtech.usa/">About Us</a></li>
-                    <li><a href="../ambassadors/index.html">Ambassadors</a></li>
-                    <li><a href="../blog/index.html">Blog</a></li>
-                    <li><a href="../contact/index.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h5 style="color: white;">Contact & Legal</h5>
-                <ul class="footer-links contact-links">
-                    <li><i class="fa-solid fa-phone"></i> +1 480-630-9630</li>
-                    <li><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</li>
-                    <li><a href="../terms-conditions/index.html">Terms of Service</a></li>
-                    <li><a href="../privacy-policy/index.html">Privacy Policy</a></li>
-                </ul>
-                <div class="app-buttons-row" style="display:flex; gap:15px; flex-wrap:wrap;">
-                    <a href="https://apps.apple.com/us/app/alex-ai-insurtech-app/id6752793999" class="btn-app-store">
-                        <i class="fa-brands fa-apple"></i>
-                        <div>
-                            <span class="small-txt">Download on the</span>
-                            <span class="big-txt">App Store</span>
-                        </div>
-                    </a>
-                    <a href="https://play.google.com/store/apps/details?id=cloud.alexai.movil&pcampaignid=web_share" class="btn-app-store">
-                        <i class="fa-brands fa-google-play"></i>
-                        <div>
-                            <span class="small-txt">Get it on</span>
-                            <span class="big-txt">Google Play</span>
-                        </div>
-                    </a>
+        <div class="footer-bottom">
+            <div class="container bottom-flex">
+                <div class="copyright-text">
+                    &copy; 2026 Alex AI Insurtech. All rights reserved.
+                </div>
+                <div class="legal-links">
+                    <a href="../privacy-policy/index.html">Privacy Policy</a>
+                    <span class="divider">|</span>
+                    <a href="../terms-conditions/index.html">Terms of Service</a>
                 </div>
             </div>
-
-        </div>
-        <div class="container copyright-row">
-             <p>&copy; 2026 Alex AI Insurtech. All rights reserved.</p>
-             <div class="social-links">
-                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@Alex-AI-Insurtech" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-            </div>
+            <div class="aurora-bottom-line"></div>
         </div>
     </footer>
 
+
     <div id="floating-menu-container">
-        <div class="floating-menu-list organic-box" id="megaMenu">
-            <h5>Quick Navigate</h5>
-            <ul>
-                <li><a href="../quote/quote.html"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
-                <li><a href="../homeowners/index.html"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
-                <li><a href="../renters/index.html"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
-                <li><a href="../alex-sign/index.html"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
-                <li class="divider"></li>
-                <li><a href="../blog/index.html"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
-                <li><a href="../contact/index.html"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
-            </ul>
+        <div class="nav-command-center" id="megaMenu">
+            <div class="cmd-header">
+                <span>Quick Navigate</span>
+                <span class="cmd-badge">MENU</span>
+            </div>
+            <div class="cmd-grid">
+                <a href="../quote/quote.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-car"></i></div>
+                    <span>Car Insurance</span>
+                </a>
+                <a href="../homeowners/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-house"></i></div>
+                    <span>Home Insurance</span>
+                </a>
+                <a href="../renters/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-key"></i></div>
+                    <span>Renters Insurance</span>
+                </a>
+                <a href="../alex-sign/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-file-signature"></i></div>
+                    <span>Alex Sign</span>
+                </a>
+                <a href="../blog/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-newspaper"></i></div>
+                    <span>Blog</span>
+                </a>
+                <a href="../contact/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-headset"></i></div>
+                    <span>Contact Support</span>
+                </a>
+            </div>
+            <div class="cmd-footer">
+                <a href="../index.html">Back to Home <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
         </div>
-        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open quick menu">
-            <i class="fa-solid fa-bars-staggered"></i>
+        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open menu">
+            <i class="fa-regular fa-compass"></i>
         </button>
     </div>
 
     <div id="floating-chat-container">
-        <div class="chat-bubble organic-box" id="chatGreeting">
-            <strong>Alex AI says:</strong><br> 👋 Welcome aboard!
+        <div class="alex-chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div class="agent-info">
+                    <div class="agent-avatar"><i class="fa-solid fa-robot"></i><div class="status-dot"></div></div>
+                    <div class="agent-text">
+                        <span class="name">Alex AI Assistant</span>
+                        <span class="status">Reply time: Instant</span>
+                    </div>
+                </div>
+                <button class="close-chat-btn js-close-chat"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="chat-body">
+                <div class="chat-timestamp">Today, 5:00 PM</div>
+                
+                <div class="msg-row bot">
+                    <div class="msg-bubble">
+                        Hello! I see you're looking at quotes. Do you have any questions about the <strong>Collision Deductible</strong>? 🚗
+                    </div>
+                </div>
+                
+                <div class="chat-suggestions">
+                    <button>Explain Deductibles</button>
+                    <button>Talk to Human</button>
+                </div>
+            </div>
+            
+            <div class="chat-footer">
+                <input type="text" placeholder="Type your question..." class="chat-input">
+                <button class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
         </div>
-        <button class="chat-avatar-btn js-trigger-chat"><i class="fa-solid fa-robot"></i></button>
+
+        <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
+            <i class="fa-solid fa-comment-dots"></i>
+            <span class="online-badge"></span>
+        </button>
     </div>
 
-    <script src="../js/documents.js"></script>
     <script src="../js/script.js"></script>
+    <script src="../js/script-quote.js"></script>
+    <script src="../js/documents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+
     <script>
-        // Script para cambiar el texto de la caja de upload al seleccionar archivo
-        document.querySelectorAll('.file-upload-input').forEach(input => {
+ // Lógica visual para los uploaders (Cambio de color al subir)
+        document.querySelectorAll('.file-input-hidden').forEach(input => {
             input.addEventListener('change', function() {
+                const zone = this.closest('.file-drop-zone-premium');
+                const statusSpan = zone.querySelector('.file-status');
+                const icon = zone.querySelector('.icon-upload-circle');
+                
                 if (this.files && this.files.length > 0) {
-                    // Buscar el span dentro del padre y cambiar texto
-                    const wrapper = this.closest('.file-upload-box');
-                    const textSpan = wrapper.querySelector('span:nth-of-type(2)'); // El segundo span (Click to browse)
-                    const icon = wrapper.querySelector('i');
+                    zone.classList.add('file-selected');
+                    statusSpan.textContent = this.files[0].name;
+                    statusSpan.style.color = '#10B981';
+                    statusSpan.style.fontWeight = '600';
                     
-                    textSpan.textContent = this.files[0].name;
-                    textSpan.style.color = '#10B981';
-                    textSpan.style.fontWeight = 'bold';
-                    
-                    icon.classList.remove('fa-file-signature', 'fa-file-contract');
-                    icon.classList.add('fa-circle-check');
-                    icon.style.color = '#10B981';
-                    
-                    wrapper.style.borderColor = '#10B981';
-                    wrapper.style.backgroundColor = '#ECFDF5';
+                    icon.innerHTML = '<i class="fa-solid fa-check"></i>';
+                    icon.style.background = '#10B981';
+                    icon.style.color = 'white';
+                    zone.style.borderColor = '#10B981';
+                    zone.style.backgroundColor = '#ECFDF5';
                 }
             });
         });
-        
-        // Responsive fix para grid de uploads en móvil
-        if(window.innerWidth < 600) {
-            const grid = document.querySelector('.upload-grid-responsive');
-            if(grid) grid.style.gridTemplateColumns = '1fr';
-        }
     </script>
+    
 </body>
 </html>

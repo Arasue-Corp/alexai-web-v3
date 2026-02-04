@@ -2579,5 +2579,236 @@ document.querySelectorAll('.validate-req').forEach(input => {
         });
     }
 });
+
+// LÓGICA NEWSLETTER (VIP FORM)
+const vipForm = document.getElementById('vip-form');
+const vipInput = document.getElementById('vip-email');
+
+if (vipForm && vipInput) {
+    vipForm.addEventListener('submit', function(e) {
+        // 1. IMPORTANTE: Evitar que la página se recargue
+        e.preventDefault();
+
+        const emailValue = vipInput.value.trim();
+
+        // 2. Validación: ¿Está vacío?
+        if (!emailValue) {
+            // Mostrar Toast Amarillo (Warning)
+            if (typeof showToast === 'function') {
+                showToast("Please enter your email address first.", "warning");
+            }
+            // Poner foco en el input y efecto visual de error (opcional si tienes esa clase)
+            vipInput.focus();
+            return; // Detener ejecución
+        }
+
+        // 3. Validación básica de formato de email (Opcional pero recomendado)
+        if (!emailValue.includes('@') || !emailValue.includes('.')) {
+            if (typeof showToast === 'function') {
+                showToast("Please enter a valid email address.", "warning");
+            }
+            return;
+        }
+
+        // 4. Éxito: Simular envío
+        // Aquí iría tu código de Supabase o backend real
+        
+        // Simular carga visual en el botón (opcional)
+        const btn = vipForm.querySelector('button');
+        const originalText = btn.innerText;
+        btn.innerText = "Joining...";
+        
+        setTimeout(() => {
+            // Restaurar botón
+            btn.innerText = originalText;
+            
+            // Limpiar el input
+            vipInput.value = "";
+
+            // Mostrar Toast Verde (Success)
+            if (typeof showToast === 'function') {
+                showToast("Welcome to the club! Subscription active.", "success");
+            }
+        }, 1000); // Simula 1 segundo de espera
+    });
+}
 });
 
+/* =========================================
+   CONTACT FORM LOGIC (HOME)
+   ========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+    initContactForm();
+});
+
+function initContactForm() {
+    const contactForm = document.getElementById('main-contact-form');
+    if (!contactForm) return;
+
+    // Seleccionar inputs requeridos
+    const inputs = contactForm.querySelectorAll('[required]');
+
+    // Limpieza de errores al interactuar
+    inputs.forEach(input => {
+        const clearError = () => {
+            const wrapper = input.parentElement; // El contenedor .float-group
+            wrapper.classList.remove('input-error');
+            wrapper.classList.remove('shake-anim');
+        };
+
+        // Limpiar al escribir o cambiar
+        input.addEventListener('input', clearError);
+        input.addEventListener('change', clearError);
+    });
+
+    // Manejo del envío
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        let isValid = true;
+        let firstError = null;
+
+        inputs.forEach(input => {
+            const val = input.value.trim();
+            const wrapper = input.parentElement; // Seleccionamos el PADRE
+
+            if (!val) {
+                isValid = false;
+                
+                // 1. Aseguramos limpieza previa para reiniciar animación
+                wrapper.classList.remove('shake-anim');
+                
+                // 2. Forzar "Reflow" (necesario para reiniciar animaciones CSS)
+                void wrapper.offsetWidth; 
+                
+                // 3. Aplicar clases al CONTENEDOR (Todo el bloque se mueve y se pinta)
+                wrapper.classList.add('input-error');
+                wrapper.classList.add('shake-anim');
+                
+                // 4. Quitar solo el movimiento tras 0.5s (el rojo se queda)
+                setTimeout(() => wrapper.classList.remove('shake-anim'), 500);
+
+                if (!firstError) firstError = input;
+            }
+        });
+
+        // Caso especial: Validación de Email
+        const emailInput = document.getElementById('email');
+        if (emailInput && emailInput.value && !emailInput.value.includes('@')) {
+            const wrapper = emailInput.parentElement;
+            
+            isValid = false;
+            if (typeof showToast === 'function') {
+                showToast("Please enter a valid email address.", "warning");
+            }
+
+            wrapper.classList.remove('shake-anim');
+            void wrapper.offsetWidth;
+            wrapper.classList.add('input-error');
+            wrapper.classList.add('shake-anim');
+            setTimeout(() => wrapper.classList.remove('shake-anim'), 500);
+            
+            if (!firstError) firstError = emailInput;
+        }
+
+        if (!isValid) {
+            if (typeof showToast === 'function') {
+                showToast("Please check the highlighted fields.", "warning");
+            }
+            if (firstError) firstError.focus();
+            return; // Detener aquí si hay errores
+        }
+
+        // --- SI TODO ESTÁ BIEN: ENVIAR ---
+        
+        // Simulación Envío (Tu botón premium)
+        const btn = contactForm.querySelector('button[type="submit"]');
+        const contentWrapper = btn.querySelector('.btn-content-wrapper'); // Contenedor del texto
+        const originalContent = contentWrapper.innerHTML;
+        
+        btn.disabled = true;
+        // Spinner de carga
+        contentWrapper.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin" style="font-size: 1.2rem;"></i><span style="margin-left:8px;">Sending...</span>`;
+
+        setTimeout(() => {
+            if (typeof showToast === 'function') {
+                showToast("Message sent successfully!", "success");
+            }
+            contactForm.reset();
+            
+            // Estado de éxito visual en el botón
+            btn.classList.add('success-state');
+            contentWrapper.innerHTML = `<i class="fa-solid fa-check-circle" style="font-size: 1.3rem;"></i><span style="margin-left:8px;">Sent!</span>`;
+            
+            // Restaurar botón original
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.classList.remove('success-state');
+                
+                // Transición suave de opacidad para cambiar el texto
+                contentWrapper.style.opacity = '0';
+                setTimeout(() => {
+                    contentWrapper.innerHTML = originalContent;
+                    contentWrapper.style.opacity = '1';
+                }, 200);
+            }, 3000);
+        }, 1500);
+    });
+}
+
+/**
+ * UTILITY: Toast Notification System
+ * Asegura que funcione aunque falte el contenedor en HTML
+ */
+function showToast(message, type = 'success') {
+    let container = document.getElementById('toast-container');
+    
+    // Auto-crear contenedor si no existe
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    
+    // Iconos y colores
+    let iconClass = 'fa-circle-check';
+    let cssClass = 'alex-toast'; // Clase base
+
+    if (type === 'success') {
+        cssClass += ' success';
+        iconClass = 'fa-circle-check';
+    } else if (type === 'warning') {
+        cssClass += ' warning';
+        iconClass = 'fa-triangle-exclamation';
+    } else if (type === 'error') {
+        cssClass += ' danger';
+        iconClass = 'fa-circle-xmark';
+    }
+
+    toast.className = cssClass;
+    toast.innerHTML = `
+        <div class="toast-icon-box"><i class="fa-solid ${iconClass}"></i></div>
+        <div class="toast-content">
+            <span class="toast-title">${type.charAt(0).toUpperCase() + type.slice(1)}</span>
+            <span class="toast-sub">${message}</span>
+        </div>
+    `;
+    
+    container.appendChild(toast);
+
+    // Animación Entrada
+    requestAnimationFrame(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(0)';
+    });
+
+    // Auto eliminar
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 400);
+    }, 4000);
+}

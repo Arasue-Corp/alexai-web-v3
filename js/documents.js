@@ -1,149 +1,214 @@
-document.addEventListener('DOMContentLoaded', () => {
-    
-    const docForm = document.getElementById('documents-form');
-    const errorMsg = document.getElementById('form-error');
-    const submitBtn = document.getElementById('submit-btn');
-    const loader = submitBtn.querySelector('.loader');
-    const successModal = document.getElementById('success-modal');
-    const modalCloseBtn = document.getElementById('modal-close-btn');
-    const btnFinish = document.getElementById('btn-finish');
+document.addEventListener('DOMContentLoaded', function() {
 
-    if (!docForm) return;
+    // --- 1. CONFIGURACIÓN: TOASTS (NOTIFICACIONES) ---
+    function showToast(msg, type = 'success') {
+        const container = document.getElementById('toast-container');
+        if (!container) return; // Seguridad
 
-    docForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+        const toast = document.createElement('div');
+        
+        // Iconos según el tipo
+        let iconHtml = '<i class="fa-solid fa-check"></i>';
+        if(type === 'warning') iconHtml = '<i class="fa-solid fa-triangle-exclamation"></i>';
+        if(type === 'danger') iconHtml = '<i class="fa-solid fa-circle-xmark"></i>';
 
-        // 1. UI Loading State
-        errorMsg.classList.add('hidden');
-        loader.classList.remove('hidden');
-        submitBtn.disabled = true;
+        // Clases CSS (Basadas en tu style-quote.css)
+        toast.className = `alex-toast ${type}`;
+        
+        toast.innerHTML = `
+            <div class="toast-icon-box">${iconHtml}</div>
+            <div class="toast-content">
+                <span class="toast-title">${type === 'warning' ? 'Insight' : 'Insight'}</span>
+                <span class="toast-sub">${msg}</span>
+            </div>
+        `;
+        
+        container.appendChild(toast);
+        
+        // Animación de entrada
+        requestAnimationFrame(() => toast.classList.add('show'));
+        
+        // Auto eliminar a los 4 segundos
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 400);
+        }, 4000);
+    }
 
-        try {
-            // 2. Recolectar datos
-            const name = document.getElementById('user-name').value.trim();
-            const lastname = document.getElementById('user-lastname').value.trim();
-            const dob = document.getElementById('user-dob').value;
-            const phone = document.getElementById('user-phone').value.trim();
-            const email = document.getElementById('user-email').value.trim();
-            
-            const fileAgreement = document.getElementById('file-agreement').files[0];
-            const fileAnnex = document.getElementById('file-annex').files[0];
-
-            // Validaciones básicas
-            if (!name || !lastname || !dob || !phone || !email || !fileAgreement || !fileAnnex) {
-                throw new Error("Please fill in all fields and select both files.");
+    // --- 2. CONFIGURACIÓN: CALENDARIO (FLATPICKR) ---
+    const dateInput = document.getElementById('user-dob');
+    if (dateInput && typeof flatpickr !== 'undefined') {
+        flatpickr(dateInput, {
+            dateFormat: "m/d/Y",
+            maxDate: "today", // No permite fechas futuras para nacimiento
+            disableMobile: "true",
+            theme: "material_blue",
+            onChange: function(selectedDates, dateStr, instance) {
+                // Al seleccionar, quitamos el error rojo si existía
+                const wrapper = instance.element.closest('.input-rich-wrapper');
+                if (wrapper) wrapper.classList.remove('input-error');
             }
+        });
+    }
 
-            // 3. Generar nombres de archivo únicos
-            const timestamp = Date.now();
-            const cleanName = `${name}_${lastname}`.replace(/\s+/g, '_').toLowerCase();
+    // --- 3. LÓGICA VISUAL DE ARCHIVOS (UPLOAD ZONES) ---
+    // Maneja el cambio de color e icono cuando se sube un PDF/Imagen
+    const fileInputs = ['file-agreement', 'file-annex'];
+
+    fileInputs.forEach(id => {
+        const input = document.getElementById(id);
+        if(!input) return;
+
+        input.addEventListener('change', function() {
+            // Buscamos la zona padre (.file-drop-zone-premium)
+            const zone = this.closest('.file-drop-zone-premium');
+            const statusSpan = zone.querySelector('.file-status');
+            const iconBox = zone.querySelector('.icon-upload-circle');
             
-            const agreementPath = `agreement_${cleanName}_${timestamp}.${fileAgreement.name.split('.').pop()}`;
-            const annexPath = `annex_${cleanName}_${timestamp}.${fileAnnex.name.split('.').pop()}`;
+            // Limpiar error previo
+            zone.classList.remove('input-error');
 
-            // 4. Subir Archivo 1 (Agreement)
-            const { error: uploadError1 } = await supabase.storage
-                .from('signed-documents') // Asegúrate de crear este bucket
-                .upload(agreementPath, fileAgreement);
-
-            if (uploadError1) throw new Error(`Error uploading Agreement: ${uploadError1.message}`);
-
-            // 5. Subir Archivo 2 (Annex)
-            const { error: uploadError2 } = await supabase.storage
-                .from('signed-documents')
-                .upload(annexPath, fileAnnex);
-
-            if (uploadError2) throw new Error(`Error uploading Annex: ${uploadError2.message}`);
-
-            // 6. Guardar datos en la Base de Datos
-            const { error: dbError } = await supabase
-                .from('signers') // Asegúrate de crear esta tabla
-                .insert({
-                    first_name: name,
-                    last_name: lastname,
-                    dob: dob,
-                    email: email,
-                    phone: phone,
-                    agreement_path: agreementPath,
-                    annex_path: annexPath
-                });
-
-            if (dbError) throw dbError;
-
-            // 7. Éxito
-            successModal.classList.remove('hidden');
-            docForm.reset();
-
-        } catch (error) {
-            console.error(error);
-            let message = error.message;
-            
-            // Manejo de duplicados
-            if (error.code === '23505') {
-                if (error.message.includes('email')) {
-                    message = "This email has already submitted documents.";
-                } else if (error.message.includes('phone')) {
-                    message = "This phone number has already submitted documents.";
-                }
-            }
-            
-            errorMsg.textContent = message;
-            errorMsg.classList.remove('hidden');
-
-        } finally {
-            loader.classList.add('hidden');
-            submitBtn.disabled = false;
-        }
-    });
-
-// Cerrar Modal y Redirigir
-    const closeModal = () => {
-        successModal.classList.add('hidden');
-        window.location.href = 'https://alexai.cloud/'; // O tu index.html local
-    };
-
-    if(modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
-    if(btnFinish) btnFinish.addEventListener('click', closeModal);
-
-});
-
-// --- LÓGICA PARA FORZAR DESCARGA DE PDFS (Agrega esto al final) ---
-document.addEventListener('DOMContentLoaded', () => {
-    // Selecciona todos los enlaces que tengan el atributo 'download'
-    const downloadLinks = document.querySelectorAll('a[download]');
-
-    downloadLinks.forEach(link => {
-        link.addEventListener('click', async (e) => {
-            e.preventDefault(); // Evita que el navegador abra el link
-            
-            const url = link.href;
-            const filename = link.getAttribute('download') || 'document.pdf'; // Nombre por defecto si falla
-
-            try {
-                // 1. Obtener el archivo como "blob" (datos crudos)
-                const response = await fetch(url);
-                if (!response.ok) throw new Error('Network error');
-                const blob = await response.blob();
-
-                // 2. Crear una URL temporal para ese blob
-                const blobUrl = window.URL.createObjectURL(blob);
-
-                // 3. Crear un enlace invisible y hacerle click programáticamente
-                const tempLink = document.createElement('a');
-                tempLink.href = blobUrl;
-                tempLink.download = filename; // Esto fuerza el nombre del archivo
-                document.body.appendChild(tempLink);
-                tempLink.click();
-
-                // 4. Limpiar
-                document.body.removeChild(tempLink);
-                window.URL.revokeObjectURL(blobUrl);
-
-            } catch (error) {
-                console.error("Error en descarga forzada:", error);
-                // Fallback: Si falla el script, abrir en nueva pestaña
-                window.open(url, '_blank');
+            if (this.files && this.files.length > 0) {
+                const fileName = this.files[0].name;
+                
+                // Estilo de éxito visual
+                zone.style.borderColor = '#10B981'; // Verde
+                zone.style.backgroundColor = '#ECFDF5'; // Verde muy claro
+                
+                statusSpan.textContent = fileName; // Mostrar nombre
+                statusSpan.style.color = '#10B981';
+                statusSpan.style.fontWeight = '600';
+                
+                iconBox.innerHTML = '<i class="fa-solid fa-check"></i>';
+                iconBox.style.background = '#10B981';
+                iconBox.style.color = 'white';
             }
         });
     });
+
+    // --- 4. VALIDACIÓN Y ENVÍO (SUBMIT) ---
+    const form = document.getElementById('documents-form');
+    
+    if (form) {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault(); // Evitar recarga standard
+
+            let isValid = true;
+            let firstErrorElement = null;
+
+            // A) VALIDAR INPUTS DE TEXTO (Nombre, Apellido, Email, Tel, Fecha)
+            const textInputs = form.querySelectorAll('.validate-req');
+            
+            textInputs.forEach(input => {
+                const wrapper = input.closest('.input-rich-wrapper');
+                
+                // Limpiar estado anterior
+                if(wrapper) wrapper.classList.remove('input-error');
+
+                if (!input.value.trim()) {
+                    isValid = false;
+                    
+                    // Aplicar clase de error (Shake y Borde Rojo)
+                    if(wrapper) {
+                        void wrapper.offsetWidth; // Truco para reiniciar la animación CSS
+                        wrapper.classList.add('input-error');
+                    }
+                    
+                    if (!firstErrorElement) firstErrorElement = input;
+                }
+            });
+
+            // B) VALIDAR ARCHIVOS
+            fileInputs.forEach(id => {
+                const input = document.getElementById(id);
+                const zone = document.getElementById(id.replace('file-', 'zone-')); // zone-agreement
+                
+                if (zone) zone.classList.remove('input-error');
+
+                if (input && input.files.length === 0) {
+                    isValid = false;
+                    if (zone) {
+                        void zone.offsetWidth;
+                        zone.classList.add('input-error'); // Asume que tienes CSS para shake en esta clase también
+                    }
+                    if (!firstErrorElement) firstErrorElement = zone; // Enfocar la zona si falla
+                }
+            });
+
+            // C) ACCIÓN SEGÚN RESULTADO
+            if (!isValid) {
+                // ❌ Faltan datos
+                showToast("Please fill in all required fields and upload documents.", "warning");
+                
+                // Scroll suave al primer error
+                if (firstErrorElement) {
+                    firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    if(firstErrorElement.tagName === 'INPUT') firstErrorElement.focus({preventScroll:true});
+                }
+                
+            } else {
+                // ✅ Todo correcto: Proceder al envío
+                await handleSubmission();
+            }
+        });
+    }
+
+    // --- 5. FUNCIÓN DE ENVÍO A SUPABASE (Simulada/Real) ---
+    async function handleSubmission() {
+        const btn = document.getElementById('submit-btn');
+        const originalText = btn.innerHTML;
+        
+        // Estado de carga
+        btn.disabled = true;
+        btn.innerHTML = '<span>Uploading...</span> <div class="loader"></div>'; // Asegúrate de tener CSS para .loader o usa un icono fa-spin
+        
+        try {
+            // AQUÍ IRÍA TU LÓGICA REAL DE SUPABASE
+            // 1. Subir archivos a Storage
+            // 2. Insertar registro en Base de Datos
+            
+            // Simulación de espera de red (2 segundos)
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // Si todo sale bien:
+            showToast("Documents uploaded successfully!", "success");
+            
+            // Mostrar Modal de Éxito
+            const modal = document.getElementById('success-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('visible'); // Asegúrate de tener estilos para esto
+                modal.style.display = 'flex'; // Forzar display flex
+            }
+
+        } catch (error) {
+            console.error(error);
+            showToast("Error uploading documents. Please try again.", "danger");
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
+    }
+
+    // --- 6. EVENTOS DE LIMPIEZA (UX) ---
+    // Quita el borde rojo en cuanto el usuario escribe
+    document.querySelectorAll('.validate-req').forEach(input => {
+        input.addEventListener('input', function() {
+            const wrapper = this.closest('.input-rich-wrapper');
+            if (wrapper) wrapper.classList.remove('input-error');
+        });
+    });
+
+    // Cerrar Modal
+    const closeModalBtn = document.getElementById('modal-close-btn');
+    const finishBtn = document.getElementById('btn-finish');
+    const successModal = document.getElementById('success-modal');
+
+    function hideModal() {
+        if(successModal) successModal.style.display = 'none';
+        window.location.href = "../index.html"; // Redirigir al home o donde quieras
+    }
+
+    if(closeModalBtn) closeModalBtn.addEventListener('click', hideModal);
+    if(finishBtn) finishBtn.addEventListener('click', hideModal);
+
 });

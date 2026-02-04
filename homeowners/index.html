@@ -3,405 +3,866 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homeowners Insurance - Alex AI Insurtech</title>
+    <title>Alex AI Insurtech - Homeowners Insurance</title>
+    <meta name="description" content="AI-powered insurance, handled by humans. Get smart protection in 90 seconds.">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="stylesheet" href="../css/style-quote.css">
+    <link rel="stylesheet" href="../css/style.css">
+
     <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+
 </head>
 <body>
 
-    <div class="ambient-glow glow-1"></div>
-    <div class="ambient-glow glow-3"></div>
-    <div id="transition-overlay"></div>
+    <div class="top-header-aurora">
+        <div class="container top-bar-flex">
+            
+            <div class="top-info-group">
+                <a href="tel:+14806309630" class="top-link glass-hover">
+                    <i class="fa-solid fa-phone pulse-icon"></i> 
+                    <span>+1 480 630 9630</span>
+                </a>
+                
+                <span class="divider-vertical"></span>
+                
+                <a href="mailto:hello@alexai.cloud" class="top-link glass-hover">
+                    <i class="fa-solid fa-envelope"></i> 
+                    <span>hello@alexai.cloud</span>
+                </a>
 
-   <div class="top-header">
-        <div class="container top-header-flex">
-            <div class="top-contact">
-                <a href="tel:+1800555ALEX"><i class="fa-solid fa-phone"></i> +1 480 630 9630</a>
-                <a href="mailto:hello@alexai.com"><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</a>
-                <span><i class="fa-solid fa-location-dot"></i> 3101 N Central Ave ste 1174, Phoenix, AZ</span>
+                <span class="divider-vertical desktop-only"></span>
+                <div class="top-location desktop-only">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>3101 N Central Ave ste 1174, Phoenix, AZ</span>
+                </div>
             </div>
-            <div class="top-social">
-                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+
+            <div class="top-social-group">
+                <span class="social-label desktop-only">Connect:</span>
+                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" target="_blank" class="social-btn" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/alexai.insurtech.usa/" target="_blank" class="social-btn" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
             </div>
         </div>
+        
+        <div class="aurora-border-glow"></div>
     </div>
 
-    <header class="site-header">
-        <div class="container header-wrapper">
-            <a href="https://alexai.cloud/" class="logo-container">
+   <header class="site-header glass-navbar">
+        <div class="container nav-container">
+            
+            <a href="https://alexai.cloud/" class="brand-logo">
                 <img src="../assets/img/Logo-alexai-main.png" alt="Alex AI Logo" class="site-logo">
             </a>
-            
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../quote/quote.html" class="js-trigger-quote">Quote</a></li>
-                    <li class="has-dropdown">
-                        <a href="../index.html#products">Products <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
-                        <ul class="dropdown-menu organic-box">
-                            <li><a href="../alex-sign/index.html">Alex Sign</a></li>
-                            <li><a href="../homeowners/index.html">Homeowners Insurance</a></li>
-                            <li><a href="../renters/index.html">Renters Insurance</a></li>
-                            <li><a href="../contact/index.html">Others Insurance</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="../index.html#carriers">Carriers</a></li>
-                    <li><a href="../blog/index.html">Blog</a></li>
-                    <li><a href="../contact/index.html">Contact</a></li>
 
-                    <li class="mobile-only-nav"><a href="../ambassadors/documents.html">Become an Ambassador</a></li>
-                    <li class="mobile-only-nav"><a href="../quote/quote.html" style="color: var(--alex-blue-accent);">Check Prices</a></li>
+            <nav class="nav-center desktop-only">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-item active">Home</a></li>
+                    <li><a href="../quote/quote.html" class="nav-item">Quote</a></li>
+                    
+                    <li class="nav-dropdown-group">
+                        <button class="nav-item dropdown-btn">
+                            Products <i class="fa-solid fa-angle-down arrow-indicator"></i>
+                        </button>
+                        
+                        <div class="dropdown-glass-panel">
+                            <div class="dropdown-grid">
+                                <a href="../alex-sign/index.html" class="dd-card">
+                                    <div class="icon-tile tile-blue"><i class="fa-solid fa-signature"></i></div>
+                                    <div class="dd-info"><span class="dd-title">Alex Sign</span><span class="dd-desc">Digital signatures</span></div>
+                                </a>
+                                <a href="../homeowners/index.html" class="dd-card">
+                                    <div class="icon-tile tile-indigo"><i class="fa-solid fa-house-chimney"></i></div>
+                                    <div class="dd-info"><span class="dd-title">Homeowners</span><span class="dd-desc">Property protection</span></div>
+                                </a>
+                                <a href="../renters/index.html" class="dd-card">
+                                    <div class="icon-tile tile-cyan"><i class="fa-solid fa-key"></i></div>
+                                    <div class="dd-info"><span class="dd-title">Renters</span><span class="dd-desc">Apartment coverage</span></div>
+                                </a>
+                                <a href="../contact/index.html" class="dd-card">
+                                    <div class="icon-tile tile-purple"><i class="fa-solid fa-shield-halved"></i></div>
+                                    <div class="dd-info"><span class="dd-title">Others</span><span class="dd-desc">Custom plans</span></div>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li><a href="#carriers" class="nav-item">Carriers</a></li>
+                    <li><a href="../blog/index.html" class="nav-item">Blog</a></li>
+                    <li><a href="../contact/index.html" class="nav-item">Contact</a></li>
+
                 </ul>
             </nav>
 
-            <div class="header-actions">
-                <a href="../ambassadors/index.html" class="btn btn-outline btn-sm">Become an Ambassador</a>
-                <a href="../quote/quote.html" class="btn btn-solid btn-sm js-trigger-quote">Check Prices</a>
+            <div class="nav-actions">
+                
+                <a href="../ambassadors/documents.html" class="btn-view-aurora desktop-only">
+                    Become an Ambassador
+                </a>
+
+                <span class="divider-vertical desktop-only"></span>
+
+                <a href="../quote/quote.html" class="btn-aurora-gradient js-trigger-quote">
+                    <span>Check Prices</span>
+                    <i class="fa-solid fa-arrow-right-long btn-icon-anim"></i>
+                </a>
+                
+                <button class="mobile-toggle-btn mobile-only" onclick="toggleMobileMenu()" aria-label="Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
-            
-             <button class="mobile-menu-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        </div>
+
+        <div class="mobile-menu-dropdown" id="mobileMenu">
+            <ul class="mobile-list">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../quote/quote.html">Quote</a></li>
+                <li><a href="../ambassadors/documents.html" style="color: var(--c-blue);">Become an Ambassador</a></li>
+                <li class="divider-horizontal"></li>
+                <li><a href="../alex-sign/index.html">Alex Sign</a></li>
+                <li><a href="../homeowners/index.html">Homeowners</a></li>
+                <li><a href="../renters/index.html">Renters</a></li>
+                <li class="divider-horizontal"></li>
+                <li><a href="../contact/index.html">Contact</a></li>
+            </ul>
         </div>
     </header>
 
-
     <main>
-        
-        <section class="section-padding">
-            <div class="container hero-grid">
-                <div class="hero-content">
-                    <div class="sketch-label" style="margin-bottom: 20px;">Complete Home Protection</div>
-                    <h1>Homeowners Insurance, That Has You <span style="color:var(--alex-blue-accent);">Covered</span>.</h1>
-                    <p class="hero-subtitle">
-                        Whether you are buying or protecting your home, Alex AI makes insurance easy. Rates starting at <strong>$130/mo</strong>.
-                    </p>
-                    <div class="hero-cta-wrapper">
-                        <a href="../quote/quote.html" class="btn-glow-anim">
-                            <span>Get Your Home Quote</span>
-                            <i class="fa-solid fa-arrow-right-long"></i>
-                        </a>                    
-                    </div>
-                </div>
-                <div class="hero-video-organic" style="padding: 20px; background: #F0F9FF; border-radius: 40px; display:inline-block; transform: rotate(2deg);">
-                    <video id="heroVideoElement" class="floating-illo js-hover-video"" style="border-radius: 25px; border: 2px solid var(--alex-ink); box-shadow: 5px 5px 0 rgba(0,0,0,0.1);" loop muted playsinline preload="metadata">
-                        <source src="../assets/videos/home-insurance-hero.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-            </div>
-        </section>
+        <section class="hero-sign-section">
+            <div class="aurora-light-mesh"></div>
+            <div class="tech-grid-light"></div>
 
-        <section class="trust-bar section-padding bg-off-white">
-            <div class="container">
-                <div class="carriers-paper organic-box text-center" style="overflow: hidden;"> 
-                    <h5 class="sketch-label">We work with top-rated carriers</h5>
-                    <div class="slider-container">
-                        <div class="slider-track">
-                            <div class="carrier-item"><img src="../assets/img/Carrier-aspire.jpg" alt="Aspire"></div>
-                            <div class="carrier-item"><img src="../assets/img/Carrier-assurance-america.png" alt="Assurance"></div>
-                            <div class="carrier-item"><img src="../assets/img/Carrier-chubb.jpg" alt="Chubb"></div>
-                            <div class="carrier-item"><img src="../assets/img/Carrier-clearcover.png" alt="Clearcover"></div>
-                            <div class="carrier-item"><img src="../assets/img/Carrier-covercube-2.jpg" alt="Covercube"></div>
-                            <div class="carrier-item"><img src="../assets/img/Carrier-just.jpg" alt="Just"></div>
-                            <div class="carrier-item"><img src="../assets/img/Carrier-kemper.jpg" alt="Kemper"></div>
-
-                            <div class="carrier-item"><img src="../assets/img/Carrier-aspire.jpg" alt="Aspire"></div>
-                            <div class="carrier-item"><img src="../assets/img/Carrier-assurance-america.png" alt="Assurance"></div>
-                            <div class="carrier-item"><img src="../assets/img/Carrier-chubb.jpg" alt="Chubb"></div>
-                            <div class="carrier-item"><img src="../assets/img/Carrier-clearcover.png" alt="Clearcover"></div>
-                            <div class="carrier-item"><img src="../assets/img/Carrier-covercube-2.jpg" alt="Covercube"></div>
-                            <div class="carrier-item"><img src="../assets/img/Carrier-just.jpg" alt="Just"></div>
-                            <div class="carrier-item"><img src="../assets/img/Carrier-kemper.jpg" alt="Kemper"></div>
+            <div class="container position-relative z-2">
+                <div class="hero-grid-split">
+                    
+                    <div class="hero-content-tech">
+                        <div class="inline-badge-premium mb-3">
+                            <span class="pulse-dot-purple"></span> Complete Home Protection
+                        </div>
+                        <h1 class="display-title-hero">
+                            Homeowners Insurance, That Has
+                            <span class="text-gradient-corp">You Covered.</span>
+                        </h1>
+                        <p class="lead-text-hero">
+                            Whether you are buying or protecting your home, Alex AI makes insurance easy. Rates starting at $130/mo.
+                        </p>
+                        
+                        <div class="hero-actions-row">
+                            <a href="../homeowners-quotation/index.html" class="btn-aurora-primary">
+                                <span>Get Your Home Quote</span> <i class="fa-solid fa-arrow-right-long"></i>
+                            </a>
                         </div>
                     </div>
+
+                    <div class="hero-visual-tech">
+                        <div class="glass-frame-monitor">
+                            <div class="monitor-header">
+                                <div class="dots-row"><span></span><span></span><span></span></div>
+                                <div class="address-bar">alexai.cloud/homeowners</div>
+                            </div>
+                            <div class="arch-visual-col">
+                                <div class="arch-visual-wrapper">     
+                                    <div class="arch-glow-back"></div>
+                                    <div class="arch-glass-frame">
+                                        <img src="../assets/img/alex-hero-8.png" alt="Alex AI Hero" class="arch-img"> 
+                                        <div class="arch-shimmer"></div>
+                                        <div class="arch-reflection"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="floating-status-card" style="z-index: 999;">
+                                <div class="icon-box-success"><i class="fa-solid fa-shield-halved"></i></div>
+                                <div>
+                                    <strong>Prior insurance detected</strong>
+                                    <span>Verified via Alex AI smart system</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
 
-        <section class="section-padding">
+        <section id="carriers" class="trust-dock-section">
+
+            <div class="social-header text-center">
+                <div class="inline-badge-premium mb-3">
+                    <span class="pulse-dot-purple"></span> Top-Rated Carriers
+                </div>
+            </div>
+            
             <div class="container">
-                <div class="section-header text-center">
-                    <h2 class="sketch-headline-sm">What's Covered?</h2>
-                    <p>Protection for your most valuable asset and everything inside.</p>
+                
+                <div class="aurora-dock">
+                    
+                    <div class="dock-gradient-top"></div>
+
+                    <div class="dock-label">
+                        <div class="status-indicator">
+                            <span class="pulse-ring"></span>
+                            <span class="dot"></span>
+                        </div>
+                        <div class="label-text">
+                            <span class="sub">Verified Network</span>
+                            <span class="main text-gradient-corp">Our Partners</span>
+                        </div>
+                    </div>
+
+                    <div class="dock-divider desktop-only"></div>
+
+                    <div class="dock-slider-area">
+                        <div class="infinite-track">
+                            <div class="tech-logo"><img src="../assets/img/Carrier-aspire.jpg" alt="Aspire"></div>
+                            <div class="tech-logo"><img src="../assets/img/Carrier-assurance-america.png" alt="Assurance"></div>
+                            <div class="tech-logo"><img src="../assets/img/Carrier-chubb.jpg" alt="Chubb"></div>
+                            <div class="tech-logo"><img src="../assets/img/Carrier-clearcover.png" alt="Clearcover"></div>
+                            <div class="tech-logo"><img src="../assets/img/Carrier-covercube-2.jpg" alt="Covercube"></div>
+                            <div class="tech-logo"><img src="../assets/img/Carrier-just.jpg" alt="Just"></div>
+                            <div class="tech-logo"><img src="../assets/img/Carrier-kemper.jpg" alt="Kemper"></div>
+                            <div class="tech-logo"><img src="../assets/img/Carrier-commonwealth.jpg" alt="Commonwealth"></div>
+
+
+                            <div class="tech-logo"><img src="../assets/img/Carrier-aspire.jpg" alt="Aspire"></div>
+                            <div class="tech-logo"><img src="../assets/img/Carrier-assurance-america.png" alt="Assurance"></div>
+                            <div class="tech-logo"><img src="../assets/img/Carrier-chubb.jpg" alt="Chubb"></div>
+                            <div class="tech-logo"><img src="../assets/img/Carrier-clearcover.png" alt="Clearcover"></div>
+                            <div class="tech-logo"><img src="../assets/img/Carrier-covercube-2.jpg" alt="Covercube"></div>
+                            <div class="tech-logo"><img src="../assets/img/Carrier-just.jpg" alt="Just"></div>
+                            <div class="tech-logo"><img src="../assets/img/Carrier-kemper.jpg" alt="Kemper"></div>
+                            <div class="tech-logo"><img src="../assets/img/Carrier-commonwealth.jpg" alt="Commonwealth"></div>
+
+                        </div>
+                        
+                        <div class="dock-fade-left"></div>
+                        <div class="dock-fade-right"></div>
+                    </div>
+
                 </div>
                 
-                <div class="grid-3">
-                    <div class="product-card organic-box" style="text-align: left; padding: 40px 30px;">
-                        <div style="background:#DBEAFE; width:60px; height:60px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:20px; border:2px solid var(--alex-blue-accent);">
-                            <i class="fa-solid fa-house-chimney" style="font-size: 1.5rem; color: var(--alex-blue-accent);"></i>
+            </div>
+        </section>
+
+        <section class="features-aurora-section">
+            <div class="container">
+                <div class="section-head-tech text-center mb-5">
+                        <div class="inline-badge-premium mb-3">
+                            <span class="pulse-dot-purple"></span> Your Coverages
                         </div>
-                        <h3>Dwelling Coverage</h3>
-                        <p>Protection against damage to the structure of your home from fire, storms, and other covered events.</p>
+                    <h2 class="display-title-sm">Comprehensive <span class="text-gradient-corp">coverage solutions</span></h2>
+                </div>
+
+                <div class="features-grid-tech">
+                    
+                    <div class="feature-glass-card">
+                        <div class="feature-icon-box icon-blue">
+                            <i class="fa-solid fa-house-chimney-crack"></i>
+                        </div>
+                        <h3>Damage to the house</h3>
+                        <p>Protection against damage from fire, storms, and other covered events.</p>
                     </div>
 
-                    <div class="product-card organic-box" style="text-align: left; padding: 40px 30px;">
-                        <div style="background:#DCFCE7; width:60px; height:60px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:20px; border:2px solid #10B981;">
-                            <i class="fa-solid fa-couch" style="font-size: 1.5rem; color: #10B981;"></i>
+                    <div class="feature-glass-card">
+                        <div class="feature-icon-box icon-purple">
+                            <i class="fa-solid fa-house-laptop"></i>
                         </div>
-                        <h3>Personal Property</h3>
-                        <p>Coverage for your belongings inside the house, such as furniture, electronics, and clothing.</p>
+                        <h3>Personal property inside</h3>
+                        <p>Coverage for your belongings inside the house, such as furniture and electronics.</p>
                     </div>
 
-                    <div class="product-card organic-box" style="text-align: left; padding: 40px 30px;">
-                        <div style="background:#FEF3C7; width:60px; height:60px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:20px; border:2px solid #F59E0B;">
-                            <i class="fa-solid fa-user-shield" style="font-size: 1.5rem; color: #F59E0B;"></i>
+                    <div class="feature-glass-card">
+                        <div class="feature-icon-box icon-cyan">
+                            <i class="fa-solid fa-user-shield"></i>
                         </div>
-                        <h3>Liability Protection</h3>
+                        <h3>Liability protection</h3>
                         <p>Protects you against lawsuits for bodily injury or property damage that you or family members cause.</p>
                     </div>
+
+                    <div class="feature-glass-card">
+                        <div class="feature-icon-box icon-indigo">
+                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                        </div>
+                        <h3>Temporary living expenses</h3>
+                        <p>Helps cover the cost of temporary housing if your rental becomes uninhabitable due to a covered event.</p>
+                    </div>
+
+                    <div class="feature-glass-card">
+                        <div class="feature-icon-box icon-dark">
+                            <i class="fa-solid fa-calculator"></i>
+                        </div>
+                        <h3>Optional add-ons</h3>
+                        <p>Customize your coverage with options for electronics, jewelry, and more.</p>
+                    </div>
+
                 </div>
             </div>
         </section>
+        <br><br>
 
-        <section class="section-padding bg-off-white">
-            <div class="container">
-                <div class="organic-box taped-note">
-                    <div class="washi-tape-large"></div>
-                    <div class="alex-grid" style="padding: 40px 20px;">
-                        <div class="alex-content">
-                            <h2 class="sketch-headline-sm">Why choose Alex AI?</h2>
-                            <p class="lead-text">We make buying home insurance painless and fast.</p>
-                            <ul class="feature-list">
-                                <li><i class="fa-solid fa-wand-magic-sparkles"></i> <strong>AI-Powered:</strong> We analyze your needs to recommend the best coverage.</li>
-                                <li><i class="fa-solid fa-check-double"></i> <strong>Lender Approved:</strong> Meets all mortgage requirements.</li>
-                                <li><i class="fa-solid fa-bolt"></i> <strong>Fast & Modern:</strong> Get a quote with minimal info in minutes.</li>
-                                <li><i class="fa-solid fa-headset"></i> <strong>Human Support:</strong> Our team is here to help with any questions.</li>
-                            </ul>
-                            <a href="../homeowners-quotation/index.html" class="btn btn-glow-anim" style="margin-top: 20px; width: fit-content;">Check My Rate</a>
-                        </div>
-                        <div class="alex-image-container" style="text-align: center;">
-                             <img src="../assets/img/alex-support.png" alt="Alex AI Shield" style="max-width: 60%; filter: drop-shadow(8px 8px 0px rgba(44, 62, 80, 0.1)); animation: float-vertical 9s ease-in-out infinite;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-padding">
-            <div class="container">
-                <div class="section-header text-center">
-                    <h2 class="sketch-headline-sm">Homeowners Love Us</h2>
-                    <p>See what our clients are saying.</p>
-                </div>
-                <div class="grid-3">
-                    <div class="review-card organic-box">
-                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <p>"I was able to customize my coverage right from the dashboard. Zero stress."</p>
-                        <div class="reviewer">
-                             <img src="../assets/img/Profile-joel.png" onerror="this.src='https://placehold.co/50x50?text=J'" alt="Joel" class="avatar-sketch" style="width:50px;">
-                             <span>Joel Cota<br><small>Homeowner</small></span>
-                        </div>
-                    </div>
-                    <div class="review-card organic-box">
-                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <p>"It’s the first time I feel like an insurance agency is actually on my side. Easy-to-use tech."</p>
-                        <div class="reviewer">
-                             <img src="../assets/img/Profile-antony.png" onerror="this.src='https://placehold.co/50x50?text=A'" alt="Antony" class="avatar-sketch" style="width:50px;">
-                             <span>Antony G.<br><small>Architect</small></span>
-                        </div>
-                    </div>
-                    <div class="review-card organic-box">
-                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <p>"5 stars, easily! In less than 10 minutes I had a quote for my house."</p>
-                        <div class="reviewer">
-                             <img src="../assets/img/Profile-jenny.png" onerror="this.src='https://placehold.co/50x50?text=J'" alt="Jenny" class="avatar-sketch" style="width:50px;">
-                             <span>Jenny Rojas<br><small>Musician</small></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-padding bg-off-white">
-            <div class="container grid-2-uneven align-center">
+        <section class="aurora-arch-section">
+            <div class="container position-relative z-2">
                 
-                <div class="app-content">
-                    <div class="sketch-label">Mobile App</div>
-                    <h2>Manage everything in your pocket.</h2>
-                    <p class="lead-text" style="margin-bottom: 30px;">Get the Alex AI app. File claims, adjust coverage, and chat with Alex 24/7, right from your phone.</p>
+                <div class="aurora-arch-grid">
                     
-                    <ul class="feature-list" style="margin-bottom: 40px;">
-                        <li><i class="fa-solid fa-mobile-screen-button"></i> <strong>Review your policy</strong> – Access your insurance details 24/7.</li>
-                        <li><i class="fa-solid fa-pen-to-square"></i> <strong>Request policy changes</strong> – Add a vehicle, driver, or coverage easily.</li>
-                        <li><i class="fa-solid fa-bolt"></i> <strong>Make updates instantly</strong> – Keep your information up to date without paperwork.</li>
-                        <li><i class="fa-solid fa-headset"></i> <strong>Personalized support</strong> – Get direct assistance from our team through the app.</li>
-                    </ul>
+                    <div class="arch-content-col">
+                        
+                        <div class="social-header text-center">
+                            <div class="inline-badge-premium mb-3">
+                                <span class="pulse-dot-purple"></span> The Alex AI Advantage
+                            </div>
+                        </div>
 
-                    <div class="app-buttons-row" style="display:flex; gap:15px; flex-wrap:wrap;">
-                        <a href="https://apps.apple.com/us/app/alex-ai-insurtech-app/id6752793999" class="btn-app-store">
-                            <i class="fa-brands fa-apple"></i>
-                            <div>
-                                <span class="small-txt">Download on the</span>
-                                <span class="big-txt">App Store</span>
+                        <h2 class="arch-title text-center">
+                            Insurance engineered for <br>
+                            <span class="arch-gradient-text">speed and precision.</span>
+                        </h2>
+                        
+                        <p class="arch-lead text-center">
+                            We replaced legacy paperwork with intelligence. Experience the perfect balance of algorithmic pricing and dedicated human expertise.
+                        </p>
+
+                        <div class="arch-features-stack">
+                            
+                            <div class="arch-feature-row">
+                                <div class="arch-icon-box theme-blue">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                </div>
+                                <div class="arch-text">
+                                    <h6>AI-Powered</h6>
+                                    <p>We analyze your needs to recommend the best coverage.</p>
+                                </div>
                             </div>
-                        </a>
-                        <a href="https://play.google.com/store/apps/details?id=cloud.alexai.movil&pcampaignid=web_share" class="btn-app-store">
-                            <i class="fa-brands fa-google-play"></i>
-                            <div>
-                                <span class="small-txt">Get it on</span>
-                                <span class="big-txt">Google Play</span>
+
+                            <div class="arch-feature-row">
+                                <div class="arch-icon-box theme-green">
+                                    <i class="fa-solid fa-file-circle-check"></i>
+                                </div>
+                                <div class="arch-text">
+                                    <h6>Lender Approved</h6>
+                                    <p>Meets all mortgage requirements.</p>
+                                </div>
                             </div>
-                        </a>
+
+                            <div class="arch-feature-row">
+                                <div class="arch-icon-box theme-blue">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+                                <div class="arch-text">
+                                    <h6>Fast & Modern</h6>
+                                    <p>Get a quote with minimal info in minutes.</p>
+                                </div>
+                            </div>
+
+                            <div class="arch-feature-row">
+                                <div class="arch-icon-box theme-purple">
+                                    <i class="fa-solid fa-user-shield"></i>
+                                </div>
+                                <div class="arch-text">
+                                    <h6>Concierge Support</h6>
+                                    <p>Complex claims handled by licensed humans, not chatbots.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="arch-action-area">
+                            <a href="../homeowners-quotation/index.html" class="btn-aurora-primary">
+                                Get My Rate <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                            <span class="arch-secure-label"><i class="fa-solid fa-shield-halved"></i> Secure & Verified</span>
+                        </div>
+
                     </div>
+
+                    <div class="arch-visual-col">
+                        <div class="arch-visual-wrapper">
+                            
+                            <div class="arch-glow-back"></div>
+
+                            <div class="arch-glass-frame">
+                                <img src="../assets/img/alex-support.png" alt="Alex AI Support" class="arch-img">
+                                
+                                <div class="arch-shimmer"></div>
+                                
+                                <div class="arch-reflection"></div>
+                            </div>
+
+                            <div class="arch-floating-tags">
+                                <div class="glass-tag tag-top">
+                                    <span class="status-pulse"></span>
+                                    <div>
+                                        <strong>Active Policy</strong>
+                                        <span>Protection Verified</span>
+                                    </div>
+                                </div>
+                                <div class="glass-tag tag-bottom">
+                                    <div class="icon-flash"><i class="fa-solid fa-bolt"></i></div>
+                                    <div>
+                                        <strong>Instant Quote</strong>
+                                        <span>Under 2 mins</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="app-image-container">
-                    <div class="organic-box app-video-wrapper" style="padding: 20px; background: #F0F9FF; border-radius: 40px; display:inline-block; transform: rotate(2deg);">
-                        <video class="js-hover-video floating-illo" style="border-radius: 25px; border: 2px solid var(--alex-ink); box-shadow: 5px 5px 0 rgba(0,0,0,0.1);" loop playsinline>
-                                <source src="../assets/videos/video-app.mp4" type="video/mp4">
-                            </video>
+            </div>
+        </section>
+
+        <section class="reviews-aurora-section bg-white-soft">
+            <div class="social-header text-center">
+                <div class="inline-badge-premium mb-3">
+                    <span class="pulse-dot-purple"></span> Our Reviews
+                </div>
+            </div>
+            <div class="container">
+                <div class="glass-reviews-grid">
+                    
+                    <div class="review-glass-card card-featured-glass">
+                        <div class="card-glass-content">
+                            <div class="review-meta">
+                                <div class="user-info">
+                                    <img src="../assets/img/Profile-arantxa.jpg" onerror="this.src='https://placehold.co/50x50'" alt="Arantxa" class="avatar-sm">
+                                    <div>
+                                        <h4>Arantxa M.</h4>
+                                        <span class="verified-tag"><i class="fa-solid fa-certificate"></i> Verified User</span>
+                                    </div>
+                                </div>
+                                <div class="quote-mark-aurora"><i class="fa-solid fa-quote-right"></i></div>
+                            </div>
+
+                            <div class="aurora-stars">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+
+                            <h3 class="quote-headline">"Bound a policy in under 3 minutes! ⚡️"</h3>
+                            <p class="quote-body">
+                                "I honestly didn't think getting homeowners insurance could be this fast. I downloaded the Alex AI app, answered a few questions about my property, and the AI generated a custom quote instantly. No phone calls, no waiting on hold. The interface is super clean and modern. This is how insurance should be in 2026."
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="reviews-column-right">
+                        
+                        <div class="review-glass-card">
+                            <div class="card-glass-content">
+                                <div class="review-meta-compact">
+                                    <img src="../assets/img/Profile-joel.png" onerror="this.src='https://placehold.co/50x50'" alt="Joel" class="avatar-sm">
+                                    <div class="meta-text">
+                                        <h4>Joel Cota</h4>
+                                        <span>Project Manager</span>
+                                    </div>
+                                </div>
+                                <p class="quote-body-sm">"I was hesitant to try an 'Insurtech' because I didn't want to talk to a robot when things go wrong. Alex AI is different. The app handled my quote in seconds (super impressive tech!), but then my agent, Sarah, personally reached out to walk me through the details. She wasn't just reading a script; she actually cared about getting my coverage right. It’s the perfect balance."</p>
+                            </div>
+                        </div>
+
+                        <div class="review-glass-card">
+                            <div class="card-glass-content">
+                                <div class="review-meta-compact">
+                                    <img src="../assets/img/Profile-antony.png" onerror="this.src='https://placehold.co/50x50'" alt="Antony" class="avatar-sm">
+                                    <div class="meta-text">
+                                        <h4>Antony G.</h4>
+                                        <span>Architect</span>
+                                    </div>
+                                </div>
+                                <p class="quote-body-sm">"We had a pipe burst at 2 AM. The Alex system was incredible—I filed the claim instantly on my phone without waiting on hold. But what really mattered was that my dedicated agent called me first thing in the morning just to ask, 'Are you guys okay?' You can’t code that kind of empathy. The claim was paid fast, but the kindness is why I’m staying."</p>
+                            </div>
+                        </div>
+
+                        <div class="review-glass-card">
+                            <div class="card-glass-content">
+                                <div class="review-meta-compact">
+                                    <img src="../assets/img/Profile-jenny.png" onerror="this.src='https://placehold.co/50x50'" alt="Jenny" class="avatar-sm">
+                                    <div class="meta-text">
+                                        <h4>Jenny Rojas</h4>
+                                        <span>Designer</span>
+                                    </div>
+                                </div>
+                                <p class="quote-body-sm">"I love that I can text my agent and get an instant reply, but I also love that their system monitors my policy. The AI flagged that my home value had increased, and my agent proactively set up a quick Zoom call to adjust my limits so I wouldn't be underinsured. It feels like they are always looking out for me."</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="section-padding">
-            <div class="container" style="max-width: 800px;">
-                <div class="section-header text-center">
-                    <h2 class="sketch-headline-sm">Homeowners FAQ</h2>
-                    <p>Common questions about protecting your home.</p>
-                </div>
-                
-                <div class="faq-accordion organic-box">
-                    <div class="faq-item">
-                        <button class="faq-question">What does homeowners insurance typically cover? <i class="fa-solid fa-plus"></i></button>
-                        <div class="faq-answer">
-                            <p>It usually covers the structure of your home, personal belongings inside, liability for injuries to others, and additional living expenses if your home becomes unlivable.</p>
+        <section id="app" class="app-marketing-section">
+            <div class="container">
+                <div class="app-showcase-wrapper">
+                    
+                    <div class="app-text-content">
+                        <div class="social-header text-center">
+                            <div class="inline-badge-premium mb-3">
+                                <span class="pulse-dot-purple"></span> Mobile App
+                            </div>
+                            <h2 class="display-title-app">Insurance that keeps up with <span class="text-gradient-corp">real life.</span></h2>
+                            <p class="lead-text-app text-center">Forget paperwork. Manage your policy, file claims in seconds, and get paid faster—all from your pocket.</p>
+                        </div>
+                        
+                        <div class="benefit-visual-list">
+                            
+                            <div class="benefit-item">
+                                <div class="benefit-icon-box box-blue">
+                                    <i class="fa-solid fa-bolt-lightning"></i>
+                                </div>
+                                <div class="benefit-details">
+                                    <strong>Request Policy Changes</strong>
+                                    <p>Add a vehicle, driver, or coverage easily.</p>
+                                </div>
+                            </div>
+
+                            <div class="benefit-item">
+                                <div class="benefit-icon-box box-purple">
+                                    <i class="fa-solid fa-user-shield"></i>
+                                </div>
+                                <div class="benefit-details">
+                                    <strong>Expert Support</strong>
+                                    <p>Chat with licensed humans 24/7.</p>
+                                </div>
+                            </div>
+
+                            <div class="benefit-item">
+                                <div class="benefit-icon-box box-cyan">
+                                    <i class="fa-solid fa-sliders"></i>
+                                </div>
+                                <div class="benefit-details">
+                                    <strong>Total Control</strong>
+                                    <p>Adjust coverage instantly.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="store-btn-group">
+                            <a href="https://apps.apple.com/us/app/alex-ai-insurtech-app/id6752793999" target="_blank">
+                                <button class="btn-store-unified">
+                                    <i class="fa-brands fa-apple"></i>
+                                    <div class="btn-text-col">
+                                        <span>Download on the</span>
+                                        <strong>App Store</strong>
+                                    </div>
+                                </button>
+                            </a>
+                            <a href="https://play.google.com/store/apps/details?id=cloud.alexai.movil&pcampaignid=web_share&pli=1" target="_blank">
+                                <button class="btn-store-unified">
+                                    <i class="fa-brands fa-google-play"></i>
+                                    <div class="btn-text-col">
+                                        <span>Get it on</span>
+                                        <strong>Google Play</strong>
+                                    </div>
+                                </button>
+                            </a>
                         </div>
                     </div>
 
-                    <div class="faq-item">
-                        <button class="faq-question">Is homeowners insurance required? <i class="fa-solid fa-plus"></i></button>
-                        <div class="faq-answer">
-                            <p>If you have a mortgage, yes—your lender will require it. Even if you own your home outright, it's highly recommended to protect your asset from unexpected disasters.</p>
+                    <div class="app-visual-marketing">
+                        
+                        <div class="phone-core-video">
+                            <div class="phone-aura-clean"></div>
+                            <div class="phone-chassis-premium organic-box">
+                                <video class="js-hover-video app-screen-video" loop playsinline>
+                                    <source src="../assets/videos/video-app.webm" type="video/webm">
+                                </video>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="faq-item">
-                        <button class="faq-question">Why get insurance through Alex AI? <i class="fa-solid fa-plus"></i></button>
-                        <div class="faq-answer">
-                            <p>We shop around for you. We pull quotes from top-rated insurers and help you compare coverage, pricing, and features so you get the best deal with less effort.</p>
+                        <div class="marketing-card card-payout">
+                            <div class="icon-circle-marketing icon-green"><i class="fa-solid fa-file-signature"></i></div>
+                            <div class="marketing-info">
+                                <strong class="benefit-title">My policy in minutes</strong>
+                                <span class="benefit-desc">Documents sent directly.</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="faq-item">
-                        <button class="faq-question">Can I bundle home and auto? <i class="fa-solid fa-plus"></i></button>
-                        <div class="faq-answer">
-                            <p>Definitely. Many of our partner insurers offer bundle discounts, and Alex AI automatically checks for those to help you save even more.</p>
+                        <div class="marketing-card card-help">
+                            <div class="agent-stack-marketing">
+                                <img src="../assets/img/Profile-stephanie.jpg" alt="Agent" class="avatar-marketing">
+                                <span class="online-dot-marketing"></span>
+                            </div>
+                            <div class="marketing-info">
+                                <strong class="benefit-title">We're here 24/7</strong>
+                                <span class="benefit-desc">Real help, right away.</span>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </section>
 
+        <section id="faq" class="faq-aurora-section">
+            <div class="container">
+                <div class="faq-grid-layout">
+                    
+                    <div class="faq-sidebar">
+                        <div class="lab-header text-center">
+                            <div class="header-status-light">
+                                <span class="pulse-blue"></span>Knowledge Base
+                            </div>
+                            <h2 class="display-title-lab">Frequently Asked <span class="text-gradient-anim">Questions.</span></h2>
+                            <p class="lead-text-faq text-center">Everything you need to know about the Alex AI ecosystem, coverage protocols, and security.</p>
+                        </div>
+
+                        <div class="support-glass-card">
+                            <div class="icon-support-glow"><i class="fa-solid fa-headset"></i></div>
+                            <div class="support-text">
+                                <strong>Still have questions?</strong>
+                                <p>Our expert team is online.</p>
+                            </div>
+                            <a href="../contact/index.html">
+                                <button class="btn-chat-support">Chat with us</button>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="faq-content-column">
+                        
+                        <div class="faq-item active"> <div class="faq-question">
+                                <h3>What does homeowners insurance typically cover?</h3>
+                                <div class="faq-toggle"><i class="fa-solid fa-plus"></i></div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Coverage usually includes:
+                                <br>• The structure of your home (walls, roof, floor, etc.).
+                                <br>• Personal belongings inside the home.
+                                <br>• Liability (injuries or property damage to others).
+                                <br>• Additional living expenses if your home becomes unlivable.
+                                <br>• Optional protections (flood, earthquake, umbrella policies, etc.).
+                                <br>All policies can be bundled for maximum efficiency and savings.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Is homeowners insurance required?</h3>
+                                <div class="faq-toggle"><i class="fa-solid fa-plus"></i></div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>If you have a mortgage, yes—your lender will require it. Even if you own your home outright, it's highly recommended to protect your asset from unexpected disasters.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Why get insurance through Alex AI?</h3>
+                                <div class="faq-toggle"><i class="fa-solid fa-plus"></i></div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>We shop around for you. We pull quotes from top-rated insurers and help you compare coverage, pricing, and features so you get the best deal with less effort.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Can I bundle home and auto?</h3>
+                                <div class="faq-toggle"><i class="fa-solid fa-plus"></i></div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Definitely. Many of our partner insurers offer bundle discounts, and Alex AI automatically checks for those to help you save even more.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer id="contact" class="site-footer">
-        <div class="container footer-grid">
-            <div class="footer-col brand-col">
-                <a href="../index.html" style="display: block; margin-bottom: 20px;">
-                    <img src="../assets/img/Logo-alexai-main.png" 
-                        alt="Alex AI Insurtech Logo" 
-                        style="max-width: 160px; height: auto; filter: brightness(0) invert(1);">
-                </a>
-                <p style="color: rgba(255,255,255,0.9); font-weight: 500;">
-                    Smart insurance for modern life. Powered by intelligence, driven by humans.
-                </p>
-            </div>
-            <div class="footer-col">
-                <h5 style="color: white;">Products</h5>
-                <ul class="footer-links">
-                    <li><a href="../quote/quote.html">Car Insurance</a></li>
-                    <li><a href="../homeowners/index.html">Home Insurance</a></li>
-                    <li><a href="../renters/index.html">Renters Insurance</a></li>
-                    <li><a href="../alex-sign/index.html">Alex Sign</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h5 style="color: white;">Company</h5>
-                <ul class="footer-links">
-                    <li><a href="https://www.instagram.com/alexai.insurtech.usa/">About Us</a></li>
-                    <li><a href="../ambassadors/index.html">Ambassadors</a></li>
-                    <li><a href="../blog/index.html">Blog</a></li>
-                    <li><a href="../contact/index.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h5 style="color: white;">Contact & Legal</h5>
-                <ul class="footer-links contact-links">
-                    <li><i class="fa-solid fa-phone"></i> +1 480-630-9630</li>
-                    <li><i class="fa-solid fa-envelope"></i> hello@alexai.cloud</li>
-                    <li><a href="../terms-conditions/index.html">Terms of Service</a></li>
-                    <li><a href="../privacy-policy/index.html">Privacy Policy</a></li>
-                </ul>
-                <div class="app-buttons-row" style="display:flex; gap:15px; flex-wrap:wrap;">
-                    <a href="https://apps.apple.com/us/app/alex-ai-insurtech-app/id6752793999" class="btn-app-store">
-                        <i class="fa-brands fa-apple"></i>
-                        <div>
-                            <span class="small-txt">Download on the</span>
-                            <span class="big-txt">App Store</span>
-                        </div>
+    <footer class="footer-aurora">
+        <div class="footer-light-mesh"></div>
+
+        <div class="container">
+            <div class="footer-grid">
+                
+                <div class="footer-col brand-col">
+                    <a href="../index.html" class="footer-logo">
+                        <img src="../assets/img/Logo-alexai-main-white.png" alt="Alex AI Logo" class="footer-logo-img">
                     </a>
-                    <a href="https://play.google.com/store/apps/details?id=cloud.alexai.movil&pcampaignid=web_share" class="btn-app-store">
-                        <i class="fa-brands fa-google-play"></i>
-                        <div>
-                            <span class="small-txt">Get it on</span>
-                            <span class="big-txt">Google Play</span>
-                        </div>
-                    </a>
+                    <p class="footer-tagline">
+                        Smart insurance for modern life. Powered by intelligence, driven by humans.
+                    </p>
+                    <div class="footer-social-mini">
+                        <a href="https://www.facebook.com/people/Alexai-Insurtech-USA/61573922245346/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/alexai.insurtech.usa/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/channel/UCphdQNb7AT5jauTFKYgSh9g" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@alexaiinsurtech" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+
+
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Products</h4>
+                    <ul class="footer-links">
+                        <li><a href="../quote/quote.html">Car Insurance</a></li>
+                        <li><a href="../homeowners/index.html">Home Insurance</a></li>
+                        <li><a href="../renters/index.html">Renters Insurance</a></li>
+                        <li><a href="../alex-sign/index.html">Alex Sign <span class="badge-new">New</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://www.instagram.com/alexai.insurtech.usa/" target="_blank">About Us</a></li>
+                        <li><a href="../ambassadors/documents.html">Ambassadors</a></li>
+                        <li><a href="../blog/index.html">Blog</a></li>
+                        <li><a href="../contact/index.html">Contact Support</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="footer-col contact-col">
+                    <h4 class="footer-heading">Contact & Access</h4>
+                    
+                    <ul class="contact-list">
+                        <li>
+                            <i class="fa-solid fa-phone"></i> 
+                            <a href="tel:+14806309630">+1 480-630-9630</a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i> 
+                            <a href="mailto:hello@alexai.cloud">hello@alexai.cloud</a>
+                        </li>
+                    </ul>
+
+                    <div class="footer-app-buttons">
+                        <a href="https://apps.apple.com/us/app/alex-ai-insurtech-app/id6752793999" target="_blank">
+                            <button class="btn-footer-store">
+                                <i class="fa-brands fa-apple"></i>
+                                <div class="store-text">
+                                    <span>Download on</span>
+                                    <strong>App Store</strong>
+                                </div>
+                            </button>
+                        </a>
+                        <a href="https://play.google.com/store/apps/details?id=cloud.alexai.movil&pcampaignid=web_share" target="_blank">
+                            <button class="btn-footer-store">
+                                <i class="fa-brands fa-google-play"></i>
+                                <div class="store-text">
+                                    <span>Get it on</span>
+                                    <strong>Google Play</strong>
+                                </div>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container bottom-flex">
+                <div class="copyright-text">
+                    &copy; 2026 Alex AI Insurtech. All rights reserved.
+                </div>
+                <div class="legal-links">
+                    <a href="../privacy-policy/index.html">Privacy Policy</a>
+                    <span class="divider">|</span>
+                    <a href="../terms-conditions/index.html">Terms of Service</a>
                 </div>
             </div>
-
-        </div>
-        <div class="container copyright-row">
-             <p>&copy; 2026 Alex AI Insurtech. All rights reserved.</p>
-             <div class="social-links">
-                <a href="https://www.facebook.com/p/Alexai-Insurtech-USA-61573922245346/" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-                <a href="https://www.instagram.com/alexai.insurtech.usa/" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@Alex-AI-Insurtech" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-            </div>
+            <div class="aurora-bottom-line"></div>
         </div>
     </footer>
 
+
     <div id="floating-menu-container">
-        <div class="floating-menu-list organic-box" id="megaMenu">
-            <h5>Quick Navigate</h5>
-            <ul>
-                <li><a href="../quote/quote.html"><i class="fa-solid fa-car"></i> Car Insurance</a></li>
-                <li><a href="../homeowners/index.html"><i class="fa-solid fa-house"></i> Home Insurance</a></li>
-                <li><a href="../renters/index.html"><i class="fa-solid fa-key"></i> Renters Insurance</a></li>
-                <li><a href="../alex-sign/index.html"><i class="fa-solid fa-file-signature"></i> Alex Sign</a></li>
-                <li class="divider"></li>
-                <li><a href="../blog/index.html"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
-                <li><a href="../contact/index.html"><i class="fa-solid fa-headset"></i> Contact Support</a></li>
-            </ul>
+        <div class="nav-command-center" id="megaMenu">
+            <div class="cmd-header">
+                <span>Quick Navigate</span>
+                <span class="cmd-badge">MENU</span>
+            </div>
+            <div class="cmd-grid">
+                <a href="../quote/quote.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-car"></i></div>
+                    <span>Car Insurance</span>
+                </a>
+                <a href="../homeowners/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-house"></i></div>
+                    <span>Home Insurance</span>
+                </a>
+                <a href="../renters/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-key"></i></div>
+                    <span>Renters Insurance</span>
+                </a>
+                <a href="../alex-sign/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-file-signature"></i></div>
+                    <span>Alex Sign</span>
+                </a>
+                <a href="../blog/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-newspaper"></i></div>
+                    <span>Blog</span>
+                </a>
+                <a href="../contact/index.html" class="cmd-card">
+                    <div class="cmd-icon"><i class="fa-solid fa-headset"></i></div>
+                    <span>Contact Support</span>
+                </a>
+            </div>
+            <div class="cmd-footer">
+                <a href="../index.html">Back to Home <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
         </div>
-        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open quick menu">
-            <i class="fa-solid fa-bars-staggered"></i>
+        <button class="floating-menu-btn js-toggle-mega-menu" aria-label="Open menu">
+            <i class="fa-regular fa-compass"></i>
         </button>
     </div>
-
 
     <div id="floating-chat-container">
-        <div class="chat-bubble organic-box" id="chatGreeting">
-            <strong>Alex AI says:</strong><br> 👋 Protect your home today?
+        <div class="alex-chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div class="agent-info">
+                    <div class="agent-avatar"><i class="fa-solid fa-robot"></i><div class="status-dot"></div></div>
+                    <div class="agent-text">
+                        <span class="name">Alex AI Assistant</span>
+                        <span class="status">Reply time: Instant</span>
+                    </div>
+                </div>
+                <button class="close-chat-btn js-close-chat"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="chat-body">
+                <div class="chat-timestamp">Today, 5:00 PM</div>
+                
+                <div class="msg-row bot">
+                    <div class="msg-bubble">
+                        Hello! I see you're looking at quotes. Do you have any questions about the <strong>Collision Deductible</strong>? 🚗
+                    </div>
+                </div>
+                
+                <div class="chat-suggestions">
+                    <button>Explain Deductibles</button>
+                    <button>Talk to Human</button>
+                </div>
+            </div>
+            
+            <div class="chat-footer">
+                <input type="text" placeholder="Type your question..." class="chat-input">
+                <button class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
         </div>
+
         <button class="chat-avatar-btn js-trigger-chat" aria-label="Chat with support">
-            <i class="fa-solid fa-robot"></i>
+            <i class="fa-solid fa-comment-dots"></i>
+            <span class="online-badge"></span>
         </button>
     </div>
 
+    <script src="../js/script-quote.js"></script>
     <script src="../js/script.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => { 
-                const bubble = document.getElementById('chatGreeting');
-                if(bubble) bubble.classList.add('is-visible'); 
-            }, 1000);
-        });
-    </script>
+
+    
 </body>
 </html>
