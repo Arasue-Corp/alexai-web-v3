@@ -16,6 +16,8 @@
 </head>
 <body>
 
+    <div class="noise-overlay"></div>
+
     <div class="top-header-aurora">
         <div class="container top-bar-flex">
             
@@ -118,18 +120,60 @@
             </div>
         </div>
 
-        <div class="mobile-menu-dropdown" id="mobileMenu">
-            <ul class="mobile-list">
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="../quote/quote.html">Quote</a></li>
-                <li><a href="../ambassadors/documents.html" style="color: var(--c-blue);">Become an Ambassador</a></li>
-                <li class="divider-horizontal"></li>
-                <li><a href="../alex-sign/index.html">Alex Sign</a></li>
-                <li><a href="../homeowners/index.html">Homeowners</a></li>
-                <li><a href="../renters/index.html">Renters</a></li>
-                <li class="divider-horizontal"></li>
-                <li><a href="../contact/index.html">Contact</a></li>
-            </ul>
+        <div class="mobile-menu-premium" id="mobileMenu">
+            <div class="menu-aurora-bg"></div>
+            
+            <div class="menu-inner-container">
+                
+                <div class="menu-internal-header">
+                    <img src="./assets/img/Logo-alexai-main.png" alt="Logo" style="height: 30px;">
+                    <button class="menu-close-btn" onclick="toggleMobileMenu()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <a href="./quote/quote.html" class="menu-widget-card highlight-card">
+                    <div class="widget-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="widget-info">
+                        <span class="widget-title">Get a Quote</span>
+                        <span class="widget-desc">Start in 90 seconds</span>
+                    </div>
+                    <div class="widget-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+
+                <div class="menu-grid-row">
+                    <a href="./ambassadors/documents.html" class="menu-square-card">
+                        <i class="fa-solid fa-users-viewfinder" style="color: #7C3AED;"></i>
+                        <span>Ambassador</span>
+                    </a>
+                    <a href="./alex-sign/index.html" class="menu-square-card">
+                        <i class="fa-solid fa-file-signature" style="color: #2563EB;"></i>
+                        <span>Alex Sign</span>
+                    </a>
+                </div>
+
+                <div class="menu-section-title">INSURANCE PRODUCTS</div>
+                <div class="menu-links-group">
+                    <a href="./homeowners/index.html" class="menu-link-item">
+                        <i class="fa-solid fa-house"></i> Homeowners
+                    </a>
+                    <a href="./renters/index.html" class="menu-link-item">
+                        <i class="fa-solid fa-key"></i> Renters
+                    </a>
+                    <a href="./index.html#carriers" class="menu-link-item">
+                        <i class="fa-solid fa-shield-halved"></i> Our Carriers
+                    </a>
+                </div>
+
+                <div class="menu-footer">
+                    <a href="./contact/index.html" class="menu-footer-link">Contact Support</a>
+                    <div class="menu-socials">
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </header>
 
@@ -411,7 +455,11 @@
         </button>
     </div>
 
-    <script src="../js/script-quote.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
     <script src="../js/script.js"></script>
+    <script src="../js/script-quote.js"></script>
+
+    <div class="ai-cursor" id="customCursor"></div>
+    <div class="ai-cursor-dot" id="cursorDot"></div>
 </body>
 </html>

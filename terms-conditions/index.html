@@ -16,6 +16,8 @@
 </head>
 <body>
 
+    <div class="noise-overlay"></div>
+
     <div class="top-header-aurora">
         <div class="container top-bar-flex">
             
@@ -118,18 +120,60 @@
             </div>
         </div>
 
-        <div class="mobile-menu-dropdown" id="mobileMenu">
-            <ul class="mobile-list">
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="../quote/quote.html">Quote</a></li>
-                <li><a href="../ambassadors/documents.html" style="color: var(--c-blue);">Become an Ambassador</a></li>
-                <li class="divider-horizontal"></li>
-                <li><a href="../alex-sign/index.html">Alex Sign</a></li>
-                <li><a href="../homeowners/index.html">Homeowners</a></li>
-                <li><a href="../renters/index.html">Renters</a></li>
-                <li class="divider-horizontal"></li>
-                <li><a href="../contact/index.html">Contact</a></li>
-            </ul>
+        <div class="mobile-menu-premium" id="mobileMenu">
+            <div class="menu-aurora-bg"></div>
+            
+            <div class="menu-inner-container">
+                
+                <div class="menu-internal-header">
+                    <img src="./assets/img/Logo-alexai-main.png" alt="Logo" style="height: 30px;">
+                    <button class="menu-close-btn" onclick="toggleMobileMenu()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <a href="./quote/quote.html" class="menu-widget-card highlight-card">
+                    <div class="widget-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="widget-info">
+                        <span class="widget-title">Get a Quote</span>
+                        <span class="widget-desc">Start in 90 seconds</span>
+                    </div>
+                    <div class="widget-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+
+                <div class="menu-grid-row">
+                    <a href="./ambassadors/documents.html" class="menu-square-card">
+                        <i class="fa-solid fa-users-viewfinder" style="color: #7C3AED;"></i>
+                        <span>Ambassador</span>
+                    </a>
+                    <a href="./alex-sign/index.html" class="menu-square-card">
+                        <i class="fa-solid fa-file-signature" style="color: #2563EB;"></i>
+                        <span>Alex Sign</span>
+                    </a>
+                </div>
+
+                <div class="menu-section-title">INSURANCE PRODUCTS</div>
+                <div class="menu-links-group">
+                    <a href="./homeowners/index.html" class="menu-link-item">
+                        <i class="fa-solid fa-house"></i> Homeowners
+                    </a>
+                    <a href="./renters/index.html" class="menu-link-item">
+                        <i class="fa-solid fa-key"></i> Renters
+                    </a>
+                    <a href="./index.html#carriers" class="menu-link-item">
+                        <i class="fa-solid fa-shield-halved"></i> Our Carriers
+                    </a>
+                </div>
+
+                <div class="menu-footer">
+                    <a href="./contact/index.html" class="menu-footer-link">Contact Support</a>
+                    <div class="menu-socials">
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </header>
 
@@ -146,8 +190,11 @@
                         Terms & <span class="text-gradient-tech">Conditions</span>
                     </h1>
                     <div class="legal-meta-row">
-                        <div class="meta-item">
-                            <i class="fa-regular fa-clock"></i> Last Updated: <strong>January 1, 2024</strong>
+                        <div class="meta-item" style="color:var(--aurora-indigo);">
+                            <i class="fa-regular fa-clock"></i> Last Updated: <strong>February 24, 2024</strong>
+                        </div>
+                        <div class="meta-item" style="color:var(--aurora-indigo);">
+                            <i class="fa-solid fa-globe"></i> Region: <strong>Global / US</strong>
                         </div>
                         <div class="meta-item status-active">
                             <span class="dot-pulse"></span> Active
@@ -250,9 +297,9 @@
                         </div>
 
                         <div class="alert-box-blue mt-4">
-                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <i class="fa-solid fa-triangle-exclamation" style="color:red;"></i>
                             <div>
-                                <strong>Minors (13-17)</strong>
+                                <strong style="color:var(--aurora-indigo);">Minors (13-17)</strong>
                                 <p class="mb-0">If you are between the ages of 13 and 17, you must go over this Agreement with your parent or guardian to ensure both you and they fully understand it, and that they consent to it on your behalf.</p>
                             </div>
                         </div>
@@ -268,9 +315,9 @@
                         <h2 class="card-title">5. Intellectual Property</h2>
                         <p>The content on this Website is owned by us and is legally protected, including by U.S. copyright law, trademark law, and relevant international agreements. We retain all rights to the Website.</p>
                         <ul class="check-list-legal">
-                            <li><strong>Feedback:</strong> If you provide comments or suggestions, we are free to use that Feedback without restriction or compensation.</li>
-                            <li><strong>Personal Use:</strong> You are allowed to use the information provided only for your personal, non-commercial purposes.</li>
-                            <li><strong>No Mirroring:</strong> You may not "mirror" any content from this Website without our explicit prior written consent.</li>
+                            <li><strong style="color:var(--aurora-indigo);">Feedback:</strong> If you provide comments or suggestions, we are free to use that Feedback without restriction or compensation.</li>
+                            <li><strong style="color:var(--aurora-indigo);">Personal Use:</strong> You are allowed to use the information provided only for your personal, non-commercial purposes.</li>
+                            <li><strong style="color:var(--aurora-indigo);">No Mirroring:</strong> You may not "mirror" any content from this Website without our explicit prior written consent.</li>
                         </ul>
                     </section>
 
@@ -323,7 +370,7 @@
                     </section>
 
                     <section id="communications" class="legal-card highlight-card">
-                        <h2 class="card-title text-gradient-tech">9. Communications & Consent</h2>
+                        <h2 class="card-title">9. Communications & Consent</h2>
                         <p>By providing your email address, phone number, or both on Alex AI web, you give us and our partnered insurance providers permission to contact you via phone, email, or text about:</p>
                         
                         <div class="sharing-grid">
@@ -364,9 +411,9 @@
                     <section id="disclaimer" class="legal-card">
                         <h2 class="card-title">10. Disclaimer of warranty</h2>
                         <div class="alert-box-blue" style="border-left-color: #DC2626; background: #FEF2F2;">
-                            <i class="fa-solid fa-circle-exclamation text-danger"></i>
+                            <i class="fa-solid fa-circle-exclamation text-danger" style="color:orange;"></i>
                             <div>
-                                <strong>"AS IS" Basis</strong>
+                                <strong style="color:var(--aurora-indigo);">"AS IS" Basis</strong>
                                 <p class="mb-0 text-danger-dark">The Website and its content are provided to you strictly on an "as is" and "as available" basis. Our estimates may not always be accurate.</p>
                             </div>
                         </div>
@@ -600,8 +647,12 @@
         </button>
     </div>
 
-    <script src="../js/script-quote.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
     <script src="../js/script.js"></script>
+    <script src="../js/script-quote.js"></script>
+
+    <div class="ai-cursor" id="customCursor"></div>
+    <div class="ai-cursor-dot" id="cursorDot"></div>
 
     
 </body>

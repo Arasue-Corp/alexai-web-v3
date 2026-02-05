@@ -3,35 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex AI Insurtech - Ambassador Program</title>
+    <title>Alex AI Insurtech - Homeowners Insurance Quote</title>
     <meta name="description" content="AI-powered insurance, handled by humans. Get smart protection in 90 seconds.">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./style-test.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <link rel="stylesheet" href="../css/style-quote.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="./style-test.css">
+
 
     <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.supabase) {
-                const SUPABASE_URL = 'https://pddukinvrrmibnxfunuw.supabase.co';
-                const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBkZHVraW52cnJtaWJueGZ1bnV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM0MDYwMTYsImV4cCI6MjA3ODk4MjAxNn0.1-NioXXntQALwJL5nAoGyX6hysG3QsZu7Qg-hsJAzdY';
-                window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                // Usamos window.supabaseClient para evitar conflictos de nombres
-                console.log("Supabase conectado ✅");
-            } else {
-                console.error("Supabase SDK no disponible ❌");
-            }
-        });
-    </script>
-
 </head>
-<body class="bg-body">
+<body>
+
+    <div class="noise-overlay"></div>
 
     <div id="toast-container"></div>
 
@@ -111,7 +100,7 @@
                         </div>
                     </li>
                     
-                    <li><a href="../index.html#carriers" class="nav-item">Carriers</a></li>
+                    <li><a href="#carriers" class="nav-item">Carriers</a></li>
                     <li><a href="../blog/index.html" class="nav-item">Blog</a></li>
                     <li><a href="../contact/index.html" class="nav-item">Contact</a></li>
 
@@ -137,383 +126,504 @@
             </div>
         </div>
 
-        <div class="mobile-menu-dropdown" id="mobileMenu">
-            <ul class="mobile-list">
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="../quote/quote.html">Quote</a></li>
-                <li><a href="../ambassadors/documents.html" style="color: var(--c-blue);">Become an Ambassador</a></li>
-                <li class="divider-horizontal"></li>
-                <li><a href="../alex-sign/index.html">Alex Sign</a></li>
-                <li><a href="../homeowners/index.html">Homeowners</a></li>
-                <li><a href="../renters/index.html">Renters</a></li>
-                <li class="divider-horizontal"></li>
-                <li><a href="../contact/index.html">Contact</a></li>
-            </ul>
+        <div class="mobile-menu-premium" id="mobileMenu">
+            <div class="menu-aurora-bg"></div>
+            
+            <div class="menu-inner-container">
+                
+                <div class="menu-internal-header">
+                    <img src="./assets/img/Logo-alexai-main.png" alt="Logo" style="height: 30px;">
+                    <button class="menu-close-btn" onclick="toggleMobileMenu()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <a href="./quote/quote.html" class="menu-widget-card highlight-card">
+                    <div class="widget-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="widget-info">
+                        <span class="widget-title">Get a Quote</span>
+                        <span class="widget-desc">Start in 90 seconds</span>
+                    </div>
+                    <div class="widget-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+
+                <div class="menu-grid-row">
+                    <a href="./ambassadors/documents.html" class="menu-square-card">
+                        <i class="fa-solid fa-users-viewfinder" style="color: #7C3AED;"></i>
+                        <span>Ambassador</span>
+                    </a>
+                    <a href="./alex-sign/index.html" class="menu-square-card">
+                        <i class="fa-solid fa-file-signature" style="color: #2563EB;"></i>
+                        <span>Alex Sign</span>
+                    </a>
+                </div>
+
+                <div class="menu-section-title">INSURANCE PRODUCTS</div>
+                <div class="menu-links-group">
+                    <a href="./homeowners/index.html" class="menu-link-item">
+                        <i class="fa-solid fa-house"></i> Homeowners
+                    </a>
+                    <a href="./renters/index.html" class="menu-link-item">
+                        <i class="fa-solid fa-key"></i> Renters
+                    </a>
+                    <a href="./index.html#carriers" class="menu-link-item">
+                        <i class="fa-solid fa-shield-halved"></i> Our Carriers
+                    </a>
+                </div>
+
+                <div class="menu-footer">
+                    <a href="./contact/index.html" class="menu-footer-link">Contact Support</a>
+                    <div class="menu-socials">
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </header>
 
-    <main>    
-        <section class="legal-hero">
-            <div class="legal-hero-bg"></div>
-            <div class="container position-relative z-2">
-                <div class="d-flex flex-column align-items-center text-center">
-                    <div class="badge-legal-tech mb-3">
-                        <i class="fa-solid fa-gem" style="color: #7C3AED;"></i> Exclusive Program
-                    </div>
-                    <h1 class="display-legal-title">
-                        Alex AI <span class="text-gradient-tech">Official Ambassador Program</span>
-                    </h1>
-                    <div class="legal-meta-row">
-                        <div class="pg-header-badge blue">
-                            <span class="dot-pulse"></span> Personal & Business
-                        </div>
-                        <div class="meta-item status-active">
-                            <span class="dot-pulse"></span> Applications Open
-                        </div>
-                        <div class="meta-item status-active" style="color: #F59E0B;">
-                            <span class="fa-solid fa-bolt"></span> Instant Approval
-                        </div>
-                    </div>
-                </div>
+    <main class="page-wrapper">
+        
+        <div class="wizard-container">
+            <div class="wizard-top">
+                <div class="wizard-title"><i class="fa-solid fa-house-chimney"></i> Home Coverage</div>
+                <div class="wizard-title"><i class="fa-solid fa-flag-checkered"></i> Step <span id="stepNumberDisplay">1</span> of 7</div>
             </div>
-        </section>
-        <br>
+            <div class="progress-track"><div class="progress-fill" id="visualProgressBar" style="width: 14%;"></div></div>
+            <div class="header-split"></div>
+            <header class="brand-page-header">
+                <div class="title-group">
+                    <h1 id="stepTitle">Client Information</h1>
+                    <div class="aurora-line"></div> 
+                </div>
+                <p id="stepDesc">Let's start with the primary homeowner details.</p>
+            </header>
+        </div>
 
         <div class="specs-layout-grid">
-            <div class="main-spec-col">
-                
-                <div class="premium-white-card" >
-                    <div class="aurora-card-form">
-                        
-                        <form id="registration-form" novalidate>
-
-                                <div id="step-1" class="panel-step active">
-
-                                    <div class="mb-4">
-                                        <h2 style="color: var(--color-indigo);">Let's get you started.</h2>
-                                        <p>Fill in your details to create your secure ambassador ID.</p>
-                                    </div>
-                            
-                                        <div class="premium-group">
-
-                                            <div class="pg-header">
-                                                <div class="pg-header-badge blue">
-                                                    <i class="fa-solid fa-id-card"></i> 1. Your Information
-                                                </div>
-                                                <div class="pg-header-line"></div>
-                                            </div>
-
-                                            <div class="grid-2-tight mb-4">
-                                                <div class="inp-rich-group">
-                                                    <label class="lbl-premium">First Name</label>
-                                                    <div class="input-rich-wrapper compact-premium theme-blue">
-                                                        <div class="icon-slot"><i class="fa-solid fa-user"></i></div>
-                                                        <input type="text" id="user-name" class="rich-input validate-req" placeholder="e.g. Jonathan">
-                                                    </div>
-                                                </div>
-                                                <div class="inp-rich-group">
-                                                    <label class="lbl-premium">Last Name</label>
-                                                    <div class="input-rich-wrapper compact-premium theme-blue">
-                                                        <div class="icon-slot"><i class="fa-solid fa-font"></i></div>
-                                                        <input type="text" id="user-lastname" class="rich-input validate-req" placeholder="e.g. Smith">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="grid-2-tight mb-4">
-                                                <div class="inp-rich-group">
-                                                    <label class="lbl-premium">Email Address</label>
-                                                    <div class="input-rich-wrapper compact-premium theme-blue">
-                                                        <div class="icon-slot"><i class="fa-regular fa-envelope"></i></div>
-                                                        <input type="email" id="user-email" class="rich-input validate-req" placeholder="name@example.com">
-                                                    </div>
-                                                </div>
-                                                <div class="inp-rich-group">
-                                                    <label class="lbl-premium">Phone Number</label>
-                                                    <div class="input-rich-wrapper compact-premium theme-blue">
-                                                        <div class="icon-slot"><i class="fa-solid fa-phone"></i></div>
-                                                        <input type="tel" id="user-phone" class="rich-input validate-req" placeholder="(555) 123-4567">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="hero-action-area">
-                                                <button id="btnNext" type="button" onclick="goToStep(2)" class="btn-hero-gradient w-100">
-                                                    <span>Continue to Wallet</span> <i class="fa-solid fa-arrow-right"></i>
-                                                </button>
-                                                <div class="secure-badge-modern mt-3">
-                                                    <i class="fa-solid fa-shield-halved"></i> Data encrypted & secure
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <div id="step-2" class="panel-step">
-                                    <div class="form-section">
-                                        <div class="premium-group" style="position: relative; overflow: hidden;">
-                                            
-                                            <div id="wallet-verifier" class="wallet-verify-overlay">
-                                                <div style="width: 60px; height: 60px; border: 3px solid #E2E8F0; border-top-color: #3B82F6; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
-                                                <h5 style="color: #1E293B; font-weight: 700; margin-bottom: 5px;">Securing Connection...</h5>
-                                                <p style="color: #64748B; font-size: 0.9rem;">Verifying PayPal link integration</p>
-                                            </div>
-
-                                            <div class="pg-header">
-                                                <div class="pg-header-badge teal">
-                                                    <i class="fa-brands fa-paypal"></i> 2. Wallet Setup
-                                                </div>
-                                            </div>
-
-                                            <div class="download-zone-premium text-center" style="background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(239,246,255,0.5) 100%); border-radius: 16px; padding: 40px 20px; border: 1px solid rgba(255,255,255,0.6);">
-                                                <div class="dz-content d-block">
-                                                    
-                                                    <div class="dz-icon-circle pulse-icon-lg" style="margin: 0 auto 20px auto; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; background: white; color: #003087; box-shadow: 0 15px 35px -5px rgba(0, 48, 135, 0.2);">
-                                                        <i class="fa-brands fa-paypal"></i>
-                                                    </div>
-                                                    
-                                                    <h4 style=" margin-bottom: 10px; font-weight: 700; color: #1e293b;">Connect Payout Method</h4>
-                                                    <p style="max-width: 400px; margin: 0 auto 25px auto; color: #64748B;">
-                                                        Connect your PayPal to receive your $25 rewards instantly.
-                                                    </p>
-                                                    
-                                                    <a href="https://www.paypal.com/paypalme/" target="_blank" class="btn-download-card hover-lift" style="margin: 0 auto; max-width: 320px; border-color: #003087; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 24px; border-radius: 12px; border: 2px solid #003087; text-decoration: none; transition: all 0.3s; background: white;">
-                                                        <span style="color: #003087; font-weight: 700;">Connect PayPal Wallet</span>
-                                                        <i class="fa-solid fa-arrow-up-right-from-square" style="color: #003087;"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                            <div class="hero-action-area d-flex gap-3 mt-4">
-                                                <button type="button" onclick="goToStep(1)" class="btn-view-aurora border-0" style="flex: 1;">Back</button>
-                                                <button type="button" onclick="verifyWalletAndNext()" class="btn-hero-gradient" style="flex: 2;">
-                                                    <span>I've Connected It</span> <i class="fa-solid fa-shield-check"></i>
-                                                </button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="step-3" class="panel-step" style="display: none;">
-                                    <div class="form-section">
-                                        <div class="premium-group">
-                                            
-                                            <div class="pg-header">
-                                                <div class="pg-header-badge blue">
-                                                    <i class="fa-solid fa-graduation-cap"></i> 3. Certification
-                                                </div>
-                                            </div>
-
-                                            <div class="quiz-progress-track">
-                                                <div class="quiz-progress-fill" id="quizProgress"></div>
-                                                <div class="quiz-step-counter" id="quizCounter">1 / 5</div>
-                                            </div>
-
-                                            <div class="quiz-focus-container" id="quizContainer">
-                                                
-                                                <div class="quiz-slide active" data-index="1">
-                                                    <h5 class="mb-4" style="font-size:1.25rem; font-weight: 700; color:var(--aurora-text);">
-                                                        1. When do you earn your $25 reward?
-                                                    </h5>
-                                                    
-                                                    <div class="quiz-option" onclick="handleQuizSelection(this, 'q1', 'A')">
-                                                        <div class="option-badge">A</div>
-                                                        <span>When someone clicks my link.</span>
-                                                        <div class="check-indicator"><i class="fa-solid fa-check"></i></div>
-                                                    </div>
-                                                    
-                                                    <div class="quiz-option" onclick="handleQuizSelection(this, 'q1', 'B')">
-                                                        <div class="option-badge">B</div>
-                                                        <span>When my referral pays their first month.</span>
-                                                        <div class="check-indicator"><i class="fa-solid fa-check"></i></div>
-                                                    </div>
-
-                                                    <div class="quiz-option" onclick="handleQuizSelection(this, 'q1', 'C')">
-                                                        <div class="option-badge">C</div>
-                                                        <span>When someone requests a quote.</span>
-                                                        <div class="check-indicator"><i class="fa-solid fa-check"></i></div>
-                                                    </div>
-                                                    <input type="hidden" id="q1" name="q1" class="quiz-input">
-                                                </div>
-
-                                                <div class="quiz-slide" data-index="2">
-                                                    <h5 class="mb-4" style="font-size:1.25rem; font-weight: 700; color:var(--aurora-text);">
-                                                        2. Can you refer yourself or your spouse?
-                                                    </h5>
-                                                    <div class="quiz-option" onclick="handleQuizSelection(this, 'q2', 'A')">
-                                                        <div class="option-badge">A</div>
-                                                        <span>Yes, absolutely, all sales count.</span>
-                                                        <div class="check-indicator"><i class="fa-solid fa-check"></i></div>
-                                                    </div>
-                                                    <div class="quiz-option" onclick="handleQuizSelection(this, 'q2', 'B')">
-                                                        <div class="option-badge">B</div>
-                                                        <span>No, it's for new customers only.</span>
-                                                        <div class="check-indicator"><i class="fa-solid fa-check"></i></div>
-                                                    </div>
-                                                    <input type="hidden" id="q2" name="q2" class="quiz-input">
-                                                </div>
-
-                                                <div class="quiz-slide" data-index="3">
-                                                    <h5 class="mb-4" style="font-size:1.25rem; font-weight: 700; color:var(--aurora-text);">
-                                                        3. A friend asks about coverage details. You:
-                                                    </h5>
-                                                    <div class="quiz-option" onclick="handleQuizSelection(this, 'q3', 'A')">
-                                                        <div class="option-badge">A</div>
-                                                        <span>Say I'm not an agent, but Alex AI will explain it.</span>
-                                                        <div class="check-indicator"><i class="fa-solid fa-check"></i></div>
-                                                    </div>
-                                                    <div class="quiz-option" onclick="handleQuizSelection(this, 'q3', 'B')">
-                                                        <div class="option-badge">B</div>
-                                                        <span>Try to explain the coverages myself.</span>
-                                                        <div class="check-indicator"><i class="fa-solid fa-check"></i></div>
-                                                    </div>
-                                                    <input type="hidden" id="q3" name="q3" class="quiz-input">
-                                                </div>
-
-                                                <div class="quiz-slide" data-index="4">
-                                                    <h5 class="mb-4" style="font-size:1.25rem; font-weight: 700; color:var(--aurora-text);">
-                                                        4. Correct way to promote your link?
-                                                    </h5>
-                                                    <div class="quiz-option" onclick="handleQuizSelection(this, 'q4', 'A')">
-                                                        <div class="option-badge">A</div>
-                                                        <span>Authentic sharing with friends & social media.</span>
-                                                        <div class="check-indicator"><i class="fa-solid fa-check"></i></div>
-                                                    </div>
-                                                    <div class="quiz-option" onclick="handleQuizSelection(this, 'q4', 'B')">
-                                                        <div class="option-badge">B</div>
-                                                        <span>Sending 500 spam emails to strangers.</span>
-                                                        <div class="check-indicator"><i class="fa-solid fa-check"></i></div>
-                                                    </div>
-                                                    <input type="hidden" id="q4" name="q4" class="quiz-input">
-                                                </div>
-
-                                                <div class="quiz-slide" data-index="5">
-                                                    <h5 class="mb-4" style="font-size:1.25rem; font-weight: 700; color:var(--aurora-text);">
-                                                        5. Can you promise "Financial Freedom"?
-                                                    </h5>
-                                                    <div class="quiz-option" onclick="handleQuizSelection(this, 'q5', 'A')">
-                                                        <div class="option-badge">A</div>
-                                                        <span>Yes, if they refer enough people.</span>
-                                                        <div class="check-indicator"><i class="fa-solid fa-check"></i></div>
-                                                    </div>
-                                                    <div class="quiz-option" onclick="handleQuizSelection(this, 'q5', 'B')">
-                                                        <div class="option-badge">B</div>
-                                                        <span>No, income claims are prohibited.</span>
-                                                        <div class="check-indicator"><i class="fa-solid fa-check"></i></div>
-                                                    </div>
-                                                    <input type="hidden" id="q5" name="q5" class="quiz-input">
-                                                </div>
-
-                                            </div>
-
-                                            <div class="quiz-nav-actions">
-                                                <button type="button" class="btn-quiz-prev" onclick="prevQuizSlide()">
-                                                    <i class="fa-solid fa-arrow-left"></i> Previous
-                                                </button>
-
-                                                <div id="submit-area">
-                                                    <button type="submit" class="btn-hero-gradient">
-                                                        <span>Finish & Certify</span> <i class="fa-solid fa-rocket"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="step-4" class="panel-step" style="display: none;">
-                                    <div class="form-section text-center py-5">
-                                        
-                                        <div style="margin-bottom: 30px; animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
-                                            <div style="width: 80px; height: 80px; background: #10B981; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; margin: 0 auto; box-shadow: 0 0 0 10px rgba(16, 185, 129, 0.15);">
-                                                <i class="fa-solid fa-check"></i>
-                                            </div>
-                                        </div>
-                                        
-                                        <h2 style="color: var(--aurora-text); margin-bottom: 10px; font-weight: 800; font-size: 2rem;">You're In!</h2>
-                                        <p class="mb-5" style="color: var(--aurora-text-muted); font-size: 1.1rem;">Welcome to the official ambassador team.</p>
-
-                                        <div class="holo-card-container">
-                                            <div class="digital-id-card">
-                                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px;">
-                                                    <img src="../assets/img/Logo-alexai-main-white.png" alt="Logo" style="height: 24px; opacity: 0.9;">
-                                                    <i class="fa-solid fa-wifi" style="transform: rotate(90deg); opacity: 0.7;"></i>
-                                                </div>
-                                                
-                                                <div class="id-chip"></div>
-                                                
-                                                <div class="text-start">
-                                                    <div class="id-label">Ambassador ID</div>
-                                                    <div class="id-number-display" id="final-email-display">Generating...</div>
-                                                </div>
-                                                
-                                                <div class="id-footer">
-                                                    <div class="text-start">
-                                                        <div class="id-label">MEMBER SINCE</div>
-                                                        <div style="font-size: 0.9rem; font-weight: 600;">2026</div>
-                                                    </div>
-                                                    <div class="id-status-badge">
-                                                        <span style="width: 6px; height: 6px; background: #34D399; border-radius: 50%; box-shadow: 0 0 5px #34D399;"></span>
-                                                        Active
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div style="margin-top: 40px;">
-                                            <p style="color: #64748B; font-size: 0.9rem; margin-bottom: 15px;">Your dashboard is ready.</p>
-                                            <a href="https://rater.alexai.cloud/login" class="btn-hero-gradient px-5 py-3" style="text-decoration: none; display: inline-flex; width: 100%; justify-content: center;">
-                                                Launch Command Center <i class="fa-solid fa-arrow-right-to-bracket" style="margin-left: 10px;"></i>
-                                            </a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <br>
-                </div>
-
             
-                <aside class="sidebar-column">
-                    <aside class="config-sidebar">
-                        <div class="organic-panel" style="box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05);">
-                            <div class="sidebar-title">Your Progress</div>
-                            <ul class="aurora-list">
-                                <li class="active"><span class="pulse-dot"></span> Personal Info</li>
-                                <li><i class="fa-regular fa-circle"></i> Wallet Setup</li>
-                                <li><i class="fa-regular fa-circle"></i> Certification</li>
-                                <li><i class="fa-regular fa-circle"></i> Activation</li>
-                            </ul>
-                            <div class="sidebar-title">Highlights</div>
-                            <div style="display:flex; gap:10px; margin-bottom:12px; font-size:0.9rem; color:#514690;"><i class="fa-solid fa-check-circle" style="color: #10B981;"></i>
-                                <span>
-                                    <strong>$25 Per Referral</strong>
-                                    <br>
-                                    Earn everytime someone buys.
-                                </span>
-                            </div>
-                            <div style="display:flex; gap:10px; margin-bottom:12px; font-size:0.9rem; color:#514690;"><i class="fa-solid fa-check-circle" style="color: #10B981;"></i>
-                                <span>
-                                    <strong>Unlimited Cap</strong>
-                                    <br>
-                                    No limit to your earnings.
-                                </span>
-                            </div>
-                            <div></div>
+            <div class="main-spec-col">
+                <div class="premium-white-card">
+                    
+                    <form id="home-quote-form" novalidate>
+                        
+                        <div class="form-tab-panel active" id="tab-0">
+                            <div class="premium-group anim-entry">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge blue">
+                                        <i class="fa-solid fa-id-card"></i> Your Information
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
 
+                                <div class="grid-2-tight mb-4">
+                                    <div class="inp-rich-group">
+                                        <label class="lbl-premium">Email Address</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-regular fa-envelope"></i></div>
+                                            <input type="email" name="email" class="rich-input validate-req" placeholder="name@example.com">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label class="lbl-premium">Phone Number</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-phone"></i></div>
+                                            <input type="tel" name="phone" class="rich-input validate-req" placeholder="(555) 123-4567">
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <div class="tip-box-vibrant" style="margin-top: 20px;">
-                                <i class="fa-regular fa-lightbulb tip-icon"></i>
-                                <div>
-                                    <strong>Alex Tip:</strong> Use your inner circle. Your first 5 sales ($125) usually come from family & friends who already trust you.
+                                <div class="inp-rich-group mb-4">
+                                    <label class="lbl-premium">First Named Insured</label>
+                                    <div class="input-rich-wrapper compact-premium theme-blue">
+                                        <div class="icon-slot"><i class="fa-solid fa-user-check"></i></div>
+                                        <input type="text" name="first-name" class="rich-input validate-req" placeholder="Full Legal Name">
+                                    </div>
+                                </div>
+
+                                <div class="grid-3-tight">
+                                    <div class="inp-rich-group">
+                                        <label class="lbl-premium">Date of Birth</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-regular fa-calendar"></i></div>
+                                            <input type="text" name="dob1" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label class="lbl-premium">Occupation</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-briefcase"></i></div>
+                                            <input type="text" name="occupation1" class="rich-input validate-req" placeholder="e.g. Engineer">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label class="lbl-premium">Employer</span></label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
+                                            <input type="text" name="employer1" class="rich-input validate-req" placeholder="Company Name">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="premium-group anim-entry delay-1" style="background: #F8FAFC;">
+                                <div class="row-switch-container compact" style="border:none; padding:0;">
+                                    <div class="switch-label-group">
+                                        <div class="sl-text">
+                                            <span class="sl-title">Add Second Named Insured?</span>
+                                        </div>
+                                    </div>
+                                    <div class="aurora-toggle-segment small smart-wrapper">
+                                        <input type="checkbox" id="toggleSecondInsured" class="smart-toggle-input">
+                                        <label for="toggleSecondInsured" class="smart-toggle-btn">
+                                            <span class="state-add">
+                                                <i class="fa-solid fa-plus"></i> Add
+                                            </span>
+                                            <span class="state-remove">
+                                                <i class="fa-solid fa-trash-can"></i> Remove
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div id="secondInsuredSection" class="hidden-anim mt-3 pt-3" style="border-top:1px dashed #CBD5E1;">
+                                    <div class="inp-rich-group mb-4">
+                                        <label class="lbl-premium">Second Insured Name</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-user-check"></i></div>
+                                            <input type="text" name="second-name" class="rich-input validate-req" placeholder="Full Legal Name">
+                                        </div>
+                                    </div>
+
+                                    <div class="grid-3-tight">
+                                        <div class="inp-rich-group">
+                                            <label class="lbl-premium">Date of Birth</label>
+                                            <div class="input-rich-wrapper compact-premium theme-blue">
+                                                <div class="icon-slot"><i class="fa-regular fa-calendar"></i></div>
+                                                <input type="text" name="dob2" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY">
+                                            </div>
+                                        </div>
+                                        <div class="inp-rich-group">
+                                            <label class="lbl-premium">Occupation</label>
+                                            <div class="input-rich-wrapper compact-premium theme-blue">
+                                                <div class="icon-slot"><i class="fa-solid fa-briefcase"></i></div>
+                                                <input type="text" name="occupation2" class="rich-input validate-req" placeholder="e.g. Engineer">
+                                            </div>
+                                        </div>
+                                        <div class="inp-rich-group">
+                                            <label class="lbl-premium">Employer</span></label>
+                                            <div class="input-rich-wrapper compact-premium theme-blue">
+                                                <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
+                                                <input type="text" name="employer2" class="rich-input validate-req" placeholder="Company Name">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </aside>
-                </aside>
-            </div>  
-     </main>
+
+                        <div class="form-tab-panel" id="tab-1">
+                            <div class="premium-group anim-entry">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge purple"><i class="fa-solid fa-map-location-dot"></i> PROPERTY ADDRESS</div>
+                                    <div class="pg-header-line"></div>
+                                </div>
+
+                                <div class="inp-rich-group mb-4">
+                                    <label class="lbl-premium">Street Address</label>
+                                    <div class="input-rich-wrapper compact-premium theme-purple">
+                                        <div class="icon-slot"><i class="fa-solid fa-map-pin"></i></div>
+                                        <input type="text" name="location-address" class="rich-input validate-req" placeholder="e.g. 123 Main St">
+                                    </div>
+                                </div>
+
+                                <div class="grid-3-tight mb-4">
+                                    <div class="inp-rich-group"><label class="lbl-premium">City</label><div class="input-rich-wrapper compact-premium theme-purple"><div class="icon-slot"><i class="fa-solid fa-city"></i></div><input type="text" name="city" class="rich-input validate-req" placeholder="e.g. Phoenix"></div></div>
+                                    <div class="inp-rich-group"><label class="lbl-premium">State</label><div class="input-rich-wrapper compact-premium theme-purple"><div class="icon-slot"><i class="fa-solid fa-flag-usa"></i></div><input type="text" name="state" class="rich-input validate-req" placeholder="e.g. Arizona"></div></div>
+                                    <div class="inp-rich-group"><label class="lbl-premium">Zip Code</label><div class="input-rich-wrapper compact-premium theme-purple"><div class="icon-slot"><i class="fa-solid fa-hashtag"></i></div><input type="text" name="zip" class="rich-input validate-req" placeholder="e.g. 85012"></div></div>
+                                </div>
+                            </div>
+
+                            <div class="premium-group anim-entry delay-1">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge blue"><i class="fa-solid fa-house-user"></i> USAGE TYPE</div>
+                                    <div class="pg-header-line"></div>
+                                </div>
+                                
+                                <div class="grid-3-tight mb-4">
+                                    <label class="checkbox-card" style="justify-content: center; flex-direction: column; gap:10px; padding:20px;">
+                                        <input type="radio" name="occupancy" value="primary" checked style="display:none;">
+                                        <i class="fa-solid fa-house-chimney-user" style="font-size:1.5rem; color:#64748B;"></i>
+                                        <span style="font-weight:600; color:#334155;">Primary</span>
+                                    </label>
+                                    <label class="checkbox-card" style="justify-content: center; flex-direction: column; gap:10px; padding:20px;">
+                                        <input type="radio" name="occupancy" value="secondary" style="display:none;">
+                                        <i class="fa-solid fa-house-laptop" style="font-size:1.5rem; color:#64748B;"></i>
+                                        <span style="font-weight:600; color:#334155;">Secondary</span>
+                                    </label>
+                                    <label class="checkbox-card" style="justify-content: center; flex-direction: column; gap:10px; padding:20px;">
+                                        <input type="radio" name="occupancy" value="rented" style="display:none;">
+                                        <i class="fa-solid fa-key" style="font-size:1.5rem; color:#64748B;"></i>
+                                        <span style="font-weight:600; color:#334155;">Rented</span>
+                                    </label>
+                                </div>
+
+                                <div class="grid-2-tight">
+                                    <div class="inp-rich-group">
+                                        <label class="lbl-premium">Dwelling Type</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
+                                            <select name="dwelling-type" class="rich-input validate-req">
+                                                <option value="house">House</option>
+                                                <option value="condo">Condo</option>
+                                                <option value="townhouse">Townhouse</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label class="lbl-premium">New Purchase?</label>
+                                        <div class="input-rich-wrapper compact-premium theme-blue">
+                                            <div class="icon-slot"><i class="fa-solid fa-cart-shopping"></i></div>
+                                            <select name="new-purchase" class="rich-input validate-req">
+                                                <option value="no">No</option>
+                                                <option value="yes">Yes</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-tab-panel" id="tab-2">
+                            <div class="premium-group anim-entry">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge blue"><i class="fa-solid fa-ruler-combined"></i> SPECS</div>
+                                    <div class="pg-header-line"></div>
+                                </div>
+
+                                <div class="grid-2-tight mb-4">
+                                    <div class="inp-rich-group">
+                                        <label class="lbl-premium">Year Built <span class="req">*</span></label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-regular fa-calendar"></i></div>
+                                            <input type="number" name="year-built" class="rich-input validate-req" placeholder="e.g. 1995">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label class="lbl-premium">Square Footage <span class="req">*</span></label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-maximize"></i></div>
+                                            <input type="number" name="sq-footage" class="rich-input validate-req" placeholder="e.g. 2000">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="inp-rich-group mb-4">
+                                    <label class="lbl-premium">Construction Type <span class="req">*</span></label>
+                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                        <div class="icon-slot"><i class="fa-solid fa-hammer"></i></div>
+                                        <select name="construction-type" class="rich-input validate-req">
+                                            <option value="">Select...</option>
+                                            <option value="frame">Frame</option>
+                                            <option value="brick">Brick</option>
+                                            <option value="stucco">Stucco</option>
+                                            <option value="masonry">Masonry</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="grid-3-tight">
+                                    <div class="inp-rich-group"><label class="lbl-premium">Roof Type</label><div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-house-chimney-crack"></i></div><input type="text" name="roof-type" class="rich-input validate-req"></div></div>
+                                    <div class="inp-rich-group"><label class="lbl-premium">Roof Shape</label><div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-shapes"></i></div><input type="text" name="roof-shape" class="rich-input validate-req"></div></div>
+                                    <div class="inp-rich-group"><label class="lbl-premium">Foundation</label><div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-layer-group"></i></div><input type="text" name="foundation" class="rich-input validate-req"></div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-tab-panel" id="tab-3">
+                            <div class="premium-group anim-entry">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge blue"><i class="fa-solid fa-shield-halved"></i> SAFETY</div>
+                                    <div class="pg-header-line"></div>
+                                </div>
+
+                                <div style="display:flex; flex-direction:column; gap:10px;">
+                                    <label class="checkbox-card">
+                                        <input type="checkbox" name="fire-dept">
+                                        <div style="display:flex; align-items:center;">
+                                            <i class="fa-solid fa-fire-extinguisher" style="color:#64748B; margin-right:10px; font-size:1.2rem;"></i>
+                                            <span style="font-weight:600; color:#334155;">Within 5 miles of a Fire Dept?</span>
+                                        </div>
+                                    </label>
+                                    <label class="checkbox-card">
+                                        <input type="checkbox" name="fire-hydrant">
+                                        <div style="display:flex; align-items:center;">
+                                            <i class="fa-solid fa-faucet" style="color:#64748B; margin-right:10px; font-size:1.2rem;"></i>
+                                            <span style="font-weight:600; color:#334155;">Within 1000 ft of a Fire Hydrant?</span>
+                                        </div>
+                                    </label>
+                                    <label class="checkbox-card">
+                                        <input type="checkbox" name="burglar-alarm">
+                                        <div style="display:flex; align-items:center;">
+                                            <i class="fa-solid fa-bell" style="color:#64748B; margin-right:10px; font-size:1.2rem;"></i>
+                                            <span style="font-weight:600; color:#334155;">Active Central Station Burglar Alarm?</span>
+                                        </div>
+                                    </label>
+                                    <label class="checkbox-card">
+                                        <input type="checkbox" name="fire-alarm">
+                                        <div style="display:flex; align-items:center;">
+                                            <i class="fa-solid fa-fire" style="color:#64748B; margin-right:10px; font-size:1.2rem;"></i>
+                                            <span style="font-weight:600; color:#334155;">Active Central Station Fire Alarm?</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-tab-panel" id="tab-4">
+                            <div class="premium-group anim-entry">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge blue" style="background:#FFFBEB; color:#D97706;">
+                                        <i class="fa-solid fa-triangle-exclamation"></i> CLAIM HISTORY
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
+                                <p style="color:#64748B; font-size:0.9rem; margin-bottom:20px;">Losses in the last 5 years.</p>
+                                
+                                <div class="inp-rich-group mb-4">
+                                    <label class="lbl-premium">Number of Losses</label>
+                                    <div class="input-rich-wrapper compact-premium">
+                                        <div class="icon-slot"><i class="fa-solid fa-list-ol"></i></div>
+                                        <select id="num-losses" class="rich-input">
+                                            <option value="0">No Losses (0)</option>
+                                            <option value="1">1 Loss</option>
+                                            <option value="2">2 Losses</option>
+                                            <option value="3">3 Losses</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="dynamic-loss-container"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-tab-panel" id="tab-5">
+                            <div class="premium-group anim-entry">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge blue"><i class="fa-solid fa-file-contract"></i> CURRENT POLICY</div>
+                                    <div class="pg-header-line"></div>
+                                </div>
+
+                                <div class="grid-2-tight mb-4">
+                                    <div class="inp-rich-group">
+                                        <label class="lbl-premium">Current Carrier</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-briefcase"></i></div>
+                                            <input type="text" name="current-company" class="rich-input">
+                                        </div>
+                                    </div>
+                                    <div class="inp-rich-group">
+                                        <label class="lbl-premium">Dwelling Limit</label>
+                                        <div class="input-rich-wrapper compact-premium theme-teal">
+                                            <div class="icon-slot"><i class="fa-solid fa-dollar-sign"></i></div>
+                                            <input type="text" name="current-dwelling" class="rich-input">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="border: 2px dashed #CBD5E1; border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; transition: all 0.2s;" id="dec-upload-zone">
+                                    <input type="file" id="declarationPageInput" style="display: none;" accept=".pdf,.jpg,.png">
+                                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2rem; color: #3B82F6; margin-bottom: 10px;"></i>
+                                    <div id="uploadText" style="font-weight: 700; color: #1E293B;">Upload Declaration Page</div>
+                                    <div style="font-size: 0.85rem; color: #94A3B8;">PDF, JPG or PNG (Max 5MB)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-tab-panel" id="tab-6">
+                            <div class="premium-group anim-entry">
+                                <div class="pg-header">
+                                    <div class="pg-header-badge purple" style="background:#F5F3FF; color:#7C3AED;">
+                                        <i class="fa-regular fa-gem"></i> VALUABLES
+                                    </div>
+                                    <div class="pg-header-line"></div>
+                                </div>
+
+                                <div class="premium-group compact-group" style="background:#F8FAFC; border:1px solid #F1F5F9; padding:20px; border-radius:12px; margin-bottom:20px;">
+                                    <h6 style="color:#7C3AED; font-weight:700; margin-top:0;"><i class="fa-regular fa-gem"></i> Jewelry</h6>
+                                    <div class="grid-2-tight">
+                                        <div class="inp-rich-group"><label class="lbl-premium">Blanket ($)</label><div class="input-rich-wrapper compact-premium"><input type="number" name="jewelry-blanket" class="rich-input" placeholder="0"></div></div>
+                                        <div class="inp-rich-group"><label class="lbl-premium">Itemized ($)</label><div class="input-rich-wrapper compact-premium"><input type="number" name="jewelry-itemized" class="rich-input" placeholder="0"></div></div>
+                                    </div>
+                                    <div style="margin-top:10px; display:flex; align-items:center;">
+                                        <input type="checkbox" name="jewelry-vault" style="margin-right:10px;">
+                                        <span style="font-size:0.9rem; color:#64748B;">Kept in bank vault?</span>
+                                    </div>
+                                </div>
+
+                                <div class="grid-2-tight">
+                                    <div class="premium-group compact-group" style="background:#F8FAFC; border:1px solid #F1F5F9; padding:15px; border-radius:12px;">
+                                        <h6 style="margin-top:0; font-size:0.95rem; font-weight:700;">Furs</h6>
+                                        <div class="inp-rich-group mb-2"><input type="number" name="furs-blanket" class="input-rich-wrapper compact-premium rich-input" placeholder="Blanket $"></div>
+                                        <div class="inp-rich-group"><input type="number" name="furs-itemized" class="input-rich-wrapper compact-premium rich-input" placeholder="Itemized $"></div>
+                                    </div>
+                                    <div class="premium-group compact-group" style="background:#F8FAFC; border:1px solid #F1F5F9; padding:15px; border-radius:12px;">
+                                        <h6 style="margin-top:0; font-size:0.95rem; font-weight:700;">Fine Arts</h6>
+                                        <div class="inp-rich-group mb-2"><input type="number" name="arts-blanket" class="input-rich-wrapper compact-premium rich-input" placeholder="Blanket $"></div>
+                                        <div class="inp-rich-group"><input type="number" name="arts-itemized" class="input-rich-wrapper compact-premium rich-input" placeholder="Itemized $"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hero-action-area">
+                            <button type="button" id="btn-prev" class="btn-view-aurora" style="display:none;">Back</button>
+                            <button type="button" id="btn-next" class="btn-hero-gradient">
+                                Next Step <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            <button type="submit" id="btn-submit" class="btn-hero-gradient" style="display:none;">
+                                Get My Quote <i class="fa-solid fa-bolt"></i>
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <aside class="sidebar-column">
+                <div class="organic-panel" style="position: sticky; top: 100px;">
+                    <div class="sidebar-title">COVERAGE PATH</div>
+                    <ul class="aurora-list" id="sidebarList">
+                        <li class="active"><span class="pulse-dot"></span> Info</li>
+                        <li><i class="fa-regular fa-circle"></i> Location</li>
+                        <li><i class="fa-regular fa-circle"></i> Specs</li>
+                        <li><i class="fa-regular fa-circle"></i> Safety</li>
+                        <li><i class="fa-regular fa-circle"></i> History</li>
+                        <li><i class="fa-regular fa-circle"></i> Policy</li>
+                        <li><i class="fa-regular fa-circle"></i> Valuables</li>
+                    </ul>
+                    <div class="discount-box-vibrant" style="margin-top:20px;">
+                        <i class="fa-solid fa-tags bg-icon"></i>
+                        <div class="db-title">Discounts</div>
+                        <div class="db-msg">Multi-policy discounts available.</div>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+    <div id="successModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center;">
+        <div class="premium-white-card" style="padding:40px; border-radius:20px; max-width:400px; text-align:center;">
+            <div style="width:70px; height:70px; background:#10B981; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-size:30px; margin:0 auto 20px auto;">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 style="margin-bottom:10px; color:#1E293B;">Quote Received!</h3>
+            <p style="color:#64748B; margin-bottom:25px;">Processing your property data...</p>
+            <button id="closeModalBtn" class="btn-hero-gradient" style="width:100%; justify-content:center;">Done</button>
+        </div>
+    </div>
 
     <footer class="footer-aurora">
         <div class="footer-light-mesh"></div>
@@ -695,10 +805,18 @@
         </button>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="../js/script.js"></script>
-    <script src="../js/script-quote.js"></script>
-    <script src="../js/ambassador.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <!-- <script src="../js/script.js"></script> -->
+    <!-- <script src="../js/script-quote.js"></script> -->
+
+    <div class="ai-cursor" id="customCursor"></div>
+    <div class="ai-cursor-dot" id="cursorDot"></div>
+
+        <script src="./script-test.js"></script>
+
+
     
 </body>
 </html>

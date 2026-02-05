@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Alex AI Insurtech - JS Initialized");
 
     // 1. Funciones Globales UI
-    initMobileMenu();
+    toggleMobileMenu();
     initFloatingMegaMenu();
     initFAQAccordion();
     
@@ -34,28 +34,90 @@ document.addEventListener("DOMContentLoaded", () => {
    CORE FUNCTIONS
    ========================================= */
 
-function initMobileMenu() {
-    const menuToggle = document.querySelector('.mobile-menu-toggle');
-    const siteHeader = document.querySelector('.site-header');
-    if (!menuToggle || !siteHeader) return;
+// --- 0. INICIALIZACIÓN LUXURY SCROLL (LENIS) ---
+document.addEventListener("DOMContentLoaded", () => {
+    // Solo activamos en Desktop para rendimiento
+    if (window.innerWidth > 991) {
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Curva exponencial suave
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        });
 
-    menuToggle.addEventListener('click', () => {
-        siteHeader.classList.toggle('nav-open');
-        const icon = menuToggle.querySelector('i');
-        if(siteHeader.classList.contains('nav-open')) {
-            icon.classList.remove('fa-bars'); icon.classList.add('fa-xmark');
-            document.body.style.overflow = 'hidden';
-        } else {
-            icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars');
-            document.body.style.overflow = '';
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
         }
+
+        requestAnimationFrame(raf);
+        
+        console.log("🚀 Lenis Smooth Scroll Activado");
+    }
+});
+
+// --- LÓGICA DEL CURSOR AI ---
+const cursor = document.getElementById('customCursor');
+const cursorDot = document.getElementById('cursorDot');
+
+if (cursor && cursorDot && window.innerWidth > 991) {
+    document.addEventListener('mousemove', (e) => {
+        // El punto va instantáneo
+        cursorDot.style.left = e.clientX + 'px';
+        cursorDot.style.top = e.clientY + 'px';
+        
+        // El círculo grande tiene "lag" (animación CSS o JS simple)
+        cursor.animate({
+            left: e.clientX + 'px',
+            top: e.clientY + 'px'
+        }, { duration: 500, fill: "forwards" });
+    });
+
+    // Detectar hovers para agrandar el cursor
+    const hoverables = document.querySelectorAll('a, button, input, textarea, select, .hover-target');
+    hoverables.forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
     });
 }
 
-function initFloatingMegaMenu() {
+/* --- JS MENÚ PREMIUM SEGURO --- */
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    
+    // Si por alguna razón no existe, salimos
+    if (!menu) return;
+
+    // Toggleamos la clase
+    const isOpen = menu.classList.toggle('is-open');
+
+    // Manejo del scroll
+    if (isOpen) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+}
+
+// ASEGURAR QUE EMPIECE CERRADO AL CARGAR (Safety Check)
+document.addEventListener("DOMContentLoaded", () => {
+    const menu = document.getElementById('mobileMenu');
+    if (menu && menu.classList.contains('is-open')) {
+        menu.classList.remove('is-open'); // Lo forzamos a cerrar al cargar
+        document.body.style.overflow = '';
+    }
+});
+
        // =========================================
     // LOGICA DE BOTONES FLOTANTES (NUEVO)
     // =========================================
+
+function initFloatingMegaMenu() {
+
     
     // --- 1. CHAT LOGIC ---
     const chatBtn = document.querySelector('.js-trigger-chat');
@@ -728,3 +790,178 @@ window.addEventListener("load", function() {
     console.log("🚀 Alex AI: Botones flotantes alineados a la derecha.");
 });
 
+/* =========================================
+   HOMEOWNER QUOTE WIZARD LOGIC
+   ========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+    initWizard();
+});
+
+function initWizard() {
+    let currentStep = 0;
+    const steps = document.querySelectorAll('.form-tab-panel');
+    const sidebarItems = document.querySelectorAll('#sidebarList li');
+    const totalSteps = steps.length;
+    
+    const btnNext = document.getElementById('btn-next');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnSubmit = document.getElementById('btn-submit');
+    const progress = document.getElementById('visualProgressBar');
+    const stepNumDisplay = document.getElementById('stepNumber');
+
+    // 1. Validar Paso Actual
+    function validateStep(index) {
+        const currentPanel = steps[index];
+        // Busca inputs dentro de wrappers ricos o inputs estándar
+        const requiredInputs = currentPanel.querySelectorAll('input[required], select[required]');
+        let isValid = true;
+
+        requiredInputs.forEach(input => {
+            const val = input.value.trim();
+            // Soporte para input-rich-wrapper
+            const wrapper = input.closest('.input-rich-wrapper') || input;
+            
+            if (!val) {
+                isValid = false;
+                wrapper.classList.add('input-error'); // Tu clase CSS de error existente
+                
+                // Shake Animation
+                wrapper.classList.add('shake-anim');
+                setTimeout(() => wrapper.classList.remove('shake-anim'), 500);
+                
+                // Auto-limpieza
+                input.addEventListener('input', () => wrapper.classList.remove('input-error'), {once:true});
+            }
+        });
+        return isValid;
+    }
+
+    // 2. Actualizar UI (Pasos, Botones, Sidebar)
+    function updateUI() {
+        // Mostrar panel correcto
+        steps.forEach((s, i) => {
+            if (i === currentStep) {
+                s.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                s.classList.remove('active');
+            }
+        });
+
+        // Actualizar Sidebar
+        sidebarItems.forEach((li, i) => {
+            li.classList.remove('active');
+            
+            // Texto original limpio
+            const text = li.innerText.replace('✓', '').trim();
+            
+            if (i < currentStep) {
+                li.innerHTML = `<i class="fa-solid fa-check" style="color:#10B981; margin-right:8px;"></i> ${text}`;
+                li.style.color = '#10B981';
+                li.style.fontWeight = '600';
+            } else if (i === currentStep) {
+                li.classList.add('active');
+                li.innerHTML = `<span class="pulse-dot"></span> ${text}`;
+                li.style.color = '#1E293B';
+                li.style.fontWeight = '700';
+            } else {
+                li.innerHTML = `<i class="fa-regular fa-circle" style="margin-right:8px;"></i> ${text}`;
+                li.style.color = '#94A3B8';
+                li.style.fontWeight = '400';
+            }
+        });
+
+        // Botones
+        if (btnPrev) btnPrev.style.display = currentStep === 0 ? 'none' : 'block';
+        
+        if (currentStep === totalSteps - 1) {
+            if (btnNext) btnNext.style.display = 'none';
+            if (btnSubmit) btnSubmit.style.display = 'block';
+        } else {
+            if (btnNext) btnNext.style.display = 'block';
+            if (btnSubmit) btnSubmit.style.display = 'none';
+        }
+
+        // Progreso
+        if (progress) progress.style.width = ((currentStep + 1) / totalSteps) * 100 + '%';
+        if (stepNumDisplay) stepNumDisplay.innerText = currentStep + 1;
+    }
+
+    // Event Listeners Navegación
+    if (btnNext) {
+        btnNext.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (validateStep(currentStep)) {
+                currentStep++;
+                updateUI();
+            } else {
+                // Si tienes showToast global, úsalo
+                if(typeof showToast === 'function') showToast("Please fill in required fields.", "warning");
+            }
+        });
+    }
+
+    if (btnPrev) {
+        btnPrev.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentStep > 0) {
+                currentStep--;
+                updateUI();
+            }
+        });
+    }
+
+    // --- LOGICA DE CAMPOS DINAMICOS ---
+    
+    // 1. Segundo Asegurado
+    const toggle2nd = document.getElementById('toggleSecondInsured');
+    const secSection = document.getElementById('secondInsuredSection');
+    if (toggle2nd && secSection) {
+        toggle2nd.addEventListener('change', (e) => {
+            secSection.style.display = e.target.checked ? 'block' : 'none';
+        });
+    }
+
+    // 2. Pérdidas (Loss History)
+    const lossSelect = document.getElementById('num-losses');
+    const lossContainer = document.getElementById('dynamic-loss-container');
+    if (lossSelect && lossContainer) {
+        lossSelect.addEventListener('change', (e) => {
+            const count = parseInt(e.target.value);
+            lossContainer.innerHTML = '';
+            
+            for(let i = 1; i <= count; i++) {
+                const html = `
+                    <div class="loss-entry-card">
+                        <h6 style="font-weight:700; color:#EF4444; margin-bottom:10px;">Loss Incident #${i}</h6>
+                        <div class="grid-2-tight">
+                            <div class="inp-rich-group"><label class="lbl-premium">Date</label><input type="text" class="rich-input date-picker" placeholder="MM/DD/YYYY"></div>
+                            <div class="inp-rich-group"><label class="lbl-premium">Type</label><input type="text" class="rich-input" placeholder="e.g. Fire"></div>
+                        </div>
+                    </div>`;
+                lossContainer.insertAdjacentHTML('beforeend', html);
+            }
+            // Reinicializar calendarios en los nuevos inputs
+            if(window.flatpickr) flatpickr(".date-picker", { dateFormat: "m/d/Y" });
+        });
+    }
+
+    // 3. Upload Visual
+    const fileInput = document.getElementById('declarationPageInput');
+    const uploadText = document.getElementById('uploadText');
+    const zone = document.getElementById('dec-upload-zone');
+    
+    if (fileInput && uploadText) {
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                uploadText.textContent = this.files[0].name;
+                zone.style.borderColor = '#10B981';
+                zone.style.backgroundColor = '#ECFDF5';
+            }
+        });
+    }
+
+    // Inicializar UI
+    updateUI();
+}

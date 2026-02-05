@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex AI Insurtech - Digital Document Management</title>
+    <title>Alex Sign - Digital Document Management</title>
     <meta name="description" content="AI-powered insurance, handled by humans. Get smart protection in 90 seconds.">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
@@ -15,6 +15,8 @@
 
 </head>
 <body>
+
+    <div class="noise-overlay"></div>
 
     <div class="top-header-aurora">
         <div class="container top-bar-flex">
@@ -118,18 +120,60 @@
             </div>
         </div>
 
-        <div class="mobile-menu-dropdown" id="mobileMenu">
-            <ul class="mobile-list">
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="../quote/quote.html">Quote</a></li>
-                <li><a href="../ambassadors/documents.html" style="color: var(--c-blue);">Become an Ambassador</a></li>
-                <li class="divider-horizontal"></li>
-                <li><a href="../alex-sign/index.html">Alex Sign</a></li>
-                <li><a href="../homeowners/index.html">Homeowners</a></li>
-                <li><a href="../renters/index.html">Renters</a></li>
-                <li class="divider-horizontal"></li>
-                <li><a href="../contact/index.html">Contact</a></li>
-            </ul>
+        <div class="mobile-menu-premium" id="mobileMenu">
+            <div class="menu-aurora-bg"></div>
+            
+            <div class="menu-inner-container">
+                
+                <div class="menu-internal-header">
+                    <img src="./assets/img/Logo-alexai-main.png" alt="Logo" style="height: 30px;">
+                    <button class="menu-close-btn" onclick="toggleMobileMenu()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <a href="./quote/quote.html" class="menu-widget-card highlight-card">
+                    <div class="widget-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="widget-info">
+                        <span class="widget-title">Get a Quote</span>
+                        <span class="widget-desc">Start in 90 seconds</span>
+                    </div>
+                    <div class="widget-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+
+                <div class="menu-grid-row">
+                    <a href="./ambassadors/documents.html" class="menu-square-card">
+                        <i class="fa-solid fa-users-viewfinder" style="color: #7C3AED;"></i>
+                        <span>Ambassador</span>
+                    </a>
+                    <a href="./alex-sign/index.html" class="menu-square-card">
+                        <i class="fa-solid fa-file-signature" style="color: #2563EB;"></i>
+                        <span>Alex Sign</span>
+                    </a>
+                </div>
+
+                <div class="menu-section-title">INSURANCE PRODUCTS</div>
+                <div class="menu-links-group">
+                    <a href="./homeowners/index.html" class="menu-link-item">
+                        <i class="fa-solid fa-house"></i> Homeowners
+                    </a>
+                    <a href="./renters/index.html" class="menu-link-item">
+                        <i class="fa-solid fa-key"></i> Renters
+                    </a>
+                    <a href="./index.html#carriers" class="menu-link-item">
+                        <i class="fa-solid fa-shield-halved"></i> Our Carriers
+                    </a>
+                </div>
+
+                <div class="menu-footer">
+                    <a href="./contact/index.html" class="menu-footer-link">Contact Support</a>
+                    <div class="menu-socials">
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </header>
 
@@ -155,7 +199,7 @@
                         
                         <div class="hero-actions-row">
                             <a href="../contact/index.html" class="btn-aurora-primary">
-                                <span>Get Started</span> <i class="fa-solid fa-arrow-right-long"></i>
+                                <span>Unlock Your Potential</span> <i class="fa-solid fa-arrow-right-long"></i>
                             </a>
                         </div>
                     </div>
@@ -166,15 +210,18 @@
                                 <div class="dots-row"><span></span><span></span><span></span></div>
                                 <div class="address-bar">alex-sign.secure/dashboard</div>
                             </div>
-                            <div class="video-wrapper">
-                                <video id="heroVideoElement" class="dashboard-video" autoplay loop muted playsinline preload="metadata">
-                                    <source src="../assets/videos/alex-sign-hero.mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                                <div class="scan-line-overlay"></div>
+                            <div class="arch-visual-col">
+                                <div class="arch-visual-wrapper">     
+                                    <div class="arch-glow-back"></div>
+                                    <div class="arch-glass-frame">
+                                        <img src="../assets/img/alex-hero-14.png" alt="Alex AI Hero" class="arch-img"> 
+                                        <div class="arch-shimmer"></div>
+                                        <div class="arch-reflection"></div>
+                                    </div>
+                                </div>
                             </div>
                             
-                            <div class="floating-status-card">
+                            <div class="floating-status-card" style="z-index: 999;">
                                 <div class="icon-box-success"><i class="fa-solid fa-file-signature"></i></div>
                                 <div>
                                     <strong>Contract Signed</strong>
@@ -728,8 +775,12 @@
 
     
 
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
+
+    <div class="ai-cursor" id="customCursor"></div>
+    <div class="ai-cursor-dot" id="cursorDot"></div>
 
 </body>
 </html>
