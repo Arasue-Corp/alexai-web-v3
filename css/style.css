@@ -4961,6 +4961,7 @@ position: absolute;
     position: relative;
     overflow: hidden;
     border-top: none; /* Eliminamos el borde gris */
+    margin-top: 1%;
 }
 
 /* --- EFECTOS DE LUZ AURORA AMBIENTAL --- */
@@ -5270,7 +5271,6 @@ position: absolute;
 .badge-blue { background: #E0F2FE; color: #009cff; }
 
 .price-display { font-size: 3rem; font-weight: 800; margin: 20px 0; }
-.currency { font-size: 1.5rem; vertical-align: super; }
 .period { font-size: 1rem; color: #94A3B8; font-weight: 500; }
 
 .pricing-features { list-style: none; padding: 0; margin: 30px 0; text-align: left; }
@@ -10371,7 +10371,6 @@ position: absolute;
 .badge-blue { background: #E0F2FE; color: #009cff; }
 
 .price-display { font-size: 3rem; font-weight: 800; margin: 20px 0; }
-.currency { font-size: 1.5rem; vertical-align: super; }
 .period { font-size: 1rem; color: #94A3B8; font-weight: 500; }
 
 .pricing-features { list-style: none; padding: 0; margin: 30px 0; text-align: left; }

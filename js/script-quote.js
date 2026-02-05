@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // --- DATOS DE EJEMPLO ---
     const offers = [
-        { id: 1, logo: '../assets/img/Carrier-covercube-2.jpg', carrier: 'CoverCube', plan: 'Full Covercube', down: '3,920.22', monthly: '0.00' },
+        { id: 1, logo: '../assets/img/Carrier-covercube-2.jpg', carrier: 'CoverCube', plan: 'Full Covercube', down: '3,920.22', monthly: '0.00', instantBind: true },
         { id: 2, logo: '../assets/img/Carrier-kemper.jpg', carrier: 'Kemper', plan: 'Kemper Auto Flex', down: '870.32', monthly: '661.64',alexChoice: true },
         { id: 3, logo: '../assets/img/Carrier-just.jpg', carrier: 'Just', plan: 'Standard Plan', down: '900.00', monthly: '710.00' },
         { id: 4, logo: '../assets/img/Carrier-clearcover.png', carrier: 'Clearcover', plan: 'Economy', down: '800.00', monthly: '640.00' }
@@ -127,8 +127,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const choiceTagHTML = o.alexChoice 
                 ? `<div class="alex-choice-tag"><i class="fa-solid fa-heart"></i> Alex Choice</div>` 
                 : '';
+            const bindTagHTML = o.instantBind 
+                ? `<div class="alex-choice-tag" style="background: var(--brand-green)"><i class="fa-solid fa-bolt"></i> Instant Bind</div>` 
+                : '';
             div.innerHTML = `
-                ${choiceTagHTML}<div class="stamp-mark"><i class="fa-solid fa-check"></i> SELECTED</div>
+                ${choiceTagHTML}<div class="stamp-mark""><i class="fa-solid fa-check"></i> SELECTED</div>
+
+                ${bindTagHTML}<div class="stamp-mark"><i class="fa-solid fa-check"></i> SELECTED</div>
                 
                 <div class="card-main">
                     <div class="logo-col"><img src="${o.logo}" class="carrier-logo"></div>
@@ -2635,7 +2640,7 @@ if (vipForm && vipInput) {
 });
 
 /* =========================================
-   CONTACT FORM LOGIC (HOME)
+   CONTACT FORM LOGIC
    ========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -297,7 +297,7 @@ body::before {
 
 /* Badge "Selected" */
 .stamp-mark {
-    position: absolute; top: 15px; right: 15px; transform: none;
+    position: absolute; top: 5px; right: 15px; transform: none;
     background: var(--color-success); color: white; font-weight: 700; font-size: 0.7rem;
     padding: 5px 12px; border-radius: 20px; opacity: 0; pointer-events: none; z-index: 10;
     box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
@@ -1772,21 +1772,30 @@ input:checked + .slider.red-theme { background-color: #EF4444; }
 
 /* 2. TABS INTEGRADOS (Look de Carpeta/Dashboard) */
 .car-tabs-integrated {
-    display: flex; 
-    gap: 5px; 
-    margin-bottom: -1px; /* Solape visual con la tarjeta */
-    padding: 0 10px;
+    display: flex;
+    width: 100%;        /* Ocupar todo el ancho disponible */
+    gap: 5px;           /* Reducir el espacio entre pestañas si es necesario */
+    overflow: hidden;   /* Ocultar lo que salga (aunque con lo de abajo no debería salir nada) */
+}
+
+.car-tabs-integrated .tab-int{
+   flex: 1;            /* Crecen y se encogen para llenar el espacio equitativamente */
+    min-width: 0;       /* PERMITE que se encojan si hay muchos elementos (la clave del fix) */
+    padding: 10px 5px;  /* Reducimos un poco el padding lateral para ganar espacio */
     
-    /* --- NUEVAS PROPIEDADES PARA CORREGIR DESBORDAMIENTO --- */
-    width: 100%;
-    overflow-x: auto;          /* Permite scroll horizontal */
-    overflow-y: hidden;        /* Evita scroll vertical */
-    white-space: nowrap;       /* Mantiene todo en una línea */
-    -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
-    
-    /* Ocultar barra de scroll (Estética limpia) */
-    scrollbar-width: none;     /* Firefox */
-    -ms-overflow-style: none;  /* IE/Edge */
+    /* Estética para que el texto se vea bien en espacios pequeños */
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; /* Pone "..." si el texto es demasiado largo */
+    text-align: center;
+    justify-content: center; /* Centrar contenido si usas flex dentro del botón */
+}
+
+.car-tabs-integrated .add-btn{
+    flex: 0 0 auto;     /* No crecer, solo ocupar su tamaño natural */
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 /* Ocultar barra de scroll en Chrome/Safari */
@@ -2913,22 +2922,43 @@ input:checked + .slider.red-theme { background-color: #EF4444; }
 
 /* 3. BOTÓN ADD FIJO (Estilo Grande y Claro) */
 .btn-add-driver-static {
-    width: 100%;
-    background: #FFFFFF;
-    border: 2px dashed #CBD5E1;
-    color: #64748B;
-    padding: 14px;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    transition: all 0.2s ease;
+    position: relative;
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 28px; border-radius: 50px;
+    text-decoration: none; font-weight: 700; font-size: 0.95rem;
+    background: white; color: var(--brand-indigo);
+    /* Truco para borde gradiente */
+    border: 1px solid transparent;
+    background-image: linear-gradient(white, white), linear-gradient(135deg, #009cff, #514690);
+    background-origin: border-box; background-clip: padding-box, border-box;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
 }
 .btn-add-driver-static:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-    background: #EFF6FF;
+    border-color: var(--brand-indigo);
+    color: white;
+    background: var(--brand-indigo);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.btn-add-car-static {
+    position: relative;
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 28px; border-radius: 50px;
+    text-decoration: none; font-weight: 700; font-size: 0.95rem;
+    background: white; color: var(--brand-indigo);
+    /* Truco para borde gradiente */
+    border: 1px solid transparent;
+    background-image: linear-gradient(white, white), linear-gradient(135deg, #009cff, #514690);
+    background-origin: border-box; background-clip: padding-box, border-box;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+.btn-add-car-static:hover {
+    border-color: var(--brand-indigo);
+    color: white;
+    background: var(--brand-indigo);
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
@@ -3301,7 +3331,7 @@ body.page-enter { animation: pageEnterAnim 0.4s ease-out forwards; }
 .pg-title-main {
     display: block;
     font-weight: 700;
-    color: #1E293B;
+    color: var(--brand-indigo);
     font-size: 0.95rem;
 }
 .pg-subtitle {

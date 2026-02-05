@@ -3,26 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex AI Insurtech - Homeowners Insurance Quote</title>
-    <meta name="description" content="AI-powered insurance, handled by humans. Get smart protection in 90 seconds.">
+    <title>Alex AI Home Insurance Quote</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="stylesheet" href="./style-test.css"> 
 
-    <link rel="stylesheet" href="../css/style-quote.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="./style-test.css">
-
-
+    <link rel="stylesheet" href="../css/style-quote.css"> 
     <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
-
 </head>
-<body>
-
-    <div class="noise-overlay"></div>
+<body class="bg-body">
 
     <div id="toast-container"></div>
+
+    <div class="noise-overlay"></div>
 
     <div class="top-header-aurora">
         <div class="container top-bar-flex">
@@ -183,449 +180,316 @@
         </div>
     </header>
 
-    <main class="page-wrapper">
-        
-        <div class="wizard-container">
-            <div class="wizard-top">
-                <div class="wizard-title"><i class="fa-solid fa-house-chimney"></i> Home Coverage</div>
-                <div class="wizard-title"><i class="fa-solid fa-flag-checkered"></i> Step <span id="stepNumberDisplay">1</span> of 7</div>
-            </div>
-            <div class="progress-track"><div class="progress-fill" id="visualProgressBar" style="width: 14%;"></div></div>
-            <div class="header-split"></div>
-            <header class="brand-page-header">
-                <div class="title-group">
-                    <h1 id="stepTitle">Client Information</h1>
-                    <div class="aurora-line"></div> 
-                </div>
-                <p id="stepDesc">Let's start with the primary homeowner details.</p>
-            </header>
-        </div>
 
-        <div class="specs-layout-grid">
-            
-            <div class="main-spec-col">
-                <div class="premium-white-card">
-                    
-                    <form id="home-quote-form" novalidate>
-                        
-                        <div class="form-tab-panel active" id="tab-0">
-                            <div class="premium-group anim-entry">
-                                <div class="pg-header">
-                                    <div class="pg-header-badge blue">
-                                        <i class="fa-solid fa-id-card"></i> Your Information
-                                    </div>
-                                    <div class="pg-header-line"></div>
-                                </div>
-
-                                <div class="grid-2-tight mb-4">
-                                    <div class="inp-rich-group">
-                                        <label class="lbl-premium">Email Address</label>
-                                        <div class="input-rich-wrapper compact-premium theme-blue">
-                                            <div class="icon-slot"><i class="fa-regular fa-envelope"></i></div>
-                                            <input type="email" name="email" class="rich-input validate-req" placeholder="name@example.com">
-                                        </div>
-                                    </div>
-                                    <div class="inp-rich-group">
-                                        <label class="lbl-premium">Phone Number</label>
-                                        <div class="input-rich-wrapper compact-premium theme-blue">
-                                            <div class="icon-slot"><i class="fa-solid fa-phone"></i></div>
-                                            <input type="tel" name="phone" class="rich-input validate-req" placeholder="(555) 123-4567">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="inp-rich-group mb-4">
-                                    <label class="lbl-premium">First Named Insured</label>
-                                    <div class="input-rich-wrapper compact-premium theme-blue">
-                                        <div class="icon-slot"><i class="fa-solid fa-user-check"></i></div>
-                                        <input type="text" name="first-name" class="rich-input validate-req" placeholder="Full Legal Name">
-                                    </div>
-                                </div>
-
-                                <div class="grid-3-tight">
-                                    <div class="inp-rich-group">
-                                        <label class="lbl-premium">Date of Birth</label>
-                                        <div class="input-rich-wrapper compact-premium theme-blue">
-                                            <div class="icon-slot"><i class="fa-regular fa-calendar"></i></div>
-                                            <input type="text" name="dob1" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY">
-                                        </div>
-                                    </div>
-                                    <div class="inp-rich-group">
-                                        <label class="lbl-premium">Occupation</label>
-                                        <div class="input-rich-wrapper compact-premium theme-blue">
-                                            <div class="icon-slot"><i class="fa-solid fa-briefcase"></i></div>
-                                            <input type="text" name="occupation1" class="rich-input validate-req" placeholder="e.g. Engineer">
-                                        </div>
-                                    </div>
-                                    <div class="inp-rich-group">
-                                        <label class="lbl-premium">Employer</span></label>
-                                        <div class="input-rich-wrapper compact-premium theme-blue">
-                                            <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
-                                            <input type="text" name="employer1" class="rich-input validate-req" placeholder="Company Name">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="premium-group anim-entry delay-1" style="background: #F8FAFC;">
-                                <div class="row-switch-container compact" style="border:none; padding:0;">
-                                    <div class="switch-label-group">
-                                        <div class="sl-text">
-                                            <span class="sl-title">Add Second Named Insured?</span>
-                                        </div>
-                                    </div>
-                                    <div class="aurora-toggle-segment small smart-wrapper">
-                                        <input type="checkbox" id="toggleSecondInsured" class="smart-toggle-input">
-                                        <label for="toggleSecondInsured" class="smart-toggle-btn">
-                                            <span class="state-add">
-                                                <i class="fa-solid fa-plus"></i> Add
-                                            </span>
-                                            <span class="state-remove">
-                                                <i class="fa-solid fa-trash-can"></i> Remove
-                                            </span>
-                                        </label>
-                                    </div>
-                                </div>
-                                
-                                <div id="secondInsuredSection" class="hidden-anim mt-3 pt-3" style="border-top:1px dashed #CBD5E1;">
-                                    <div class="inp-rich-group mb-4">
-                                        <label class="lbl-premium">Second Insured Name</label>
-                                        <div class="input-rich-wrapper compact-premium theme-blue">
-                                            <div class="icon-slot"><i class="fa-solid fa-user-check"></i></div>
-                                            <input type="text" name="second-name" class="rich-input validate-req" placeholder="Full Legal Name">
-                                        </div>
-                                    </div>
-
-                                    <div class="grid-3-tight">
-                                        <div class="inp-rich-group">
-                                            <label class="lbl-premium">Date of Birth</label>
-                                            <div class="input-rich-wrapper compact-premium theme-blue">
-                                                <div class="icon-slot"><i class="fa-regular fa-calendar"></i></div>
-                                                <input type="text" name="dob2" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY">
-                                            </div>
-                                        </div>
-                                        <div class="inp-rich-group">
-                                            <label class="lbl-premium">Occupation</label>
-                                            <div class="input-rich-wrapper compact-premium theme-blue">
-                                                <div class="icon-slot"><i class="fa-solid fa-briefcase"></i></div>
-                                                <input type="text" name="occupation2" class="rich-input validate-req" placeholder="e.g. Engineer">
-                                            </div>
-                                        </div>
-                                        <div class="inp-rich-group">
-                                            <label class="lbl-premium">Employer</span></label>
-                                            <div class="input-rich-wrapper compact-premium theme-blue">
-                                                <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
-                                                <input type="text" name="employer2" class="rich-input validate-req" placeholder="Company Name">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-tab-panel" id="tab-1">
-                            <div class="premium-group anim-entry">
-                                <div class="pg-header">
-                                    <div class="pg-header-badge purple"><i class="fa-solid fa-map-location-dot"></i> PROPERTY ADDRESS</div>
-                                    <div class="pg-header-line"></div>
-                                </div>
-
-                                <div class="inp-rich-group mb-4">
-                                    <label class="lbl-premium">Street Address</label>
-                                    <div class="input-rich-wrapper compact-premium theme-purple">
-                                        <div class="icon-slot"><i class="fa-solid fa-map-pin"></i></div>
-                                        <input type="text" name="location-address" class="rich-input validate-req" placeholder="e.g. 123 Main St">
-                                    </div>
-                                </div>
-
-                                <div class="grid-3-tight mb-4">
-                                    <div class="inp-rich-group"><label class="lbl-premium">City</label><div class="input-rich-wrapper compact-premium theme-purple"><div class="icon-slot"><i class="fa-solid fa-city"></i></div><input type="text" name="city" class="rich-input validate-req" placeholder="e.g. Phoenix"></div></div>
-                                    <div class="inp-rich-group"><label class="lbl-premium">State</label><div class="input-rich-wrapper compact-premium theme-purple"><div class="icon-slot"><i class="fa-solid fa-flag-usa"></i></div><input type="text" name="state" class="rich-input validate-req" placeholder="e.g. Arizona"></div></div>
-                                    <div class="inp-rich-group"><label class="lbl-premium">Zip Code</label><div class="input-rich-wrapper compact-premium theme-purple"><div class="icon-slot"><i class="fa-solid fa-hashtag"></i></div><input type="text" name="zip" class="rich-input validate-req" placeholder="e.g. 85012"></div></div>
-                                </div>
-                            </div>
-
-                            <div class="premium-group anim-entry delay-1">
-                                <div class="pg-header">
-                                    <div class="pg-header-badge blue"><i class="fa-solid fa-house-user"></i> USAGE TYPE</div>
-                                    <div class="pg-header-line"></div>
-                                </div>
-                                
-                                <div class="grid-3-tight mb-4">
-                                    <label class="checkbox-card" style="justify-content: center; flex-direction: column; gap:10px; padding:20px;">
-                                        <input type="radio" name="occupancy" value="primary" checked style="display:none;">
-                                        <i class="fa-solid fa-house-chimney-user" style="font-size:1.5rem; color:#64748B;"></i>
-                                        <span style="font-weight:600; color:#334155;">Primary</span>
-                                    </label>
-                                    <label class="checkbox-card" style="justify-content: center; flex-direction: column; gap:10px; padding:20px;">
-                                        <input type="radio" name="occupancy" value="secondary" style="display:none;">
-                                        <i class="fa-solid fa-house-laptop" style="font-size:1.5rem; color:#64748B;"></i>
-                                        <span style="font-weight:600; color:#334155;">Secondary</span>
-                                    </label>
-                                    <label class="checkbox-card" style="justify-content: center; flex-direction: column; gap:10px; padding:20px;">
-                                        <input type="radio" name="occupancy" value="rented" style="display:none;">
-                                        <i class="fa-solid fa-key" style="font-size:1.5rem; color:#64748B;"></i>
-                                        <span style="font-weight:600; color:#334155;">Rented</span>
-                                    </label>
-                                </div>
-
-                                <div class="grid-2-tight">
-                                    <div class="inp-rich-group">
-                                        <label class="lbl-premium">Dwelling Type</label>
-                                        <div class="input-rich-wrapper compact-premium theme-blue">
-                                            <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
-                                            <select name="dwelling-type" class="rich-input validate-req">
-                                                <option value="house">House</option>
-                                                <option value="condo">Condo</option>
-                                                <option value="townhouse">Townhouse</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="inp-rich-group">
-                                        <label class="lbl-premium">New Purchase?</label>
-                                        <div class="input-rich-wrapper compact-premium theme-blue">
-                                            <div class="icon-slot"><i class="fa-solid fa-cart-shopping"></i></div>
-                                            <select name="new-purchase" class="rich-input validate-req">
-                                                <option value="no">No</option>
-                                                <option value="yes">Yes</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-tab-panel" id="tab-2">
-                            <div class="premium-group anim-entry">
-                                <div class="pg-header">
-                                    <div class="pg-header-badge blue"><i class="fa-solid fa-ruler-combined"></i> SPECS</div>
-                                    <div class="pg-header-line"></div>
-                                </div>
-
-                                <div class="grid-2-tight mb-4">
-                                    <div class="inp-rich-group">
-                                        <label class="lbl-premium">Year Built <span class="req">*</span></label>
-                                        <div class="input-rich-wrapper compact-premium theme-teal">
-                                            <div class="icon-slot"><i class="fa-regular fa-calendar"></i></div>
-                                            <input type="number" name="year-built" class="rich-input validate-req" placeholder="e.g. 1995">
-                                        </div>
-                                    </div>
-                                    <div class="inp-rich-group">
-                                        <label class="lbl-premium">Square Footage <span class="req">*</span></label>
-                                        <div class="input-rich-wrapper compact-premium theme-teal">
-                                            <div class="icon-slot"><i class="fa-solid fa-maximize"></i></div>
-                                            <input type="number" name="sq-footage" class="rich-input validate-req" placeholder="e.g. 2000">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="inp-rich-group mb-4">
-                                    <label class="lbl-premium">Construction Type <span class="req">*</span></label>
-                                    <div class="input-rich-wrapper compact-premium theme-teal">
-                                        <div class="icon-slot"><i class="fa-solid fa-hammer"></i></div>
-                                        <select name="construction-type" class="rich-input validate-req">
-                                            <option value="">Select...</option>
-                                            <option value="frame">Frame</option>
-                                            <option value="brick">Brick</option>
-                                            <option value="stucco">Stucco</option>
-                                            <option value="masonry">Masonry</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="grid-3-tight">
-                                    <div class="inp-rich-group"><label class="lbl-premium">Roof Type</label><div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-house-chimney-crack"></i></div><input type="text" name="roof-type" class="rich-input validate-req"></div></div>
-                                    <div class="inp-rich-group"><label class="lbl-premium">Roof Shape</label><div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-shapes"></i></div><input type="text" name="roof-shape" class="rich-input validate-req"></div></div>
-                                    <div class="inp-rich-group"><label class="lbl-premium">Foundation</label><div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-layer-group"></i></div><input type="text" name="foundation" class="rich-input validate-req"></div></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-tab-panel" id="tab-3">
-                            <div class="premium-group anim-entry">
-                                <div class="pg-header">
-                                    <div class="pg-header-badge blue"><i class="fa-solid fa-shield-halved"></i> SAFETY</div>
-                                    <div class="pg-header-line"></div>
-                                </div>
-
-                                <div style="display:flex; flex-direction:column; gap:10px;">
-                                    <label class="checkbox-card">
-                                        <input type="checkbox" name="fire-dept">
-                                        <div style="display:flex; align-items:center;">
-                                            <i class="fa-solid fa-fire-extinguisher" style="color:#64748B; margin-right:10px; font-size:1.2rem;"></i>
-                                            <span style="font-weight:600; color:#334155;">Within 5 miles of a Fire Dept?</span>
-                                        </div>
-                                    </label>
-                                    <label class="checkbox-card">
-                                        <input type="checkbox" name="fire-hydrant">
-                                        <div style="display:flex; align-items:center;">
-                                            <i class="fa-solid fa-faucet" style="color:#64748B; margin-right:10px; font-size:1.2rem;"></i>
-                                            <span style="font-weight:600; color:#334155;">Within 1000 ft of a Fire Hydrant?</span>
-                                        </div>
-                                    </label>
-                                    <label class="checkbox-card">
-                                        <input type="checkbox" name="burglar-alarm">
-                                        <div style="display:flex; align-items:center;">
-                                            <i class="fa-solid fa-bell" style="color:#64748B; margin-right:10px; font-size:1.2rem;"></i>
-                                            <span style="font-weight:600; color:#334155;">Active Central Station Burglar Alarm?</span>
-                                        </div>
-                                    </label>
-                                    <label class="checkbox-card">
-                                        <input type="checkbox" name="fire-alarm">
-                                        <div style="display:flex; align-items:center;">
-                                            <i class="fa-solid fa-fire" style="color:#64748B; margin-right:10px; font-size:1.2rem;"></i>
-                                            <span style="font-weight:600; color:#334155;">Active Central Station Fire Alarm?</span>
-                                        </div>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-tab-panel" id="tab-4">
-                            <div class="premium-group anim-entry">
-                                <div class="pg-header">
-                                    <div class="pg-header-badge blue" style="background:#FFFBEB; color:#D97706;">
-                                        <i class="fa-solid fa-triangle-exclamation"></i> CLAIM HISTORY
-                                    </div>
-                                    <div class="pg-header-line"></div>
-                                </div>
-                                <p style="color:#64748B; font-size:0.9rem; margin-bottom:20px;">Losses in the last 5 years.</p>
-                                
-                                <div class="inp-rich-group mb-4">
-                                    <label class="lbl-premium">Number of Losses</label>
-                                    <div class="input-rich-wrapper compact-premium">
-                                        <div class="icon-slot"><i class="fa-solid fa-list-ol"></i></div>
-                                        <select id="num-losses" class="rich-input">
-                                            <option value="0">No Losses (0)</option>
-                                            <option value="1">1 Loss</option>
-                                            <option value="2">2 Losses</option>
-                                            <option value="3">3 Losses</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div id="dynamic-loss-container"></div>
-                            </div>
-                        </div>
-
-                        <div class="form-tab-panel" id="tab-5">
-                            <div class="premium-group anim-entry">
-                                <div class="pg-header">
-                                    <div class="pg-header-badge blue"><i class="fa-solid fa-file-contract"></i> CURRENT POLICY</div>
-                                    <div class="pg-header-line"></div>
-                                </div>
-
-                                <div class="grid-2-tight mb-4">
-                                    <div class="inp-rich-group">
-                                        <label class="lbl-premium">Current Carrier</label>
-                                        <div class="input-rich-wrapper compact-premium theme-teal">
-                                            <div class="icon-slot"><i class="fa-solid fa-briefcase"></i></div>
-                                            <input type="text" name="current-company" class="rich-input">
-                                        </div>
-                                    </div>
-                                    <div class="inp-rich-group">
-                                        <label class="lbl-premium">Dwelling Limit</label>
-                                        <div class="input-rich-wrapper compact-premium theme-teal">
-                                            <div class="icon-slot"><i class="fa-solid fa-dollar-sign"></i></div>
-                                            <input type="text" name="current-dwelling" class="rich-input">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div style="border: 2px dashed #CBD5E1; border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; transition: all 0.2s;" id="dec-upload-zone">
-                                    <input type="file" id="declarationPageInput" style="display: none;" accept=".pdf,.jpg,.png">
-                                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2rem; color: #3B82F6; margin-bottom: 10px;"></i>
-                                    <div id="uploadText" style="font-weight: 700; color: #1E293B;">Upload Declaration Page</div>
-                                    <div style="font-size: 0.85rem; color: #94A3B8;">PDF, JPG or PNG (Max 5MB)</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-tab-panel" id="tab-6">
-                            <div class="premium-group anim-entry">
-                                <div class="pg-header">
-                                    <div class="pg-header-badge purple" style="background:#F5F3FF; color:#7C3AED;">
-                                        <i class="fa-regular fa-gem"></i> VALUABLES
-                                    </div>
-                                    <div class="pg-header-line"></div>
-                                </div>
-
-                                <div class="premium-group compact-group" style="background:#F8FAFC; border:1px solid #F1F5F9; padding:20px; border-radius:12px; margin-bottom:20px;">
-                                    <h6 style="color:#7C3AED; font-weight:700; margin-top:0;"><i class="fa-regular fa-gem"></i> Jewelry</h6>
-                                    <div class="grid-2-tight">
-                                        <div class="inp-rich-group"><label class="lbl-premium">Blanket ($)</label><div class="input-rich-wrapper compact-premium"><input type="number" name="jewelry-blanket" class="rich-input" placeholder="0"></div></div>
-                                        <div class="inp-rich-group"><label class="lbl-premium">Itemized ($)</label><div class="input-rich-wrapper compact-premium"><input type="number" name="jewelry-itemized" class="rich-input" placeholder="0"></div></div>
-                                    </div>
-                                    <div style="margin-top:10px; display:flex; align-items:center;">
-                                        <input type="checkbox" name="jewelry-vault" style="margin-right:10px;">
-                                        <span style="font-size:0.9rem; color:#64748B;">Kept in bank vault?</span>
-                                    </div>
-                                </div>
-
-                                <div class="grid-2-tight">
-                                    <div class="premium-group compact-group" style="background:#F8FAFC; border:1px solid #F1F5F9; padding:15px; border-radius:12px;">
-                                        <h6 style="margin-top:0; font-size:0.95rem; font-weight:700;">Furs</h6>
-                                        <div class="inp-rich-group mb-2"><input type="number" name="furs-blanket" class="input-rich-wrapper compact-premium rich-input" placeholder="Blanket $"></div>
-                                        <div class="inp-rich-group"><input type="number" name="furs-itemized" class="input-rich-wrapper compact-premium rich-input" placeholder="Itemized $"></div>
-                                    </div>
-                                    <div class="premium-group compact-group" style="background:#F8FAFC; border:1px solid #F1F5F9; padding:15px; border-radius:12px;">
-                                        <h6 style="margin-top:0; font-size:0.95rem; font-weight:700;">Fine Arts</h6>
-                                        <div class="inp-rich-group mb-2"><input type="number" name="arts-blanket" class="input-rich-wrapper compact-premium rich-input" placeholder="Blanket $"></div>
-                                        <div class="inp-rich-group"><input type="number" name="arts-itemized" class="input-rich-wrapper compact-premium rich-input" placeholder="Itemized $"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="hero-action-area">
-                            <button type="button" id="btn-prev" class="btn-view-aurora" style="display:none;">Back</button>
-                            <button type="button" id="btn-next" class="btn-hero-gradient">
-                                Next Step <i class="fa-solid fa-arrow-right"></i>
-                            </button>
-                            <button type="submit" id="btn-submit" class="btn-hero-gradient" style="display:none;">
-                                Get My Quote <i class="fa-solid fa-bolt"></i>
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-
-            <aside class="sidebar-column">
-                <div class="organic-panel" style="position: sticky; top: 100px;">
-                    <div class="sidebar-title">COVERAGE PATH</div>
-                    <ul class="aurora-list" id="sidebarList">
-                        <li class="active"><span class="pulse-dot"></span> Info</li>
-                        <li><i class="fa-regular fa-circle"></i> Location</li>
-                        <li><i class="fa-regular fa-circle"></i> Specs</li>
-                        <li><i class="fa-regular fa-circle"></i> Safety</li>
-                        <li><i class="fa-regular fa-circle"></i> History</li>
-                        <li><i class="fa-regular fa-circle"></i> Policy</li>
-                        <li><i class="fa-regular fa-circle"></i> Valuables</li>
-                    </ul>
-                    <div class="discount-box-vibrant" style="margin-top:20px;">
-                        <i class="fa-solid fa-tags bg-icon"></i>
-                        <div class="db-title">Discounts</div>
-                        <div class="db-msg">Multi-policy discounts available.</div>
-                    </div>
-                </div>
-            </aside>
-
-        </div>
-    </main>
-
-    <div id="successModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center;">
-        <div class="premium-white-card" style="padding:40px; border-radius:20px; max-width:400px; text-align:center;">
-            <div style="width:70px; height:70px; background:#10B981; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-size:30px; margin:0 auto 20px auto;">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <h3 style="margin-bottom:10px; color:#1E293B;">Quote Received!</h3>
-            <p style="color:#64748B; margin-bottom:25px;">Processing your property data...</p>
-            <button id="closeModalBtn" class="btn-hero-gradient" style="width:100%; justify-content:center;">Done</button>
+    <div class="text-center">
+        <div class="header-status-light">
+            <span class="pulse-blue"></span> <strong class="text-gradient-corp">Assisted Quotation</strong> 
         </div>
     </div>
 
-    <footer class="footer-aurora">
+    <main class="page-wrapper" style="padding-top: 40px; padding-bottom: 80px;">
+        <div class="container">
+            
+            <div class="wizard-container">
+                <div class="wizard-top">
+                    <div class="wizard-title"><i class="fa-solid fa-house-chimney"></i> Home Coverage</div>
+                    <div class="wizard-title"><i class="fa-solid fa-flag-checkered"></i></div>
+                </div>
+                <div class="progress-track"><div class="progress-fill" id="visualProgressBar" style="width: 14%;"></div></div>
+                <div class="header-split"></div>
+                <header class="brand-page-header">
+                    <div class="title-group">
+                        <h1 id="stepTitle">Customer Information</h1>
+                        <div class="aurora-line"></div> 
+                    </div>
+                    <p id="stepDesc">Let's start with the primary homeowner details.</p>
+                </header>
+            </div>
+
+            <div class="specs-layout-grid">
+                
+                <div class="main-spec-col">
+                    <div class="premium-white-card">
+                        <div class="aurora-card-form">
+                            
+                            <form id="home-quote-form" novalidate>
+                                
+                                <div class="form-tab-panel active" id="tab-0">
+                                    <div class="premium-group">
+                                        <div class="pg-header">
+                                            <div class="pg-header-badge blue"><i class="fa-solid fa-id-card"></i> CLIENT DETAILS</div>
+                                            <div class="pg-header-line"></div>
+                                        </div>
+
+                                        <div class="grid-2-tight mb-4">
+                                            <div class="inp-rich-group">
+                                                <label class="lbl-premium">Email Address</label>
+                                                <div class="input-rich-wrapper theme-blue">
+                                                    <div class="icon-slot"><i class="fa-regular fa-envelope"></i></div>
+                                                    <input type="email" name="email" class="rich-input validate-req" placeholder="john@example.com">
+                                                </div>
+                                            </div>
+                                            <div class="inp-rich-group">
+                                                <label class="lbl-premium">Phone Number</label>
+                                                <div class="input-rich-wrapper theme-blue">
+                                                    <div class="icon-slot"><i class="fa-solid fa-phone"></i></div>
+                                                    <input type="tel" name="phone" class="rich-input" placeholder="(555) 123-4567">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="inp-rich-group mb-4">
+                                            <label class="lbl-premium">First Named Insured</label>
+                                            <div class="input-rich-wrapper theme-indigo">
+                                                <div class="icon-slot"><i class="fa-solid fa-user-check"></i></div>
+                                                <input type="text" name="first-name" class="rich-input validate-req" placeholder="Full Legal Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="grid-3-tight">
+                                            <div class="inp-rich-group"><label class="lbl-premium">Date of Birth</label><div class="input-rich-wrapper theme-teal"><div class="icon-slot"><i class="fa-regular fa-calendar"></i></div><input type="text" name="dob1" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY"></div></div>
+                                            <div class="inp-rich-group"><label class="lbl-premium">Occupation</label><div class="input-rich-wrapper theme-teal"><div class="icon-slot"><i class="fa-solid fa-briefcase"></i></div><input type="text" name="occupation1" class="rich-input validate-req" placeholder="e.g. Engineer"></div></div>
+                                            <div class="inp-rich-group"><label class="lbl-premium">Employer</label><div class="input-rich-wrapper theme-teal"><div class="icon-slot"><i class="fa-solid fa-building"></i></div><input type="text" name="employer1" class="rich-input validate-req" placeholder="Company Inc."></div></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="premium-group compact-group mt-4" style="border: 2px dashed #E2E8F0; background: #F8FAFC; padding: 20px; border-radius: 16px;">
+                                        
+                                        <div class="action-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                            
+                                            <div class="text-col">
+                                                <h6 style="margin:0; font-weight: 700; color: #334155; font-size: 1rem; display: flex; align-items: center; gap: 8px;">
+                                                    <i class="fa-solid fa-user-group" style="color: #64748B;"></i> Co-Applicant
+                                                </h6>
+                                                <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: #64748B;">Add a spouse or partner to the policy.</p>
+                                            </div>
+                                            
+                                            <div class="smart-toggle-wrapper">
+                                                <input type="checkbox" id="toggleSecondInsured" class="smart-checkbox">
+                                                <label for="toggleSecondInsured" class="smart-pill-btn">
+                                                    <span class="btn-content-add state-add">
+                                                        <span class="icon-circle"><i class="fa-solid fa-plus"></i></span>
+                                                        <span class="text">Add Person</span>
+                                                    </span>
+                                                    <span class="btn-content-add state-remove">
+                                                        <span class="icon-circle red"><i class="fa-solid fa-trash-can"></i></span>
+                                                        <span class="text">Remove</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                        
+                                        <div id="secondInsuredSection" class="hidden-anim mt-4 pt-4" style="display: none; border-top: 1px solid #E2E8F0; margin-top: 20px; padding-top: 20px;">
+                                            
+                                            <div class="inp-rich-group mb-3">
+                                                <label class="lbl-premium">Full Legal Name</label>
+                                                <div class="input-rich-wrapper compact-premium theme-indigo">
+                                                    <div class="icon-slot"><i class="fa-solid fa-user-plus"></i></div>
+                                                    <input type="text" name="second-name" class="rich-input" placeholder="First and Last Name">
+                                                </div>
+                                            </div>
+
+                                            <div class="grid-3-tight">
+                                                <div class="inp-rich-group">
+                                                    <label class="lbl-premium">Date of Birth</label>
+                                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                                        <div class="icon-slot"><i class="fa-regular fa-calendar"></i></div>
+                                                        <input type="text" name="dob2" class="rich-input date-picker" placeholder="MM/DD/YYYY">
+                                                    </div>
+                                                </div>
+                                                <div class="inp-rich-group">
+                                                    <label class="lbl-premium">Occupation</label>
+                                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                                        <div class="icon-slot"><i class="fa-solid fa-briefcase"></i></div>
+                                                        <input type="text" name="occupation2" class="rich-input" placeholder="Job Title">
+                                                    </div>
+                                                </div>
+                                                <div class="inp-rich-group">
+                                                    <label class="lbl-premium">Employer</label>
+                                                    <div class="input-rich-wrapper compact-premium theme-teal">
+                                                        <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
+                                                        <input type="text" name="employer2" class="rich-input" placeholder="Company Name">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-tab-panel" id="tab-1">
+                                    <div class="premium-group anim-entry">
+                                        <div class="pg-header">
+                                            <div class="pg-header-badge purple"><i class="fa-solid fa-map-location-dot"></i> LOCATION</div>
+                                            <div class="pg-header-line"></div>
+                                        </div>
+
+                                        <div class="inp-rich-group mb-4">
+                                            <label class="lbl-premium">Property Address</label>
+                                            <div class="input-rich-wrapper theme-purple">
+                                                <div class="icon-slot"><i class="fa-solid fa-map-pin"></i></div>
+                                                <input type="text" name="location-address" class="rich-input validate-req" placeholder="123 Main St">
+                                            </div>
+                                        </div>
+
+                                        <div class="grid-3-tight mb-4">
+                                            <div class="inp-rich-group"><label class="lbl-premium">City</label><div class="input-rich-wrapper theme-purple"><div class="icon-slot"><i class="fa-solid fa-city"></i></div><input type="text" name="city" class="rich-input validate-req" placeholder="City"></div></div>
+                                            <div class="inp-rich-group"><label class="lbl-premium">State</label><div class="input-rich-wrapper theme-purple"><div class="icon-slot"><i class="fa-solid fa-flag-usa"></i></div><input type="text" name="state" class="rich-input validate-req" placeholder="State"></div></div>
+                                            <div class="inp-rich-group"><label class="lbl-premium">Zip Code</label><div class="input-rich-wrapper theme-purple"><div class="icon-slot"><i class="fa-solid fa-hashtag"></i></div><input type="text" name="zip" class="rich-input validate-req" placeholder="00000"></div></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="premium-group anim-entry delay-1">
+                                        <div class="pg-header">
+                                            <div class="pg-header-badge blue"><i class="fa-solid fa-house-chimney-user"></i> USAGE</div>
+                                            <div class="pg-header-line"></div>
+                                        </div>
+                                        
+                                        <div class="radio-card-grid">
+                                            <label class="radio-card">
+                                                <input type="radio" name="occupancy" value="primary" checked>
+                                                <div class="card-visual"><div class="icon-iso"><i class="fa-solid fa-house-user"></i></div><span>Primary</span></div>
+                                            </label>
+                                            <label class="radio-card">
+                                                <input type="radio" name="occupancy" value="secondary">
+                                                <div class="card-visual"><div class="icon-iso"><i class="fa-solid fa-house-laptop"></i></div><span>Secondary</span></div>
+                                            </label>
+                                            <label class="radio-card">
+                                                <input type="radio" name="occupancy" value="rented">
+                                                <div class="card-visual"><div class="icon-iso"><i class="fa-solid fa-key"></i></div><span>Rented</span></div>
+                                            </label>
+                                        </div>
+
+                                        <div class="grid-2-tight mt-4">
+                                            <div class="inp-rich-group">
+                                                <label class="lbl-premium">Dwelling Type</label>
+                                                <div class="input-rich-wrapper theme-blue">
+                                                    <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
+                                                    <select name="dwelling-type" class="rich-input premium-select validate-req">
+                                                        <option value="" disabled selected>Select Type</option>
+                                                        <option value="house">House</option>
+                                                        <option value="condo">Condo</option>
+                                                        <option value="townhouse">Townhouse</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="inp-rich-group">
+                                                <label class="lbl-premium">New Purchase?</label>
+                                                <div class="input-rich-wrapper theme-blue">
+                                                    <div class="icon-slot"><i class="fa-solid fa-cart-shopping"></i></div>
+                                                    <select name="new-purchase" class="rich-input premium-select validate-req">
+                                                        <option value="" disabled selected>Select...</option>
+                                                        <option value="no">No</option>
+                                                        <option value="yes">Yes</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-tab-panel" id="tab-2">
+                                    <div class="premium-group anim-entry">
+                                        <div class="pg-header"><div class="pg-header-badge teal">SPECS</div><div class="pg-header-line"></div></div>
+                                        <div class="grid-2-tight mb-4">
+                                            <div class="inp-rich-group"><label class="lbl-premium">Year Built</label><div class="input-rich-wrapper theme-teal"><div class="icon-slot"><i class="fa-regular fa-calendar"></i></div><input type="number" name="year-built" class="rich-input validate-req" placeholder="YYYY"></div></div>
+                                            <div class="inp-rich-group"><label class="lbl-premium">Square Footage</label><div class="input-rich-wrapper theme-teal"><div class="icon-slot"><i class="fa-solid fa-maximize"></i></div><input type="number" name="sq-footage" class="rich-input validate-req" placeholder="Sq Ft"></div></div>
+                                        </div>
+                                        <div class="inp-rich-group mb-4"><label class="lbl-premium">Construction</label><div class="input-rich-wrapper theme-teal"><div class="icon-slot"><i class="fa-solid fa-hammer"></i></div><select name="construction-type" class="rich-input premium-select validate-req"><option value="" disabled selected>Select</option><option>Frame</option><option>Brick</option><option>Stucco</option></select></div></div>
+                                        <div class="grid-3-tight">
+                                            <div class="inp-rich-group"><label class="lbl-premium">Roof Type</label><div class="input-rich-wrapper theme-teal"><input type="text" name="roof-type" class="rich-input validate-req" placeholder="Shingle"></div></div>
+                                            <div class="inp-rich-group"><label class="lbl-premium">Roof Shape</label><div class="input-rich-wrapper theme-teal"><input type="text" name="roof-shape" class="rich-input validate-req" placeholder="Gable"></div></div>
+                                            <div class="inp-rich-group"><label class="lbl-premium">Foundation</label><div class="input-rich-wrapper theme-teal"><input type="text" name="foundation" class="rich-input validate-req" placeholder="Slab"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-tab-panel" id="tab-3">
+                                    <div class="premium-group anim-entry">
+                                        <div class="pg-header">
+                                            <div class="pg-header-badge blue"><i class="fa-solid fa-shield-halved"></i> SAFETY FEATURES</div>
+                                            <div class="pg-header-line"></div>
+                                        </div>
+
+                                        <div class="safety-grid-modern">
+                                            <label class="safety-tile">
+                                                <input type="checkbox" name="fire-dept">
+                                                <div class="tile-face">
+                                                    <div class="tile-icon"><i class="fa-solid fa-fire-extinguisher"></i></div>
+                                                    <span class="t-main">Near Fire Dept</span>
+                                                    <span class="t-sub">&lt; 5 miles</span>
+                                                </div>
+                                            </label>
+                                            <label class="safety-tile">
+                                                <input type="checkbox" name="fire-hydrant">
+                                                <div class="tile-face">
+                                                    <div class="tile-icon"><i class="fa-solid fa-faucet"></i></div>
+                                                    <span class="t-main">Near Hydrant</span>
+                                                    <span class="t-sub">&lt; 1000 ft</span>
+                                                </div>
+                                            </label>
+                                            <label class="safety-tile">
+                                                <input type="checkbox" name="burglar-alarm">
+                                                <div class="tile-face">
+                                                    <div class="tile-icon"><i class="fa-solid fa-bell"></i></div>
+                                                    <span class="t-main">Burglar Alarm</span>
+                                                    <span class="t-sub">Monitored</span>
+                                                </div>
+                                            </label>
+                                            <label class="safety-tile">
+                                                <input type="checkbox" name="fire-alarm">
+                                                <div class="tile-face">
+                                                    <div class="tile-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+                                                    <span class="t-main">Fire Alarm</span>
+                                                    <span class="t-sub">Monitored</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-tab-panel" id="tab-4"></div>
+                                <div class="form-tab-panel" id="tab-5"></div>
+                                <div class="form-tab-panel" id="tab-6"></div>
+
+                                <div class="hero-action-area">
+                                    <button type="button" id="btn-prev" class="btn-view-aurora border-0 btn-ghost" style="display:none;">Back</button>
+                                    <button type="button" id="btn-next" class="btn-hero-gradient">
+                                        Next Step <i class="fa-solid fa-arrow-right-long"></i>
+                                    </button>
+                                    <button type="submit" id="btn-submit" class="btn-hero-gradient" style="display:none;">
+                                        Get My Quote <i class="fa-solid fa-bolt"></i>
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="sidebar-column">
+                    <aside class="config-sidebar anim-entry" style="animation-delay: 0.2s;">
+                        <div class="organic-panel" style="position: sticky; top: 100px;">
+                            <div class="sidebar-title">YOUR PROGRESS</div>
+                            <ul class="aurora-list" id="sidebarList">
+                                <li class="active"><span class="pulse-dot"></span> Personal</li>
+                                <li><i class="fa-regular fa-circle"></i> Location</li>
+                                <li><i class="fa-regular fa-circle"></i> Specs</li>
+                                <li><i class="fa-regular fa-circle"></i> Safety</li>
+                                <li><i class="fa-regular fa-circle"></i> History</li>
+                                <li><i class="fa-regular fa-circle"></i> Policy</li>
+                                <li><i class="fa-regular fa-circle"></i> Valuables</li>
+                            </ul>
+                        </div>
+                    </aside>
+                </aside>
+
+            </div>
+        </div>
+    </main>
+
+     <footer class="footer-aurora">
         <div class="footer-light-mesh"></div>
 
         <div class="container">
@@ -805,18 +669,13 @@
         </button>
     </div>
 
-
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
-    <!-- <script src="../js/script.js"></script> -->
-    <!-- <script src="../js/script-quote.js"></script> -->
+    <script src="../js/script.js"></script>
+    <script src="../js/script-quote.js"></script>
+    <script src="./script-test.js"></script>
 
-    <div class="ai-cursor" id="customCursor"></div>
-    <div class="ai-cursor-dot" id="cursorDot"></div>
+</body>
+</html>
 
-        <script src="./script-test.js"></script>
-
-
-    
 </body>
 </html>
