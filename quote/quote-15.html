@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/style.css"> 
     <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../css/style-quote.css">    
+    
 </head>
 
 <body class="bg-matte-brand">
@@ -243,7 +244,7 @@
                     <div class="action-footer">
                         <button class="btn-bind-aurora">
                             <div class="btn-content">
-                                <span class="btn-title">Bind Coverage Now</span>
+                                <span class="btn-title shimmer-btn">Bind Coverage Now</span>
                                 <span class="btn-sub">Instant Activation via SSL</span>
                             </div>
                             <div class="btn-icon">
@@ -349,6 +350,84 @@
             </div>
         </nav>
     </main>
+
+    <div id="bindSuccessModal" class="zlight-overlay">
+        
+        <div class="zlight-card">
+            <div class="shimmer-effect"></div>
+            
+            <div class="zlight-ambient-glow"></div>
+
+            <div class="zlight-content">
+                
+                <div class="zlight-header">
+                    <div class="success-icon-animated">
+                        <div class="icon-circle-premium">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <div class="icon-ripple-premium"></div>
+                    </div>
+                    <h2 class="zlight-title">Application <span class="text-gradient-corp">Received</span></h2>
+                    <p class="zlight-desc">
+                        Your request ID: <strong>#AX-BND-2026</strong>. We are finalizing your details.
+                    </p>
+                </div>
+
+                <div class="agent-assigned-box">
+                    <div class="agent-avatar">
+                        <img src="../assets/img/Profile-stephanie.webp" alt="Agent">
+                        <div class="status-dot"></div>
+                    </div>
+                    <div class="agent-info">
+                        <span class="agent-label">Senior Agent Assigned</span>
+                        <strong class="agent-name">Stephanie M.</strong>
+                        <span class="agent-status">Reviewing your application...</span>
+                    </div>
+                    <div class="agent-action-icon">
+                        <i class="fa-solid fa-message"></i>
+                    </div>
+                </div>
+
+                <div class="policy-timeline">
+                    <div class="timeline-track"></div>
+                    
+                    <div class="tl-node completed">
+                        <div class="node-dot"><i class="fa-solid fa-check"></i></div>
+                        <span class="node-label">Submitted</span>
+                    </div>
+                    
+                    <div class="tl-node active">
+                        <div class="node-dot"><i class="fa-solid fa-user-magnifying-glass"></i></div>
+                        <span class="node-label">Underwriting</span>
+                    </div>
+                    
+                    <div class="tl-node pending">
+                        <div class="node-dot"><i class="fa-solid fa-file-signature"></i></div>
+                        <span class="node-label">Issuance</span>
+                    </div>
+                </div>
+
+                <div class="next-step-msg">
+                    <i class="fa-regular fa-clock"></i>
+                    <span>Expect a verification call within <strong>10-15 minutes</strong>.</span>
+                </div>
+
+                <div class="zlight-actions">
+                    <button id="btnGoHome" class="btn-corp-primary shimmer-btn">
+                        Return to Homepage
+                    </button>
+                    <button id="btnBackToQuotes" class="btn-corp-ghost">
+                        View Other Offers
+                    </button>
+                </div>
+
+                <div class="zlight-footer">
+                    <i class="fa-solid fa-envelope-open"></i> A confirmation email has been sent to you.
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <footer class="footer-aurora">
         <div class="footer-light-mesh"></div>

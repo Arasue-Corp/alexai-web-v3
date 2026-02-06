@@ -249,7 +249,7 @@
                                         </label>
                                         <div class="input-rich-wrapper compact-premium theme-blue">
                                             <div class="icon-slot"><i class="fa-solid fa-user-injured"></i></div>
-                                            <select class="rich-input validate-req">
+                                            <select class="rich-input validate-req premium-select">
                                                 <option value="" disabled selected>Select Limit</option>
                                                 <option value="25/50">25/50</option>
                                                 <option value="50/100">50/100</option>
@@ -276,7 +276,7 @@
                                         </label>
                                         <div class="input-rich-wrapper compact-premium theme-blue">
                                             <div class="icon-slot"><i class="fa-solid fa-car-burst"></i></div>
-                                            <select class="rich-input validate-req">
+                                            <select class="rich-input validate-req premium-select">
                                                 <option value="" disabled selected>Select Limit</option>
                                                 <option value="15">15</option>
                                                 <option value="20">20</option>
@@ -309,7 +309,7 @@
                                         </label>                                        
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-user-shield"></i></div>
-                                            <select class="rich-input validate-req" id="inputUM">
+                                            <select class="rich-input validate-req premium-select js-target-um" id="inputUM">
                                                 <option value="" disabled selected>Select Limit</option>
                                                 <option value="No Coverage">No coverage</option>
                                                 <option value="25/50">25/50</option>
@@ -336,7 +336,7 @@
                                         </label>
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-umbrella"></i></div>
-                                            <select class="rich-input validate-req" id="inputUIM">
+                                            <select class="rich-input validate-req premium-select js-target-uim" id="inputUIM">
                                                 <option value="" disabled selected>Select Limit</option>
                                                 <option value="No Coverage">No coverage</option>
                                                 <option value="25/50">25/50</option>
@@ -363,7 +363,7 @@
                                         </label>                                        
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-briefcase-medical"></i></div>
-                                            <select class="rich-input validate-req">
+                                            <select class="rich-input validate-req premium-select">
                                                 <option value="" disabled selected>Select Limit</option>
                                                 <option value="No Coverage">No coverage</option>
                                                 <option value="500">500</option>
@@ -388,7 +388,7 @@
                                         </label>                                            
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-heart-pulse"></i></div>
-                                            <select class="rich-input validate-req">
+                                            <select class="rich-input validate-req premium-select">
                                                 <option value="" disabled selected>Select Limit</option>
                                                 <option value="No Coverage">No coverage</option>
                                                 <option value="1000">1000</option>
@@ -446,29 +446,46 @@
         </div>
     </div>
 
-    <div id="waiverModal" class="modal-backdrop">
-        <div class="modal-card-waiver">
-            <div class="waiver-header">
-                <div class="warning-icon-box">
+    <div id="waiverModal" class="modal-backdrop-aurora">
+        <div class="modal-content-tech warning-theme">
+            <div class="shimmer-effect"></div>
+            
+            <div class="aurora-ambient-warning"></div>
+
+            <div class="modal-header-tech">
+                <div class="header-icon-glass warning">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                 </div>
-                <h3>Uninsured / Underinsured Motorist Waiver</h3>
-            </div>
-            
-            <div class="waiver-body">
-                <p><strong>Are you sure you want to decline this coverage?</strong></p>
-                <p>By selecting <em>"No Coverage"</em> or leaving this field blank, you acknowledge that you will be financially responsible for your own medical bills if you are hit by a driver who has no insurance.</p>
-                <div class="legal-note">
-                    <i class="fa-solid fa-scale-balanced"></i> Acknowledgment of Risk pursuant to State Insurance Laws.
+                <div class="header-text-tech">
+                    <h3 class="tech-title warning-text">Coverage Waiver</h3>
+                    <p>Important safety notice regarding your protection.</p>
                 </div>
             </div>
 
-            <div class="waiver-actions">
-                <button id="btnReturnToCoverages" class="btn-waiver-secondary">
-                    <i class="fa-solid fa-arrow-left"></i> Go Back & Add Coverage
-                </button>
-                <button id="btnConfirmWaiver" class="btn-waiver-danger">
+            <div class="modal-body-tech">
+                <div class="waiver-alert-box">
+                    <p class="main-question">Are you sure you want to decline protection?</p>
+                    <p class="sub-text">
+                        By selecting <strong>"No Coverage"</strong>, you acknowledge that you will be financially responsible for your own medical bills if hit by an uninsured/underinsured driver.
+                    </p>
+                </div>
+
+                <div class="legal-tech-card">
+                    <div class="legal-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <div class="legal-content">
+                        <span class="legal-label">OFFICIAL ACKNOWLEDGMENT</span>
+                        <span class="legal-desc">Pursuant to State Insurance Laws A.R.S. § 20-259.01.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer-tech">
+                <button id="btnConfirmWaiver" class="btn-ghost-warning">
                     I Understand, Proceed <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+                <button id="btnReturnToCoverages" class="btn-primary-warning shimmer-btn">
+                    <i class="fa-solid fa-shield-halved"></i> Go Back & Add Coverage
                 </button>
             </div>
         </div>

@@ -17,62 +17,96 @@
 
     <div id="toast-container"></div>
 
-    <div id="phoneModal" class="modal-overlay-quote">
-        <div class="modal-box-aurora">
+    <div id="phoneModal" class="clean-overlay">
+        
+        <div class="card-container-relative">
+            <div class="shimmer-effect"></div>
             
-            <div id="modalStepA">
-                <div class="gift-icon-glow">
-                    <i class="fa-solid fa-gift"></i>
-                </div>
-                <h3 class="aurora-title">Unlock VIP Benefits!</h3>
-                <p class="aurora-desc">Secure your quote now and get instant access to exclusive perks:</p>
-                
-                <div class="perks-list-glass">
-                    <div class="perk-item">
-                        <div class="p-icon"><i class="fa-solid fa-tags"></i></div>
-                        <span>Mobile-only discounts unlocked</span>
+            <div class="aurora-ambient-light"></div>
+
+            <div class="clean-white-card">
+                <div id="modalStepA" class="clean-content">
+                    
+                    <div class="clean-header">
+                        <div class="glowing-icon-box">
+                            <i class="fa-regular fa-gem"></i>
+                        </div>
+                        
+                        <h3 class="clean-title">Unlock <span class="text-gradient-corp">Premier Access</span></h3>
+                        <p class="clean-desc">Secure your quote and instantly activate exclusive member benefits.</p>
                     </div>
-                    <div class="perk-item">
-                        <div class="p-icon"><i class="fa-solid fa-comment-sms"></i></div>
-                        <span>Instant quote updates via SMS</span>
+
+                    <div class="clean-features-list">
+                        <div class="clean-feat-item">
+                            <div class="cf-icon"><i class="fa-solid fa-percent"></i></div>
+                            <div class="cf-text">
+                                <strong>Exclusive Offers</strong>
+                                <span>Member-only pricing & deals.</span>
+                            </div>
+                        </div>
+                        <div class="clean-feat-item">
+                            <div class="cf-icon"><i class="fa-solid fa-bolt"></i></div>
+                            <div class="cf-text">
+                                <strong>Real-time Updates</strong>
+                                <span>Instant SMS status alerts.</span>
+                            </div>
+                        </div>
+                        <div class="clean-feat-item">
+                            <div class="cf-icon"><i class="fa-solid fa-headset"></i></div>
+                            <div class="cf-text">
+                                <strong>VIP Support Line</strong>
+                                <span>Direct access to senior agents.</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="perk-item">
-                        <div class="p-icon"><i class="fa-solid fa-crown"></i></div>
-                        <span>Priority VIP Agent Support</span>
+
+                    <div class="clean-actions">
+                        <button id="btnYesPhone" class="btn-aurora-solid shimmer-btn">
+                            Get Premier Access
+                            <i class="fa-solid fa-arrow-right-long icon-right"></i>
+                        </button>
+                        <button id="btnNoPhone" class="btn-clean-ghost">
+                            No thanks, continue as Guest
+                        </button>
                     </div>
                 </div>
 
-                <div class="modal-actions-col">
-                    <button class="btn-hero-gradient" id="btnYesPhone">Yes! Unlock My Perks</button>
-                    <button class="btn-text-only" id="btnNoPhone">No thanks, skip to quote</button>
+                <div id="modalStepB" class="clean-content" style="display: none;">
+                    
+                    <div class="clean-header">
+                        <div class="glowing-icon-box blue-theme">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="clean-title">Verify Access</h3>
+                        <p class="clean-desc">Enter your number to receive your secure access code.</p>
+                    </div>
+
+                    <div class="clean-input-group">
+                        <div class="flag-addon">
+                            <select id="countryCode">
+                                <option value="+1">🇺🇸 +1</option>
+                                <option value="+52">🇲🇽 +52</option>
+                            </select>
+                        </div>
+                        <input type="tel" id="phoneNumber" placeholder="(555) 000-0000" autofocus>
+                    </div>
+
+                    <div class="trust-micro-copy">
+                        <i class="fa-solid fa-lock"></i> 
+                        <span>Your privacy is protected by end-to-end encryption.</span>
+                    </div>
+
+                    <div class="clean-actions">
+                        <button id="btnSavePhone" class="btn-aurora-solid">
+                            Confirm Number
+                        </button>
+                        <button id="btnBackToA" class="btn-clean-ghost">
+                            Go Back
+                        </button>
+                    </div>
                 </div>
+
             </div>
-
-            <div id="modalStepB" style="display: none;">
-                <div class="gift-icon-glow blue">
-                    <i class="fa-solid fa-mobile-screen"></i>
-                </div>
-                <h3 class="aurora-title">Verify Your Number</h3>
-                <p class="aurora-desc">Enter your mobile number to receive your secure access code.</p>
-                
-                <div class="grid-phone-input">
-                    <div class="input-rich-wrapper country-sel">
-                        <select class="rich-input" id="countryCode">
-                            <option value="+1">🇺🇸 +1</option>
-                            <option value="+52">🇲🇽 +52</option>
-                        </select>
-                    </div>
-                    <div class="input-rich-wrapper" style="flex:1;">
-                        <input type="tel" class="rich-input pl-4" id="phoneNumber" placeholder="(555) 000-0000" autofocus>
-                    </div>
-                </div>
-
-                <div class="modal-actions-col">
-                    <button class="btn-hero-gradient" id="btnSavePhone">Save & Continue <i class="fa-solid fa-arrow-right"></i></button>
-                    <button class="btn-text-only" id="btnBackToA">Back</button>
-                </div>
-            </div>
-
         </div>
     </div>
 
@@ -306,7 +340,7 @@
                                     <label>Condition</label>
                                     <div class="input-rich-wrapper compact-premium theme-blue">
                                             <div class="icon-slot"><i class="fa-solid fa-star-half-stroke"></i></div>
-                                        <select class="rich-input validate-req">
+                                        <select class="rich-input validate-req premium-select">
                                             <option value="" disabled selected>Select...</option>
                                             <option value="New">New</option>
                                             <option value="Used">Used</option>
@@ -318,7 +352,7 @@
                                 <label>Primary Operator</label>
                                 <div class="input-rich-wrapper compact-premium theme-blue">
                                             <div class="icon-slot"><i class="fa-solid fa-user-tag"></i></div>
-                                    <select class="rich-input validate-req">
+                                    <select class="rich-input validate-req premium-select">
                                         <option value="Driver 1" selected>Driver 1 (Uri)</option>
                                         <option value="Driver 2">Driver 2 (Eloise)</option>
                                     </select>
@@ -450,7 +484,7 @@
                                 <label>Anti-Theft System</label>
                                 <div class="input-rich-wrapper compact-premium theme-blue">
                                             <div class="icon-slot"><i class="fa-solid fa-shield-halved"></i></div>
-                                    <select class="rich-input validate-req">
+                                    <select class="rich-input validate-req premium-select">
                                         <option value="Level 1" selected>Anti-Theft level 1</option>
                                         <option>No Anti-Theft</option>
                                         <option>Anti-Theft level 2</option>

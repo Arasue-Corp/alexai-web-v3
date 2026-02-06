@@ -312,39 +312,104 @@
         </div>
     </div>
 
-    <div id="quotesModal" class="modal-backdrop">
-        <div class="modal-card-waiver" style="max-width: 600px;">
-            <div class="waiver-header">
-                <div class="warning-icon-box" style="background: #EFF6FF; color: #009cff;">
-                    <i class="fa-regular fa-handshake"></i>
-                </div>
-                <h3>Welcome Back!</h3>
-                <p style="margin-top: 5px; color: #64748B;">We found quotes linked to <strong id="userEmailSpan" style="color: #1E293B;">your email</strong>.</p>
-            </div>
+    <div id="quotesModal" class="modal-backdrop-aurora">
+        <div class="modal-content-tech">
+            <div class="shimmer-effect"></div>
             
-            <div class="waiver-body">
-                <div style="background: #F8FAFC; border-radius: 8px; border: 1px solid #E2E8F0; overflow: hidden; margin-bottom: 20px;">
-                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
-                        <tr style="border-bottom: 1px solid #E2E8F0;">
-                            <td style="padding: 12px 15px; font-weight: 600; color: #1E293B;">#Q-839201</td>
-                            <td style="padding: 12px 15px; color: #64748B;">Oct 12</td>
-                            <td style="padding: 12px 15px; text-align: right;"><span style="background: #DCFCE7; color: #15803D; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">SAVED</span></td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 12px 15px; font-weight: 600; color: #1E293B;">#Q-772109</td>
-                            <td style="padding: 12px 15px; color: #64748B;">Sep 05</td>
-                            <td style="padding: 12px 15px; text-align: right;"><span style="background: #FEF9C3; color: #A16207; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">PENDING</span></td>
-                        </tr>
-                    </table>
+            <div class="aurora-ambient-light"></div>
+
+            <div class="modal-header-tech">
+                <div class="header-icon-glass">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
                 </div>
+                <div class="header-text-tech">
+                    <h3 class="tech-title text-gradient-corp">Welcome Back</h3>
+                    <p>We found <strong>3 existing sessions</strong> linked to <span id="userEmailSpan" style="color: #4F46E5; font-weight: 700;">your profile</span>.</p>
+                </div>
+                <button class="btn-close-tech js-close-modal"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <div class="waiver-actions">
-                <button class="btn-waiver-secondary js-start-new">
-                    Start New Quote
-                </button>
-                <button class="btn-waiver-danger js-close-modal">
-                    Cancel
+            <div class="modal-body-tech">
+                
+                <div class="list-labels-tech">
+                    <span>QUOTE DETAILS</span>
+                    <span>TIMELINE</span>
+                    <span class="text-right">ACTION</span>
+                </div>
+
+                <div class="quote-card-tech">
+                    <div class="col-info">
+                        <span class="q-id">#00000263</span>
+                        <span class="q-badge inactive">Inactive</span>
+                    </div>
+                    <div class="col-timeline">
+                        <div class="tl-item">
+                            <i class="fa-regular fa-pen-to-square gradient-icon"></i>
+                            <span>Updated: <strong>03/02/2026</strong> 11:28</span>
+                        </div>
+                        <div class="tl-item sub">
+                            <i class="fa-solid fa-plus gradient-icon"></i>
+                            <span>Created: 30/01/2026</span>
+                        </div>
+                    </div>
+                    <div class="col-action">
+                        <button class="btn-select-tech">
+                            Select <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="quote-card-tech">
+                    <div class="col-info">
+                        <span class="q-id">#00000261</span>
+                        <span class="q-badge inactive">Inactive</span>
+                    </div>
+                    <div class="col-timeline">
+                        <div class="tl-item">
+                            <i class="fa-regular fa-pen-to-square gradient-icon"></i>
+                            <span>Updated: <strong>03/02/2026</strong> 11:29</span>
+                        </div>
+                        <div class="tl-item sub">
+                            <i class="fa-solid fa-plus gradient-icon"></i>
+                            <span>Created: 27/01/2026</span>
+                        </div>
+                    </div>
+                    <div class="col-action">
+                        <button class="btn-select-tech">
+                            Select <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="quote-card-tech">
+                    <div class="col-info">
+                        <span class="q-id">#00000264</span>
+                        <span class="q-badge inactive">Inactive</span>
+                    </div>
+                    <div class="col-timeline">
+                        <div class="tl-item">
+                            <i class="fa-regular fa-pen-to-square gradient-icon"></i>
+                            <span>Updated: <strong>30/01/2026</strong> 12:51</span>
+                        </div>
+                        <div class="tl-item sub">
+                            <i class="fa-solid fa-plus gradient-icon"></i>
+                            <span>Created: 30/01/2026</span>
+                        </div>
+                    </div>
+                    <div class="col-action">
+                        <button class="btn-select-tech">
+                            Select <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer-tech">
+                <button class="btn-cancel-simple js-close-modal">Cancel</button>
+                
+                <button class="btn-start-new-gradient js-start-new shimmer-btn">
+                    Start New Quote <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
         </div>

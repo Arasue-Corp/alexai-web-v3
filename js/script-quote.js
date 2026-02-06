@@ -2298,63 +2298,110 @@ window.addEventListener('load', function() {
         });
     });
 
-    // 3. LÓGICA DEL BOTÓN NEXT
-    btnNext.onclick = function(e) {
-        e.preventDefault();
-        
-        let isBasicValid = true;
-        let firstError = null;
+// 3. LÓGICA DEL BOTÓN NEXT (SOLUCIÓN FINAL: LIMPIEZA DE FANTASMAS)
+    
+    // Paso crítico: Obtener el botón original
+    const oldBtn = document.getElementById('btnNext');
 
-        // A) Validar campos estrictamente requeridos (Fecha, Liability, etc)
-        const activePanel = step3Container.querySelector('.car-panel.active') || step3Container;
-        const requiredFields = activePanel.querySelectorAll('.validate-req');
+    if(oldBtn) {
+        // 1. CLONAR EL BOTÓN
+        // Esto crea una copia idéntica pero SIN los eventos viejos (bugs) pegados.
+        const newBtn = oldBtn.cloneNode(true);
+        oldBtn.parentNode.replaceChild(newBtn, oldBtn);
 
-        requiredFields.forEach(field => {
-            const wrapper = field.closest('.input-rich-wrapper') || field.parentElement;
-            if(wrapper) wrapper.classList.remove('input-error');
+        // 2. ASIGNAR LA LÓGICA NUEVA AL BOTÓN LIMPIO
+        newBtn.onclick = function(e) {
+            e.preventDefault();
+            
+            // --- OBTENER PANEL ACTIVO ---
+            const activePanel = step3Container.querySelector('.car-panel.active') || step3Container;
+            
+            // --- PARTE A: LIMPIEZA VISUAL (NUCLEAR) ---
+            // Borramos cualquier rastro de error en todo el panel
+            activePanel.querySelectorAll('.input-rich-wrapper').forEach(w => {
+                w.classList.remove('input-error', 'shake-anim');
+            });
 
-            if (!field.value || field.value.trim() === "") {
-                isBasicValid = false;
-                if(wrapper) {
-                    void wrapper.offsetWidth; 
-                    wrapper.classList.add('input-error');
+            // --- PARTE B: VALIDACIÓN BÁSICA (VACÍOS) ---
+            let isBasicValid = true;
+            let firstError = null;
+            const requiredFields = activePanel.querySelectorAll('.validate-req');
+
+            requiredFields.forEach(field => {
+                // Ignorar campos ocultos
+                if (field.offsetParent === null) return;
+
+                if (!field.value || field.value.trim() === "") {
+                    isBasicValid = false;
+                    const wrapper = field.closest('.input-rich-wrapper') || field.parentElement;
+                    if(wrapper) {
+                        void wrapper.offsetWidth;
+                        wrapper.classList.add('input-error', 'shake-anim');
+                    }
+                    if(!firstError) firstError = field;
                 }
-                if(!firstError) firstError = field;
+            });
+
+            if (!isBasicValid) {
+                if(firstError) firstError.focus({preventScroll: true});
+                return;
             }
-        });
 
-        if (!isBasicValid) {
-            // Si falta lo básico, error normal
-            if(typeof window.showToast === 'function') window.showToast("Please complete mandatory fields.", "warning");
-            else alert("Please complete mandatory fields.");
+            // --- PARTE C: WAIVER CHECK (SOLO "NO COVERAGE") ---
+            // Usamos las clases específicas que agregaste
+            const allUMs = Array.from(activePanel.querySelectorAll('.js-target-um'));
+            const inputUM = allUMs.find(el => el.offsetParent !== null); // Visible
 
-            if(firstError) {
-                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                if(firstError.classList.contains('date-picker') && firstError._flatpickr) firstError._flatpickr.open();
-                else firstError.focus({preventScroll: true});
+            const allUIMs = Array.from(activePanel.querySelectorAll('.js-target-uim'));
+            const inputUIM = allUIMs.find(el => el.offsetParent !== null); // Visible
+            
+            let needsWaiver = false;
+
+            const triggerWaiverError = (input) => {
+                const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
+                if (wrapper) {
+                    wrapper.classList.remove('input-error', 'shake-anim');
+                    void wrapper.offsetWidth; 
+                    wrapper.classList.add('input-error', 'shake-anim');
+                }
+            };
+
+            // Validar UM
+            if (inputUM) {
+                if (inputUM.value === "No Coverage") {
+                    console.log("⚠️ UM Activa Waiver");
+                    needsWaiver = true;
+                    triggerWaiverError(inputUM);
+                }
             }
-            return; // Detenemos aquí
-        }
 
-        // B) CHEQUEO DE WAIVER (Uninsured / Underinsured)
-        // Buscamos los inputs específicos por ID
-        const inputUM = document.getElementById('inputUM');
-        const inputUIM = document.getElementById('inputUIM');
-        
-        let needsWaiver = false;
+            // Validar UIM
+            if (inputUIM) {
+                if (inputUIM.value === "No Coverage") {
+                    console.log("⚠️ UIM Activa Waiver");
+                    needsWaiver = true;
+                    triggerWaiverError(inputUIM);
+                }
+            }
 
-        // Lógica: Si está vacío ("") O si es explícitamente "No Coverage" -> Activar Modal
-        if (inputUM && (inputUM.value === "" || inputUM.value === "No Coverage")) needsWaiver = true;
-        if (inputUIM && (inputUIM.value === "" || inputUIM.value === "No Coverage")) needsWaiver = true;
-
-        if (needsWaiver) {
-            // Mostrar Modal
-            if(modal) modal.classList.add('is-visible');
-        } else {
-            // Todo lleno correctamente -> Avanzar
-            goToNextPage();
-        }
-    };
+            // --- RESULTADO ---
+            if (needsWaiver) {
+                // Abrir Modal
+                const modal = document.getElementById('waiverModal');
+                if(modal) {
+                    modal.style.display = 'flex';
+                    setTimeout(() => modal.classList.add('is-visible'), 10);
+                }
+            } else {
+                // Éxito
+                const originalText = newBtn.innerHTML; // Usamos newBtn
+                newBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
+                setTimeout(() => {
+                    window.location.href = "quote-4.html";
+                }, 800);
+            }
+        };
+    }
 
     // 4. LÓGICA DEL MODAL
     if(btnReturn) {
@@ -2475,170 +2522,179 @@ window.initStep2Logic = function() {
     });
 };
 
-// STEP 1
-
 document.addEventListener('DOMContentLoaded', function() {
-// Elementos
-const modal = document.getElementById('quotesModal');
-const btnNext = document.getElementById('btnNext');
-const emailInput = document.getElementById('email');
-const emailSpan = document.getElementById('userEmailSpan');
+    console.log("🚀 Script Loaded: Step 1 Logic & Global");
 
-// Botones Modal
-const btnStartNew = document.querySelector('.js-start-new');
-const btnCancel = document.querySelector('.js-close-modal');
+    // ============================================================
+    // 1. DEFINICIÓN DE VARIABLES GLOBALES (Seguras)
+    // ============================================================
+    // Elementos del Paso 1
+    const btnNext = document.getElementById('btnNext');
+    const emailInput = document.getElementById('email');
+    const emailSpan = document.getElementById('userEmailSpan');
+    const modalQuotes = document.getElementById('quotesModal'); // El modal de "Welcome Back"
+    
+    // Botones dentro del Modal Welcome Back
+    const btnStartNew = document.querySelector('.js-start-new');
+    const closeButtons = document.querySelectorAll('.js-close-modal');
 
-// --- LÓGICA PRINCIPAL DEL CLIC ---
-if(btnNext) {
-    btnNext.addEventListener('click', function(e) {
-        e.preventDefault(); 
+    // Elementos Globales (Newsletter)
+    const vipForm = document.getElementById('vip-form');
+    const vipInput = document.getElementById('vip-email');
+
+
+    // ============================================================
+    // 2. LÓGICA PASO 1: EMAIL & MODAL "WELCOME BACK"
+    // ============================================================
+    // Esta condición BLINDA el código. Si no hay botón next o no hay input email,
+    // JS ignora este bloque y no tira error en otras páginas.
+    if (btnNext && emailInput) {
         
-        // 1. VALIDACIÓN
-        const requiredFields = document.querySelectorAll('.validate-req');
-        let isValid = true;
-        let firstError = null;
-
-        requiredFields.forEach(field => {
-            // Limpiar error previo (buscando el wrapper correcto)
-            const wrapper = field.closest('.input-rich-wrapper') || field.parentElement; // Soporte para nuevo y viejo
-            if(wrapper) wrapper.classList.remove('input-error');
+        btnNext.addEventListener('click', function(e) {
+            e.preventDefault(); 
             
-            let isEmpty = false;
-            if(field.type === 'checkbox') {
-                isEmpty = !field.checked;
-            } else {
-                isEmpty = !field.value.trim();
-            }
+            // A. VALIDACIÓN
+            const requiredFields = document.querySelectorAll('.validate-req');
+            let isValid = true;
+            let firstError = null;
 
-            if (isEmpty) {
-                isValid = false;
+            requiredFields.forEach(field => {
+                // Limpiar errores previos
+                const wrapper = field.closest('.input-rich-wrapper') || field.parentElement;
+                if(wrapper) wrapper.classList.remove('input-error', 'shake-anim');
                 
-                // Aplicar estilo de error al wrapper premium
-                const target = field.closest('.input-rich-wrapper') || field;
-                
-                void target.offsetWidth; // Reiniciar animación
-                target.classList.add('input-error');
-                
-                // Si es checkbox, quizás el wrapper padre
+                let isEmpty = false;
                 if(field.type === 'checkbox') {
-                    const checkWrapper = field.closest('.custom-check-wrapper') || field;
-                    checkWrapper.classList.add('input-error'); 
+                    isEmpty = !field.checked;
+                } else {
+                    isEmpty = !field.value.trim();
                 }
 
-                if(!firstError) firstError = field;
+                if (isEmpty) {
+                    isValid = false;
+                    const target = field.closest('.input-rich-wrapper') || field;
+                    
+                    void target.offsetWidth; // Reiniciar animación
+                    target.classList.add('input-error', 'shake-anim');
+                    
+                    if(field.type === 'checkbox') {
+                        const checkWrapper = field.closest('.custom-check-wrapper') || field;
+                        if(checkWrapper) checkWrapper.classList.add('input-error'); 
+                    }
+
+                    if(!firstError) firstError = field;
+                }
+            });
+
+            // Si hay error, detener
+            if (!isValid) {
+                if(firstError) firstError.focus();
+                return;
             }
+
+            // B. ÉXITO -> PROCESAR Y ABRIR MODAL
+            const originalText = btnNext.innerHTML;
+            btnNext.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking Account...';
+            btnNext.style.pointerEvents = 'none';
+            
+            setTimeout(() => {
+                // Restaurar botón
+                btnNext.innerHTML = originalText;
+                btnNext.style.pointerEvents = 'auto';
+                
+                // Poner correo en el modal (BLINDADO)
+                if(emailSpan && emailInput.value) {
+                    emailSpan.textContent = emailInput.value;
+                }
+                
+                // ABRIR MODAL (Usando clase is-visible)
+                if(modalQuotes) {
+                    modalQuotes.style.display = 'flex'; // Asegurar display flex
+                    setTimeout(() => modalQuotes.classList.add('is-visible'), 10);
+                } 
+            }, 800);
         });
 
-        // Si hay error, detener y enfocar
-        if (!isValid) {
-            if(firstError) firstError.focus();
-            return;
+        // C. LÓGICA DE BOTONES DENTRO DEL MODAL (Solo si estamos en este paso)
+        
+        // Función cerrar modal
+        const closeModal = () => {
+            if(modalQuotes) {
+                modalQuotes.classList.remove('is-visible');
+                setTimeout(() => modalQuotes.style.display = 'none', 300);
+            }
+        };
+
+        // Asignar cierre a todos los botones correspondientes
+        if(closeButtons) {
+            closeButtons.forEach(btn => btn.addEventListener('click', closeModal));
         }
 
-        // 2. ÉXITO -> SIMULAR CARGA Y MOSTRAR MODAL
-        const originalText = btnNext.innerHTML;
-        btnNext.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking Account...';
-        btnNext.style.pointerEvents = 'none';
-        
-        setTimeout(() => {
-            // Restaurar botón
-            btnNext.innerHTML = originalText;
-            btnNext.style.pointerEvents = 'auto';
+        // Botón Start New Quote
+        if(btnStartNew) {
+            btnStartNew.addEventListener('click', () => {
+                btnStartNew.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating...';
+                setTimeout(() => {
+                    window.location.href = "quote-2.html"; 
+                }, 800);
+            });
+        }
+    }
+
+
+    // ============================================================
+    // 3. UTILIDADES GLOBALES (Funcionan en todos los pasos)
+    // ============================================================
+    
+    // Limpiar errores al escribir (Input Listener)
+    const allInputs = document.querySelectorAll('.validate-req');
+    allInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            const wrapper = this.closest('.input-rich-wrapper');
+            if(wrapper) wrapper.classList.remove('input-error', 'shake-anim');
+        });
+        if(input.type === 'checkbox') {
+            input.addEventListener('change', function() {
+                const checkWrapper = this.closest('.custom-check-wrapper') || this;
+                if(checkWrapper) checkWrapper.classList.remove('input-error');
+            });
+        }
+    });
+
+    // ============================================================
+    // 4. LÓGICA NEWSLETTER (VIP FORM - GLOBAL)
+    // ============================================================
+    if (vipForm && vipInput) {
+        vipForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailValue = vipInput.value.trim();
+
+            if (!emailValue) {
+                if (typeof showToast === 'function') showToast("Please enter your email address first.", "warning");
+                vipInput.focus();
+                return;
+            }
+
+            if (!emailValue.includes('@') || !emailValue.includes('.')) {
+                if (typeof showToast === 'function') showToast("Please enter a valid email address.", "warning");
+                return;
+            }
+
+            // Simular envío
+            const btn = vipForm.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = "Joining...";
             
-            // Poner correo en el modal
-            if(emailInput.value) emailSpan.textContent = emailInput.value;
-            
-            // ABRIR MODAL (Usando clase is-visible del nuevo CSS)
-            if(modal) modal.classList.add('is-visible'); 
-        }, 800);
-    });
-}
-
-// --- CERRAR MODAL ---
-const closeModal = () => {
-    if(modal) modal.classList.remove('is-visible');
-};
-
-if(btnCancel) btnCancel.addEventListener('click', closeModal);
-
-// --- BOTÓN START NEW QUOTE ---
-if(btnStartNew) {
-    btnStartNew.addEventListener('click', () => {
-        btnStartNew.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating...';
-        setTimeout(() => {
-            window.location.href = "quote-2.html"; 
-        }, 800);
-    });
-}
-
-// --- LIMPIAR ERRORES AL ESCRIBIR ---
-document.querySelectorAll('.validate-req').forEach(input => {
-    input.addEventListener('input', function() {
-        const wrapper = this.closest('.input-rich-wrapper');
-        if(wrapper) wrapper.classList.remove('input-error');
-    });
-    if(input.type === 'checkbox') {
-        input.addEventListener('change', function() {
-            const checkWrapper = this.closest('.custom-check-wrapper') || this;
-            checkWrapper.classList.remove('input-error');
+            setTimeout(() => {
+                btn.innerText = originalText;
+                vipInput.value = "";
+                if (typeof showToast === 'function') {
+                    showToast("Welcome to the club! Subscription active.", "success");
+                }
+            }, 1000);
         });
     }
 });
-
-// LÓGICA NEWSLETTER (VIP FORM)
-const vipForm = document.getElementById('vip-form');
-const vipInput = document.getElementById('vip-email');
-
-if (vipForm && vipInput) {
-    vipForm.addEventListener('submit', function(e) {
-        // 1. IMPORTANTE: Evitar que la página se recargue
-        e.preventDefault();
-
-        const emailValue = vipInput.value.trim();
-
-        // 2. Validación: ¿Está vacío?
-        if (!emailValue) {
-            // Mostrar Toast Amarillo (Warning)
-            if (typeof showToast === 'function') {
-                showToast("Please enter your email address first.", "warning");
-            }
-            // Poner foco en el input y efecto visual de error (opcional si tienes esa clase)
-            vipInput.focus();
-            return; // Detener ejecución
-        }
-
-        // 3. Validación básica de formato de email (Opcional pero recomendado)
-        if (!emailValue.includes('@') || !emailValue.includes('.')) {
-            if (typeof showToast === 'function') {
-                showToast("Please enter a valid email address.", "warning");
-            }
-            return;
-        }
-
-        // 4. Éxito: Simular envío
-        // Aquí iría tu código de Supabase o backend real
-        
-        // Simular carga visual en el botón (opcional)
-        const btn = vipForm.querySelector('button');
-        const originalText = btn.innerText;
-        btn.innerText = "Joining...";
-        
-        setTimeout(() => {
-            // Restaurar botón
-            btn.innerText = originalText;
-            
-            // Limpiar el input
-            vipInput.value = "";
-
-            // Mostrar Toast Verde (Success)
-            if (typeof showToast === 'function') {
-                showToast("Welcome to the club! Subscription active.", "success");
-            }
-        }, 1000); // Simula 1 segundo de espera
-    });
-}
-});
-
 /* =========================================
    CONTACT FORM LOGIC
    ========================================= */
@@ -2817,3 +2873,64 @@ function showToast(message, type = 'success') {
         setTimeout(() => toast.remove(), 400);
     }, 4000);
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Selectores
+    const bindBtn = document.querySelector('.btn-bind-aurora'); 
+    const modal = document.getElementById('bindSuccessModal');
+    const btnHome = document.getElementById('btnGoHome');
+    const btnQuotes = document.getElementById('btnBackToQuotes');
+
+    if (bindBtn && modal) {
+        
+        // Clonar para limpiar eventos
+        const newBindBtn = bindBtn.cloneNode(true);
+        bindBtn.parentNode.replaceChild(newBindBtn, bindBtn);
+
+        newBindBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // 1. Estado de carga en el botón
+            const originalHTML = newBindBtn.innerHTML;
+            newBindBtn.style.pointerEvents = 'none';
+            newBindBtn.innerHTML = `
+                <div class="btn-content" style="align-items:center; width:100%; justify-content:center; flex-direction:row; gap:10px;">
+                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+                    <span class="btn-title">Binding Policy...</span>
+                </div>
+            `;
+
+            // 2. Simular envío (1.5s)
+            setTimeout(() => {
+                newBindBtn.innerHTML = originalHTML;
+                newBindBtn.style.pointerEvents = 'auto';
+
+                // 3. Abrir Modal
+                modal.style.display = 'flex';
+                setTimeout(() => modal.classList.add('active'), 10);
+            }, 1500);
+        });
+    }
+
+    // Acción: Home
+    if(btnHome) {
+        btnHome.addEventListener('click', function() {
+            btnHome.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Redirecting...';
+            setTimeout(() => {
+                window.location.href = "https://alexai.cloud"; // Ajusta tu URL
+            }, 500);
+        });
+    }
+
+    // Acción: Volver a Ofertas
+    if(btnQuotes) {
+        btnQuotes.addEventListener('click', function() {
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                window.location.href = "quote-14.html"; // Si necesitas redirección
+            }, 300);
+        });
+    }
+});

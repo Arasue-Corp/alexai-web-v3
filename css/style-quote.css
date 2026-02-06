@@ -3452,135 +3452,6 @@ body.page-enter { animation: pageEnterAnim 0.4s ease-out forwards; }
     background: rgba(16, 185, 129, 0.1);
 }
 
-/* --- WAIVER MODAL (Legal Design) --- */
-
-.modal-backdrop {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(15, 23, 42, 0.6); /* Slate 900 con opacidad */
-    backdrop-filter: blur(4px); /* Efecto vidrio borroso */
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-}
-
-.modal-backdrop.is-visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal-card-waiver {
-    background: #FFFFFF;
-    width: 90%;
-    max-width: 500px;
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-    transform: translateY(20px);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    border: 1px solid #E2E8F0;
-}
-
-.modal-backdrop.is-visible .modal-card-waiver {
-    transform: translateY(0);
-}
-
-/* Header del Modal */
-.waiver-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.warning-icon-box {
-    width: 50px; height: 50px;
-    background: #FEF2F2; /* Rojo muy claro */
-    color: #DC2626; /* Rojo alerta */
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-}
-
-.waiver-header h3 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1E293B;
-    margin: 0;
-}
-
-/* Cuerpo del Texto */
-.waiver-body p {
-    font-size: 0.95rem;
-    color: #475569;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.legal-note {
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
-    padding: 10px 15px;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    color: #64748B;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 15px;
-}
-
-/* Botones */
-.waiver-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 30px;
-}
-
-/* Botón "Volver" (Primary - Queremos que den click aquí) */
-.btn-waiver-secondary {
-    background: #009cff;
-    color: white;
-    border: none;
-    padding: 14px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-}
-.btn-waiver-secondary:hover { background: #0077CC; }
-
-/* Botón "Aceptar riesgo" (Secondary/Danger) */
-.btn-waiver-danger {
-    background: transparent;
-    color: #64748B;
-    border: 1px solid #E2E8F0;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-}
-.btn-waiver-danger:hover {
-    background: #FEF2F2;
-    color: #DC2626;
-    border-color: #FECACA;
-}
-
 /* STEP 1 */
 .legal-flex-row {
     display: flex;
@@ -3605,3 +3476,757 @@ body.page-enter { animation: pageEnterAnim 0.4s ease-out forwards; }
 .legal-txt a { color: #009cff; text-decoration: none; font-weight: 600; }
 .legal-sub { display: block; font-size: 0.75rem; color: #94A3B8; margin-top: 4px; }
 
+/* =========================================
+   AURORA TECH MODAL
+   ========================================= */
+
+/* Variables Aurora */
+:root {
+    --aurora-grad: linear-gradient(135deg, #6366F1, #8B5CF6, #3B82F6);
+}
+
+/* 1. CONTENEDOR PRINCIPAL (BACKDROP) */
+/* Por defecto oculto (display: none o visibility hidden) para que tu JS lo active */
+.modal-backdrop-aurora {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(15px);
+    z-index: 10000;
+    
+    /* ESTADO INICIAL: OCULTO */
+    opacity: 0;
+    visibility: hidden; 
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    
+    /* Flex para centrar */
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* 2. ESTADO VISIBLE (CLASE QUE AGREGA TU JS) */
+.modal-backdrop-aurora.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* 3. TARJETA DEL MODAL */
+.modal-content-tech {
+    position: relative; width: 90%; max-width: 720px;
+    background: #ffffff; border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    
+    /* Estado inicial de la animación (abajo y pequeño) */
+    transform: translateY(20px) scale(0.98);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Cuando el modal es visible, la tarjeta sube a su lugar */
+.modal-backdrop-aurora.is-visible .modal-content-tech {
+    transform: translateY(0) scale(1);
+}
+
+/* --- ESTILOS VISUALES (AURORA TECH) --- */
+
+/* Luz ambiental */
+.aurora-ambient-light {
+    position: absolute; top: -150px; right: -150px; width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.1) 40%, transparent 70%);
+    filter: blur(80px); pointer-events: none;
+}
+
+/* Header */
+.modal-header-tech {
+    position: relative; z-index: 1; padding: 35px 35px 20px 35px;
+    display: flex; align-items: center; gap: 25px;
+}
+.header-icon-glass {
+    width: 64px; height: 64px;
+    background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 20px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.15);
+}
+.header-icon-glass i { background: var(--aurora-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+.header-text-tech h3.tech-title {
+    margin: 0; font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px;
+    background: linear-gradient(90deg, #1E293B, #4F46E5); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.header-text-tech p { margin: 8px 0 0 0; color: #64748B; font-size: 1.05rem; }
+
+.btn-close-tech {
+    background: #F1F5F9; border: none; color: #94A3B8; width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; transition: 0.2s;
+}
+.btn-close-tech:hover { background: #E2E8F0; color: #EF4444; transform: rotate(90deg); }
+
+/* Listas y Tarjetas */
+.modal-body-tech { padding: 10px 35px 35px 35px; position: relative; z-index: 1; }
+.list-labels-tech {
+    display: grid; grid-template-columns: 1.3fr 2.5fr 120px;
+    font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 1px; text-transform: uppercase;
+    padding: 0 15px 15px 15px;
+}
+.text-right { text-align: right; }
+
+.quote-card-tech {
+    display: grid; grid-template-columns: 1.3fr 2.5fr 120px; align-items: center;
+    background: #ffffff; border: 1px solid #E2E8F0; border-radius: 18px; padding: 18px 20px;
+    margin-bottom: 15px; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative; background-clip: padding-box;
+}
+.quote-card-tech:hover {
+    transform: translateY(-3px); box-shadow: 0 15px 35px -10px rgba(99, 102, 241, 0.2); border-color: transparent;
+}
+.quote-card-tech::before {
+    content: ''; position: absolute; inset: 0; border-radius: 18px; padding: 1.5px;
+    background: var(--aurora-grad);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+}
+.quote-card-tech:hover::before { opacity: 1; }
+
+/* Info Columns */
+.col-info { display: flex; flex-direction: column; gap: 6px; }
+.q-id { font-family: 'Inter', sans-serif; font-weight: 800; color: #0F172A; font-size: 1.1rem; }
+.q-badge.inactive {
+    display: inline-block; width: fit-content; padding: 4px 10px; border-radius: 8px;
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: #F1F5F9; color: #64748B;
+}
+.col-timeline { display: flex; flex-direction: column; gap: 6px; }
+.tl-item { font-size: 0.9rem; color: #334155; display: flex; align-items: center; gap: 10px; }
+.gradient-icon { background: var(--aurora-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.tl-item.sub { font-size: 0.8rem; color: #94A3B8; }
+
+/* Buttons */
+.btn-select-tech {
+    background: #F8FAFC; color: #3B82F6; border: 1px solid #E2E8F0;
+    padding: 10px 20px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; cursor: pointer;
+    transition: all 0.3s; display: flex; align-items: center; gap: 8px; width: 100%; justify-content: center;
+}
+.quote-card-tech:hover .btn-select-tech {
+    background: #3B82F6; color: white; border-color: #3B82F6; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+/* Footer */
+.modal-footer-tech {
+    padding: 25px 35px; background: #F8FAFC; border-top: 1px solid #F1F5F9;
+    display: flex; justify-content: flex-end; align-items: center; gap: 15px; position: relative; z-index: 1;
+}
+.btn-cancel-simple {
+    background: none; border: none; color: #64748B; font-weight: 600; cursor: pointer;
+    padding: 10px 15px; border-radius: 8px; transition: 0.2s; font-size: 1rem;
+}
+.btn-cancel-simple:hover { background: #E2E8F0; color: #0F172A; }
+
+.btn-start-new-gradient {
+    background: #2563EB; background-image: linear-gradient(135deg, #2563EB, #4F46E5);
+    color: white; border: none; padding: 12px 28px; border-radius: 12px;
+    font-weight: 700; font-size: 1rem; cursor: pointer;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25); transition: all 0.3s;
+    display: flex; align-items: center; gap: 10px;
+}
+.btn-start-new-gradient:hover {
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4); transform: translateY(-2px);
+    background-image: linear-gradient(135deg, #3B82F6, #6366F1);
+}
+
+/* Responsive */
+@media (max-width: 650px) {
+    .list-labels-tech { display: none; }
+    .quote-card-tech { grid-template-columns: 1fr; gap: 15px; padding: 20px; }
+    .col-timeline { margin-top: 5px; padding-top: 15px; border-top: 1px solid #F1F5F9; }
+    .btn-select-tech { width: 100%; }
+}
+
+/* =========================================
+   AURORA WAIVER MODAL (WARNING VARIANT)
+   ========================================= */
+
+/* Variables de Advertencia */
+:root {
+    --warn-grad: linear-gradient(135deg, #F59E0B, #D97706); /* Ámbar a Naranja */
+    --warn-light: rgba(245, 158, 11, 0.15);
+}
+
+/* Luz Ambiental Ámbar */
+.aurora-ambient-warning {
+    position: absolute; top: -150px; right: -150px; width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.1) 40%, transparent 70%);
+    filter: blur(80px); pointer-events: none; z-index: 0;
+}
+
+/* Icono de Advertencia */
+.header-icon-glass.warning {
+    box-shadow: 0 8px 20px rgba(245, 158, 11, 0.2);
+    border-color: rgba(251, 191, 36, 0.5);
+}
+.header-icon-glass.warning i {
+    background: var(--warn-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+/* Textos */
+h3.tech-title.warning-text {
+    background: linear-gradient(90deg, #78350F, #D97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+/* Caja de Alerta en el Body */
+.waiver-alert-box {
+    background: #FFFBEB; /* Fondo amarillo muy suave */
+    border: 1px solid #FEF3C7;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.main-question {
+    font-size: 1.1rem; color: #92400E; font-weight: 700; margin: 0 0 8px 0;
+}
+.sub-text {
+    font-size: 0.95rem; color: #B45309; margin: 0; line-height: 1.5;
+}
+
+/* Tarjeta Legal Tech */
+.legal-tech-card {
+    display: flex; align-items: center; gap: 15px;
+    padding: 15px; border-radius: 12px;
+    background: #F8FAFC; border: 1px dashed #CBD5E1;
+}
+.legal-icon {
+    width: 40px; height: 40px; background: #E2E8F0; color: #64748B;
+    border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem;
+}
+.legal-content { display: flex; flex-direction: column; }
+.legal-label { font-size: 0.7rem; font-weight: 800; color: #94A3B8; letter-spacing: 1px; text-transform: uppercase; }
+.legal-desc { font-size: 0.9rem; color: #475569; font-weight: 600; }
+
+/* --- BOTONES DEL WAIVER --- */
+
+/* Botón Recomendado (Volver - Ámbar Brillante) */
+.btn-primary-warning {
+    background: #F59E0B;
+    background-image: linear-gradient(135deg, #F59E0B, #D97706);
+    color: white; border: none; padding: 12px 24px; border-radius: 12px;
+    font-weight: 700; font-size: 0.95rem; cursor: pointer;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); transition: all 0.3s;
+    display: flex; align-items: center; gap: 8px;
+}
+.btn-primary-warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5);
+}
+
+/* Botón "Proceed" (Ghost / Peligroso sutil) */
+.btn-ghost-warning {
+    background: transparent; border: 1px solid transparent;
+    color: #64748B; padding: 10px 20px; border-radius: 12px;
+    font-weight: 600; cursor: pointer; font-size: 0.95rem;
+    transition: all 0.3s; display: flex; align-items: center; gap: 8px;
+}
+.btn-ghost-warning:hover {
+    color: #EF4444; /* Se pone rojo al hover para indicar peligro */
+    background: #FEF2F2;
+    border-color: #FECACA;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .modal-footer-tech { flex-direction: column-reverse; gap: 10px; } /* Invertimos para que el botón grande quede arriba en móvil */
+    .btn-primary-warning, .btn-ghost-warning { width: 100%; justify-content: center; }
+}
+
+/* =========================================
+   AURORA TECH MODAL - RESPONSIVE TWEAKS
+   ========================================= */
+
+/* Ajustes Base para Móvil */
+@media (max-width: 768px) {
+    
+    /* 1. CONTENEDOR PRINCIPAL */
+    .modal-content-tech {
+        width: 95%; /* Ocupar casi todo el ancho */
+        margin: 10px;
+        max-height: 90vh; /* Evitar que se salga de la pantalla verticalmente */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal-body-tech {
+        overflow-y: auto; /* Scroll interno si hay muchas tarjetas */
+        padding: 15px 20px; /* Menos padding lateral */
+    }
+
+    /* 2. HEADER */
+    .modal-header-tech {
+        padding: 20px;
+        align-items: flex-start; /* Alinear arriba por si el texto es largo */
+    }
+    
+    .header-icon-glass {
+        width: 48px; height: 48px; /* Un poco más pequeño */
+        font-size: 1.4rem;
+        flex-shrink: 0; /* Evitar que se aplaste */
+    }
+
+    .header-text-tech h3.tech-title {
+        font-size: 1.4rem; /* Título más pequeño */
+    }
+    
+    .header-text-tech p {
+        font-size: 0.9rem;
+    }
+
+    /* 3. OCULTAR ENCABEZADOS DE TABLA */
+    /* En móvil no tiene sentido ver "DETAILS | TIMELINE | ACTION" */
+    .list-labels-tech {
+        display: none; 
+    }
+
+    /* 4. REESTRUCTURA DE LAS TARJETAS (La Magia) */
+    .quote-card-tech {
+        display: flex;
+        flex-direction: column; /* Apilar elementos verticalmente */
+        gap: 15px;
+        padding: 15px;
+        text-align: left;
+    }
+
+    /* Columnas internas pasan a ser filas */
+    .col-info, .col-timeline, .col-action {
+        width: 100%;
+        align-items: flex-start; /* Todo alineado a la izquierda */
+    }
+
+    /* Ajuste visual de la Info Principal */
+    .col-info {
+        flex-direction: row; /* ID y Badge en la misma línea */
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #F1F5F9;
+        padding-bottom: 10px;
+        margin-bottom: 5px;
+    }
+
+    /* Ajuste del Timeline (Fechas) */
+    .col-timeline {
+        gap: 8px;
+    }
+    
+    .tl-item {
+        font-size: 0.85rem;
+    }
+
+    /* 5. BOTONES GRANDES (Fáciles de tocar) */
+    .col-action {
+        margin-top: 5px;
+    }
+    
+    .btn-select-tech {
+        width: 100%; /* Botón ancho completo */
+        justify-content: center;
+        padding: 12px; /* Más alto para dedos gordos */
+    }
+
+    /* 6. FOOTER */
+    .modal-footer-tech {
+        flex-direction: column-reverse; /* Botón principal arriba, Cancelar abajo */
+        gap: 12px;
+        padding: 20px;
+    }
+
+    .btn-start-new-gradient {
+        width: 100%;
+        justify-content: center;
+        padding: 14px;
+    }
+
+    .btn-cancel-simple {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #F1F5F9; /* Añadir borde suave al cancelar en móvil */
+        border-radius: 12px;
+    }
+}
+
+/* Ajuste extra para móviles muy pequeños (iPhone SE, etc) */
+@media (max-width: 380px) {
+    .header-text-tech h3.tech-title { font-size: 1.2rem; }
+    .col-info { flex-direction: column; align-items: flex-start; gap: 5px; }
+}
+
+/* =========================================
+   AURORA CLEAN TECH MODAL
+   ========================================= */
+
+/* Variables de Color (Coherencia con tu marca) */
+:root {
+    --aurora-accent-1: #4F46E5; /* Indigo vibrante */
+    --aurora-accent-2: #8B5CF6; /* Violeta */
+    --aurora-accent-3: #3B82F6; /* Azul brillante */
+    --dark-btn: #0F172A; /* Azul noche profundo para botones */
+    --text-main: #1E293B;
+    --text-sub: #64748B;
+}
+
+/* 1. OVERLAY */
+.clean-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.5); /* Fondo oscuro semitransparente */
+    backdrop-filter: blur(5px); /* Blur ligero para enfocar la atención */
+    z-index: 10000;
+    display: none; align-items: center; justify-content: center;
+    padding: 20px; opacity: 0; transition: opacity 0.3s ease;
+}
+.clean-overlay.active { display: flex; opacity: 1; }
+
+/* 2. ESTRUCTURA DE TARJETA Y LUZ */
+.card-container-relative {
+    position: relative; width: 100%; max-width: 440px;
+}
+
+/* La Magia: Luz ambiental difusa detrás de la tarjeta */
+.aurora-ambient-light {
+    position: absolute; top: -80px; right: -80px; width: 300px; height: 300px;
+    background: radial-gradient(circle, var(--aurora-accent-3), var(--aurora-accent-2), transparent 65%);
+    opacity: 0.25; filter: blur(60px); z-index: 0; pointer-events: none;
+}
+
+.clean-white-card {
+    position: relative; z-index: 1;
+    background: #FFFFFF;
+    border-radius: 24px;
+    /* Sombra profunda y lujosa que levanta la tarjeta */
+    box-shadow: 
+        0 20px 40px -10px rgba(15, 23, 42, 0.15), 
+        0 0 0 1px rgba(241, 245, 249, 1); /* Borde sutilísimo */
+    overflow: hidden;
+    transform: translateY(20px) scale(0.98);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.clean-overlay.active .clean-white-card {
+    transform: translateY(0) scale(1);
+}
+
+.clean-content { padding: 40px 32px; }
+
+/* 3. HEADER */
+.clean-header { text-align: center; margin-bottom: 35px; }
+
+.glowing-icon-box {
+    width: 64px; height: 64px; margin: 0 auto 20px;
+    background: #FFFFFF; border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.7rem; color: var(--aurora-accent-1);
+    /* Sombra de color suave que simula resplandor */
+    box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.25);
+    border: 1px solid #F1F5F9;
+}
+.glowing-icon-box.blue-theme {
+    color: var(--aurora-accent-3);
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.25);
+}
+
+.clean-title {
+    font-size: 1.8rem; font-weight: 800; color: var(--text-main);
+    margin: 0 0 10px 0; letter-spacing: -0.5px;
+}
+/* Texto con gradiente */
+.aurora-text-grad {
+    background: linear-gradient(135deg, var(--aurora-accent-1), var(--aurora-accent-2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.clean-desc {
+    font-size: 1rem; color: var(--text-sub); line-height: 1.5; margin: 0;
+}
+
+/* 4. LISTA DE CARACTERÍSTICAS (Nítida) */
+.clean-features-list {
+    display: flex; flex-direction: column; gap: 16px; margin-bottom: 35px;
+}
+.clean-feat-item {
+    display: flex; align-items: flex-start; gap: 15px;
+}
+.cf-icon {
+    width: 32px; height: 32px; border-radius: 10px;
+    /* Fondo muy claro con el color del acento */
+    background: rgba(79, 70, 229, 0.08); color: var(--aurora-accent-1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.95rem; flex-shrink: 0; margin-top: 2px;
+}
+.cf-text { display: flex; flex-direction: column; }
+.cf-text strong { font-size: 1rem; color: var(--text-main); font-weight: 600; margin-bottom: 2px; }
+.cf-text span { font-size: 0.9rem; color: var(--text-sub); }
+
+/* 5. INPUTS MODERNOS */
+.clean-input-group {
+    display: flex; align-items: center;
+    background: #FFFFFF;
+    border: 2px solid #E2E8F0; /* Borde visible pero suave */
+    border-radius: 14px; padding: 6px;
+    margin-bottom: 16px; transition: all 0.3s;
+}
+.clean-input-group:focus-within {
+    border-color: var(--aurora-accent-3); /* Se ilumina azul al enfocar */
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.flag-addon select {
+    background: transparent; border: none; font-weight: 600;
+    padding: 12px 8px 12px 14px; font-size: 1rem; outline: none; cursor: pointer;
+    border-right: 2px solid #F1F5F9; margin-right: 5px; color: var(--text-main);
+}
+.clean-input-group input {
+    flex: 1; border: none; outline: none; padding: 10px;
+    font-size: 1.1rem; color: var(--text-main); font-weight: 500; background: transparent;
+}
+
+.trust-micro-copy {
+    text-align: center; color: var(--text-sub); font-size: 0.85rem; margin-bottom: 30px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.trust-micro-copy i { color: #10B981; /* Verde seguridad */ }
+
+/* 6. BOTONES PROFESIONALES */
+.clean-actions { display: flex; flex-direction: column; gap: 12px; }
+
+.btn-aurora-solid {
+    width: 100%; padding: 16px;
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-indigo)); /* Sólido oscuro = Premium */
+    color: white; border: none; border-radius: 14px;
+    font-size: 1.05rem; font-weight: 700; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    box-shadow: 0 8px 20px -5px rgba(15, 23, 42, 0.3);
+    transition: all 0.2s;
+}
+.btn-aurora-solid:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px -5px rgba(15, 23, 42, 0.4);
+    background: var(--brand-indigo); /* Un poco más claro al hover */
+    transition: ease-in;
+}
+.btn-aurora-solid.blue-theme {
+    background: linear-gradient(135deg, var(--aurora-accent-3), var(--aurora-accent-1));
+}
+.icon-right { font-size: 0.9em; transition: transform 0.2s; }
+.btn-aurora-solid:hover .icon-right { transform: translateX(4px); }
+
+.btn-clean-ghost {
+    background: transparent; border: none; color: var(--text-sub);
+    font-weight: 600; font-size: 0.95rem; cursor: pointer;
+    padding: 12px; transition: all 0.2s; border-radius: 12px;
+}
+.btn-clean-ghost:hover {
+    color: var(--text-main); background: #F8FAFC;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .clean-content { padding: 30px 24px; }
+    .clean-title { font-size: 1.6rem; }
+}
+
+/* =========================================
+   AURORA ZENITH LIGHT (Corporate Premium)
+   ========================================= */
+
+/* 1. OVERLAY */
+.zlight-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.4); /* Oscuro suave */
+    backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; transition: opacity 0.3s ease;
+}
+.zlight-overlay.active { display: flex; opacity: 1; }
+
+/* 2. TARJETA PRINCIPAL (Blanca y Flotante) */
+.zlight-card {
+    position: relative; width: 100%; max-width: 460px;
+    background: #FFFFFF;
+    border-radius: 24px;
+    /* Sombra de "elevación" muy premium */
+    box-shadow: 
+        0 20px 40px -10px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    transform: translateY(20px) scale(0.98);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.zlight-overlay.active .zlight-card {
+    transform: translateY(0) scale(1);
+}
+
+/* 3. LUZ AMBIENTAL (Aurora Glow) */
+.zlight-ambient-glow {
+    position: absolute; top: -100px; right: -100px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.15), rgba(59, 130, 246, 0.1), transparent 70%);
+    filter: blur(60px); pointer-events: none; z-index: 0;
+}
+
+.zlight-content { position: relative; z-index: 1; padding: 40px 32px; text-align: center; }
+
+/* 4. HEADER ANIMADO */
+/* =========================================
+   PREMIUM SUCCESS ICON UPGRADE
+   ========================================= */
+
+.zlight-header { margin-bottom: 35px; }
+
+.success-icon-animated {
+    position: relative; width: 80px; height: 80px; margin: 0 auto 25px;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* El nuevo contenedor del ícono (Anillo Aurora) */
+.icon-circle-premium {
+    width: 70px; height: 70px;
+    background: #FFFFFF; /* Fondo blanco limpio */
+    border-radius: 50%;
+    font-size: 2.2rem; /* Ícono más grande */
+    display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 2;
+    box-shadow: 0 10px 30px -5px rgba(59, 130, 246, 0.2); /* Sombra azul suave */
+    
+    /* TRUCO: Borde con gradiente Aurora */
+    border: 3px solid transparent;
+    background-image: linear-gradient(white, white), linear-gradient(135deg, #10B981, #3B82F6);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+}
+
+/* El Ícono en sí (Insignia con gradiente y brillo) */
+.icon-circle-premium i {
+    /* Aplicar el gradiente Aurora al texto del ícono */
+    background: linear-gradient(135deg, #10B981, #3B82F6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* Sutil resplandor interno */
+    filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));
+}
+
+/* La onda expansiva (Ripple) mejorada */
+.icon-ripple-premium {
+    position: absolute; width: 100%; height: 100%;
+    border-radius: 50%;
+    /* El borde del ripple ahora es azul brillante */
+    border: 2px solid #3B82F6;
+    animation: rippleSuccessPremium 2s infinite cubic-bezier(0.4, 0, 0.6, 1); z-index: 1;
+}
+
+@keyframes rippleSuccessPremium {
+    0% { transform: scale(1); opacity: 0.6; border-width: 3px; }
+    100% { transform: scale(1.8); opacity: 0; border-width: 1px; }
+}
+
+.zlight-title {
+    font-size: 1.8rem; font-weight: 800; color: #0F172A; margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+}
+.text-gradient-corp {
+    background: linear-gradient(135deg, #10B981, #3B82F6);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.zlight-desc { font-size: 0.95rem; color: #64748B; margin: 0; }
+
+/* 5. AGENTE (Factor Humano) */
+.agent-assigned-box {
+    background: #F8FAFC; border: 1px solid #E2E8F0;
+    border-radius: 16px; padding: 15px;
+    display: flex; align-items: center; gap: 15px; text-align: left;
+    margin-bottom: 30px;
+}
+.agent-avatar { position: relative; width: 50px; height: 50px; flex-shrink: 0; }
+.agent-avatar img {
+    width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+    border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.status-dot {
+    position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px;
+    background: #10B981; border: 2px solid white; border-radius: 50%;
+}
+.agent-info { flex-grow: 1; display: flex; flex-direction: column; }
+.agent-label { font-size: 0.75rem; color: #94A3B8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+.agent-name { font-size: 1rem; color: #0F172A; font-weight: 700; }
+.agent-status { font-size: 0.85rem; color: #3B82F6; font-weight: 500; }
+.agent-action-icon {
+    width: 36px; height: 36px; background: white; border-radius: 10px;
+    color: #3B82F6; display: flex; align-items: center; justify-content: center;
+    border: 1px solid #E2E8F0;
+}
+
+/* 6. TIMELINE (La característica clave) */
+.policy-timeline {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    position: relative; margin-bottom: 25px; padding: 0 10px;
+}
+.timeline-track {
+    position: absolute; top: 15px; left: 25px; right: 25px;
+    height: 2px; background: #E2E8F0; z-index: 0;
+}
+.tl-node {
+    position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1;
+}
+.node-dot {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #F1F5F9; color: #94A3B8; border: 3px solid #FFFFFF;
+    display: flex; align-items: center; justify-content: center; font-size: 0.8rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: all 0.3s;
+}
+.node-label { font-size: 0.75rem; color: #94A3B8; font-weight: 600; }
+
+/* Estados Timeline */
+.tl-node.completed .node-dot { background: #10B981; color: white; }
+.tl-node.completed .node-label { color: #10B981; }
+
+.tl-node.active .node-dot {
+    background: #0F172A; color: white;
+    box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.1);
+}
+.tl-node.active .node-label { color: #0F172A; font-weight: 700; }
+
+/* 7. MENSAJE Y ACCIONES */
+.next-step-msg {
+    background: #FFFBEB; color: #B45309;
+    padding: 10px 15px; border-radius: 10px; font-size: 0.9rem;
+    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 30px;
+    border: 1px solid #FEF3C7;
+}
+
+.zlight-actions { display: flex; flex-direction: column; gap: 12px; }
+
+.btn-corp-primary {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, #009cff 0%, #514690 100%); color: white;
+    border: none; border-radius: 12px; font-size: 1rem; font-weight: 600;
+    cursor: pointer; box-shadow: 0 4px 15px rgba(15, 23, 42, 0.2);
+    transition: all 0.2s;
+}
+.btn-corp-primary:hover {
+    transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15, 23, 42, 0.3);
+    background: #1E293B;
+}
+
+.btn-corp-ghost {
+    width: 100%; padding: 14px;
+    background: transparent; border: 1px solid #E2E8F0;
+    color: #64748B; border-radius: 12px; font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+}
+.btn-corp-ghost:hover {
+    border-color: #CBD5E1; color: #0F172A; background: #F8FAFC;
+}
+
+.zlight-footer { margin-top: 20px; font-size: 0.8rem; color: #94A3B8; }
+
+/* Responsive */
+@media (max-width: 480px) {
+    .zlight-content { padding: 30px 20px; }
+    .agent-assigned-box { flex-direction: column; text-align: center; }
+    .agent-info { align-items: center; }
+}
