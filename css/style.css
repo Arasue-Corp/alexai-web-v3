@@ -5664,7 +5664,7 @@ position: absolute;
 
 /* --- FILTER BAR --- */
 .filter-bar-sticky {
-    position: sticky; top: 80px; z-index: 100;
+    position: sticky; top: 80px; z-index: 99;
     background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
     border-bottom: 1px solid #F1F5F9; padding: 15px 0;
 }
@@ -10764,7 +10764,7 @@ position: absolute;
 
 /* --- FILTER BAR --- */
 .filter-bar-sticky {
-    position: sticky; top: 80px; z-index: 100;
+    position: sticky; top: 80px; z-index: 99;
     background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
     border-bottom: 1px solid #F1F5F9; padding: 15px 0;
 }
@@ -13113,7 +13113,7 @@ body.bg-body {
     gap: 12px;
     height: 100%;
     width: 100%;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 1.05rem;
     color: white;
@@ -13250,41 +13250,53 @@ body.bg-body {
 
 /* --- MENÚ PREMIUM FIXED --- */
 
-.mobile-menu-premium {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 9999;
-    background: #ffffff;
-    overflow-y: auto;
-    
-    /* BLINDAJE DE APERTURA */
-    visibility: hidden; /* Oculto por defecto para evitar glitches */
-    opacity: 0; /* Doble seguridad */
-    
-    /* LA MÁSCARA CIRCULAR */
-    clip-path: circle(0px at calc(100% - 40px) 40px);
-    -webkit-clip-path: circle(0px at calc(100% - 40px) 40px);
-    
-    /* Transición suave para todo */
-    transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-    
-    pointer-events: none;
+/* ESTILOS BASE (Móvil) - Solo se aplican si la pantalla es menor a 1024px */
+@media (max-width: 1024px) {
+    .mobile-menu-premium {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 9999;
+        background: #ffffff;
+        overflow-y: auto;
+        
+        /* BLINDAJE DE APERTURA */
+        visibility: hidden; 
+        opacity: 0; 
+        
+        /* LA MÁSCARA CIRCULAR */
+        clip-path: circle(0px at calc(100% - 40px) 40px);
+        -webkit-clip-path: circle(0px at calc(100% - 40px) 40px);
+        
+        /* Transición suave */
+        transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+        
+        pointer-events: none;
+    }
+
+    /* ESTADO ABIERTO */
+    .mobile-menu-premium.is-open {
+        visibility: visible;
+        opacity: 1;
+        clip-path: circle(150% at calc(100% - 40px) 40px);
+        -webkit-clip-path: circle(150% at calc(100% - 40px) 40px);
+        pointer-events: all;
+    }
+
+    .mobile-menu-premium.is-open .menu-inner-container {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* ESTADO ABIERTO: VISIBLE */
-/* La clase .is-open se añade con JS */
-.mobile-menu-premium.is-open {
-    visibility: visible; /* Ahora sí lo mostramos */
-    opacity: 1;
-    
-    /* Expansión del círculo */
-    clip-path: circle(150% at calc(100% - 40px) 40px);
-    -webkit-clip-path: circle(150% at calc(100% - 40px) 40px);
-    
-    pointer-events: all;
+/* SEGURIDAD PARA ESCRITORIO */
+/* Asegura que en pantallas grandes el elemento no exista visualmente */
+@media (min-width: 1025px) {
+    .mobile-menu-premium {
+        display: none;
+    }
 }
 
 /* --- CABECERA INTERNA (Nuevo) --- */
@@ -13321,7 +13333,8 @@ body.bg-body {
 .menu-aurora-bg {
     position: absolute;
     top: -50%; left: -50%;
-    width: 200%; height: 200%;
+    /* width: 200%;  */
+    height: 200%;
     background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08), transparent 60%),
                 radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.08), transparent 50%);
     z-index: -1;
@@ -13338,11 +13351,6 @@ body.bg-body {
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.4s ease 0.2s;
-}
-
-.mobile-menu-premium.is-open .menu-inner-container {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 /* Widgets y Tarjetas (Igual que versión anterior) */
@@ -13596,3 +13604,4 @@ body.hovering .ai-cursor {
     .radio-card-grid { grid-template-columns: 1fr; }
     .grid-2-tight, .grid-3-tight { grid-template-columns: 1fr; }
 }
+

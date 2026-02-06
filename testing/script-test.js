@@ -1,18 +1,4 @@
-/* --- MOBILE MENU TOGGLE --- */
-function toggleMobileMenu() {
-    const nav = document.getElementById('mainNav');
-    nav.classList.toggle('active');
-    
-    // Cambiar icono de hamburguesa a X (opcional)
-    const btnIcon = document.querySelector('.mobile-menu-toggle i');
-    if(nav.classList.contains('active')) {
-        btnIcon.classList.remove('fa-bars');
-        btnIcon.classList.add('fa-xmark');
-    } else {
-        btnIcon.classList.remove('fa-xmark');
-        btnIcon.classList.add('fa-bars');
-    }
-}
+
 
 // FAQ Accordion Logic
     const faqItems = document.querySelectorAll('.faq-item');
@@ -140,103 +126,179 @@ document.addEventListener('DOMContentLoaded', function() {
    ========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-    initWizard();
-});
+    console.log("🌟 ALEX AI WIZARD - PREMIUM V5 (Holographic Edition)");
 
-function initWizard() {
+    // ==========================================
+    // 1. CONFIGURACIÓN GLOBAL
+    // ==========================================
     let currentStep = 0;
     const steps = document.querySelectorAll('.form-tab-panel');
-    const sidebarItems = document.querySelectorAll('#sidebarList li');
+    const totalSteps = steps.length;
     
-    const btnNext = document.getElementById('btn-next');
-    const btnPrev = document.getElementById('btn-prev');
-    const btnSubmit = document.getElementById('btn-submit');
+    // UI Elements
     const progress = document.getElementById('visualProgressBar');
     const stepNumDisplay = document.getElementById('stepNumberDisplay');
     const stepTitle = document.getElementById('stepTitle');
     const stepDesc = document.getElementById('stepDesc');
-    
-    // Metadata
+    const sidebarItems = document.querySelectorAll('#sidebarList li');
+
     const meta = [
-        {title: "Customer Information", desc: "Let's start with the primary homeowner details."},
-        {title: "Property Location", desc: "Where is the home you want to insure?"},
-        {title: "Property Specs", desc: "Tell us about the structure and build."},
-        {title: "Protection & Safety", desc: "Does the home have protective devices?"},
-        {title: "Loss History", desc: "Any losses in the past 5 years?"},
-        {title: "Current Coverage", desc: "Details about your existing coverage."},
-        {title: "Valuables", desc: "High-value items requiring extra coverage."}
+        { title: "Your Home Protection Plan", desc: "Let's start with the primary homeowner details." },
+        { title: "Property Location", desc: "Where is the home you want to insure?" },
+        { title: "Property Specs", desc: "Tell us about the structure and build." },
+        { title: "Protection & Safety", desc: "Does the home have protective devices?" },
+        { title: "Loss History", desc: "Report any losses in the past 5 years." },
+        { title: "Current Coverage", desc: "Details about your existing coverage (Optional)." },
+        { title: "Valuables", desc: "Select items to add specific coverage (Optional)." }
     ];
 
-    // 1. FLATPICKR
-    if (typeof flatpickr !== 'undefined') {
-        flatpickr(".date-picker", { dateFormat: "m/d/Y", allowInput: true, disableMobile: "true" });
+    // ==========================================
+    // 2. UTILIDADES
+    // ==========================================
+    function initCalendars(scope = document) {
+        if (typeof flatpickr !== 'undefined') {
+            const inputs = scope.querySelectorAll(".date-picker");
+            if(inputs.length > 0) {
+                flatpickr(inputs, {
+                    dateFormat: "m/d/Y", allowInput: true, disableMobile: "true",
+                    onChange: function(selectedDates, dateStr, instance) {
+                        const wrapper = instance.element.closest('.input-rich-wrapper');
+                        if(wrapper) cleanErrorVisuals(wrapper);
+                    }
+                });
+            }
+        }
+    }
+    initCalendars();
+
+    function recreateButton(id) {
+        const oldBtn = document.getElementById(id);
+        if (oldBtn) {
+            const newBtn = oldBtn.cloneNode(true);
+            oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+            return newBtn;
+        }
+        return null;
     }
 
-    // 2. VALIDATION
-    function validateStep(index) {
-        const currentPanel = document.getElementById(`tab-${index}`);
-        if (!currentPanel) return true;
+    const btnNext = recreateButton('btn-next');
+    const btnPrev = recreateButton('btn-prev');
+    const btnSubmit = document.getElementById('btn-submit');
 
-        const inputs = Array.from(currentPanel.querySelectorAll('.validate-req, input[required], select[required]'));
+    // ==========================================
+    // 3. LOGICA GRID VALUABLES (ACORDEON)
+    // ==========================================
+    window.toggleValuableCard = function(card) {
+        // Toggle clase activa
+        card.classList.toggle('active');
+        
+        // Manejo del icono
+        const icon = card.querySelector('.svc-check i');
+        if(card.classList.contains('active')) {
+            // Focus al primer input si se abre
+            setTimeout(() => {
+                const input = card.querySelector('input');
+                if(input) input.focus();
+            }, 200);
+        }
+    };
+
+    // ==========================================
+    // 4. VALIDACIÓN
+    // ==========================================
+    function cleanErrorVisuals(wrapper) {
+        if(wrapper) {
+            wrapper.classList.remove('input-error', 'shake-anim');
+            wrapper.style.borderColor = ""; wrapper.style.backgroundColor = "";
+        }
+    }
+
+    function validateContainer(container) {
+        if (!container) return true;
+        const inputs = container.querySelectorAll('.validate-req, input[required], select[required]');
         let isValid = true;
         let firstError = null;
 
         inputs.forEach(input => {
-            if (input.offsetParent === null) return; // Ignorar ocultos
+            if (input.disabled) return;
+            // Ignorar inputs ocultos (dentro de acordeones cerrados)
+            if(input.closest('.smart-val-card') && !input.closest('.smart-val-card').classList.contains('active')) return;
+
+            if ((input.type === 'checkbox' || input.type === 'radio') && !input.classList.contains('validate-req')) return;
 
             const val = input.value.trim();
-            const wrapper = input.closest('.input-rich-wrapper') || input.closest('.premium-select')?.parentElement || input.parentElement;
-            
+            const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
+            cleanErrorVisuals(wrapper);
+
             if (!val) {
                 isValid = false;
                 if(wrapper) {
-                    wrapper.classList.remove('shake-anim', 'input-error');
-                    void wrapper.offsetWidth; 
+                    void wrapper.offsetWidth;
                     wrapper.classList.add('input-error', 'shake-anim');
+                    wrapper.style.borderColor = "#EF4444"; wrapper.style.backgroundColor = "#FEF2F2";
                     setTimeout(() => wrapper.classList.remove('shake-anim'), 500);
                 }
-                
-                input.addEventListener('input', () => { if(wrapper) wrapper.classList.remove('input-error'); }, {once:true});
-                input.addEventListener('change', () => { if(wrapper) wrapper.classList.remove('input-error'); }, {once:true});
-
-                if(!firstError) firstError = input;
+                if (!firstError) firstError = input;
+                const clear = () => cleanErrorVisuals(wrapper);
+                input.addEventListener('input', clear, {once: true});
+                input.addEventListener('change', clear, {once: true});
             }
         });
 
-        if (firstError) {
-            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            if(firstError.tagName !== 'SELECT') firstError.focus({preventScroll: true});
+        if (!isValid) {
+            if (typeof window.showToast === 'function') window.showToast("Please fill in all required fields.", "warning");
+            else alert("Please fill in all required fields.");
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if(!firstError.classList.contains('date-picker')) firstError.focus({preventScroll: true});
+            }
         }
         return isValid;
     }
 
-    // 3. UI UPDATE
+    // ==========================================
+    // 5. UPDATE UI
+    // ==========================================
     function updateUI() {
-        for(let i=0; i<7; i++) { 
-            const panel = document.getElementById(`tab-${i}`);
-            if(panel) {
-                if(i === currentStep) {
-                    panel.classList.add('active');
-                    panel.style.display = 'block';
-                } else {
-                    panel.classList.remove('active');
-                    panel.style.display = 'none';
-                }
-            }
+        if(stepTitle && meta[currentStep]) {
+            stepTitle.style.opacity = 0; if(stepDesc) stepDesc.style.opacity = 0;
+            setTimeout(() => {
+                stepTitle.innerText = meta[currentStep].title;
+                if(stepDesc) stepDesc.innerText = meta[currentStep].desc;
+                stepTitle.style.opacity = 1; if(stepDesc) stepDesc.style.opacity = 1;
+            }, 150);
         }
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        if (sidebarItems.length) {
+        steps.forEach((panel, i) => {
+            if (i === currentStep) {
+                panel.classList.add('active'); panel.style.display = 'block';
+                setTimeout(() => panel.style.opacity = '1', 50);
+            } else {
+                panel.classList.remove('active'); panel.style.display = 'none'; panel.style.opacity = '0';
+            }
+        });
+
+        if(sidebarItems) {
             sidebarItems.forEach((li, i) => {
-                li.classList.remove('active');
-                if (i <= currentStep) li.classList.add('active');
+                li.classList.remove('active'); li.style.color = ''; li.style.fontWeight = '';
+                const cleanText = li.textContent.replace('✓', '').trim(); 
+                if (i < currentStep) {
+                    li.innerHTML = `<i class="fa-solid fa-check" style="color:#10B981; margin-right:8px;"></i> ${cleanText}`;
+                    li.style.color = '#10B981'; li.style.fontWeight = '600';
+                } else if (i === currentStep) {
+                    li.classList.add('active');
+                    li.innerHTML = `<span class="pulse-dot"></span> ${cleanText}`;
+                    li.style.color = '#1E293B'; li.style.fontWeight = '700';
+                } else {
+                    li.innerHTML = `<i class="fa-regular fa-circle" style="margin-right:8px; font-size:0.8rem;"></i> ${cleanText}`;
+                    li.style.color = '#94A3B8';
+                }
             });
         }
 
-        if (btnPrev) btnPrev.style.display = currentStep === 0 ? 'none' : 'flex';
+        if (btnPrev) btnPrev.style.display = (currentStep === 0) ? 'none' : 'flex';
         
-        if (currentStep === 6) {
+        if (currentStep === totalSteps - 1) {
             if (btnNext) btnNext.style.display = 'none';
             if (btnSubmit) btnSubmit.style.display = 'flex';
         } else {
@@ -244,86 +306,224 @@ function initWizard() {
             if (btnSubmit) btnSubmit.style.display = 'none';
         }
 
-        if (progress) progress.style.width = ((currentStep + 1) / 7) * 100 + '%';
-        if (stepNumDisplay) stepNumDisplay.innerText = currentStep + 1;
-        if (stepTitle) stepTitle.innerText = meta[currentStep].title;
-        if (stepDesc) stepDesc.innerText = meta[currentStep].desc;
+        if(progress) progress.style.width = ((currentStep + 1) / totalSteps) * 100 + '%';
+        if(stepNumDisplay) stepNumDisplay.innerText = currentStep + 1;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 4. NAV
+    // ==========================================
+    // 6. LISTENERS NAV
+    // ==========================================
     if (btnNext) {
-        btnNext.addEventListener('click', (e) => {
+        btnNext.onclick = (e) => {
             e.preventDefault();
-            e.stopImmediatePropagation();
-            if (validateStep(currentStep)) {
-                if (currentStep < 6) {
-                    currentStep++;
-                    updateUI();
-                }
-            } else {
-                showToast("Please complete required fields", "warning");
+            if (validateContainer(steps[currentStep])) {
+                if (currentStep < totalSteps - 1) { currentStep++; updateUI(); }
             }
-        });
+        };
     }
-
     if (btnPrev) {
-        btnPrev.addEventListener('click', (e) => {
+        btnPrev.onclick = (e) => { e.preventDefault(); if (currentStep > 0) { currentStep--; updateUI(); } };
+    }
+
+    // ==========================================
+    // 7. CAMPOS DINÁMICOS (LOSSES)
+    // ==========================================
+    const lossSelect = document.getElementById('num-losses');
+    const lossContainer = document.getElementById('dynamic-loss-container');
+    if (lossSelect && lossContainer) {
+        lossSelect.addEventListener('change', (e) => {
+            const count = parseInt(e.target.value);
+            lossContainer.innerHTML = ''; 
+            if (count > 0) {
+                for (let i = 1; i <= count; i++) {
+                    const html = `
+                        <div class="premium-group compact-group anim-entry" style="margin-top:20px; border-left:4px solid #F59E0B; background:#FFFBEB; padding:20px; border-radius:12px;">
+                            <div style="font-weight:800; color:#B45309; margin-bottom:15px; font-size:0.85rem; text-transform:uppercase;">
+                                <i class="fa-solid fa-triangle-exclamation"></i> LOSS INCIDENT #${i}
+                            </div>
+                            <div class="grid-2-tight mb-3">
+                                <div class="inp-rich-group"><label class="lbl-premium">Date</label><div class="input-rich-wrapper compact-premium theme-warning" style="background:white;"><div class="icon-slot"><i class="fa-regular fa-calendar"></i></div><input type="text" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY"></div></div>
+                                <div class="inp-rich-group"><label class="lbl-premium">Type</label><div class="input-rich-wrapper compact-premium theme-warning" style="background:white;"><div class="icon-slot"><i class="fa-solid fa-fire"></i></div><select class="rich-input validate-req premium-select"><option value="" disabled selected>Select...</option><option>Fire</option><option>Water</option><option>Theft</option><option>Other</option></select></div></div>
+                            </div>
+                            <div class="inp-rich-group mb-3"><label class="lbl-premium">Details</label><div class="input-rich-wrapper theme-warning" style="background:white; height:auto; padding-top:10px;"><div class="icon-slot" style="height:30px;"><i class="fa-solid fa-align-left"></i></div><textarea class="rich-input validate-req" rows="2" placeholder="Details..." style="resize:none; height:60px; padding-top:0;"></textarea></div></div>
+                            <div class="inp-rich-group"><label class="lbl-premium">Amount ($)</label><div class="input-rich-wrapper compact-premium theme-warning" style="background:white;"><div class="icon-slot"><i class="fa-solid fa-dollar-sign"></i></div><input type="number" class="rich-input validate-req" placeholder="0.00"></div></div>
+                        </div>`;
+                    lossContainer.insertAdjacentHTML('beforeend', html);
+                }
+                initCalendars(lossContainer);
+                initPremiumSelects();
+            }
+        });
+    }
+
+    // ==========================================
+    // 8. SUBMIT MODAL (HOLOGRAPHIC)
+    // ==========================================
+    const modal = document.getElementById('quote-processing-modal');
+    const modalCard = document.getElementById('modal-card');
+
+    if (btnSubmit) {
+        btnSubmit.onclick = (e) => {
             e.preventDefault();
-            if (currentStep > 0) {
-                currentStep--;
-                updateUI();
+            if(validateContainer(steps[currentStep])) {
+                if(modal) {
+                    modal.style.display = 'flex';
+                    setTimeout(() => {
+                        modalCard.style.opacity = '1';
+                        modalCard.style.transform = 'scale(1)';
+                    }, 50);
+                    // No hacemos submit real para que veas el modal
+                }
             }
-        });
+        };
     }
 
-    // 5. SMART TOGGLE 2ND INSURED
-// Lógica del Smart Toggle
-    const toggle2nd = document.getElementById('toggleSecondInsured');
+    // ==========================================
+    // 9. EXTRAS
+    // ==========================================
+    const toggle = document.getElementById('toggleSecondInsured');
     const secSection = document.getElementById('secondInsuredSection');
-    
-    if (toggle2nd && secSection) {
-        toggle2nd.addEventListener('change', (e) => {
+    if (toggle && secSection) {
+        toggle.addEventListener('change', (e) => {
+            const inputs = secSection.querySelectorAll('input, select');
             if (e.target.checked) {
-                // MOSTRAR SECCIÓN
                 secSection.style.display = 'block';
-                // Pequeño delay para permitir que el navegador procese el display block antes de animar opacidad (si usas CSS transitions)
-                setTimeout(() => {
-                    secSection.style.opacity = '1';
-                    secSection.style.transform = 'translateY(0)';
-                }, 10);
-                
-                // Hacer requeridos los campos
-                secSection.querySelectorAll('input').forEach(i => i.setAttribute('required', 'true'));
-                secSection.querySelectorAll('input').forEach(i => i.classList.add('validate-req'));
+                setTimeout(() => secSection.style.opacity = '1', 10);
+                inputs.forEach(i => i.classList.add('validate-req'));
             } else {
-                // OCULTAR SECCIÓN
                 secSection.style.opacity = '0';
-                secSection.style.transform = 'translateY(-10px)';
-                
-                setTimeout(() => {
-                    secSection.style.display = 'none';
-                }, 300); // Esperar animación CSS
-                
-                // Quitar requeridos
-                secSection.querySelectorAll('input').forEach(i => i.removeAttribute('required'));
-                secSection.querySelectorAll('input').forEach(i => i.classList.remove('validate-req'));
+                setTimeout(() => secSection.style.display = 'none', 300);
+                inputs.forEach(i => {
+                    i.classList.remove('validate-req');
+                    i.value = '';
+                    cleanErrorVisuals(i.closest('.input-rich-wrapper'));
+                });
             }
         });
     }
+
+    const fileInput = document.getElementById('declarationPageInput');
+    const uploadText = document.getElementById('uploadText');
+    const zone = document.getElementById('dec-upload-zone');
+    if (fileInput && uploadText && zone) {
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                uploadText.innerHTML = `<span style="color:#10B981"><i class="fa-solid fa-check-circle"></i> ${this.files[0].name}</span>`;
+                zone.style.borderColor = '#10B981'; zone.style.backgroundColor = '#ECFDF5';
+            }
+        });
+    }
+
+    // START
+    updateUI();
+});
+
+/* =========================================
+   PREMIUM SELECT CONVERTER (UNIVERSAL)
+   ========================================= */
+function initPremiumSelects() {
+    const selects = document.querySelectorAll('select.premium-select');
+
+    selects.forEach(select => {
+        // Evitar duplicados
+        if (select.getAttribute('data-premium-init') === 'true') return;
+        select.setAttribute('data-premium-init', 'true');
+
+        // 1. Ocultar original
+        select.style.display = 'none';
+
+        // 2. Crear Trigger
+        const wrapper = document.createElement('div');
+        wrapper.className = 'custom-select-wrapper';
+        
+        const trigger = document.createElement('div');
+        trigger.className = 'custom-select-trigger';
+        
+        const selectedOption = select.options[select.selectedIndex];
+        const initialText = selectedOption ? selectedOption.text : 'Select...';
+        trigger.innerHTML = `<span>${initialText}</span> <i class="fa-solid fa-chevron-down custom-select-arrow"></i>`;
+        
+        wrapper.appendChild(trigger);
+        select.parentNode.insertBefore(wrapper, select.nextSibling);
+
+        // 3. Crear Menú en el Body
+        const dropdown = document.createElement('div');
+        dropdown.className = 'premium-select-dropdown';
+        
+        Array.from(select.options).forEach(option => {
+            if(option.disabled) return;
+            const item = document.createElement('div');
+            item.className = 'premium-select-option';
+            item.textContent = option.text;
+            
+            if (option.selected) item.classList.add('selected');
+
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+                trigger.querySelector('span').textContent = option.text;
+                trigger.classList.remove('active');
+                
+                dropdown.querySelectorAll('.premium-select-option').forEach(el => el.classList.remove('selected'));
+                item.classList.add('selected');
+                
+                closeAllDropdowns();
+
+                select.value = option.value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+
+                // Limpiar errores visuales
+                const inputWrapper = select.closest('.input-rich-wrapper');
+                if(inputWrapper) {
+                    inputWrapper.classList.remove('input-error', 'shake-anim');
+                    inputWrapper.style.borderColor = "";
+                    inputWrapper.style.backgroundColor = "";
+                }
+            });
+            dropdown.appendChild(item);
+        });
+
+        document.body.appendChild(dropdown);
+
+        // 4. ABRIR / CERRAR (Cálculo corregido)
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = dropdown.classList.contains('is-open');
+            closeAllDropdowns(); // Cerrar otros
+
+            if (!isOpen) {
+                trigger.classList.add('active');
+                dropdown.classList.add('is-open');
+
+                // --- POSICIONAMIENTO MATEMÁTICO ---
+                const rect = trigger.getBoundingClientRect();
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+
+                // Como es 'absolute', sumamos la posición actual + el scroll
+                dropdown.style.top = (rect.bottom + scrollTop + 5) + 'px';
+                dropdown.style.left = (rect.left + scrollLeft) + 'px';
+                dropdown.style.width = rect.width + 'px';
+            }
+        });
+    });
+
+    function closeAllDropdowns() {
+        document.querySelectorAll('.premium-select-dropdown.is-open').forEach(el => el.classList.remove('is-open'));
+        document.querySelectorAll('.custom-select-trigger.active').forEach(el => el.classList.remove('active'));
+    }
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.custom-select-trigger') && !e.target.closest('.premium-select-dropdown')) {
+            closeAllDropdowns();
+        }
+    });
+    
+    // Cerrar al hacer resize para evitar desalineación
+    window.addEventListener('resize', closeAllDropdowns);
 }
 
-function showToast(message, type = 'success') {
-    let container = document.getElementById('toast-container');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'toast-container';
-        document.body.appendChild(container);
-    }
-    container.innerHTML = '';
-    const toast = document.createElement('div');
-    toast.className = `alex-toast ${type}`;
-    toast.innerHTML = `<div class="toast-content"><span class="toast-title">${type.toUpperCase()}</span><span class="toast-sub">${message}</span></div>`;
-    container.appendChild(toast);
-    requestAnimationFrame(() => toast.classList.add('show'));
-    setTimeout(() => { if(toast.parentNode) toast.remove(); }, 3000);
-}
+// INICIALIZAR
+document.addEventListener("DOMContentLoaded", () => {
+    initPremiumSelects();
+});

@@ -3445,7 +3445,7 @@ position: absolute;
 
 /* --- FILTER BAR --- */
 .filter-bar-sticky {
-    position: sticky; top: 80px; z-index: 100;
+    position: sticky; top: 80px; z-index: 99;
     background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
     border-bottom: 1px solid #F1F5F9; padding: 15px 0;
 }
@@ -5790,7 +5790,7 @@ body.bg-body {
     gap: 12px;
     height: 100%;
     width: 100%;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 1.05rem;
     color: white;
@@ -5927,41 +5927,53 @@ body.bg-body {
 
 /* --- MENÚ PREMIUM FIXED --- */
 
-.mobile-menu-premium {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 9999;
-    background: #ffffff;
-    overflow-y: auto;
-    
-    /* BLINDAJE DE APERTURA */
-    visibility: hidden; /* Oculto por defecto para evitar glitches */
-    opacity: 0; /* Doble seguridad */
-    
-    /* LA MÁSCARA CIRCULAR */
-    clip-path: circle(0px at calc(100% - 40px) 40px);
-    -webkit-clip-path: circle(0px at calc(100% - 40px) 40px);
-    
-    /* Transición suave para todo */
-    transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-    
-    pointer-events: none;
+/* ESTILOS BASE (Móvil) - Solo se aplican si la pantalla es menor a 1024px */
+@media (max-width: 1024px) {
+    .mobile-menu-premium {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 9999;
+        background: #ffffff;
+        overflow-y: auto;
+        
+        /* BLINDAJE DE APERTURA */
+        visibility: hidden; 
+        opacity: 0; 
+        
+        /* LA MÁSCARA CIRCULAR */
+        clip-path: circle(0px at calc(100% - 40px) 40px);
+        -webkit-clip-path: circle(0px at calc(100% - 40px) 40px);
+        
+        /* Transición suave */
+        transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+        
+        pointer-events: none;
+    }
+
+    /* ESTADO ABIERTO */
+    .mobile-menu-premium.is-open {
+        visibility: visible;
+        opacity: 1;
+        clip-path: circle(150% at calc(100% - 40px) 40px);
+        -webkit-clip-path: circle(150% at calc(100% - 40px) 40px);
+        pointer-events: all;
+    }
+
+    .mobile-menu-premium.is-open .menu-inner-container {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* ESTADO ABIERTO: VISIBLE */
-/* La clase .is-open se añade con JS */
-.mobile-menu-premium.is-open {
-    visibility: visible; /* Ahora sí lo mostramos */
-    opacity: 1;
-    
-    /* Expansión del círculo */
-    clip-path: circle(150% at calc(100% - 40px) 40px);
-    -webkit-clip-path: circle(150% at calc(100% - 40px) 40px);
-    
-    pointer-events: all;
+/* SEGURIDAD PARA ESCRITORIO */
+/* Asegura que en pantallas grandes el elemento no exista visualmente */
+@media (min-width: 1025px) {
+    .mobile-menu-premium {
+        display: none;
+    }
 }
 
 /* --- CABECERA INTERNA (Nuevo) --- */
@@ -6015,11 +6027,6 @@ body.bg-body {
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.4s ease 0.2s;
-}
-
-.mobile-menu-premium.is-open .menu-inner-container {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 /* Widgets y Tarjetas (Igual que versión anterior) */
@@ -6102,7 +6109,7 @@ body.hovering .ai-cursor {
 /* HOMEOWNERS QUOTE */
 /* =========================================
    ALEX AI - HOMEOWNERS PREMIUM THEME
-   (CORREGIDO Y OPTIMIZADO)
+   (VERSIÓN FINAL LIMPIA & CORREGIDA)
    ========================================= */
 
 /* --- 1. LAYOUT & CARDS --- */
@@ -6189,8 +6196,13 @@ body.hovering .ai-cursor {
     background: #F8FAFC;
     border: 1px solid #E2E8F0;
     border-radius: 12px;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     height: 52px;
+    
+    /* FIX DE RENDERING (Evita que desaparezca al vibrar) */
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translate3d(0,0,0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .icon-slot {
@@ -6232,7 +6244,7 @@ body.hovering .ai-cursor {
 .input-rich-wrapper.theme-teal:focus-within .icon-slot { color: #0D9488; }
 .input-rich-wrapper.theme-indigo:focus-within .icon-slot { color: #4F46E5; }
 
-/* Error & Shake */
+/* ERROR & SHAKE (SOLUCIÓN DEFINITIVA) */
 .input-rich-wrapper.input-error {
     border-color: #EF4444 !important;
     background: #FEF2F2 !important;
@@ -6241,11 +6253,17 @@ body.hovering .ai-cursor {
 .input-rich-wrapper.input-error .icon-slot { color: #EF4444 !important; }
 
 @keyframes shake-hard {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
-    20%, 40%, 60%, 80% { transform: translateX(6px); }
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    15%, 45%, 75% { transform: translate3d(-6px, 0, 0); }
+    30%, 60%, 90% { transform: translate3d(6px, 0, 0); }
 }
-.shake-anim { animation: shake-hard 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+
+.shake-anim { 
+    /* IMPORTANTE: Desactivar transiciones durante el shake para evitar glitches visuales */
+    transition: none !important; 
+    animation: shake-hard 0.4s cubic-bezier(.36,.07,.19,.97) both; 
+    z-index: 5; 
+}
 
 /* --- 4. DROPDOWNS PREMIUM --- */
 .rich-input.premium-select {
@@ -6263,35 +6281,34 @@ body.hovering .ai-cursor {
     background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%233B82F6%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
 }
 
-/* --- 5. SMART PILL BUTTON (VERSION FINAL Y PROPORCIONADA) --- */
+/* --- 5. SMART PILL BUTTON (DISEÑO UNIFICADO Y CORREGIDO) --- */
 
 .smart-toggle-wrapper {
     position: relative;
     display: inline-block;
     z-index: 10;
-    margin-left: 3%;
 }
 
 .smart-checkbox { display: none; }
 
 .smart-pill-btn {
-    display: flex; /* Flexbox para centrado total */
+    display: flex; 
     align-items: center;
-    justify-content: flex-start; /* Alinear a la izquierda por el icono */
+    justify-content: flex-start; /* Alineación izquierda */
     cursor: pointer;
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     
-    /* Dimensiones Fijas para Estabilidad */
+    /* Dimensiones Fijas para que no salte */
     height: 48px; 
     min-width: 150px; 
     
-    padding: 0 6px; /* Padding solo lateral, la altura la da el height */
+    padding: 0 6px; 
     border-radius: 50px;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 2px 4px rgba(0,0,0,0.04);
     user-select: none;
-    box-sizing: border-box; /* Crucial para que el border no sume tamaño */
+    box-sizing: border-box;
 }
 
 .smart-pill-btn:hover {
@@ -6299,31 +6316,28 @@ body.hovering .ai-cursor {
     box-shadow: 0 4px 8px rgba(0,0,0,0.08);
 }
 
-/* CONTENEDOR DE ESTADOS (Interno) */
-.btn-content-add {
+/* Contenedor Interno de Estados */
+.btn-content {
     display: flex;
     align-items: center;
-    gap: 12px; /* Espacio entre icono y texto */
+    gap: 12px;
     width: 100%;
     height: 100%;
 }
 
-/* CÍRCULO DEL ICONO */
+/* Círculo del Icono */
 .icon-circle {
     width: 34px; 
     height: 34px;
     border-radius: 50%;
-    
-    /* Centrado del icono FontAwesome */
     display: flex; 
     align-items: center; 
     justify-content: center;
-    
     background: #EFF6FF; 
     color: #2563EB;
     font-size: 1rem;
     transition: 0.3s;
-    flex-shrink: 0; /* Evita que se aplaste */
+    flex-shrink: 0;
 }
 
 /* Variación Roja */
@@ -6332,22 +6346,22 @@ body.hovering .ai-cursor {
     color: #EF4444;
 }
 
-/* TEXTO */
-.btn-content-add .text {
+/* Texto */
+.btn-content .text {
     font-size: 0.9rem;
     font-weight: 700;
     color: #334155;
-    white-space: nowrap; /* Evita que el texto salte de línea */
-    padding-right: 12px; /* Margen derecho visual */
+    white-space: nowrap;
+    padding-right: 12px;
 }
 
-/* --- LÓGICA DE VISIBILIDAD (NUCLEAR FIX) --- */
+/* --- LÓGICA DE VISIBILIDAD (NUCLEAR) --- */
 
-/* Default: Mostrar ADD, Ocultar REMOVE */
+/* Por defecto */
 .state-add { display: flex !important; }
 .state-remove { display: none !important; }
 
-/* CUANDO ESTÁ ACTIVADO (CHECKED): Invertir y cambiar color */
+/* CUANDO ESTÁ ACTIVO (CHECKED) */
 .smart-checkbox:checked + .smart-pill-btn {
     background: #FEF2F2;
     border-color: #FECACA;
@@ -6361,18 +6375,10 @@ body.hovering .ai-cursor {
 
 .smart-checkbox:checked + .smart-pill-btn .state-remove {
     display: flex !important;
-    animation: fadeInSlide 0.2s ease-out;
 }
 
-/* Cambiar color de texto a rojo cuando está activo */
 .smart-checkbox:checked + .smart-pill-btn .text {
     color: #EF4444;
-}
-
-/* Animación sutil de entrada */
-@keyframes fadeInSlide {
-    from { opacity: 0; transform: translateX(-5px); }
-    to { opacity: 1; transform: translateX(0); }
 }
 
 /* --- 6. SAFETY GRID TILES --- */
@@ -6455,7 +6461,7 @@ body.hovering .ai-cursor {
     bottom: 140%;
     left: 50%;
     transform: translateX(-50%);
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: 500;
     font-size: 0.75rem;
     opacity: 0;
@@ -6493,29 +6499,362 @@ body.hovering .ai-cursor {
 
 .hidden-anim { display: none; }
 
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateX(-5px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
 @keyframes fadeSlideIn {
     from { opacity: 0; transform: translateY(20px) scale(0.98); }
     to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Transición de Steps */
 .form-tab-panel {
     display: none;
     opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.3s;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
+
 .form-tab-panel.active {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-    animation: fadeSlideIn 0.4s ease-out forwards;
+    display: block !important; /* Asegura que ocupe espacio */
+    opacity: 1 !important;     /* Asegura que se vea */
+    transform: translateY(0) !important; /* Asegura que esté en su sitio */
+    animation: fadeSlideIn 0.5s forwards;
 }
+
+.anim-entry {
+    opacity: 0;
+    animation: simpleFadeIn 0.5s 0.1s forwards; /* Delay ligero */
+}
+
+/* --- 9. HOUSING ICONS (ISO) --- */
+.radio-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.radio-card {
+    background: #FFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 20px 10px;
+    cursor: pointer; text-align: center; transition: 0.2s;
+}
+.radio-card input { display: none; }
+.radio-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+.radio-card:has(input:checked) { border-color: #3B82F6; background: #EFF6FF; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
+.icon-iso {
+    width: 60px; height: 60px; background: #F8FAFC; border-radius: 50%; margin: 0 auto 10px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #94A3B8;
+    transition: 0.3s;
+}
+.radio-card:has(input:checked) .icon-iso { background: #3B82F6; color: white; box-shadow: 0 5px 10px rgba(37, 99, 235, 0.3); }
+.radio-card span { font-weight: 600; color: #64748B; font-size: 0.9rem; }
+.radio-card:has(input:checked) span { color: #1E40AF; }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .grid-2-tight, .grid-3-tight, .safety-grid-modern { grid-template-columns: 1fr; }
+    .grid-2-tight, .grid-3-tight, .safety-grid-modern, .radio-card-grid { grid-template-columns: 1fr; }
     .action-header { flex-direction: column; align-items: flex-start; gap: 15px; }
     .smart-toggle-wrapper { width: 100%; }
     .smart-pill-btn { width: 100%; justify-content: space-between; }
+}
+
+/* Placeholder para inputs select (Mejora visual) */
+select.rich-input:invalid {
+    color: #CBD5E1; /* Color gris claro como placeholder */
+}
+select.rich-input option {
+    color: #1E293B; /* Color oscuro para las opciones */
+}
+
+/* Definimos una animación simple a prueba de fallos */
+@keyframes simpleFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 4. Asegurar que los inputs dentro no estén ocultos */
+.premium-group {
+    background: #FFFFFF; /* Asegurar fondo blanco */
+    opacity: 1; /* Por si acaso */
+}
+
+/* --- FIX DE ESPACIO EN BLANCO & DOBLE TOAST --- */
+
+/* 1. MATAR EL ESPACIO FANTASMA */
+/* Esto le dice al navegador: "Si el panel NO es el activo, que no exista físicamente" */
+.form-tab-panel:not(.active) {
+    display: none !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important; /* Doble seguridad para sacarlo del flujo */
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+/* 2. AJUSTE DE MARGEN SUPERIOR */
+/* A veces el primer elemento del tab tiene margen que empuja todo hacia abajo */
+.form-tab-panel.active > .premium-group:first-child {
+    margin-top: 0 !important;
+}
+
+/* 3. LIMPIEZA DE TOASTS */
+/* Evita que se acumulen visualmente si salen dos */
+.alex-toast {
+    margin-top: 10px;
+}
+
+.valuable-card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px; transition:0.2s; }
+    .valuable-card:hover { background: #fff; border-color: #3B82F6; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    .vc-header { font-weight: 700; color: #334155; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; }
+    
+    .icon-blue { color: #3B82F6; background: #EFF6FF; padding: 8px; border-radius: 6px; }
+    .icon-purple { color: #8B5CF6; background: #F5F3FF; padding: 8px; border-radius: 6px; }
+    .icon-teal { color: #14B8A6; background: #F0FDFA; padding: 8px; border-radius: 6px; }
+    .icon-warning { color: #F59E0B; background: #FFFBEB; padding: 8px; border-radius: 6px; }
+    .icon-gray { color: #64748B; background: #F1F5F9; padding: 8px; border-radius: 6px; }
+
+    .simple-border { border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 12px; width: 100%; font-size: 0.9rem; transition:0.2s; }
+    .simple-border:focus { border-color: #3B82F6; outline:none; background:white; box-shadow:0 0 0 3px rgba(59,130,246,0.1); }
+    
+    .vc-toggle label { font-size: 0.8rem; color: #64748B; cursor: pointer; display: flex; align-items: center; gap: 6px; margin-top: 5px; }
+    .vc-toggle input:checked + label { color: #2563EB; font-weight: 600; }
+
+    /* --- VALUABLES GRID STYLES --- */
+.jewelry-hero-card {
+    background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%);
+    border: 1px solid #DBEAFE;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.05);
+}
+.j-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+.j-icon { width: 40px; height: 40px; background: #2563EB; color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3); }
+.j-title h5 { margin: 0; font-size: 1.1rem; color: #1E293B; font-weight: 700; }
+.j-title span { font-size: 0.8rem; color: #64748B; }
+
+.vault-switch-row { display: flex; justify-content: space-between; align-items: center; background: white; padding: 10px 15px; border-radius: 10px; border: 1px solid #E2E8F0; margin-top: 10px; }
+.vs-label { font-size: 0.9rem; font-weight: 600; color: #334155; display: flex; align-items: center; gap: 8px; }
+.vs-label i { color: #94A3B8; }
+
+.divider-text { text-align: center; border-bottom: 1px solid #E2E8F0; line-height: 0.1em; margin: 20px 0 30px; font-size: 0.8rem; color: #94A3B8; font-weight: 600; letter-spacing: 1px; }
+.divider-text span { background: #fff; padding: 0 10px; }
+
+/* SMART GRID (ACCORDION) */
+.smart-grid-valuables { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; }
+
+.smart-val-card {
+    background: #fff; border: 1px solid #E2E8F0; border-radius: 12px;
+    padding: 15px; cursor: pointer; transition: all 0.2s ease;
+    display: flex; flex-direction: column; overflow: hidden;
+    height: 70px; /* Altura colapsada */
+    position: relative;
+}
+.smart-val-card:hover { border-color: #CBD5E1; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+
+/* ESTADO ACTIVO (EXPANDIDO) */
+.smart-val-card.active {
+    height: auto; /* Se expande */
+    border-color: #3B82F6;
+    background: #F8FAFC;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    grid-row: span 2; /* Opcional: para que ocupe más espacio vertical */
+}
+
+.svc-header { display: flex; align-items: center; gap: 10px; height: 40px; }
+.svc-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+.svc-icon.purple { background: #F3E8FF; color: #7E22CE; }
+.svc-icon.teal { background: #CCFBF1; color: #0F766E; }
+.svc-icon.gray { background: #F1F5F9; color: #475569; }
+.svc-icon.blue { background: #DBEAFE; color: #1D4ED8; }
+.svc-icon.warning { background: #FEF3C7; color: #B45309; }
+
+.svc-name { font-weight: 600; font-size: 0.9rem; color: #334155; flex-grow: 1; }
+.svc-check { color: #CBD5E1; transition: 0.3s; }
+.smart-val-card.active .svc-check { transform: rotate(45deg); color: #EF4444; } /* Se vuelve una X */
+
+.svc-body { opacity: 0; transform: translateY(-10px); transition: 0.3s; display: none; }
+.smart-val-card.active .svc-body { opacity: 1; transform: translateY(0); display: block; margin-top: 10px; border-top: 1px dashed #E2E8F0; padding-top: 10px; }
+
+/* --- MODAL HOLOGRÁFICO --- */
+.holo-modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(10, 10, 20, 0.7); backdrop-filter: blur(12px);
+    z-index: 999999; align-items: center; justify-content: center;
+}
+
+.holo-card {
+    width: 90%; max-width: 400px;
+    background: linear-gradient(160deg, #1e1e24 0%, #2a2a35 100%);
+    border-radius: 24px; padding: 40px 30px;
+    text-align: center; position: relative; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    color: white; transform: scale(0.9); opacity: 0; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Efecto Shimmer (Brillo pasando) */
+@keyframes shimmerMove {
+    0% { transform: translateX(-150%) skewX(-20deg); }
+    100% { transform: translateX(150%) skewX(-20deg); }
+}
+.shimmer-effect {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+    animation: shimmerMove 3s infinite; pointer-events: none;
+}
+
+.agent-avatar-group { position: relative; width: 80px; height: 80px; margin: 0 auto 20px; }
+.avatar-ring {
+    width: 100%; height: 100%; border-radius: 50%;
+    background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; color: white;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+.status-badge {
+    position: absolute; bottom: -5px; right: -10px;
+    background: #064E3B; color: #34D399;
+    font-size: 0.7rem; padding: 4px 8px; border-radius: 20px;
+    font-weight: 700; border: 1px solid #059669;
+    display: flex; align-items: center; gap: 5px;
+}
+.pulse-dot-green { width: 6px; height: 6px; background: #34D399; border-radius: 50%; box-shadow: 0 0 5px #34D399; }
+
+.holo-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 5px; background: linear-gradient(90deg, #fff, #94A3B8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.holo-sub { color: #64748B; font-size: 0.9rem; margin-bottom: 20px; }
+.mono-font { font-family: monospace; letter-spacing: 1px; color: #3B82F6; }
+
+.holo-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); margin: 20px 0; }
+
+.holo-desc { color: #CBD5E1; font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; }
+.holo-desc strong { color: white; }
+
+.contact-box {
+    background: rgba(255,255,255,0.05); border-radius: 12px; padding: 15px;
+    display: flex; align-items: center; gap: 15px; margin-bottom: 25px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.cb-icon { font-size: 1.2rem; color: #3B82F6; }
+.cb-text { text-align: left; font-size: 0.9rem; color: #E2E8F0; }
+
+.holo-btn {
+    width: 100%; padding: 14px; border: none; border-radius: 12px;
+    background: linear-gradient(90deg, #3B82F6, #2563EB);
+    color: white; font-weight: 700; font-size: 1rem; cursor: pointer;
+    box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+    transition: 0.3s;
+}
+.holo-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 30px -5px rgba(37, 99, 235, 0.6); }
+
+/* =========================================
+   UNIVERSAL PREMIUM SELECT
+   ========================================= */
+
+/* =========================================
+   UNIVERSAL PREMIUM SELECT (DISEÑO FINAL)
+   ========================================= */
+
+/* Ocultar select original */
+select.premium-select { display: none !important; }
+
+/* 1. EL BOTÓN (TRIGGER) - Se queda en el formulario */
+.custom-select-wrapper {
+    position: relative;
+    user-select: none;
+    width: 100%;
+    /* Fix para alinear dentro de tus input-rich-wrapper */
+    display: flex; 
+    align-items: center;
+    height: 100%;
+}
+
+.custom-select-trigger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px 0 0; /* Espacio para la flecha */
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #334155;
+    background: transparent; /* Transparente para heredar del wrapper padre */
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+/* Flecha */
+.custom-select-arrow {
+    font-size: 0.8rem;
+    color: #64748B;
+    transition: transform 0.3s ease;
+    margin-left: auto;
+}
+
+/* Estado Activo del Botón (Flecha gira) */
+.custom-select-trigger.active .custom-select-arrow {
+    transform: rotate(180deg);
+    color: #3B82F6;
+}
+
+/* 2. EL MENÚ FLOTANTE (PORTAL) - Vive en el Body */
+.premium-select-dropdown {
+    position: absolute !important; /* CAMBIO CLAVE: Absolute en lugar de Fixed */
+    z-index: 2147483647 !important;
+    background: #ffffff;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.15);
+    padding: 5px 0;
+    
+    /* Estado Oculto */
+    display: none; /* Usamos display none para asegurar que no estorbe */
+    opacity: 0;
+    transform: translateY(-10px);
+    
+    /* Scroll interno */
+    max-height: 250px;
+    overflow-y: auto;
+    min-width: 150px;
+}
+
+/* Estado Visible */
+.premium-select-dropdown.is-open {
+    display: block; /* Aparece */
+    animation: fadeInDrop 0.2s forwards; /* Animación simple */
+}
+
+/* Scrollbar bonito */
+.premium-select-dropdown::-webkit-scrollbar { width: 5px; }
+.premium-select-dropdown::-webkit-scrollbar-track { background: #f1f5f9; }
+.premium-select-dropdown::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+/* 3. OPCIONES INTERNAS */
+.premium-select-option {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    color: #475569;
+    cursor: pointer;
+    transition: background 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.premium-select-option:hover { background-color: #EFF6FF; color: #2563EB; }
+.premium-select-option.selected { background-color: #F1F5F9; color: #1E293B; font-weight: 600; }
+.premium-select-option.selected::after {
+    content: '\f00c'; font-family: "Font Awesome 6 Free"; font-weight: 900; color: #10B981; font-size: 0.8rem;
+}
+
+/* FIX DE COLOR EN ERROR */
+.input-error .custom-select-trigger {
+    color: #B91C1C;
+}
+.input-error .custom-select-arrow {
+    color: #EF4444;
+}
+
+@keyframes fadeInDrop {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
