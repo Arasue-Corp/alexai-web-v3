@@ -239,7 +239,9 @@
                             </div>
 
                             <div class="inp-rich-group mb-4">
-                                <label>Industry</label>
+                                <label class="cov-label">Industry
+                                    <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('employment-details')"></i>
+                                </label>
                                 <div class="input-rich-wrapper compact-premium theme-blue">
                                     <div class="icon-slot"><i class="fa-solid fa-industry"></i></div>
                                     <select class="rich-input validate-req premium-select">
@@ -309,7 +311,9 @@
                             </div>
 
                             <div class="inp-rich-group mb-4">
-                                <label>Education Level</label>
+                                <label class="cov-label">Education Level
+                                    <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('education-level')"></i>
+                                </label>
                                 <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-graduation-cap"></i></div>
                                     <select class="rich-input validate-req premium-select">
@@ -326,7 +330,9 @@
 
                             <div class="grid-2-tight">
                                 <div class="inp-rich-group">
-                                    <label>Residence Type</label>
+                                    <label class="cov-label">Residence Type
+                                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('residence-type')"></i>
+                                    </label>
                                     <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-city"></i></div>
                                         <select class="rich-input validate-req premium-select">
@@ -339,7 +345,9 @@
                                     </div>
                                 </div>
                                 <div class="inp-rich-group">
-                                    <label>Ownership</label>
+                                    <label class="cov-label">Ownership
+                                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('ownership-status')"></i>
+                                    </label>
                                     <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-key"></i></div>
                                         <select class="rich-input validate-req premium-select">
@@ -375,7 +383,9 @@
                             </div>
 
                             <div class="inp-rich-group mb-4">
-                                <label>Industry</label>
+                                <label class="cov-label">Industry
+                                    <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('employment-details')"></i>
+                                </label>
                                 <div class="input-rich-wrapper compact-premium theme-blue">
                                     <div class="icon-slot"><i class="fa-solid fa-industry"></i></div>
                                     <select class="rich-input validate-req premium-select">
@@ -445,7 +455,9 @@
                             </div>
 
                             <div class="inp-rich-group mb-4">
-                                <label>Education Level</label>
+                                <label class="cov-label">Education Level
+                                    <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('education-level')"></i>
+                                </label>
                                 <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-graduation-cap"></i></div>
                                     <select class="rich-input validate-req premium-select">
@@ -462,7 +474,9 @@
 
                             <div class="grid-2-tight">
                                 <div class="inp-rich-group">
-                                    <label>Residence Type</label>
+                                    <label class="cov-label">Residence Type
+                                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('residence-type')"></i>
+                                    </label>
                                     <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-city"></i></div>
                                         <select class="rich-input validate-req premium-select">
@@ -475,7 +489,9 @@
                                     </div>
                                 </div>
                                 <div class="inp-rich-group">
-                                    <label>Ownership</label>
+                                    <label class="cov-label">Ownership
+                                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('ownership-status')"></i>
+                                    </label>
                                     <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-key"></i></div>
                                         <select class="rich-input validate-req premium-select">
@@ -717,6 +733,34 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
+
+    <div id="richInfoModal" class="zlight-overlay">
+        <div class="zlight-card rich-mode">
+            
+            <button class="close-float-btn" onclick="closeRichInfo()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="rich-media-header" id="richHeaderColor">
+                <div class="media-content" id="richMediaContainer">
+                    </div>
+            </div>
+
+            <div class="rich-body">
+                <h3 class="rich-title" id="richTitle">Title Here</h3>
+                <p class="rich-desc" id="richDesc">Description text...</p>
+
+                <div class="example-box">
+                    <div class="ex-tag"><i class="fa-regular fa-lightbulb"></i> Example</div>
+                    <p id="richExample">If X happens, Y pays for Z...</p>
+                </div>
+            </div>
+
+            <div class="rich-footer">
+                <button class="btn-rich-action" onclick="closeRichInfo()">Got it</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

@@ -11,6 +11,7 @@
     
     <link rel="stylesheet" href="../css/style.css"> 
     <link rel="stylesheet" href="../css/style-quote.css"> 
+
     <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
 </head>
 <body class="bg-body">
@@ -226,6 +227,7 @@
                                     <div class="pg-input-area">
                                         <div class="input-rich-wrapper compact-premium">
                                             <input type="text" class="rich-input date-picker validate-req" placeholder="MM/DD/YYYY">
+                                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('effective-date')"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -243,9 +245,7 @@
                                     <div class="inp-rich-group">
                                         <label class="cov-label">
                                             Bodily Injury (BI) 
-                                            <i class="fa-solid fa-circle-info tooltip-icon">
-                                                <span class="tooltip-text" style="font-style: normal;">Pays if you injure someone else in an accident. Required by law.</span>
-                                            </i>
+                                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('bodily-injury')"></i>
                                         </label>
                                         <div class="input-rich-wrapper compact-premium theme-blue">
                                             <div class="icon-slot"><i class="fa-solid fa-user-injured"></i></div>
@@ -270,9 +270,7 @@
                                     <div class="inp-rich-group">
                                         <label class="cov-label">
                                             Property Damage (PD)
-                                            <i class="fa-solid fa-circle-info tooltip-icon">
-                                                <span class="tooltip-text" style="font-style: normal;">Pays for damage you cause to others' cars or property (fences, signs).</span>
-                                            </i>
+                                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('property-damage')"></i>
                                         </label>
                                         <div class="input-rich-wrapper compact-premium theme-blue">
                                             <div class="icon-slot"><i class="fa-solid fa-car-burst"></i></div>
@@ -288,6 +286,7 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <label class="lbl-premium">
                                 </div>
                             </div>
 
@@ -303,9 +302,7 @@
                                     <div class="inp-rich-group">
                                         <label class="cov-label">
                                             Uninsured Motorist BI
-                                            <i class="fa-solid fa-circle-info tooltip-icon">
-                                                <span class="tooltip-text" style="font-style: normal;">Pays for YOUR injuries if hit by a driver with no insurance.</span>
-                                            </i>
+                                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('uninsured-motorist')"></i>
                                         </label>                                        
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-user-shield"></i></div>
@@ -330,9 +327,7 @@
                                     <div class="inp-rich-group">
                                         <label class="cov-label">
                                             Underinsured Motorist BI
-                                            <i class="fa-solid fa-circle-info tooltip-icon">
-                                                <span class="tooltip-text" style="font-style: normal;">Pays if the at-fault driver has insurance, but not enough to cover your bills.</span>
-                                            </i>
+                                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('underinsured-motorist')"></i>
                                         </label>
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-umbrella"></i></div>
@@ -357,9 +352,7 @@
                                     <div class="inp-rich-group">
                                         <label class="cov-label">
                                             Medical Payments
-                                            <i class="fa-solid fa-circle-info tooltip-icon">
-                                                <span class="tooltip-text" style="font-style: normal;">Pays for immediate medical expenses for you/passengers, regardless of fault.</span>
-                                            </i>
+                                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('medical-payments')"></i>
                                         </label>                                        
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-briefcase-medical"></i></div>
@@ -382,9 +375,7 @@
                                     <div class="inp-rich-group">
                                         <label class="cov-label">
                                             Accidental Death
-                                            <i class="fa-solid fa-circle-info tooltip-icon">
-                                                <span class="tooltip-text" style="font-style: normal;">Provides a benefit to beneficiaries in case of a fatal auto accident.</span>
-                                            </i>
+                                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('accidental-death')"></i>
                                         </label>                                            
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-heart-pulse"></i></div>
@@ -671,8 +662,37 @@
         </button>
     </div>
 
+    <div id="richInfoModal" class="zlight-overlay">
+        <div class="zlight-card rich-mode">
+            
+            <button class="close-float-btn" onclick="closeRichInfo()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="rich-media-header" id="richHeaderColor">
+                <div class="media-content" id="richMediaContainer">
+                    </div>
+            </div>
+
+            <div class="rich-body">
+                <h3 class="rich-title" id="richTitle">Title Here</h3>
+                <p class="rich-desc" id="richDesc">Description text...</p>
+
+                <div class="example-box">
+                    <div class="ex-tag"><i class="fa-regular fa-lightbulb"></i> Example</div>
+                    <p id="richExample">If X happens, Y pays for Z...</p>
+                </div>
+            </div>
+
+            <div class="rich-footer">
+                <button class="btn-rich-action" onclick="closeRichInfo()">Got it</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
+
 </body>
 </html>

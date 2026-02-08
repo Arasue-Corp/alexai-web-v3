@@ -240,7 +240,9 @@
                                 </div>
 
                                 <div class="inp-rich-group mb-4">
-                                    <label>Vehicle Identification Number (VIN)</label>
+                                    <label class="cov-label">Vehicle Identification Number (VIN)
+                                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('vehicle-vin')"></i>
+                                    </label>
                                 <div class="input-rich-wrapper compact-premium theme-blue">
                                     <div class="icon-slot"><i class="fa-solid fa-barcode"></i></div>
                                         <input type="text" class="rich-input validate-req" placeholder="17 Characters" style="letter-spacing: 2px; font-weight: 700; text-transform: uppercase;">
@@ -321,7 +323,9 @@
                             
                                 <div class="grid-2-tight">
                                     <div class="inp-rich-group">
-                                        <label>Comprehensive</label>
+                                        <label class="cov-label">Comprehensive
+                                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('comp-coverage')"></i>
+                                        </label>
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-cloud-showers-heavy"></i></div>
                                             <select class="rich-input premium-select">
@@ -332,7 +336,9 @@
                                         </div>
                                     </div>
                                     <div class="inp-rich-group">
-                                        <label>Collision</label>
+                                        <label class="cov-label">Collision
+                                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('coll-coverage')"></i>
+                                        </label>
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-car-burst"></i></div>
                                             <select class="rich-input premium-select">
@@ -346,14 +352,18 @@
 
                                 <div class="grid-2-tight mt-3">
                                     <div class="inp-rich-group">
-                                        <label>Towing</label>
+                                        <label class="cov-label">Towing
+                                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('roadside-assistance')"></i>
+                                        </label>
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-truck-pickup"></i></div>
                                             <select class="rich-input premium-select"><option>No Coverage</option><option selected>$50</option><option>$75</option></select>
                                         </div>
                                     </div>
                                     <div class="inp-rich-group">
-                                        <label>Rental</label>
+                                        <label class="cov-label">Rental
+                                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('rental-reimbursement')"></i>
+                                        </label>
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-key"></i></div>
                                             <select class="rich-input premium-select"><option>No Coverage</option><option selected>$30 / day</option></select>
@@ -367,7 +377,9 @@
                                     
                                     <div class="row-switch-container compact">
                                         <div class="switch-label-group">
-                                            <div class="sl-text"><span class="sl-title">Gap Coverage</span></div>
+                                            <div class="sl-text"><span class="sl-title cov-label">Gap Coverage
+                                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('gap-coverage')"></i>
+                                            </span></div>
                                         </div>
                                         <div class="aurora-toggle-segment small">
                                             <input type="radio" name="gap_1" id="gap1_yes" value="yes">
@@ -380,7 +392,9 @@
 
                                     <div class="row-switch-container compact">
                                         <div class="switch-label-group">
-                                            <div class="sl-text"><span class="sl-title">Safety Features</span></div>
+                                            <div class="sl-text"><span class="sl-title cov-label">Safety Features
+                                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('safety-features')"></i>
+                                            </span></div>
                                         </div>
                                         <div class="aurora-toggle-segment small">
                                             <input type="radio" name="safe_1" id="safe1_yes" value="yes">
@@ -393,7 +407,9 @@
 
                                     <div class="row-switch-container compact">
                                         <div class="switch-label-group">
-                                            <div class="sl-text"><span class="sl-title">Custom Equipment</span></div>
+                                            <div class="sl-text"><span class="sl-title cov-label">Custom Equipment
+                                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('custom-equipment')"></i>
+                                            </span></div>
                                         </div>
                                         <div class="input-rich-wrapper compact-input">
                                             <span class="currency">$</span>
@@ -638,6 +654,34 @@
 
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
+
+    <div id="richInfoModal" class="zlight-overlay">
+        <div class="zlight-card rich-mode">
+            
+            <button class="close-float-btn" onclick="closeRichInfo()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="rich-media-header" id="richHeaderColor">
+                <div class="media-content" id="richMediaContainer">
+                    </div>
+            </div>
+
+            <div class="rich-body">
+                <h3 class="rich-title" id="richTitle">Title Here</h3>
+                <p class="rich-desc" id="richDesc">Description text...</p>
+
+                <div class="example-box">
+                    <div class="ex-tag"><i class="fa-regular fa-lightbulb"></i> Example</div>
+                    <p id="richExample">If X happens, Y pays for Z...</p>
+                </div>
+            </div>
+
+            <div class="rich-footer">
+                <button class="btn-rich-action" onclick="closeRichInfo()">Got it</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

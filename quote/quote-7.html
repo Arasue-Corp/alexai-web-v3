@@ -247,7 +247,9 @@
 
                                 <div class="grid-2-tight">
                                     <div class="inp-rich-group">
-                                        <label>Licensed in US Since</label>
+                                    <label class="cov-label">Licensed in US Since
+                                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('us-experience')"></i>
+                                    </label>
                                         <div class="input-rich-wrapper compact-premium theme-blue">
                                             <div class="icon-slot"><i class="fa-solid fa-calendar-check"></i></div>
                                             <input type="text" class="rich-input date-picker master-date calc-years validate-req" data-driver="d1" placeholder="MM/DD/YYYY">
@@ -307,7 +309,9 @@
                                     </div>
 
                                 <div class="inp-rich-group mb-4">
-                                    <label>Do you have a foreign license?</label>
+                                    <label class="cov-label">Do you have a foreign license?
+                                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('foreign-license')"></i>
+                                    </label>
                                     <div class="input-rich-wrapper compact-premium theme-teal">
                                                 <div class="icon-slot"><i class="fa-solid fa-passport"></i></div>
                                         <select class="rich-input foreign-select validate-req premium-select" onchange="toggleForeign('d1', this.value)">
@@ -357,7 +361,9 @@
                                     <div class="switch-label-group">
                                         <div class="sl-icon"><i class="fa-solid fa-file-contract"></i></div>
                                         <div class="sl-text">
-                                            <span class="sl-title">SR-22 Filing?</span>
+                                            <span class="sl-title cov-label">SR-22 Filing?
+                                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('sr22-filing')"></i>
+                                            </span>
                                             <span class="sl-sub">Certificate of Financial Responsibility?</span>
                                         </div>
                                     </div>
@@ -390,7 +396,9 @@
                                     <div class="switch-label-group">
                                         <div class="sl-icon" style="color:#EF4444; background:#FEF2F2;"><i class="fa-solid fa-ban"></i></div>
                                         <div class="sl-text">
-                                            <span class="sl-title">License Suspended?</span>
+                                            <span class="sl-title cov-label">License Suspended?
+                                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('license-suspended')"></i>
+                                            </span>
                                             <span class="sl-sub">Is your license currently suspended?</span>
                                         </div>
                                     </div>
@@ -872,6 +880,34 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
+
+    <div id="richInfoModal" class="zlight-overlay">
+        <div class="zlight-card rich-mode">
+            
+            <button class="close-float-btn" onclick="closeRichInfo()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="rich-media-header" id="richHeaderColor">
+                <div class="media-content" id="richMediaContainer">
+                    </div>
+            </div>
+
+            <div class="rich-body">
+                <h3 class="rich-title" id="richTitle">Title Here</h3>
+                <p class="rich-desc" id="richDesc">Description text...</p>
+
+                <div class="example-box">
+                    <div class="ex-tag"><i class="fa-regular fa-lightbulb"></i> Example</div>
+                    <p id="richExample">If X happens, Y pays for Z...</p>
+                </div>
+            </div>
+
+            <div class="rich-footer">
+                <button class="btn-rich-action" onclick="closeRichInfo()">Got it</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

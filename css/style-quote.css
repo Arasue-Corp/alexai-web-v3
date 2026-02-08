@@ -9,6 +9,8 @@
     --color-dark: #0F172A;          /* Slate 900 (Text) */
     --color-gray: #64748B;          /* Slate 500 (Subtext) */
     --color-success: #10B981;       /* Emerald */
+    --degradado-aurora: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-indigo) 100%);
+
     
     /* Surfaces */
     --bg-body: #F8FAFC;             /* Cold Matte White */
@@ -155,7 +157,8 @@ body::before {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px; /* Espacio entre columnas */
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    height: 60px;
 }
 
 .form-grid-2 .cov-label {
@@ -4676,3 +4679,152 @@ h3.tech-title.warning-text {
     opacity: 0; transition: opacity 0.3s;
 }
 #custom-modal.active { display: flex; opacity: 1; }
+
+/* --- INFO MODAL STYLES --- */
+
+/* Hacemos la tarjeta un poco más angosta para lectura fácil */
+.zlight-card.info-mode {
+    max-width: 420px;
+    padding: 0; 
+    border-radius: 20px;
+    overflow: hidden; /* Para que el footer no se salga */
+}
+
+/* Header Limpio */
+.info-header {
+    padding: 25px 25px 15px;
+    display: flex; align-items: center; gap: 15px;
+}
+
+.info-icon-circle {
+    width: 42px; height: 42px;
+    background: #EFF6FF; color: #2563EB;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+}
+
+.info-title {
+    margin: 0; font-size: 1.1rem; font-weight: 800; color: #0F172A; flex: 1;
+}
+
+.modal-close-btn-simple {
+    background: transparent; border: none; font-size: 1.2rem;
+    color: #94A3B8; cursor: pointer; width: 30px; height: 30px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    transition: 0.2s;
+}
+.modal-close-btn-simple:hover { background: #F1F5F9; color: #EF4444; }
+
+/* Cuerpo */
+.info-body { padding: 0 25px 25px; }
+
+.info-desc {
+    font-size: 0.95rem; line-height: 1.6; color: #475569; margin-bottom: 20px;
+}
+
+.info-list { list-style: none; padding: 0; margin: 0; }
+.info-list li {
+    display: flex; gap: 12px; align-items: flex-start;
+    margin-bottom: 10px; font-size: 0.9rem; color: #334155;
+}
+
+/* Footer */
+.info-footer {
+    padding: 15px 25px; background: #F8FAFC; border-top: 1px solid #E2E8F0;
+    text-align: right;
+}
+.btn-ghost-primary {
+    background: transparent; color: #2563EB; font-weight: 700; border: none;
+    cursor: pointer; padding: 8px 16px; border-radius: 8px; transition: 0.2s;
+}
+.btn-ghost-primary:hover { background: #EFF6FF; }
+
+/* --- RICH MODAL STYLES --- */
+
+.zlight-card.rich-mode {
+    max-width: 400px;
+    padding: 0;
+    overflow: hidden; /* Importante para que la imagen de cabecera respete los bordes */
+    border: 1px solid rgba(255,255,255,0.8);
+}
+
+/* Botón cerrar flotante */
+.close-float-btn {
+    position: absolute; top: 15px; right: 15px;
+    width: 32px; height: 32px; background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(4px); border: none; border-radius: 50%;
+    color: #1E293B; cursor: pointer; z-index: 10;
+    transition: 0.2s; display: flex; align-items: center; justify-content: center;
+}
+.close-float-btn:hover { background: white; color: #EF4444; }
+
+/* 1. HEADER VISUAL */
+.rich-media-header {
+    height: 160px;
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); /* Default Blue */
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+}
+
+/* Animación de Flotar */
+@keyframes float-anim {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.rich-img-icon {
+    font-size: 4rem;
+    color: #3B82F6;
+    animation: float-anim 4s ease-in-out infinite;
+    filter: drop-shadow(0 10px 15px rgba(59, 130, 246, 0.3));
+}
+
+/* Si usas imágenes reales */
+.rich-img-real {
+    max-height: 120px;
+    width: auto;
+    animation: float-anim 4s ease-in-out infinite;
+}
+
+/* 2. BODY */
+.rich-body { padding: 25px 25px 15px; text-align: center; }
+
+.rich-title {
+    font-size: 1.4rem; font-weight: 800; color: #0F172A;
+    margin-bottom: 10px; letter-spacing: -0.5px;
+}
+
+.rich-desc {
+    font-size: 0.95rem; color: #64748B; line-height: 1.5; margin-bottom: 20px;
+}
+
+/* Caja de Ejemplo */
+.example-box {
+    background: #F8FAFC; border: 1px dashed #CBD5E1;
+    border-radius: 12px; padding: 15px; text-align: left;
+    position: relative; margin-top: 10px;
+}
+
+.ex-tag {
+    font-size: 0.75rem; font-weight: 700; color: #0D9488;
+    text-transform: uppercase; margin-bottom: 5px; display: block;
+}
+
+.example-box p {
+    font-size: 0.9rem; color: #334155; margin: 0; line-height: 1.4;
+    font-style: italic;
+}
+
+/* 3. FOOTER */
+.rich-footer {
+    padding: 15px 25px 25px;
+}
+
+.btn-rich-action {
+    width: 100%; padding: 12px; background: var(--degradado-aurora); color: white;
+    border: none; border-radius: 12px; font-weight: 600; cursor: pointer;
+    transition: transform 0.2s;
+}
+.btn-rich-action:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+

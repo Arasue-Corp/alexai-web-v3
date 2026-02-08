@@ -395,7 +395,9 @@
                                     </div>
                                 </div>
                                 <div class="inp-rich-group">
-                                    <label>Current Odometer</label>
+                                    <label class="cov-label">Current Odometer
+                                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('vehicle-odometer')"></i>
+                                    </label>
                                     <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-hashtag"></i></div>
                                         <input type="number" class="rich-input validate-req" placeholder="Total Miles">
@@ -411,6 +413,7 @@
                                 <div class="pg-header-badge blue">
                                     <i class="fa-solid fa-toggle-on"></i> VEHICLE STATUS
                                 </div>
+                                <span class="cov-label" style="margin-bottom:-6px !important;"><i class="fa-solid fa-circle-info tooltip-icon cov-label" onclick="showRichInfo('vehicle-status-flags')"></i></span>
                                 <div class="pg-header-line"></div>
                             </div>
                         
@@ -465,14 +468,18 @@
                                     </div>
                                 </div>
                                 <div class="inp-rich-group">
-                                    <label>MSRP</label>
+                                    <label class="cov-label">MSRP
+                                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('vehicle-values')"></i>
+                                    </label>
                                     <div class="input-rich-wrapper">
                                         <span class="currency">$</span>
                                         <input type="number" class="rich-input" placeholder="0.00">
                                     </div>
                                 </div>
                                 <div class="inp-rich-group">
-                                    <label>ACV (Current)</label>
+                                    <label class="cov-label">ACV (Current)
+                                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('vehicle-values')"></i>
+                                    </label>
                                     <div class="input-rich-wrapper">
                                         <span class="currency">$</span>
                                         <input type="number" class="rich-input" placeholder="0.00">
@@ -481,7 +488,9 @@
                             </div>
 
                             <div class="inp-rich-group" style="margin-top: 20px;">
-                                <label>Anti-Theft System</label>
+                                <label class="cov-label">Anti-Theft System
+                                    <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('anti-theft-levels')"></i>
+                                </label>
                                 <div class="input-rich-wrapper compact-premium theme-blue">
                                             <div class="icon-slot"><i class="fa-solid fa-shield-halved"></i></div>
                                     <select class="rich-input validate-req premium-select">
@@ -737,6 +746,34 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
+
+    <div id="richInfoModal" class="zlight-overlay">
+        <div class="zlight-card rich-mode">
+            
+            <button class="close-float-btn" onclick="closeRichInfo()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="rich-media-header" id="richHeaderColor">
+                <div class="media-content" id="richMediaContainer">
+                    </div>
+            </div>
+
+            <div class="rich-body">
+                <h3 class="rich-title" id="richTitle">Title Here</h3>
+                <p class="rich-desc" id="richDesc">Description text...</p>
+
+                <div class="example-box">
+                    <div class="ex-tag"><i class="fa-regular fa-lightbulb"></i> Example</div>
+                    <p id="richExample">If X happens, Y pays for Z...</p>
+                </div>
+            </div>
+
+            <div class="rich-footer">
+                <button class="btn-rich-action" onclick="closeRichInfo()">Got it</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

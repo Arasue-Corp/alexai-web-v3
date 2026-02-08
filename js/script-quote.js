@@ -1055,7 +1055,9 @@ if(document.getElementById('quoteFormStep10')) {
                 </div>            
 
                 <div class="inp-rich-group mb-4">
-                    <label>Vehicle Identification Number (VIN)</label>
+                    <label class="cov-label">Vehicle Identification Number (VIN)
+                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('vehicle-vin')"></i>
+                    </label>
                     <div class="input-rich-wrapper compact-premium theme-blue">
                         <div class="icon-slot"><i class="fa-solid fa-barcode"></i></div>
                         <input type="text" class="rich-input validate-req" placeholder="17 Characters" style="letter-spacing: 2px; font-weight: 700; text-transform: uppercase;">
@@ -1091,25 +1093,53 @@ if(document.getElementById('quoteFormStep10')) {
                 </div>
 
                 <div class="grid-2-tight">
-                    <div class="inp-rich-group"><label>Comprehensive</label><div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-cloud-showers-heavy"></i></div><select class="rich-input"><option>$500 ded</option><option>$1000 ded</option><option>No Cov</option></select></div></div>
-                    <div class="inp-rich-group"><label>Collision</label><div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-car-burst"></i></div><select class="rich-input"><option>$500 ded</option><option>$1000 ded</option><option>No Cov</option></select></div></div>
+                    <div class="inp-rich-group">
+                        <label class="cov-label">Comprehensive
+                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('comp-coverage')"></i>
+                        </label>
+                    <div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-cloud-showers-heavy"></i></div><select class="rich-input"><option>$500 ded</option><option>$1000 ded</option><option>No Cov</option></select></div></div>
+                    <div class="inp-rich-group">
+                        <label class="cov-label">Collision
+                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('coll-coverage')"></i>
+                        </label>
+                    <div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-car-burst"></i></div><select class="rich-input"><option>$500 ded</option><option>$1000 ded</option><option>No Cov</option></select></div></div>
                 </div>
                 <div class="grid-2-tight mt-3">
-                    <div class="inp-rich-group"><label>Towing</label><div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-truck-pickup"></i></div><select class="rich-input"><option>No Cov</option><option>$50</option></select></div></div>
-                    <div class="inp-rich-group"><label>Rental</label><div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-key"></i></div><select class="rich-input"><option>No Cov</option><option>$30/day</option></select></div></div>
+                    <div class="inp-rich-group">
+                        <label class="cov-label">Towing
+                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('roadside-assistance')"></i>
+                        </label>
+                    <div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-truck-pickup"></i></div><select class="rich-input"><option>No Cov</option><option>$50</option></select></div></div>
+                    <div class="inp-rich-group">
+                        <label class="cov-label">Rental
+                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('rental-reimbursement')"></i>
+                        </label>
+                    <div class="input-rich-wrapper compact-premium theme-teal"><div class="icon-slot"><i class="fa-solid fa-key"></i></div><select class="rich-input"><option>No Cov</option><option>$30/day</option></select></div></div>
                 </div>
 
                 <div class="extras-list-container mt-4">
                     <div class="row-switch-container compact">
-                        <div class="switch-label-group"><div class="sl-text"><span class="sl-title">Gap Coverage</span></div></div>
+                        <div class="switch-label-group">
+                            <div class="sl-text"><span class="sl-title cov-label">Gap Coverage
+                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('gap-coverage')"></i>
+                            </span></div>
+                        </div>
                         <div class="aurora-toggle-segment small"><input type="radio" name="gap_${id}" id="gap${id}_yes" value="yes"><label for="gap${id}_yes">Yes</label><input type="radio" name="gap_${id}" id="gap${id}_no" value="no" checked><label for="gap${id}_no">No</label><div class="segment-highlight"></div></div>
                     </div>
                     <div class="row-switch-container compact">
-                        <div class="switch-label-group"><div class="sl-text"><span class="sl-title">Safety Features</span></div></div>
+                        <div class="switch-label-group">
+                            <div class="sl-text"><span class="sl-title cov-label">Safety Features
+                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('safety-features')"></i>
+                            </span></div>
+                        </div>
                         <div class="aurora-toggle-segment small"><input type="radio" name="safe_${id}" id="safe${id}_yes" value="yes"><label for="safe${id}_yes">Yes</label><input type="radio" name="safe_${id}" id="safe${id}_no" value="no" checked><label for="safe${id}_no">No</label><div class="segment-highlight"></div></div>
                     </div>
                     <div class="row-switch-container compact">
-                        <div class="switch-label-group"><div class="sl-text"><span class="sl-title">Custom Equipment</span></div></div>
+                        <div class="switch-label-group">
+                            <div class="sl-text"><span class="sl-title cov-label">Custom Equipment
+                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('custom-equipment')"></i>
+                            </span></div>
+                        </div>
                         <div class="input-rich-wrapper compact-input"><span class="currency">$</span><input type="number" class="rich-input" placeholder="0"></div>
                     </div>
                 </div>
@@ -1330,11 +1360,16 @@ if(document.getElementById('quoteFormStep8')) {
 }
 
 /* =========================================
-   LOGIC FOR STEP 7 (LICENSING) - FIXED
+   LOGIC FOR STEP 7 (LICENSING & FILINGS) - SOLUCIÓN FINAL
    ========================================= */
-if(document.getElementById('quoteFormStep7')) {
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const step7Container = document.getElementById('quoteFormStep7');
+    const btnNext = document.getElementById('btnNext');
 
-    // 1. DATEPICKER & CALCULATIONS
+    if (!step7Container || !btnNext) return;
+
+    // 1. DATEPICKERS & CALCULATIONS
     if(typeof flatpickr !== 'undefined') {
         flatpickr(".date-picker", { 
             dateFormat: "m/d/Y", 
@@ -1346,60 +1381,49 @@ if(document.getElementById('quoteFormStep7')) {
                 const dateObj = selectedDates[0];
                 const now = new Date();
 
-                // A) ANTIGÜEDAD DE LICENCIA (US / AZ / EXP)
+                // A) Sincronizar Master -> Slave
+                if(input.classList.contains('master-date')) {
+                    const panel = input.closest('.car-panel');
+                    const usBlock = panel.querySelector('div[id^="us-block-"]');
+                    // Solo sincronizar si el bloque US no está deshabilitado
+                    if (usBlock && !usBlock.classList.contains('disabled')) {
+                        panel.querySelectorAll('.slave-date').forEach(slave => {
+                            if (slave._flatpickr && !slave.value) {
+                                slave._flatpickr.setDate(dateObj, true); 
+                            }
+                        });
+                    }
+                }
+
+                // B) Antigüedad (Años)
                 if(input.classList.contains('calc-years')) {
                     let years = now.getFullYear() - dateObj.getFullYear();
-                    // Ajuste preciso de mes/día
                     if (now.getMonth() < dateObj.getMonth() || 
                        (now.getMonth() === dateObj.getMonth() && now.getDate() < dateObj.getDate())) {
                         years--;
                     }
                     years = Math.max(0, years);
-
-                    // Buscar input "Years" hermano
                     const wrapper = input.closest('.inp-rich-group');
                     const nextGroup = wrapper.nextElementSibling;
                     if(nextGroup) {
                         const yearInput = nextGroup.querySelector('.years-calc');
                         if(yearInput) yearInput.value = `${years} Years`;
                     }
-
-                    // Sincronizar Master -> Slave (US Date -> AZ Date)
-                    if(input.classList.contains('master-date')) {
-                        const panel = input.closest('.car-panel');
-                        // Solo si no es extranjera (sin sello)
-                        if(!panel.querySelector('.license-block-wrapper').classList.contains('disabled')) {
-                            panel.querySelectorAll('.slave-date').forEach(slave => {
-                                if(!slave.value) slave._flatpickr.setDate(dateObj, true); 
-                            });
-                        }
-                    }
                 }
 
-                // B) CÁLCULO SUSPENSIÓN (TIEMPO TRANSCURRIDO)
+                // C) Suspensión (Meses)
                 if(input.classList.contains('calc-elapsed')) {
-                    // Diferencia total en meses
                     let monthsDiff = (now.getFullYear() - dateObj.getFullYear()) * 12;
                     monthsDiff -= dateObj.getMonth();
                     monthsDiff += now.getMonth();
-                    
-                    // Ajuste por día del mes
-                    if (now.getDate() < dateObj.getDate()) {
-                        monthsDiff--;
-                    }
+                    if (now.getDate() < dateObj.getDate()) monthsDiff--;
                     monthsDiff = Math.max(0, monthsDiff);
-
                     const y = Math.floor(monthsDiff / 12);
                     const m = monthsDiff % 12;
-
-                    // CORRECCIÓN: Buscamos por ID parcial porque la clase puede variar
-                    // input -> wrapper -> group -> parent (hidden div)
                     const section = input.closest('div[id^="susp-"]'); 
-                    
                     if(section) {
                         const yearOut = section.querySelector('.years-elapsed');
                         const monthOut = section.querySelector('.months-elapsed');
-                        
                         if(yearOut) yearOut.value = y;
                         if(monthOut) monthOut.value = m;
                     }
@@ -1408,214 +1432,238 @@ if(document.getElementById('quoteFormStep7')) {
         });
     }
 
-    // 2. TOGGLE FOREIGN LICENSE (STAMP)
+    // 2. TOGGLE FOREIGN LICENSE (VISUAL)
     window.toggleForeign = function(driverId, val) {
         const usBlock = document.getElementById(`us-block-${driverId}`);
         const foreignSection = document.getElementById(`foreign-section-${driverId}`);
+        if(!usBlock || !foreignSection) return;
         
         if(val !== 'None') {
-            // Activar Sello
-            usBlock.classList.add('disabled');
-            foreignSection.classList.add('visible');
-            
-            // Quitar 'validate-req' de los inputs tapados para que no bloqueen
-            usBlock.querySelectorAll('.validate-req').forEach(el => {
-                el.classList.remove('validate-req');
-                el.classList.remove('input-error'); // Limpiar errores previos
-            });
-            // Hacer requeridos los inputs extranjeros
-            foreignSection.querySelectorAll('input').forEach(el => el.classList.add('validate-req'));
-
+            // Activar Extranjero
+            usBlock.classList.add('disabled'); // Marca visual para saber que está inactivo
+            foreignSection.classList.remove('hidden-anim');
+            foreignSection.style.display = 'block'; 
         } else {
-            // Restaurar Normal
+            // Restaurar US
             usBlock.classList.remove('disabled');
-            foreignSection.classList.remove('visible');
-            
-            // Restaurar requeridos US
-            usBlock.querySelectorAll('.rich-input').forEach(el => el.classList.add('validate-req'));
-            // Quitar requeridos extranjeros
-            foreignSection.querySelectorAll('input').forEach(el => el.classList.remove('validate-req'));
+            foreignSection.classList.add('hidden-anim');
+            foreignSection.style.display = 'none';
         }
     };
 
     // 3. TOGGLE SECTIONS (SR22 / SUSP)
     window.toggleSection = function(sectionId, action) {
         const div = document.getElementById(sectionId);
+        if(!div) return;
+
         if(action === 'yes') {
-            div.classList.add('visible');
-            // Activar validación en los campos que aparecieron
-            div.querySelectorAll('input, select').forEach(el => {
-                if(!el.readOnly) el.classList.add('validate-req');
-            });
+            div.classList.remove('hidden-anim');
+            div.style.display = 'block'; 
+            setTimeout(() => div.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
         } else {
-            div.classList.remove('visible');
-            // Desactivar validación y limpiar errores
+            div.classList.add('hidden-anim');
+            div.style.display = 'none'; 
             div.querySelectorAll('input, select').forEach(el => {
-                el.classList.remove('validate-req');
-                el.value = ''; // Limpiar valor
+                el.value = '';
                 el.closest('.input-rich-wrapper')?.classList.remove('input-error');
             });
         }
     };
 
-    // 4. SWITCH TABS
-    window.switchDriverTab = function(driverId, btnElement) {
-        // 1. Gestión de Tabs (Visual)
-        document.querySelectorAll('.tab-int, .driver-tab').forEach(t => t.classList.remove('active'));
-        if(btnElement) btnElement.classList.add('active');
-        else {
-            // Lógica para resaltar tab si vienes de botón Next/Prev
-            const targetTab = document.querySelector(`[onclick*="'${driverId}'"]`) || document.getElementById(`tab-${driverId}`);
-            if(targetTab) targetTab.classList.add('active');
+    // 4. VALIDACIÓN INTELIGENTE
+    btnNext.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        let isValid = true;
+        let firstError = null;
+
+        const activePanel = step7Container.querySelector('.car-panel.active') || step7Container.querySelector('.car-panel');
+        const driverId = activePanel.getAttribute('data-id') || 'd1';
+
+        // --- VALIDACIÓN SR-22 (Lógica) ---
+        const sr22Radio = activePanel.querySelector(`input[name="sr22_${driverId}"]:checked`);
+        if (sr22Radio && sr22Radio.value === 'yes') {
+            const container = document.getElementById(`sr22-${driverId}`);
+            const select = container.querySelector('select');
+            if (select) {
+                const wrapper = select.closest('.input-rich-wrapper');
+                wrapper.classList.remove('input-error');
+                if (!select.value || select.value === "") {
+                    isValid = false;
+                    void wrapper.offsetWidth; wrapper.classList.add('input-error');
+                    if (!firstError) firstError = select;
+                }
+            }
         }
 
-        // 2. SELECCIÓN DE PANELES
-        const currentPanel = document.querySelector('.car-panel.active, .driver-panel.active');
-        const targetPanel = document.getElementById(`panel-${driverId}`);
-
-        // 3. DETECTAR DIRECCIÓN AUTOMÁTICAMENTE
-        // Asumimos orden: d1 < d2 < d3
-        const currentId = currentPanel ? currentPanel.id.replace('panel-', '') : '';
-        // Comparación simple de strings funciona para 'd1' < 'd2' o 'car-1' < 'car-2'
-        const direction = (driverId > currentId) ? 'next' : 'prev';
-
-        // 4. ¡LLAMADA AL MOTOR GLOBAL!
-        window.auroraTransition(currentPanel, targetPanel, direction);
-    };
-
-    // 5. VALIDATION
-    if (btnNext) {
-        btnNext.addEventListener('click', (e) => {
-            e.preventDefault();
-            let isValid = true;
-            let firstError = null;
-            
-            const activePanel = document.querySelector('.car-panel.active');
-            // Seleccionamos solo los inputs marcados como requeridos
-            const inputs = activePanel.querySelectorAll('.validate-req');
-            
-            inputs.forEach(input => {
-                // TRUCO: offsetParent es null si el elemento (o su padre) tiene display: none
-                // Esto asegura que NO validemos campos ocultos
-                if(input.offsetParent !== null) { 
-                    const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
-                    wrapper.classList.remove('input-error');
-                    
-                    // Validar si está vacío o si es un select sin valor
-                    if(!input.value.trim() || input.value === "") {
-                        isValid = false;
-                        void wrapper.offsetWidth; // Shake animation reset
-                        wrapper.classList.add('input-error');
-                        if (firstError === null) firstError = wrapper;
-                    }
+        // --- VALIDACIÓN SUSPENSION (Lógica) ---
+        const suspRadio = activePanel.querySelector(`input[name="susp_${driverId}"]:checked`);
+        if (suspRadio && suspRadio.value === 'yes') {
+            const container = document.getElementById(`susp-${driverId}`);
+            const dateInput = container.querySelector('input.date-picker');
+            if (dateInput) {
+                const wrapper = dateInput.closest('.input-rich-wrapper');
+                wrapper.classList.remove('input-error');
+                if (!dateInput.value || dateInput.value === "") {
+                    isValid = false;
+                    void wrapper.offsetWidth; wrapper.classList.add('input-error');
+                    if (!firstError) firstError = dateInput;
                 }
-            });
+            }
+        }
 
-            if(isValid) {
-                const btn = document.getElementById('btnNext');
-                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
-                setTimeout(() => {
-                    window.location.href = "quote-8.html";
-                }, 800);
-            } else {
-                window.showToast("Please fill in all required fields.", "warning");
-                if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // --- VALIDACIÓN DE LICENCIA (US vs FOREIGN) ---
+        // Revisamos qué eligió en el Select "Do you have a foreign license?"
+        const foreignSelect = activePanel.querySelector('.foreign-select');
+        const isForeign = foreignSelect && foreignSelect.value !== 'None';
+
+        // Recorremos TODOS los inputs requeridos del panel activo
+        const inputs = activePanel.querySelectorAll('.validate-req');
+        
+        inputs.forEach(input => {
+            // 1. Filtro: ¿Es un input de SR22/Suspension? (Ya validados arriba, ignorar)
+            const isInOptional = input.closest(`div[id^="sr22-"], div[id^="susp-"]`);
+            if (isInOptional) return;
+
+            // 2. Filtro: LICENCIAS (Aquí está la corrección clave)
+            const foreignBlock = input.closest('div[id^="foreign-section-"]');
+            const usBlock = input.closest('div[id^="us-block-"]');
+
+            // CASO A: Eligió Extranjera -> Ignorar inputs de US Block
+            if (isForeign && usBlock) return;
+
+            // CASO B: Eligió US (None) -> Ignorar inputs de Foreign Block
+            if (!isForeign && foreignBlock) return;
+
+            // Si pasa los filtros, VALIDAMOS
+            const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
+            wrapper.classList.remove('input-error');
+
+            if (!input.value || input.value.trim() === "") {
+                console.log("❌ Campo vacío:", input);
+                isValid = false;
+                void wrapper.offsetWidth;
+                wrapper.classList.add('input-error');
+                if (!firstError) firstError = input;
             }
         });
-    }
-}
+
+        if (isValid) {
+            btnNext.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+            setTimeout(() => {
+                window.location.href = "quote-8.html";
+            }, 800);
+        } else {
+            if(typeof window.showToast === 'function') window.showToast("Please complete the required fields.", "warning");
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstError.focus({preventScroll:true});
+            }
+        }
+    });
+});
 
 /* =========================================
    LOGIC FOR STEP 6 (HISTORY)
    ========================================= */
-if(document.getElementById('quoteFormStep6')) {
+/* =========================================
+   LOGIC FOR STEP 6 (History) - VALIDACIÓN LÓGICA (INFALIBLE)
+   ========================================= */
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const step6Container = document.getElementById('quoteFormStep6');
+    const btnNext = document.getElementById('btnNext');
 
-    // 1. DATEPICKERS
+    if (!step6Container || !btnNext) return;
+
+    // 1. INICIALIZAR DATEPICKERS (Si existen)
     if(typeof flatpickr !== 'undefined') {
         flatpickr(".date-picker-past", { dateFormat: "m/d/Y", maxDate: "today", disableMobile: "true" });
         flatpickr(".date-picker-future", { dateFormat: "m/d/Y", minDate: "today", disableMobile: "true" });
     }
 
-    // 2. TOGGLE HISTORY (SHOW/HIDE)
+    // 2. FUNCIÓN TOGGLE (Para mostrar/ocultar visualmente)
     window.toggleHistory = function(driverId, action) {
         const wrapper = document.getElementById(`history-wrapper-${driverId}`);
+        if(!wrapper) return;
+
         if(action === 'yes') {
-            wrapper.classList.add('visible');
-            // Hacer requeridos los inputs
-            wrapper.querySelectorAll('input, select').forEach(el => el.classList.add('validate-req'));
+            wrapper.classList.remove('hidden-anim');
+            wrapper.style.display = 'block'; 
+            setTimeout(() => wrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
         } else {
-            wrapper.classList.remove('visible');
-            // Limpiar requeridos y errores
-            wrapper.querySelectorAll('input, select').forEach(el => {
-                el.classList.remove('validate-req');
-                el.closest('.input-rich-wrapper')?.classList.remove('input-error');
-            });
+            wrapper.classList.add('hidden-anim');
+            wrapper.style.display = 'none';
+            // Limpiar errores visuales
+            wrapper.querySelectorAll('.input-rich-wrapper').forEach(el => el.classList.remove('input-error'));
         }
     };
 
-// 3. SWITCH TABS CON ANIMACIÓN
-    window.switchDriverTab = function(driverId, btnElement) {
-        // 1. Gestión de Tabs (Visual)
-        document.querySelectorAll('.tab-int, .driver-tab').forEach(t => t.classList.remove('active'));
-        if(btnElement) btnElement.classList.add('active');
-        else {
-            // Lógica para resaltar tab si vienes de botón Next/Prev
-            const targetTab = document.querySelector(`[onclick*="'${driverId}'"]`) || document.getElementById(`tab-${driverId}`);
-            if(targetTab) targetTab.classList.add('active');
-        }
+    // 3. VALIDACIÓN SEGURA AL DAR CLICK
+    btnNext.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
 
-        // 2. SELECCIÓN DE PANELES
-        const currentPanel = document.querySelector('.car-panel.active, .driver-panel.active');
-        const targetPanel = document.getElementById(`panel-${driverId}`);
+        let isValid = true;
+        let firstError = null;
 
-        // 3. DETECTAR DIRECCIÓN AUTOMÁTICAMENTE
-        // Asumimos orden: d1 < d2 < d3
-        const currentId = currentPanel ? currentPanel.id.replace('panel-', '') : '';
-        // Comparación simple de strings funciona para 'd1' < 'd2' o 'car-1' < 'car-2'
-        const direction = (driverId > currentId) ? 'next' : 'prev';
+        // A. Identificar Panel Activo (Driver 1, Driver 2...)
+        const activePanel = step6Container.querySelector('.car-panel.active') || step6Container.querySelector('.car-panel');
+        // Obtenemos el ID del conductor (ej: 'd1') desde el atributo data-id del HTML
+        const driverId = activePanel.getAttribute('data-id') || 'd1';
 
-        // 4. ¡LLAMADA AL MOTOR GLOBAL!
-        window.auroraTransition(currentPanel, targetPanel, direction);
-    };
+        // B. VERIFICAR LA PREGUNTA PRINCIPAL (¿Tiene seguro?)
+        // Buscamos el radio button que está "checked" para este conductor
+        const radioName = `hasIns_${driverId}`;
+        const selectedOption = activePanel.querySelector(`input[name="${radioName}"]:checked`);
+        const userHasInsurance = selectedOption ? selectedOption.value === 'yes' : false;
 
-    // 4. VALIDATION
-    if (btnNext) {
-        btnNext.addEventListener('click', (e) => {
-            e.preventDefault();
-            let isValid = true;
-            let firstError = null;
+        console.log(`Driver: ${driverId} | Tiene Seguro: ${userHasInsurance}`);
+
+        // C. VALIDAR SOLO SI DIJO "YES"
+        if (userHasInsurance) {
+            // Buscar el contenedor de los campos
+            const wrapper = document.getElementById(`history-wrapper-${driverId}`);
             
-            const activePanel = document.querySelector('.car-panel.active');
-            // Validar solo inputs visibles con la clase validate-req
-            const inputs = activePanel.querySelectorAll('.validate-req');
-            
+            // Buscar TODOS los inputs que deberían tener datos (Selects e Inputs)
+            // IMPORTANTE: Asegúrate de que tus fechas tengan la clase 'validate-req' en el HTML
+            const inputs = wrapper.querySelectorAll('.validate-req');
+
+            if (inputs.length === 0) {
+                console.warn("⚠️ OJO: No se encontraron inputs con la clase .validate-req");
+            }
+
             inputs.forEach(input => {
-                if(input.offsetParent !== null) { // Check visibility
-                    const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
-                    wrapper.classList.remove('input-error');
+                const parent = input.closest('.input-rich-wrapper') || input.parentElement;
+                parent.classList.remove('input-error');
+
+                // Validar si está vacío
+                if (!input.value || input.value.trim() === "") {
+                    isValid = false;
                     
-                    if(!input.value.trim() || input.value === "") {
-                        isValid = false;
-                        void wrapper.offsetWidth;
-                        wrapper.classList.add('input-error');
-                        if (firstError === null) firstError = wrapper;
-                    }
+                    // Marcar error
+                    void parent.offsetWidth; // Reset animación
+                    parent.classList.add('input-error');
+                    
+                    if (!firstError) firstError = input;
                 }
             });
+        }
 
-            if(isValid) {
-                const btn = document.getElementById('btnNext');
-                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
-                setTimeout(() => {
-                    window.location.href = "quote-7.html";
-                }, 800);
-            } else {
-                window.showToast("Please fill in all required fields.", "warning");
-                if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        });
-    }
-}
+        // D. RESULTADO
+        if (isValid) {
+            btnNext.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+            setTimeout(() => {
+                window.location.href = "quote-7.html";
+            }, 800);
+        } else {
+            if(typeof window.showToast === 'function') window.showToast("Please complete the insurance details.", "warning");
+            if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstError.focus({preventScroll: true});
+        }
+    });
+});
 
 /* =========================================
    LOGIC FOR STEP 5 (VIOLATIONS) - FIXED TABS
@@ -1682,7 +1730,9 @@ if(document.getElementById('quoteFormStep5')) {
 
                 <div class="grid-2-tight">
                     <div class="inp-rich-group" style="grid-column: 1 / -1;">
-                        <label>Violation Type</label>
+                        <label class="cov-label">Violation Type 
+                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('violation-type')"></i>
+                        </label>
                         <div class="input-rich-wrapper compact-premium theme-blue">
                                             <div class="icon-slot"><i class="fa-solid fa-triangle-exclamation"></i></div>
                             <select class="rich-input validate-req">
@@ -1728,7 +1778,9 @@ if(document.getElementById('quoteFormStep5')) {
                     </div>
 
                     <div class="inp-rich-group">
-                        <label>Payout (BI/PD)</label>
+                        <label class="cov-label")>Payout (BI/PD)
+                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('payout-bipd')"></i>                        
+                        </label>
                         <div class="input-rich-wrapper compact-premium theme-blue">
                             <div class="icon-slot"><i class="fa-solid fa-dollar-sign"></i></div>
                             <input type="number" class="rich-input validate-req" placeholder="0">
@@ -1736,7 +1788,9 @@ if(document.getElementById('quoteFormStep5')) {
                     </div>
 
                     <div class="inp-rich-group">
-                        <label>Payout (Coll)</label>
+                        <label class="cov-label">Payout (Coll)
+                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('payout-coll')"></i>
+                        </label>
                         <div class="input-rich-wrapper compact-premium theme-blue">
                             <div class="icon-slot"><i class="fa-solid fa-dollar-sign"></i></div>
                             <input type="number" class="rich-input validate-req" placeholder="0">
@@ -2088,7 +2142,9 @@ if(document.getElementById('quoteFormStep4')) {
                     </div>
 
                     <div class="inp-rich-group mt-3">
-                        <label>License Number</label>
+                        <label class="cov-label">Driver License / ID / Passport Number
+                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('document-requirements')"></i>
+                        </label>
                         <div class="input-rich-wrapper compact-premium theme-teal">
                             <div class="icon-slot"><i class="fa-solid fa-id-card"></i></div><input type="text" class="rich-input validate-req" placeholder="Enter DL Number"></div>
                     </div>
@@ -2258,183 +2314,144 @@ if(document.getElementById('quoteFormStep4')) {
 /* =========================================
    LOGIC FOR STEP 3 (Quote 3) - WITH WAIVER MODAL
    ========================================= */
-window.addEventListener('load', function() {
+/* ===============================================================
+   LÓGICA PASO 3: CALENDARIO + VALIDACIÓN + WAIVER VISUAL
+   =============================================================== */
+document.addEventListener('DOMContentLoaded', function() {
+
     const step3Container = document.getElementById('quoteFormStep3');
-    let btnNext = document.getElementById('btnNext');
+    const btnNext = document.getElementById('btnNext');
 
-    // Elementos del Modal
-    const modal = document.getElementById('waiverModal');
-    const btnReturn = document.getElementById('btnReturnToCoverages');
-    const btnConfirm = document.getElementById('btnConfirmWaiver');
+    if (!step3Container || !btnNext) return;
 
-    if (!btnNext || !step3Container) return;
+    // -----------------------------------------------------------
+    // 1. INICIALIZAR CALENDARIO (Flatpickr)
+    // -----------------------------------------------------------
+    const dateInput = step3Container.querySelector('.date-picker');
+    if (dateInput && typeof flatpickr !== 'undefined') {
+        if (dateInput._flatpickr) dateInput._flatpickr.destroy();
 
-    // 1. ACTIVAR CALENDARIO (Flatpickr)
-    if (typeof flatpickr !== 'undefined') {
-        const dateInput = step3Container.querySelector('.date-picker');
-        if (dateInput) {
-            flatpickr(dateInput, {
-                dateFormat: "m/d/Y",
-                minDate: "today",
-                defaultDate: "today",
-                disableMobile: "true",
-                onChange: function(selectedDates, dateStr, instance) {
-                    const wrapper = instance.element.closest('.input-rich-wrapper');
-                    if(wrapper) wrapper.classList.remove('input-error');
-                }
-            });
-        }
-    }
-
-    // 2. VALIDACIÓN VISUAL (Al cambiar inputs)
-    // Incluimos tanto los validate-req como los UM/UIM
-    const allInputs = step3Container.querySelectorAll('select, input');
-    allInputs.forEach(input => {
-        input.addEventListener('change', function() {
-            if(this.value && this.value !== "") {
-                const wrapper = this.closest('.input-rich-wrapper') || this.parentElement;
-                if(wrapper) wrapper.classList.remove('input-error');
+        flatpickr(dateInput, {
+            dateFormat: "m/d/Y",
+            minDate: "today",
+            defaultDate: "today",
+            disableMobile: "true",
+            onChange: function(selectedDates, dateStr, instance) {
+                const wrapper = instance.element.closest('.input-rich-wrapper');
+                if(wrapper) wrapper.classList.remove('input-error', 'shake-anim');
             }
         });
-    });
-
-// 3. LÓGICA DEL BOTÓN NEXT (SOLUCIÓN FINAL: LIMPIEZA DE FANTASMAS)
-    
-    // Paso crítico: Obtener el botón original
-    const oldBtn = document.getElementById('btnNext');
-
-    if(oldBtn) {
-        // 1. CLONAR EL BOTÓN
-        // Esto crea una copia idéntica pero SIN los eventos viejos (bugs) pegados.
-        const newBtn = oldBtn.cloneNode(true);
-        oldBtn.parentNode.replaceChild(newBtn, oldBtn);
-
-        // 2. ASIGNAR LA LÓGICA NUEVA AL BOTÓN LIMPIO
-        newBtn.onclick = function(e) {
-            e.preventDefault();
-            
-            // --- OBTENER PANEL ACTIVO ---
-            const activePanel = step3Container.querySelector('.car-panel.active') || step3Container;
-            
-            // --- PARTE A: LIMPIEZA VISUAL (NUCLEAR) ---
-            // Borramos cualquier rastro de error en todo el panel
-            activePanel.querySelectorAll('.input-rich-wrapper').forEach(w => {
-                w.classList.remove('input-error', 'shake-anim');
-            });
-
-            // --- PARTE B: VALIDACIÓN BÁSICA (VACÍOS) ---
-            let isBasicValid = true;
-            let firstError = null;
-            const requiredFields = activePanel.querySelectorAll('.validate-req');
-
-            requiredFields.forEach(field => {
-                // Ignorar campos ocultos
-                if (field.offsetParent === null) return;
-
-                if (!field.value || field.value.trim() === "") {
-                    isBasicValid = false;
-                    const wrapper = field.closest('.input-rich-wrapper') || field.parentElement;
-                    if(wrapper) {
-                        void wrapper.offsetWidth;
-                        wrapper.classList.add('input-error', 'shake-anim');
-                    }
-                    if(!firstError) firstError = field;
-                }
-            });
-
-            if (!isBasicValid) {
-                if(firstError) firstError.focus({preventScroll: true});
-                return;
-            }
-
-            // --- PARTE C: WAIVER CHECK (SOLO "NO COVERAGE") ---
-            // Usamos las clases específicas que agregaste
-            const allUMs = Array.from(activePanel.querySelectorAll('.js-target-um'));
-            const inputUM = allUMs.find(el => el.offsetParent !== null); // Visible
-
-            const allUIMs = Array.from(activePanel.querySelectorAll('.js-target-uim'));
-            const inputUIM = allUIMs.find(el => el.offsetParent !== null); // Visible
-            
-            let needsWaiver = false;
-
-            const triggerWaiverError = (input) => {
-                const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
-                if (wrapper) {
-                    wrapper.classList.remove('input-error', 'shake-anim');
-                    void wrapper.offsetWidth; 
-                    wrapper.classList.add('input-error', 'shake-anim');
-                }
-            };
-
-            // Validar UM
-            if (inputUM) {
-                if (inputUM.value === "No Coverage") {
-                    console.log("⚠️ UM Activa Waiver");
-                    needsWaiver = true;
-                    triggerWaiverError(inputUM);
-                }
-            }
-
-            // Validar UIM
-            if (inputUIM) {
-                if (inputUIM.value === "No Coverage") {
-                    console.log("⚠️ UIM Activa Waiver");
-                    needsWaiver = true;
-                    triggerWaiverError(inputUIM);
-                }
-            }
-
-            // --- RESULTADO ---
-            if (needsWaiver) {
-                // Abrir Modal
-                const modal = document.getElementById('waiverModal');
-                if(modal) {
-                    modal.style.display = 'flex';
-                    setTimeout(() => modal.classList.add('is-visible'), 10);
-                }
-            } else {
-                // Éxito
-                const originalText = newBtn.innerHTML; // Usamos newBtn
-                newBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
-                setTimeout(() => {
-                    window.location.href = "quote-4.html";
-                }, 800);
-            }
-        };
     }
 
-    // 4. LÓGICA DEL MODAL
-    if(btnReturn) {
-        btnReturn.onclick = function() {
-            // Cerrar modal y quedarse aquí
-            modal.classList.remove('is-visible');
-            
-            // Opcional: Hacer scroll a la sección de protección para que elijan
-            const umSection = document.getElementById('inputUM');
-            if(umSection) {
-                umSection.closest('.premium-group').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                // Resaltar visualmente
-                umSection.closest('.input-rich-wrapper').classList.add('input-error');
-            }
-        };
-    }
-
-    if(btnConfirm) {
-        btnConfirm.onclick = function() {
-            // Aceptar riesgo -> Cerrar modal y avanzar
-            modal.classList.remove('is-visible');
-            goToNextPage();
-        };
-    }
-
-    // Función auxiliar para avanzar
-    function goToNextPage() {
+    // -----------------------------------------------------------
+    // 2. FUNCIÓN DE NAVEGACIÓN
+    // -----------------------------------------------------------
+    const irAlSiguientePaso = () => {
         btnNext.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
         btnNext.style.pointerEvents = 'none';
-        
         setTimeout(() => {
             window.location.href = "quote-4.html";
-        }, 800);
+        }, 500);
+    };
+
+    // -----------------------------------------------------------
+    // 3. VALIDACIÓN AL HACER CLICK
+    // -----------------------------------------------------------
+    btnNext.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopImmediatePropagation(); 
+
+        // A) Limpiar errores visuales previos
+        step3Container.querySelectorAll('.input-rich-wrapper').forEach(w => {
+            w.classList.remove('input-error', 'shake-anim');
+        });
+
+        // B) Validar CAMPOS VACÍOS (Obligatorios)
+        const inputs = step3Container.querySelectorAll('.validate-req');
+        let hayErrores = false;
+        let primerError = null;
+
+        inputs.forEach(input => {
+            const valor = input.value;
+            // Si está vacío
+            if (!valor || valor.trim() === "") {
+                hayErrores = true;
+                const wrapper = input.closest('.input-rich-wrapper') || input.parentElement;
+                
+                if (wrapper) {
+                    void wrapper.offsetWidth; // Reset animación
+                    wrapper.classList.add('input-error', 'shake-anim');
+                }
+                if (!primerError) primerError = input;
+            }
+        });
+
+        if (hayErrores) {
+            if (primerError) primerError.focus({preventScroll: true});
+            if (typeof window.showToast === 'function') window.showToast("Please select all required fields.", "warning");
+            return; 
+        }
+
+        // C) Validar WAIVER (UM / UIM) con EFECTO VISUAL
+        const inputUM = document.getElementById('inputUM');
+        const inputUIM = document.getElementById('inputUIM');
+        const modal = document.getElementById('waiverModal');
+        let waiverActivado = false;
+
+        // Función auxiliar para marcar error
+        const marcarError = (elemento) => {
+            const wrapper = elemento.closest('.input-rich-wrapper');
+            if (wrapper) {
+                void wrapper.offsetWidth;
+                wrapper.classList.add('input-error', 'shake-anim');
+            }
+        };
+
+        // Verificamos UM
+        if (inputUM && inputUM.value === "No Coverage") {
+            waiverActivado = true;
+            marcarError(inputUM); // <--- ESTO AÑADE EL ROJO Y EL SHAKE
+        }
+
+        // Verificamos UIM
+        if (inputUIM && inputUIM.value === "No Coverage") {
+            waiverActivado = true;
+            marcarError(inputUIM); // <--- ESTO AÑADE EL ROJO Y EL SHAKE
+        }
+
+        if (waiverActivado && modal) {
+            // Abrir Modal
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('is-visible'), 10);
+        } else {
+            // Todo correcto -> Avanzar
+            irAlSiguientePaso();
+        }
+    });
+
+    // -----------------------------------------------------------
+    // 4. BOTONES DEL MODAL
+    // -----------------------------------------------------------
+    const btnConfirm = document.getElementById('btnConfirmWaiver');
+    const btnReturn = document.getElementById('btnReturnToCoverages');
+    const modal = document.getElementById('waiverModal');
+
+    if (modal) {
+        if(btnConfirm) {
+            btnConfirm.onclick = function() {
+                modal.classList.remove('is-visible');
+                setTimeout(() => { 
+                    modal.style.display = 'none';
+                    irAlSiguientePaso(); // Avanzar tras confirmar
+                }, 300);
+            };
+        }
+        if(btnReturn) {
+            btnReturn.onclick = function() {
+                modal.classList.remove('is-visible');
+                setTimeout(() => { modal.style.display = 'none'; }, 300);
+            };
+        }
     }
 });
 
@@ -3026,4 +3043,428 @@ function switchCompTab(tabId, btn) {
 // 4. CERRAR CON ESCAPE
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeCompareModal();
+});
+
+/* =========================================
+   RICH MEDIA TOOLTIP SYSTEM
+   ========================================= */
+
+// BASE DE DATOS DE TOOLTIPS
+const RICH_TOOLTIPS = {
+    
+    'bodily-injury': {
+        title: "Bodily Injury Liability",
+        type: 'icon', 
+        src: 'fa-user-injured', // Icono de persona lastimada
+        theme: 'purple',        // Gradiente morado elegante
+        desc: "This is your financial shield. It pays for the medical expenses and lost wages of other people if you are at fault in an accident.",
+        example: "You accidentally rear-end a car at a stoplight. The other driver suffers whiplash. This coverage pays for their ambulance, ER visit, and physical therapy."
+    },
+
+    'property-damage': {
+        title: "Property Damage Liability",
+        type: 'icon',
+        src: 'fa-car-burst', // Icono de choque/daño
+        theme: 'teal',       // Gradiente Turquesa (Fresco y Financiero)
+        desc: "Pays for damage you cause to another person's property with your vehicle. It covers other cars, fences, lamp posts, or buildings.",
+        example: "You slide on a wet road and hit a parked car and a neighbor's mailbox. This coverage pays to repair both the other car and the mailbox."
+    },
+
+    'uninsured-motorist': {
+        title: "Uninsured Motorist (UM)",
+        type: 'icon',
+        src: 'fa-user-shield', // Escudo protegiendo al usuario
+        theme: 'orange',       // Naranja (Alerta)
+        desc: "Pays for your medical bills if you are hit by a driver who has NO insurance or in a hit-and-run scenario.",
+        example: "A driver runs a red light, hits your car, and flees the scene (hit-and-run). UM covers your injuries since the other driver can't be found."
+    },
+
+    // 4. UNDERINSURED MOTORIST (UIM)
+    'underinsured-motorist': {
+        title: "Underinsured Motorist (UIM)",
+        type: 'icon',
+        src: 'fa-scale-unbalanced', // Balanza desequilibrada
+        theme: 'orange',            // Naranja (Alerta)
+        desc: "Kicks in when the at-fault driver has insurance, but their limits are too low to pay for all your medical bills.",
+        example: "The other driver's policy limit is $25k, but your medical bills are $50k. UIM pays the remaining $25k difference."
+    },
+
+    // 5. MEDICAL PAYMENTS
+    'medical-payments': {
+        title: "Medical Payments (MedPay)",
+        type: 'icon',
+        src: 'fa-briefcase-medical', // Maletín médico
+        theme: 'red',                // Rojo (Salud)
+        desc: "Pays for immediate medical/funeral expenses for you or your passengers, regardless of who was at fault.",
+        example: "You slam on the brakes and your passenger hits their head on the dashboard. MedPay covers their ambulance and X-rays instantly, with no deductible."
+    },
+
+    // 6. ACCIDENTAL DEATH
+    'accidental-death': {
+        title: "Accidental Death Indemnity",
+        type: 'icon',
+        src: 'fa-ribbon', // Lazo conmemorativo
+        theme: 'blue',    // Azul oscuro (Seriedad/Luto)
+        desc: "Provides a lump-sum cash payment to your beneficiaries if a covered person passes away due to injuries from a car accident.",
+        example: "Provides financial support for funeral costs or lost income to the family in the worst-case scenario."
+    },
+
+    // 7. EFFECTIVE DATE
+    'effective-date': {
+        title: "Policy Effective Date",
+        type: 'icon',
+        src: 'fa-calendar-check', // Calendario activado
+        theme: 'green',           // Verde (Inicio/Go)
+        desc: "The exact moment your coverage begins. Accidents happening *before* this date/time are NOT covered.",
+        example: "If you select tomorrow as your start date, you are not insured for your drive home tonight."
+    },
+
+    // 8. DOCUMENT REQUIREMENTS
+    'document-requirements': {
+        title: "Accepted Documents",
+        type: 'icon',
+        src: 'fa-passport', // Icono de pasaporte/ID
+        theme: 'blue',      // Azul (Identidad)
+        desc: "We accept various forms of government-issued ID to verify your identity and driving history.",
+        example: "You can use a US Driver's License, State ID, Foreign License, Matricula Consular, or an International Passport."
+    },
+
+    // 9. VIOLATION TYPE (General)
+    'violation-type': {
+        title: "Traffic Violations & Claims",
+        type: 'icon',
+        src: 'fa-triangle-exclamation', // Triángulo de alerta
+        theme: 'orange',                 // Naranja (Precaución)
+        desc: "Any tickets, accidents, or claims in the last 3-5 years. These impact your driving score.",
+        example: "Includes Speeding, At-Fault Accidents, DUIs, or even Roadside Assistance claims depending on the carrier."
+    },
+
+    // 10. PAYOUT BI/PD (Bodily Injury / Property Damage)
+    'payout-bipd': {
+        title: "Payout: Injury & Property",
+        type: 'icon',
+        src: 'fa-hand-holding-dollar', // Mano entregando dinero
+        theme: 'teal',                  // Turquesa (Dinero saliente)
+        desc: "The total amount the insurance company paid to *other people* for their injuries or damage to their car/property in an accident you caused.",
+        example: "You hit a fence. The insurance paid the neighbor $2,000 to fix it. Enter $2,000 here."
+    },
+
+    // 11. PAYOUT COLLISION
+    'payout-coll': {
+        title: "Payout: Collision",
+        type: 'icon',
+        src: 'fa-car-crash', // Auto dañado
+        theme: 'blue',       // Azul (Tu activo)
+        desc: "The amount the insurance company paid to repair *your own vehicle* after an accident.",
+        example: "You backed into a pole. The body shop charged $1,500 to fix your bumper, paid by insurance. Enter $1,500 here."
+    },
+    // 12. PRIOR CARRIER
+    'prior-carrier': {
+        title: "Prior Insurance Carrier",
+        type: 'icon',
+        src: 'fa-building-shield', // Edificio con escudo
+        theme: 'blue',             // Corporativo
+        desc: "The company that currently insures you. Proof of prior insurance (continuous coverage) unlocks the biggest discounts.",
+        example: "Select 'None' only if you are currently uninsured. Otherwise, choose your current provider (e.g., Geico, Progressive)."
+    },
+
+    // 13. PRIOR LIABILITY LIMITS
+    'prior-limits': {
+        title: "Prior Liability Limits",
+        type: 'icon',
+        src: 'fa-arrow-up-right-dots', // Gráfica subiendo / Niveles
+        theme: 'purple',               // Estatus/Nivel
+        desc: "Your current coverage amounts for Bodily Injury. Higher prior limits show financial responsibility and often result in a cheaper quote now.",
+        example: "Check your current policy DEC page. Common limits are 25/50 (State Min), 50/100, or 100/300 (High)."
+    },
+
+    // 14. PRIOR TRANSFER LEVEL
+    'transfer-level': {
+        title: "Transfer Discount Level",
+        type: 'icon',
+        src: 'fa-medal',   // Medalla de premio
+        theme: 'orange',   // Dorado/Naranja (Recompensa)
+        desc: "This rating rewards your history of continuous coverage. Higher levels unlock deeper 'Welcome Discounts' on your new policy.",
+        example: "• No Prior: Currently uninsured.\n• Level 1: Standard (6+ months insured).\n• Level 2: Preferred (1+ years).\n• Level 3: Elite (3+ years w/ high limits)."
+    },
+
+    // 15. US DRIVING EXPERIENCE
+    'us-experience': {
+        title: "US Driving History",
+        type: 'icon',
+        src: 'fa-road',     // Carretera
+        theme: 'blue',      // Azul (Historial)
+        desc: "The total time you have held a valid driver's license in the United States. This is a key factor in calculating your rate.",
+        example: "New drivers (less than 3 years) typically see higher rates. 3+ years of continuous history unlocks standard pricing."
+    },
+
+    // 16. FOREIGN LICENSE
+    'foreign-license': {
+        title: "International / Foreign License",
+        type: 'icon',
+        src: 'fa-globe-americas', // Mundo/Global
+        theme: 'purple',          // Morado (Identidad)
+        desc: "We insure drivers with non-US licenses! Select the type of permit or license you currently hold.",
+        example: "Valid for: Mexico License, Canadian License, International Permits, or Matricula Consular identification."
+    },
+
+    // 17. SR-22 FILING
+    'sr22-filing': {
+        title: "SR-22 Filing Certificate",
+        type: 'icon',
+        src: 'fa-file-signature', // Documento con firma
+        theme: 'orange',          // Naranja (Trámite)
+        desc: "A form we file with the state DMV to prove you have active liability insurance. Required often after a DUI or driving without insurance.",
+        example: "If the DMV told you that you need an 'SR-22' to reinstate your license, select 'Yes' here."
+    },
+
+    // 18. LICENSE SUSPENDED
+    'license-suspended': {
+        title: "License Status",
+        type: 'icon',
+        src: 'fa-ban',      // Prohibido / Semáforo rojo
+        theme: 'red',       // Rojo (Alerta)
+        desc: "Indicates if your driving privilege is currently revoked or suspended. We may still be able to insure you with a 'Non-Owner' policy or SR-22.",
+        example: "Be honest here. We run MVR reports, and accurate info now prevents rate changes later."
+    },
+
+    // 19. EMPLOYMENT INFO (Industry / Occupation)
+    'employment-details': {
+        title: "Employment & Occupation",
+        type: 'icon',
+        src: 'fa-briefcase',  // Maletín
+        theme: 'blue',        // Azul (Profesional)
+        desc: "Insurers use occupation data to predict risk. Certain professions (like engineers, teachers, or scientists) often qualify for 'Affinity Discounts'.",
+        example: "Select the industry that best fits your current job. If retired or a student, select those specific options for accurate rating."
+    },
+
+    // 20. EDUCATION LEVEL
+    'education-level': {
+        title: "Education Level",
+        type: 'icon',
+        src: 'fa-graduation-cap', // Gorro de graduación
+        theme: 'purple',          // Morado (Logro)
+        desc: "Statistically, drivers with higher education levels tend to have fewer accidents. This can unlock the 'Professional' or 'Good Student' discount.",
+        example: "Select your highest degree completed (e.g., High School, Bachelors, Masters, PhD)."
+    },
+
+    // 21. RESIDENCE TYPE
+    'residence-type': {
+        title: "Residence Type",
+        type: 'icon',
+        src: 'fa-city',       // Edificios/Ciudad
+        theme: 'teal',        // Turquesa (Entorno)
+        desc: "Where you live determines parking risks (street vs. garage) and density. A Mobile Home is rated differently than a high-rise Condo.",
+        example: "• Home: Single family detached.\n• Apt/Condo: Shared walls/parking.\n• Mobile Home: Manufactured housing."
+    },
+
+    // 22. OWNERSHIP STATUS
+    'ownership-status': {
+        title: "Home Ownership",
+        type: 'icon',
+        src: 'fa-house-user', // Persona en casa
+        theme: 'orange',      // Naranja (Activo/Dueño)
+        desc: "Homeowners often get significant discounts (up to 15%) on auto insurance due to stability factors, even if they don't bundle policies.",
+        example: "Select 'Own' if you pay a mortgage or own it outright. Select 'Rent' if you have a landlord."
+    },
+
+    // 23. VIN
+    'vehicle-vin': {
+        title: "Vehicle Identification Number (VIN)",
+        type: 'icon',
+        src: 'fa-barcode',   // Código de barras
+        theme: 'blue',       // Azul (Identidad)
+        desc: "The unique 17-character serial number. It tells us the exact trim, engine, and factory safety features of your car.",
+        example: "Found on your dashboard (driver's side), inside the driver's door jamb, or on your registration card."
+    },
+
+    // 24. COMPREHENSIVE (Other-than-Collision)
+    'comp-coverage': {
+        title: "Comprehensive Coverage",
+        type: 'icon',
+        src: 'fa-cloud-bolt', // Rayo/Naturaleza
+        theme: 'teal',        // Turquesa (Eventos externos)
+        desc: "Pays for damage NOT caused by a crash. This includes theft, vandalism, fire, weather (hail/flood), and hitting animals.",
+        example: "If a tree falls on your car or you hit a deer, Comprehensive pays the repairs minus your deductible."
+    },
+
+    // 25. COLLISION
+    'coll-coverage': {
+        title: "Collision Coverage",
+        type: 'icon',
+        src: 'fa-car-crash',  // Choque
+        theme: 'orange',      // Naranja (Impacto)
+        desc: "Pays to repair YOUR car if you hit another vehicle or object (pole, wall), regardless of who was at fault.",
+        example: "Required if you have a loan/lease. If you select 'No Coverage', you pay 100% of your own repairs."
+    },
+
+    // 26. TOWING / RENTAL
+    'roadside-assistance': {
+        title: "Roadside Assistance",
+        type: 'icon',
+        src: 'fa-truck-pickup', // Grúa
+        theme: 'purple',        // Morado (Servicio)
+        desc: "Emergency help if your car breaks down, you get a flat tire, run out of gas, or lock your keys inside.",
+        example: "Your car dies on the freeway. This covers the cost of the tow truck to the nearest repair shop."
+    },
+
+    // 27. RENTAL REIMBURSEMENT
+    'rental-reimbursement': {
+        title: "Rental Reimbursement",
+        type: 'icon',
+        src: 'fa-car-side',     // Coche lateral
+        theme: 'purple',        // Morado (Servicio)
+        desc: "Pays for a rental car while yours is being repaired as part of a *covered insurance claim* (e.g., after an accident).",
+        example: "A crash puts your car in the shop for 10 days. This coverage pays $30-$50 per day for a rental so you can still get to work."
+    },
+
+    // 28. GAP COVERAGE
+    'gap-coverage': {
+        title: "Gap Insurance",
+        type: 'icon',
+        src: 'fa-bridge',     // Puente (Gap)
+        theme: 'green',       // Verde (Dinero)
+        desc: "Pays the difference (the gap) between what you owe on your loan and the car's actual cash value if it's totaled.",
+        example: "Loan balance: $25k. Car value: $20k. Without Gap, you still owe the bank $5k after a total loss."
+    },
+
+    // 29. CUSTOM EQUIPMENT
+    'custom-equipment': {
+        title: "Custom Equipment (CPE)",
+        type: 'icon',
+        src: 'fa-screwdriver-wrench', // Herramientas
+        theme: 'blue',
+        desc: "Coverage for aftermarket parts NOT installed by the factory (e.g., custom rims, stereo, lift kits, wraps).",
+        example: "Standard policies only cover stock parts. Enter the value of your upgrades here to insure them."
+    },
+    
+    // 30. SAFETY FEATURES
+    'safety-features': {
+        title: "Vehicle Safety Features",
+        type: 'icon',
+        src: 'fa-shield-cat', // Escudo con agilidad / Protección
+        theme: 'green',       // Verde (Seguridad = Descuento)
+        desc: "Modern safety tech reduces accident risk and theft. Checking these boxes can unlock the 'Passive Restraint' and 'Anti-Theft' discounts.",
+        example: "• Anti-Theft: Alarm or GPS tracker.\n• Blind Spot: Lights on mirror when changing lanes.\n• Lane Assist: Beeps if you drift."
+    },
+
+    // 31. LIENHOLDER / OWNERSHIP
+    'lienholder-info': {
+        title: "Financial Interest (Lienholder)",
+        type: 'icon',
+        src: 'fa-file-invoice-dollar', // Factura/Dólar
+        theme: 'blue',                 // Azul (Corporativo)
+        desc: "If you have a loan or lease, the bank owns part of the car. We must list them as a 'Loss Payee' to protect their asset.",
+        example: "• Owned: No bank involved.\n• Financed: You pay a loan (e.g., Toyota Financial).\n• Leased: You return the car later."
+    },
+
+    // 32. ODOMETER
+    'vehicle-odometer': {
+        title: "Current Odometer",
+        type: 'icon',
+        src: 'fa-gauge-high', // Tacómetro
+        theme: 'blue',
+        desc: "The current total mileage on the vehicle. This helps verify the car's condition and annual usage.",
+        example: "Read the dashboard directly. Do not estimate. Example: 45,200 miles."
+    },
+
+    // 33. VEHICLE VALUES (MSRP & ACV)
+    'vehicle-values': {
+        title: "MSRP vs. ACV",
+        type: 'icon',
+        src: 'fa-tag',        // Etiqueta de precio
+        theme: 'teal',        // Turquesa (Valor)
+        desc: "MSRP is the original 'Sticker Price' when new. ACV (Actual Cash Value) is what the car is worth TODAY (depreciated).",
+        example: "• MSRP: $30,000 (New 2020).\n• ACV: $18,500 (Used value now).\nGAP coverage covers the difference if you owe more than ACV."
+    },
+
+    // 34. ANTI-THEFT LEVELS
+    'anti-theft-levels': {
+        title: "Anti-Theft System Type",
+        type: 'icon',
+        src: 'fa-lock',       // Candado
+        theme: 'green',       // Verde (Seguridad)
+        desc: "The type of security system installed. Higher levels (Passive/GPS) get bigger discounts.",
+        example: "• Level 4 (Passive): Disables engine without the chipped key (Standard on most modern cars).\n• Level 5 (GPS): LoJack or OnStar tracking."
+    },
+
+    // 35. VEHICLE STATUS FLAGS
+    'vehicle-status-flags': {
+        title: "Special Vehicle Status",
+        type: 'icon',
+        src: 'fa-circle-exclamation', // Alerta
+        theme: 'orange',              // Naranja (Atención)
+        desc: "Check these boxes ONLY if they apply. These special conditions affect eligibility and valuation.",
+        example: "• Salvage: Previously totaled/rebuilt title.\n• Grey Market: Imported non-US spec.\n• Monitoring: Usage-based device (Snapshot/DriveSafe)."
+    },
+
+    // 36. GENERAL COVERAGE GUIDE (Master Tooltip)
+    'general-coverages': {
+        title: "How Auto Insurance Works",
+        type: 'icon',
+        src: 'fa-layer-group',  // Capas / Paquete
+        theme: 'blue',          // Azul (Educativo)
+        desc: "Your policy is a custom bundle of protections. You can mix and match limits to find the perfect balance of price and safety.",
+        example: "• Liability: Pays *others* (Required).\n• Vehicle: Fixes *your car* (Comp & Collision).\n• Medical: Pays *your injuries* (MedPay)."
+    }
+};
+
+// FUNCIÓN PARA ABRIR
+window.showRichInfo = function(key) {
+    const data = RICH_TOOLTIPS[key];
+    const modal = document.getElementById('richInfoModal');
+    
+    if (!data || !modal) return;
+
+    // 1. Textos
+    document.getElementById('richTitle').innerText = data.title;
+    document.getElementById('richDesc').innerText = data.desc;
+    document.getElementById('richExample').innerText = data.example;
+
+    // 2. Configurar Header (Color y Media)
+    const header = document.getElementById('richHeaderColor');
+    const container = document.getElementById('richMediaContainer');
+    
+    // Resetear clases de color
+    header.className = 'rich-media-header'; 
+    // Aplicar gradientes según el tema
+    if(data.theme === 'blue') header.style.background = 'linear-gradient(135deg, #EFF6FF 0%, #009CFF 100%)';
+    if(data.theme === 'orange') header.style.background = 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)';
+    if(data.theme === 'purple') header.style.background = 'linear-gradient(135deg, #F5F3FF 0%, #514690 100%)';
+    if(data.theme === 'teal') header.style.background = 'linear-gradient(135deg, #F0FDFA 0%, #CCFBF1 100%)';
+    if(data.theme === 'red')    header.style.background = 'linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%)';
+    if(data.theme === 'green')  header.style.background = 'linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)';
+
+    // 3. Inyectar Visual (Icono o Imagen)
+    if(data.type === 'icon') {
+        // Color del icono según tema
+        let color = '#009CFF';
+        if(data.theme === 'orange') color = '#F59E0B';
+        if(data.theme === 'purple') color = '#514690';
+        if(data.theme === 'teal') color = '#14B8A6';
+        if(data.theme === 'red')    color = '#EF4444';
+        if(data.theme === 'green')  color = '#10B981';
+
+        container.innerHTML = `<i class="fa-solid ${data.src} rich-img-icon" style="color:${color}"></i>`;
+    } else if (data.type === 'image') {
+        container.innerHTML = `<img src="${data.src}" class="rich-img-real" alt="Illustration">`;
+    }
+
+    // 4. Mostrar
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('active'), 10);
+};
+
+// FUNCIÓN CERRAR
+window.closeRichInfo = function() {
+    const modal = document.getElementById('richInfoModal');
+    if (modal) {
+        modal.classList.remove('active');
+        setTimeout(() => modal.style.display = 'none', 300);
+    }
+};
+
+// Cerrar con click fuera
+document.getElementById('richInfoModal')?.addEventListener('click', (e) => {
+    if(e.target.id === 'richInfoModal') closeRichInfo();
 });

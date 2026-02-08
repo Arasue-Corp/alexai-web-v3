@@ -273,23 +273,25 @@
                                         <label>Policy Start Date</label>
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-calendar-check"></i></div>
-                                            <input type="text" class="rich-input date-picker-past" placeholder="MM/DD/YYYY">
+                                            <input type="text" class="rich-input date-picker-past validate-req" placeholder="MM/DD/YYYY">
                                         </div>
                                     </div>
                                     <div class="inp-rich-group">
                                         <label>Expiration Date</label>
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-calendar-xmark"></i></div>
-                                            <input type="text" class="rich-input date-picker-future" placeholder="MM/DD/YYYY">
+                                            <input type="text" class="rich-input date-picker-future validate-req" placeholder="MM/DD/YYYY">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="inp-rich-group mt-3">
-                                    <label>Prior Carrier</label>
+                                    <label class="cov-label">Prior Carrier
+                                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('prior-carrier')"></i>
+                                    </label>
                                     <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
-                                        <select class="rich-input premium-select">
+                                        <select class="rich-input premium-select validate-req">
                                             <option value="" disabled selected>Select Carrier</option>
                                             <option>GEICO</option>
                                             <option>Progressive</option>
@@ -307,12 +309,14 @@
 
                                 <div class="grid-2-tight mt-3">
                                     <div class="inp-rich-group">
-                                        <label>Liability Limits</label>
+                                        <label class="cov-label">Liability Limits
+                                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('prior-limits')"></i>
+                                        </label>
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-scale-balanced"></i></div>
-                                            <select class="rich-input premium-select">
+                                            <select class="rich-input premium-select validate-req">
                                                 <option value="" disabled selected>Select</option>
-                                                <option>15/30/10 (State Min)</option>
+                                                <option>25/50/15 (State Min)</option>
                                                 <option>25/50/25</option>
                                                 <option>50/100/50</option>
                                                 <option>100/300/100 (Recommended)</option>
@@ -321,10 +325,12 @@
                                         </div>
                                     </div>
                                     <div class="inp-rich-group">
-                                        <label>Prior Transfer Level</label>
+                                        <label class="cov-label">Prior Transfer Level
+                                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('transfer-level')"></i>
+                                        </label>
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-layer-group"></i></div>
-                                            <select class="rich-input premium-select">
+                                            <select class="rich-input premium-select validate-req">
                                                 <option value="" disabled selected>Select Level</option>
                                                 <option>No Prior Transfer</option>
                                                 <option>Prior Transfer Level 1</option>
@@ -436,7 +442,9 @@
                                 </div>
 
                                 <div class="inp-rich-group mt-3">
-                                    <label>Prior Carrier</label>
+                                    <label class="cov-label">Prior Carrier
+                                        <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('prior-carrier')"></i>
+                                    </label>
                                     <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-building"></i></div>
                                         <select class="rich-input premium-select">
@@ -457,7 +465,9 @@
 
                                 <div class="grid-2-tight mt-3">
                                     <div class="inp-rich-group">
-                                        <label>Liability Limits</label>
+                                        <label class="cov-label">Liability Limits
+                                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('prior-limits')"></i>
+                                        </label>
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-scale-balanced"></i></div>
                                             <select class="rich-input premium-select">
@@ -471,7 +481,9 @@
                                         </div>
                                     </div>
                                     <div class="inp-rich-group">
-                                        <label>Prior Transfer Level</label>
+                                        <label class="cov-label">Liability Limits
+                                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('prior-limits')"></i>
+                                        </label>
                                         <div class="input-rich-wrapper compact-premium theme-teal">
                                             <div class="icon-slot"><i class="fa-solid fa-layer-group"></i></div>
                                             <select class="rich-input premium-select">
@@ -747,6 +759,34 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
+
+    <div id="richInfoModal" class="zlight-overlay">
+        <div class="zlight-card rich-mode">
+            
+            <button class="close-float-btn" onclick="closeRichInfo()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="rich-media-header" id="richHeaderColor">
+                <div class="media-content" id="richMediaContainer">
+                    </div>
+            </div>
+
+            <div class="rich-body">
+                <h3 class="rich-title" id="richTitle">Title Here</h3>
+                <p class="rich-desc" id="richDesc">Description text...</p>
+
+                <div class="example-box">
+                    <div class="ex-tag"><i class="fa-regular fa-lightbulb"></i> Example</div>
+                    <p id="richExample">If X happens, Y pays for Z...</p>
+                </div>
+            </div>
+
+            <div class="rich-footer">
+                <button class="btn-rich-action" onclick="closeRichInfo()">Got it</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

@@ -227,122 +227,161 @@
                     <button class="veh-btn"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
 
-                <div class="cov-field">
-                    <label class="cov-label">Coverage Selected <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Choose your protection level</span></i></label>
-                    <div class="radio-stack">
-                        <label class="radio-opt"><input type="radio" name="cov_mode" value="liability" class="recalc"> Liability Coverage Only</label>
-                        <label class="radio-opt"><input type="radio" name="cov_mode" value="comp_coll" checked class="recalc"> Comprehensive & Collision</label>
-                        <label class="radio-opt"><input type="radio" name="cov_mode" value="comp" class="recalc"> Comprehensive</label>
+                <div class="premium-group">
+                    <div class="cov-field">
+                        <label class="cov-label">Coverage Selected 
+                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('general-coverages')"></i>
+                        </label>
+                        <div class="radio-stack">
+                            <label class="radio-opt"><input type="radio" name="cov_mode" value="liability" class="recalc"> Liability Coverage Only</label>
+                            <label class="radio-opt"><input type="radio" name="cov_mode" value="comp_coll" checked class="recalc"> Comprehensive & Collision</label>
+                            <label class="radio-opt"><input type="radio" name="cov_mode" value="comp" class="recalc"> Comprehensive</label>
+                        </div>
                     </div>
                 </div>
 
-                <div id="deductibleSection">
-                    <div class="section-break"></div>
-                    <div class="sec-title">Comprehensive & Collision</div>
+
+                <div class="premium-group">                
+                    <div id="deductibleSection">
+                        <div class="section-break"></div>
+                        <div class="sec-title">Comprehensive & Collision</div>
+                        
+                        <div class="form-grid-2">
+                            <div class="cov-field" id="collGroup" style="margin-bottom:0;">
+                                <label class="cov-label">COMP
+                                    <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('comp-coverage')"></i>
+                                </label>
+                                <select class="cov-select recalc premium-select">
+                                    <option>No Cov</option><option>100</option><option>250</option><option>500</option><option selected>1000</option><option>2000</option>
+                                </select>
+                            </div>
+                            <div class="cov-field" id="compGroup" style="margin-bottom:0;">
+                                <label class="cov-label">COLL
+                                    <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('coll-coverage')"></i>
+                                </label>
+                                <select class="cov-select recalc premium-select">
+                                    <option>No Cov</option><option>100</option><option>250</option><option>500</option><option selected>1000</option><option>2000</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="section-break"></div>
+
+                <div id="customLiabilityOptions" class="premium-group">
+                    <div class="sec-title">Liability Coverage</div>                    
+                    <div class="radio-stack">
+                        <label class="radio-opt">
+                            <input type="radio" name="liab_mode" value="state" class="recalc"> 
+                            <div>
+                                <span>State Minimum ($25K/50K/15K)</span>
+                                <div class="radio-desc">Legal minimum. Good only if price sensitive.</div>
+                            </div>
+                        </label>
+                        <label class="radio-opt">
+                            <input type="radio" name="liab_mode" value="custom" checked class="recalc"> 
+                            <span>Your Protection (Recommended)</span>
+                        </label>
+                    </div>
+
+
+                        <div class="form-grid-2" style="margin-bottom:0;">
+                            <div class="cov-field" style="margin-bottom:0;">
+                                <label class="cov-label">Bodily Injury 
+                                    <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('bodily-injury')"></i>
+                                </label>
+                                <select class="cov-select recalc premium-select">
+                                    <option>25K/50K</option><option>50K/100K</option><option selected>100K/300K</option><option>250K/500K</option>
+                                </select>
+                            </div>
+                            <div class="cov-field" style="margin-bottom:0;">
+                                <label class="cov-label">Property Damage 
+                                    <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('property-damage')"></i>
+                                </label>
+                                <select class="cov-select recalc premium-select">
+                                    <option>15K</option><option>25K</option><option selected>50K</option><option>100K</option>
+                                </select>
+                            </div>
+                        </div>
+                </div>
+
+
+                <div class="section-break"></div>
+
+                <div class="premium-group">                
+                    <div class="sec-title">Medical & Protection</div>
                     
                     <div class="form-grid-2">
-                        <div class="cov-field" id="collGroup" style="margin-bottom:0;">
-                            <label class="cov-label">Comprehensive Ded.<i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Theft, fire, glass, weather</span></i></label>
-                            <select class="cov-select recalc premium-select">
-                                <option>No Cov</option><option>100</option><option>250</option><option>500</option><option selected>1000</option><option>2000</option>
-                            </select>
-                        </div>
-                        <div class="cov-field" id="compGroup" style="margin-bottom:0;">
-                            <label class="cov-label">Collision Ded. <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">You pay this amount for repairs</span></i></label>
-                            <select class="cov-select recalc premium-select">
-                                <option>No Cov</option><option>100</option><option>250</option><option>500</option><option selected>1000</option><option>2000</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-break"></div>
-                <div class="sec-title">Liability Coverage</div>
-                
-                <div class="radio-stack">
-                    <label class="radio-opt">
-                        <input type="radio" name="liab_mode" value="state" class="recalc"> 
-                        <div>
-                            <span>State Minimum ($25/50/15)</span>
-                            <div class="radio-desc">Legal minimum. Good only if price sensitive.</div>
-                        </div>
-                    </label>
-                    <label class="radio-opt">
-                        <input type="radio" name="liab_mode" value="custom" checked class="recalc"> 
-                        <span>Your Protection (Recommended)</span>
-                    </label>
-                </div>
-
-                <div id="customLiabilityOptions" class="nested-options active">
-                    <div class="form-grid-2" style="margin-bottom:0;">
                         <div class="cov-field" style="margin-bottom:0;">
-                            <label class="cov-label">Bodily Injury <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Injuries to others</span></i></label>
-                            <select class="cov-select recalc premium-select">
-                                <option>25/50</option><option>50/100</option><option selected>100/300</option><option>250/500</option>
-                            </select>
+                            <label class="cov-label">Medical Payments 
+                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('medical-payments')"></i>
+                            </label>
+                            <select class="cov-select recalc premium-select"><option>No Cov</option><option>500</option><option>1000</option><option>5000</option></select>
                         </div>
                         <div class="cov-field" style="margin-bottom:0;">
-                            <label class="cov-label">Property Damage <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Damage to other cars/property</span></i></label>
-                            <select class="cov-select recalc premium-select">
-                                <option>15K</option><option>25K</option><option selected>50K</option><option>100K</option>
-                            </select>
+                            <label class="cov-label">Accidental Death 
+                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('accidental-death')"></i>
+                            </label>
+                            <select class="cov-select recalc premium-select"><option>No Cov</option><option>5000</option><option>10000</option></select>
                         </div>
                     </div>
-                </div>
+                    
+                    <div class="form-grid-2">
+                        <div class="cov-field" style="margin-bottom:0;">
+                            <label class="cov-label">Uninsured BI 
+                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('uninsured-motorist')"></i>
+                            </label>
+                            <select class="cov-select recalc premium-select"><option>No Cov</option><option>25/50</option><option>50/100</option><option selected>100/300</option></select>
+                        </div>
+                        <div class="cov-field" style="margin-bottom:0;">
+                            <label class="cov-label">Underinsured BI 
+                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('underinsured-motorist')"></i>
+                            </label>
+                            <select class="cov-select recalc premium-select"><option>No Cov</option><option>25/50</option><option>50/100</option><option selected>100/300</option></select>
+                        </div>
+                    </div>
 
-                <div class="section-break"></div>
-                <div class="sec-title">Medical & Protection</div>
-                
-                <div class="form-grid-2">
-                    <div class="cov-field" style="margin-bottom:0;">
-                        <label class="cov-label">Medical Payments <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Medical bills for you</span></i></label>
-                        <select class="cov-select recalc premium-select"><option>No Cov</option><option>500</option><option>1000</option><option>5000</option></select>
+                    <div class="section-break"></div>
+                    <div class="sec-title">Extras</div>
+                    
+                    <div class="form-grid-2">
+                        <div class="cov-field" style="margin-bottom:0;">
+                            <label class="cov-label">Roadside Asst. 
+                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('roadside-assistance')"></i>
+                            </label>
+                            <select class="cov-select recalc premium-select"><option>No</option><option>50</option><option>75</option><option>100</option></select>
+                        </div>
+                        <div class="cov-field" style="margin-bottom:0;">
+                            <label class="cov-label">Rental Car 
+                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('rental-reimbursement')"></i>
+                            </label>
+                            <select class="cov-select recalc premium-select"><option>No</option><option>30</option><option>40</option><option>50</option></select>
+                        </div>
                     </div>
-                    <div class="cov-field" style="margin-bottom:0;">
-                        <label class="cov-label">Accidental Death <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Death benefit</span></i></label>
-                        <select class="cov-select recalc premium-select"><option>No Cov</option><option>5000</option><option>10000</option></select>
+                    
+                    <div class="form-grid-2">
+                        <div class="cov-field" style="margin-bottom:0;">
+                            <label class="cov-label">Gap Coverage 
+                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('gap-coverage')"></i>
+                            </label>
+                            <select class="cov-select recalc premium-select"><option>No</option><option>Yes</option></select>
+                        </div>
+                        <div class="cov-field" style="margin-bottom:0;">
+                            <label class="cov-label">Safety Feat. 
+                                <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('safety-features')"></i>
+                            </label>
+                            <select class="cov-select recalc premium-select"><option>No</option><option>Yes</option></select>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="form-grid-2">
-                    <div class="cov-field" style="margin-bottom:0;">
-                        <label class="cov-label">Uninsured BI <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Hit by uninsured driver</span></i></label>
-                        <select class="cov-select recalc premium-select"><option>No Cov</option><option>25/50</option><option>50/100</option><option selected>100/300</option></select>
-                    </div>
-                    <div class="cov-field" style="margin-bottom:0;">
-                        <label class="cov-label">Underinsured BI <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Hit by underinsured driver</span></i></label>
-                        <select class="cov-select recalc premium-select"><option>No Cov</option><option>25/50</option><option>50/100</option><option selected>100/300</option></select>
-                    </div>
-                </div>
 
-                <div class="section-break"></div>
-                <div class="sec-title">Extras</div>
-                
-                <div class="form-grid-2">
-                    <div class="cov-field" style="margin-bottom:0;">
-                        <label class="cov-label">Roadside Asst. <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Towing & Labor</span></i></label>
-                        <select class="cov-select recalc premium-select"><option>No</option><option>50</option><option>75</option><option>100</option></select>
+                    <div class="cov-field">
+                        <label class="cov-label">Custom Equipment Value 
+                            <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('custom-equipment')"></i>
+                        </label>
+                        <input type="number" class="custom-input recalc" placeholder="$0">
                     </div>
-                    <div class="cov-field" style="margin-bottom:0;">
-                        <label class="cov-label">Rental Car <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Reimbursement per day</span></i></label>
-                        <select class="cov-select recalc premium-select"><option>No</option><option>30</option><option>40</option><option>50</option></select>
-                    </div>
-                </div>
-                
-                <div class="form-grid-2">
-                    <div class="cov-field" style="margin-bottom:0;">
-                        <label class="cov-label">Gap Coverage <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Covers the "gap" between what you owe on a financed/leased vehicle and its actual cash value (ACV)</span></i></label>
-                        <select class="cov-select recalc premium-select"><option>No</option><option>Yes</option></select>
-                    </div>
-                    <div class="cov-field" style="margin-bottom:0;">
-                        <label class="cov-label">Safety Feat. <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Product attributes (like anti-lock brakes or lane departure warnings) or built-in tools (like telematics) that reduce risk, preventing accidents and claims</span></i></label>
-                        <select class="cov-select recalc premium-select"><option>No</option><option>Yes</option></select>
-                    </div>
-                </div>
-
-                <div class="cov-field">
-                    <label class="cov-label">Custom Equipment Value <i class="fa-solid fa-circle-info tooltip-icon"><span class="tooltip-text">Aftermarket additions or modifications that go beyond factory standard, requiring a specific endorsement to cover their value</span></i></label>
-                    <input type="number" class="custom-input recalc" placeholder="$0">
                 </div>
                 
                 <div class="cov-field" style="margin-top:20px;">
@@ -783,6 +822,33 @@
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
 
+    <div id="richInfoModal" class="zlight-overlay">
+        <div class="zlight-card rich-mode">
+            
+            <button class="close-float-btn" onclick="closeRichInfo()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="rich-media-header" id="richHeaderColor">
+                <div class="media-content" id="richMediaContainer">
+                    </div>
+            </div>
+
+            <div class="rich-body">
+                <h3 class="rich-title" id="richTitle">Title Here</h3>
+                <p class="rich-desc" id="richDesc">Description text...</p>
+
+                <div class="example-box">
+                    <div class="ex-tag"><i class="fa-regular fa-lightbulb"></i> Example</div>
+                    <p id="richExample">If X happens, Y pays for Z...</p>
+                </div>
+            </div>
+
+            <div class="rich-footer">
+                <button class="btn-rich-action" onclick="closeRichInfo()">Got it</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

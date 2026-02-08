@@ -229,8 +229,9 @@
                         <div class="premium-group">
                                 <div class="pg-header">
                                     <div class="pg-header-badge blue">
-                                        <i class="fa-solid fa-sack-dollar"></i> DO YOU FINANCE OR LEASE YOUR VEHICLE?
+                                        <i class="fa-solid fa-sack-dollar"></i> DO YOU FINANCE OR LEASE YOUR VEHICLE? 
                                     </div>
+                                    <span class="cov-label" style="margin-bottom: 0px;"><i class="fa-solid fa-circle-info tooltip-icon cov-label" onclick="showRichInfo('lienholder-info')"></i></span>
                                     <div class="pg-header-line"></div>
                                 </div>
                         
@@ -352,6 +353,7 @@
                                 <div class="pg-header-badge blue">
                                     <i class="fa-solid fa-sack-dollar"></i> OWNERSHIP STATUS (CAR 2)
                                 </div>
+                                    <span class="cov-label" style="margin-bottom: -6px;"><i class="fa-solid fa-circle-info tooltip-icon cov-label" onclick="showRichInfo('lienholder-info')"></i></span>
                                 <div class="pg-header-line"></div>
                             </div>
                         
@@ -688,6 +690,34 @@
 
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
+
+    <div id="richInfoModal" class="zlight-overlay">
+        <div class="zlight-card rich-mode">
+            
+            <button class="close-float-btn" onclick="closeRichInfo()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="rich-media-header" id="richHeaderColor">
+                <div class="media-content" id="richMediaContainer">
+                    </div>
+            </div>
+
+            <div class="rich-body">
+                <h3 class="rich-title" id="richTitle">Title Here</h3>
+                <p class="rich-desc" id="richDesc">Description text...</p>
+
+                <div class="example-box">
+                    <div class="ex-tag"><i class="fa-regular fa-lightbulb"></i> Example</div>
+                    <p id="richExample">If X happens, Y pays for Z...</p>
+                </div>
+            </div>
+
+            <div class="rich-footer">
+                <button class="btn-rich-action" onclick="closeRichInfo()">Got it</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
