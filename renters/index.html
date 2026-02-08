@@ -605,14 +605,33 @@
 
                     <div class="app-visual-marketing">
                         
-                        <div class="phone-core-video">
-                            <div class="phone-aura-clean"></div>
-                            <div class="phone-chassis-premium organic-box">
-                                <video class="js-hover-video app-screen-video" loop playsinline>
-                                    <source src="../assets/videos/video-app.webm" type="video/webm">
-                                </video>
+                    <div class="phone-core-video">
+                        <div class="phone-aura-clean"></div>
+                        
+                        <div class="phone-chassis-premium organic-box position-relative" id="smartVideoContainer">
+                            
+                            <video class="js-hover-video app-screen-video" loop playsinline id="marketingVideo">
+                                <source src="../assets/videos/video-app.webm" type="video/webm">
+                            </video>
+
+                            <div class="video-overlay">
+                                
+                                <div class="corporate-cta-button shimmer-btn">
+                                    <div class="cta-icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="cta-text-group">
+                                        <span class="cta-main-text">See it in action</span>
+                                        <span class="cta-sub-text desktop-only">Hover to play</span>
+                                        <span class="cta-sub-text mobile-only">Tap to play</span>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
+                    </div>
 
                         <div class="marketing-card card-payout">
                             <div class="icon-circle-marketing icon-green"><i class="fa-solid fa-file-signature"></i></div>
@@ -907,9 +926,6 @@
 
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
-
-    <div class="ai-cursor" id="customCursor"></div>
-    <div class="ai-cursor-dot" id="cursorDot"></div>
 
     
 </body>

@@ -14,16 +14,34 @@
 
     <div id="toast-container"></div>
 
-    <div id="custom-modal" class="modal-overlay-edit">
-        <div class="modal-box">
-            <div class="modal-icon danger"><i class="fa-solid fa-trash-can"></i></div>
-            <div class="modal-content">
-                <h3>Remove Item?</h3>
-                <p>This will permanently remove this entity. Quote recalculation required.</p>
+    <div id="custom-modal" class="zlight-overlay">
+        <div class="zlight-card delete-premium-card">
+            
+            <div class="danger-icon-container">
+                <div class="danger-ripple"></div>
+                <div class="danger-circle">
+                    <i class="fa-regular fa-trash-can"></i>
+                </div>
             </div>
-            <div class="modal-actions">
-                <button type="button" class="btn-modal-cancel" onclick="closeModalToast()">Cancel</button>
-                <button type="button" id="btn-confirm-action" class="btn-modal-confirm">Yes, Remove</button>
+
+            <div class="zlight-content text-center" style="padding: 20px 30px 30px;">
+                <h3 class="zlight-title" style="font-size: 1.4rem;">Delete this item?</h3>
+                <p class="zlight-desc" style="margin-bottom: 5px;">
+                    This action cannot be undone.
+                </p>
+                <div class="warning-capsule">
+                    <i class="fa-solid fa-circle-exclamation"></i> Quote will be recalculated
+                </div>
+            </div>
+
+            <div class="modal-actions-grid">
+                <button type="button" class="btn-premium-ghost" onclick="closeModalToast()">
+                    Cancel
+                </button>
+                
+                <button type="button" id="btn-confirm-action" class="btn-premium-danger">
+                    Yes, Delete
+                </button>
             </div>
         </div>
     </div>
@@ -225,7 +243,7 @@
                     <div class="head-info">
                         <h3>Uri Williams <span class="badge blue">Primary</span></h3>
                         <div class="meta-line">
-                            <span>Age: 30</span> <span class="dot">•</span> <span>Prior Insurance: <strong class="txt-green">Yes</strong></span>
+                            <span>Age: 30</span> <span class="dot"></span> <span>Prior Insurance: <strong class="txt-green">Yes</strong></span>
                         </div>
                         <div class="contact-line">
                             <small><i class="fa-regular fa-envelope"></i> uri.williams@gmail.com</small>
@@ -233,7 +251,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card-body">
                     <div class="split-layout">
                         <div class="split-col">
@@ -322,12 +339,17 @@
                     <div class="head-info">
                         <h3>Elois Wolf<span class="badge gray">Driver 2</span></h3>
                         <div class="meta-line">
-                            <span>Age: 26</span> <span class="dot">•</span> <span>Prior Insurance: <strong class="txt-red">No</strong></span>
+                            <span>Age: 26</span> <span class="dot"></span> <span>Prior Insurance: <strong class="txt-red">No</strong></span>
                         </div>
                     </div>
-                    <button type="button" class="btn-abs-delete" onclick="confirmRemove('driver-2', 'Driver')">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
+                    <div class="btn-action-edit-info">
+                        <button type="button" class="btn-abs-delete" onclick="confirmRemove('driver-2', 'Driver')">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                        <button type="button" class="btn-abs-edit">
+                            <i class="fa-solid fa-file-pen theme-blue"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="split-layout">
@@ -428,8 +450,14 @@
                         <h3>2019 NISSAN TITAN S</h3>
                         <div class="vin-mono">VIN: ...1N6AA1EK518910</div>
                     </div>
-                    <button type="button" class="btn-abs-delete disabled" disabled><i class="fa-solid fa-trash-can"></i></button>
-                </div>
+                    <div class="btn-action-edit-info">
+                        <button type="button" class="btn-abs-delete disabled">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                        <button type="button" class="btn-abs-edit disabled">
+                            <i class="fa-solid fa-file-pen theme-blue"></i>
+                        </button>
+                    </div>                </div>
                 <div class="card-body">
                     <div class="split-layout">
                         <div class="split-col">
@@ -472,10 +500,14 @@
                     <div class="head-info">
                         <h3>2022 GMC CANYON</h3>
                         <div class="vin-mono">VIN: ...C4RJEA384</div>
+                    <div class="btn-action-edit-info">
+                        <button type="button" class="btn-abs-delete" onclick="confirmRemove('veh-2', 'Vehicle')">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                        <button type="button" class="btn-abs-edit">
+                            <i class="fa-solid fa-file-pen theme-blue"></i>
+                        </button>
                     </div>
-                    <button type="button" class="btn-abs-delete" onclick="confirmRemove('veh-2', 'Vehicle')">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
                 </div>
                 <div class="card-body">
                     <div class="split-layout">
@@ -526,7 +558,7 @@
 
             <div class="dock-wrapper">
                 <div class="dock-glass">
-                    <button type="button" class="dock-btn ghost" onclick="window.location.href='index.html'">
+                    <button type="button" class="dock-btn ghost" onclick="window.location.href='./quote.html'">
                         <i class="fa-solid fa-rotate-left"></i> Edit All (Restart)
                     </button>
                     <div class="dock-sep"></div>

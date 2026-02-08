@@ -903,10 +903,29 @@
                     
                     <div class="phone-core-video">
                         <div class="phone-aura-clean"></div>
-                        <div class="phone-chassis-premium organic-box">
-                            <video class="js-hover-video app-screen-video" loop playsinline>
+                        
+                        <div class="phone-chassis-premium organic-box position-relative" id="smartVideoContainer">
+                            
+                            <video class="js-hover-video app-screen-video" loop playsinline id="marketingVideo">
                                 <source src="./assets/videos/video-app.webm" type="video/webm">
                             </video>
+
+                            <div class="video-overlay">
+                                
+                                <div class="corporate-cta-button shimmer-btn">
+                                    <div class="cta-icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="cta-text-group">
+                                        <span class="cta-main-text">See it in action</span>
+                                        <span class="cta-sub-text desktop-only">Hover to play</span>
+                                        <span class="cta-sub-text mobile-only">Tap to play</span>
+                                    </div>
+                                </div>
+                                
+                            </div>
                         </div>
                     </div>
 
@@ -1040,7 +1059,7 @@
                 <div>
                     <div class="social-header text-center">
                         <div class="inline-badge-premium mb-3">
-                            <span class="pulse-dot-purple"></span> Mobile App
+                            <span class="pulse-dot-purple"></span> Knowledge Base
                         </div>
                     </div>
                     <h2 class="display-title-mag">Smarter living & <span class="text-gradient-corp">insurance tips.</span></h2>
@@ -1173,7 +1192,7 @@
                 <div class="faq-sidebar">
                     <div class="lab-header text-center">
                         <div class="header-status-light">
-                            <span class="pulse-blue"></span>Knowledge Base
+                            <span class="pulse-blue"></span>FAQ
                         </div>
                         <h2 class="display-title-lab">Frequently Asked <span class="text-gradient-anim">Questions.</span></h2>
                         <p class="lead-text-faq" style="text-align: center;">Everything you need to know about the Alex AI ecosystem, coverage protocols, and security.</p>

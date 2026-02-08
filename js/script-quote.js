@@ -327,10 +327,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Modals & Next Actions
     document.querySelectorAll('.js-btn-compare').forEach(btn => {
-        btn.addEventListener('click', () => { 
+        btn.addEventListener('click', (e) => { 
+            e.preventDefault();
             if(btn.classList.contains('active')) {
-                const modal = document.getElementById('compareModal');
-                if(modal) modal.classList.add('active'); 
+                openCompareModal();
             }
         });
     });
@@ -2694,6 +2694,59 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 1000);
         });
     }
+
+// --- NEWSLETTER SUBSCRIPTION (VIP Subscriber) - ADAPTADO A TU HTML ACTUAL ---
+// 1. Seleccionamos los elementos por su CLASE
+    const nlForm = document.querySelector('.nl-form');
+    // Buscamos el input dentro del formulario para ser más específicos
+    const nlInput = nlForm ? nlForm.querySelector('.nl-input') : null;
+
+    // 2. Verificamos que existan para evitar errores
+    if (nlForm && nlInput) {
+        
+        nlForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Evita la recarga de la página
+            
+            const emailValue = nlInput.value.trim();
+
+            // Validación 1: Campo vacío
+            if (!emailValue) {
+                if (typeof showToast === 'function') {
+                    showToast("Please enter your email address first.", "warning");
+                }
+                nlInput.focus();
+                return;
+            }
+
+            // Validación 2: Formato de email simple
+            if (!emailValue.includes('@') || !emailValue.includes('.')) {
+                if (typeof showToast === 'function') {
+                    showToast("Please enter a valid email address.", "warning");
+                }
+                return;
+            }
+
+            // 3. Simulación de envío (Loading state)
+            const btn = nlForm.querySelector('.btn-nl-submit'); // Seleccionamos el botón
+            const originalText = btn.innerText;
+            
+            btn.innerText = "Subscribing..."; // Cambiamos texto temporalmente
+            btn.disabled = true; // Opcional: Deshabilitar botón para evitar doble click
+            
+            setTimeout(() => {
+                // Restaurar estado original
+                btn.innerText = originalText;
+                btn.disabled = false; 
+                nlInput.value = ""; // Limpiar el input
+                
+                // Mensaje de éxito
+                if (typeof showToast === 'function') {
+                    showToast("Thanks for subscribing! You are on the list.", "success");
+                }
+            }, 1000);
+        });
+    }
+
 });
 /* =========================================
    CONTACT FORM LOGIC
@@ -2933,4 +2986,44 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 300);
         });
     }
+});
+
+    /* =========================================
+    LOGICA DEL MODAL COMPARADOR & TABS
+    ========================================= */
+
+/* --- MODAL COMPARADOR LOGIC --- */
+
+// 1. ABRIR (Llamar con onclick="openCompareModal()")
+function openCompareModal() {
+    const modal = document.getElementById('compareModal');
+    if(modal) {
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('active'), 10);
+    }
+}
+
+// 2. CERRAR
+function closeCompareModal() {
+    const modal = document.getElementById('compareModal');
+    if(modal) {
+        modal.classList.remove('active');
+        setTimeout(() => modal.style.display = 'none', 300);
+    }
+}
+
+// 3. CAMBIAR TABS (Nissan vs GMC)
+function switchCompTab(tabId, btn) {
+    // a. Desactivar todos
+    document.querySelectorAll('.veh-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.comp-tab-content').forEach(c => c.classList.remove('active'));
+    
+    // b. Activar seleccionado
+    btn.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+}
+
+// 4. CERRAR CON ESCAPE
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeCompareModal();
 });

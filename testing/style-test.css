@@ -679,7 +679,6 @@ video.product-icon { filter: none !important; object-fit: contain; }
 /* =============================================
    QUOTE TOOL LAYOUT & FORM ELEMENTS
 ============================================= */
-.quote-page-body { background-color: var(--bg-off-white); min-height: 100vh; display: flex; flex-direction: column; }
 
 
 

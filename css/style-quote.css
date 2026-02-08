@@ -37,6 +37,9 @@
 
 /* Aplicando el sistema */
 
+.quote-page-body { background-color: var(--bg-off-white); min-height: 100vh; display: flex; flex-direction: column; }
+
+
 /* Nivel Grande (Contenedores) */
 .offer-card, 
 .brand-card, 
@@ -451,7 +454,7 @@ body::before {
     box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #F1F5F9;
 }
 .v-info h5 { margin: 0 0 2px 0; font-size: 0.85rem; font-weight: 800; color: var(--color-dark); text-transform: uppercase; }
-.v-info span { font-size: 0.75rem; color: #64748B; font-family: 'Courier New', monospace; letter-spacing: -0.5px; background: #E2E8F0; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+.v-info span { font-size: 0.75rem; color: #64748B; font-family: 'Poppins', monospace; letter-spacing: -0.5px; background: #E2E8F0; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
 
 /* Cuerpo del Vehículo */
 .veh-det-body { padding: 20px; }
@@ -684,7 +687,49 @@ body::before {
     .per-mo { text-align: center; }
     .det-grid { grid-template-columns: 1fr; gap: 30px; }
     .title-sticker h1 { font-size: 1.4rem; }
+    .offer-card{
+        width: auto !important;
+    }
 }
+
+@media (max-width: 1025px) { 
+    .page-wrapper{
+        width: 900px;
+    }
+    .offer-card{
+        width: 900px;
+    }
+    .mobile-filter-bar{
+        display: block;
+    }
+
+    .config-sidebar.mobile-active { 
+    display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
+    z-index: 2500; overflow-y: auto; border-radius: 0; border: none; padding-top: 80px;
+    }
+}
+
+@media (max-width: 450px) { 
+    .offer-card{
+        display:flex
+    }
+
+    .card-main{
+        max-width: 100% !important;
+    }
+}
+/* 
+@media (max-width: 320px) { 
+    .offer-card{
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 320px) { 
+    .offer-card{
+        max-width: 320px;
+    }
+} */
 
 /* =========================================
    TOOLTIP "VIBRANT AURORA" (OPCIÓN FINAL)
@@ -856,17 +901,6 @@ body::before {
     background: #F1F5F9; padding: 6px; border-radius: 16px;
     display: inline-flex; position: relative; gap: 5px;
 }
-.veh-tab-btn {
-    padding: 10px 24px; border: none; background: transparent;
-    border-radius: 12px; font-weight: 600; color: #64748B; font-size: 0.9rem;
-    cursor: pointer; transition: all 0.2s ease;
-    display: flex; align-items: center; gap: 8px;
-}
-.veh-tab-btn.active {
-    background: #FFFFFF; color: var(--color-indigo);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06); font-weight: 700;
-}
-.veh-tab-btn.active i { color: var(--color-primary); }
 
 /* --- CUERPO (SCROLL INTELIGENTE) --- */
 .comp-body { flex: 1; overflow: hidden; position: relative; background: #FFF; }
@@ -914,8 +948,6 @@ body::before {
 /* Estilos de Celda */
 .brand-box { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .th-logo { height: 40px; object-fit: contain; }
-.plan-badge { font-size: 0.85rem; font-weight: 700; color: var(--color-dark); margin-top: 5px; }
-
 
 
 /* Rec Badge mejorado */
@@ -936,7 +968,6 @@ body::before {
 }
 
 /* Precios */
-.price-tag-lg { font-size: 1.6rem; font-weight: 900; color: var(--color-dark); letter-spacing: -1px; line-height: 1; }
 .price-sub { font-size: 0.75rem; color: #94A3B8; font-weight: 600; text-transform: uppercase; margin-top: 4px; }
 
 /* Footer */
@@ -1037,6 +1068,14 @@ body::before {
     .f-icon { width: 24px; height: 24px; font-size: 0.8rem; margin-right: 8px; }
     .price-tag-lg { font-size: 1.2rem; }
     .th-logo { height: 30px; }
+
+    .card-main{
+        max-width: 85%;
+    }
+
+    .offer-card{
+        display: block;
+    }
 }
 
 /* Estilo para los separadores de sección en la tabla */
@@ -1120,7 +1159,7 @@ body::before {
 
 body.bg-matte-brand {
     background-color: var(--brand-bg);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Poppins', sans-serif;
     color: #334155;
     min-height: 100vh;
 }
@@ -1326,7 +1365,7 @@ body.bg-matte-brand {
 
 .bg-ultra-matte {
     background-color: #F8FAFC; color: #0F172A; 
-    font-family: 'Inter', sans-serif; margin: 0;
+    font-family: 'Poppins', sans-serif; margin: 0;
 }
 .spacer-footer { height: 160px; }
 
@@ -1379,12 +1418,19 @@ body.bg-matte-brand {
 .vin-mono { font-family: monospace; color: #94A3B8; font-size: 0.85rem; }
 
 .btn-abs-delete {
-    position: absolute; top: 20px; right: 20px;
+
     width: 36px; height: 36px; border-radius: 8px; border: 1px solid #FEE2E2; background: #FEF2F2;
-    color: #EF4444; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;
+    color: #EF4444; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: 0.2s;
 }
 .btn-abs-delete:hover { background: #EF4444; color: white; border-color: #EF4444; }
 .btn-abs-delete.disabled { opacity: 0.3; cursor: not-allowed; background: #F1F5F9; border-color: #E2E8F0; color: #CBD5E1; }
+
+.btn-abs-edit {
+    width: 36px; height: 36px; border-radius: 8px; border: 1px solid #FEE2E2; background: #E6F5FF;
+    color: var(--brand-blue); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: 0.2s;
+}
+.btn-abs-edit:hover { background: var(--brand-blue); color: white; border-color: var(--brand-blue); }
+.btn-abs-edit.disabled { opacity: 0.3; cursor: not-allowed; background: #F1F5F9; border-color: #E2E8F0; color: #CBD5E1; }
 
 /* --- CARD BODY LAYOUT (SPLIT) --- */
 .card-body { padding: 40px; }
@@ -1420,7 +1466,7 @@ body.bg-matte-brand {
 
 .clean-input, .clean-select {
     width: 100%; padding: 12px 14px; background: #FFFFFF; border: 1px solid #D1D5DB; border-radius: 8px;
-    font-size: 0.95rem; color: #1e293b; transition: 0.2s; font-family: 'Inter', sans-serif;
+    font-size: 0.95rem; color: #1e293b; transition: 0.2s; font-family: 'Poppins', sans-serif;
 }
 .clean-input:focus, .clean-select:focus { border-color: #2563EB; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); outline: none; }
 .clean-input.locked { background: #F8FAFC; border-color: transparent; color: #94A3B8; pointer-events: none; }
@@ -3592,7 +3638,7 @@ body.page-enter { animation: pageEnterAnim 0.4s ease-out forwards; }
 
 /* Info Columns */
 .col-info { display: flex; flex-direction: column; gap: 6px; }
-.q-id { font-family: 'Inter', sans-serif; font-weight: 800; color: #0F172A; font-size: 1.1rem; }
+.q-id { font-family: 'Poppins', sans-serif; font-weight: 800; color: #0F172A; font-size: 1.1rem; }
 .q-badge.inactive {
     display: inline-block; width: fit-content; padding: 4px 10px; border-radius: 8px;
     font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: #F1F5F9; color: #64748B;
@@ -4040,22 +4086,40 @@ h3.tech-title.warning-text {
     z-index: 10000;
     display: none; align-items: center; justify-content: center;
     padding: 20px;
-    opacity: 0; transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+    display: none;
 }
 .zlight-overlay.active { display: flex; opacity: 1; }
 
-/* 2. TARJETA PRINCIPAL (Blanca y Flotante) */
+/* Aseguramos que el overlay esté por encima de TODO */
+#bindSuccessModal.zlight-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    display: none; /* Controlado por JS */
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(12px) !important;
+    z-index: 2147483647 !important; /* Máximo z-index posible */
+    border-radius: 24px; /* Ajusta según el diseño de tu modal */
+    overflow: hidden !important;
+}
+
+/* Forzamos que la tarjeta sea visible cuando el padre se activa */
+#bindSuccessModal.zlight-overlay[style*="display: flex"] .zlight-card {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: scale(1) !important;
+}
+
 .zlight-card {
-    position: relative; width: 100%; max-width: 460px;
-    background: #FFFFFF;
-    border-radius: 24px;
-    /* Sombra de "elevación" muy premium */
-    box-shadow: 
-        0 20px 40px -10px rgba(0, 0, 0, 0.1),
-        0 0 0 1px rgba(0, 0, 0, 0.03);
-    overflow: hidden;
-    transform: translateY(20px) scale(0.98);
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    background: var(--brand-bg) !important;
+    position: relative;
+    z-index: 2147483648;
+    transform: scale(0.9);
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    overflow: hidden !important;
+    border-radius: 24px; /* Ajusta según el diseño de tu modal */
 }
 .zlight-overlay.active .zlight-card {
     transform: translateY(0) scale(1);
@@ -4209,7 +4273,6 @@ h3.tech-title.warning-text {
 }
 .btn-corp-primary:hover {
     transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15, 23, 42, 0.3);
-    background: #1E293B;
 }
 
 .btn-corp-ghost {
@@ -4230,3 +4293,386 @@ h3.tech-title.warning-text {
     .agent-assigned-box { flex-direction: column; text-align: center; }
     .agent-info { align-items: center; }
 }
+
+/* ======================================== */
+
+/* ======================================================
+   ESTILOS EXCLUSIVOS DEL MODAL DE COMPARACIÓN
+   ====================================================== */
+
+/* 1. EL FONDO Y LA TARJETA */
+.modal-overlay-quote {
+    display: none; /* Oculto por defecto */
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.85); /* Fondo oscuro elegante */
+    backdrop-filter: blur(5px);
+    z-index: 99999; /* Siempre encima */
+    align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s ease;
+}
+.modal-overlay-quote.active { opacity: 1; }
+
+.comp-card {
+    background: #FFFFFF; width: 95%; max-width: 1150px; height: 90vh;
+    border-radius: 20px; display: flex; flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    overflow: hidden; 
+}
+
+/* 2. HEADER Y PESTAÑAS */
+.comp-header {
+    padding: 20px 30px; border-bottom: 1px solid #E2E8F0;
+    display: flex; justify-content: space-between; align-items: center; background: white;
+}
+.comp-title h3 { margin: 0; font-size: 1.3rem; font-weight: 800; color: var(--brand-indigo); }
+.comp-title p { margin: 4px 0 0; font-size: 0.9rem; color: var(--brand-indigo); }
+
+.close-comp-btn {
+    width: 36px; height: 36px; border-radius: 50%; border: none;
+    background: #F1F5F9; color: var(--brand-indigo); font-size: 1rem; cursor: pointer; transition: 0.2s;
+}
+.close-comp-btn:hover { background: #fee2e2; color: #ef4444; }
+
+.comp-controls-area {
+    padding: 12px 30px; background: #F8FAFC; border-bottom: 1px solid #E2E8F0;
+}
+.veh-toggle-container { display: flex; gap: 10px; }
+.veh-tab-btn {
+    padding: 10px 20px; border-radius: 50px; border: 1px solid #E2E8F0;
+    background: white; color: #64748B; font-weight: 600; font-size: 0.9rem;
+    cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px;
+}
+.veh-tab-btn.active {
+    background: var(--brand-blue); color: white; border-color: var(--brand-blue);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+.veh-tab-btn.active i { color: white; }
+
+
+/* 3. TABLA COMPARATIVA (Sticky + Diseño) */
+.comp-body { flex: 1; overflow: hidden; position: relative; background: #FFFFFF; }
+.comp-tab-content { display: none; height: 100%; }
+.comp-tab-content.active { display: block; }
+
+.table-scroll-wrapper { height: 100%; overflow: auto; padding-bottom: 40px; }
+
+.tech-table {
+    width: 100%; border-collapse: separate; border-spacing: 0; min-width: 900px;
+}
+
+/* Encabezados Fijos (Sticky Header) */
+.tech-table th {
+    position: sticky; top: 0; z-index: 20; background: white;
+    padding: 20px 15px; border-bottom: 2px solid #E2E8F0; vertical-align: top;
+}
+/* Columna Izquierda Fija (Sticky Column) */
+.tech-table th.sticky-col, .tech-table td.sticky-col {
+    position: sticky; left: 0; z-index: 30; background: white;
+    border-right: 1px solid #E2E8F0; width: 160px; min-width: 160px;
+}
+.tech-table th.sticky-col { z-index: 40; } /* Esquina superior izquierda */
+
+.tech-table td {
+    padding: 15px; border-bottom: 1px solid #F1F5F9;
+    text-align: center; color: var(--brand-indigo); vertical-align: middle; font-size: 0.9rem;
+}
+.feature-col {
+    text-align: left !important; font-weight: 600; font-size: 0.85rem; 
+    color: #64748B; text-transform: uppercase; letter-spacing: 0.5px;
+    display: flex; align-items: center; gap: 10px;
+}
+.f-icon {
+    width: 28px; height: 28px; border-radius: 6px; background: #F1F5F9;
+    color: #64748B; display: flex; align-items: center; justify-content: center;
+}
+
+/* 4. COLUMNA DESTACADA (AI CHOICE) */
+.highlight-head {
+    background: linear-gradient(to bottom, #ECFDF5 0%, white 100%) !important;
+    border-top: 4px solid #10B981 !important;
+}
+.highlight-cell {
+    background: #E6F5FF !important; 
+    border-left: 1px solid #DCFCE7; border-right: 1px solid #DCFCE7;
+    font-weight: 700;
+}
+
+/* Badges y Textos */
+.carrier-logo-text { font-weight: 800; font-size: 1rem; line-height: 1.2; margin-bottom: 5px; }
+.plan-badge { font-size: 0.7rem; padding: 3px 8px; border-radius: 20px; background: #F1F5F9; color: #64748B; font-weight: 600; }
+.rec-badge {
+    background: #10B981; color: white; padding: 4px 10px; border-radius: 6px;
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; display: inline-block;
+}
+
+.rec-badge-blue {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-indigo) 100%); color: white; padding: 4px 10px; border-radius: 6px;
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; display: inline-block;
+}
+
+/* Precios */
+.price-tag-lg { font-size: 1.4rem; font-weight: 900; }
+.price-sub { font-size: 0.75rem; color: var(--brand-indigo); }
+.text-primary { color: var(--brand-indigo) !important; }
+.text-muted { color: var(--brand-indigo) !important; }
+.font-bold { font-weight: 700; }
+
+/* Botones */
+.btn-select-primary {
+    background: var(--brand-indigo); color: white; border: none; padding: 10px;
+    border-radius: 8px; font-weight: 700; width: 100%; cursor: pointer;
+}
+.btn-select-ghost {
+    background: transparent; border: 1px solid #E2E8F0; color: #64748B;
+    padding: 8px; border-radius: 8px; font-weight: 600; width: 100%; cursor: pointer;
+}
+
+/* Footer */
+.comp-footer {
+    padding: 15px 30px; border-top: 1px solid #E2E8F0; background: white;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.btn-update {
+    background: var(--brand-indigo); color: white; border: none; padding: 10px 24px;
+    border-radius: 8px; cursor: pointer;
+}
+
+/* 5. ANIMACIÓN SHIMMER (Resplandor) */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+.shimmer-effect {
+    position: relative; overflow: hidden;
+}
+.shimmer-effect::after {
+    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+    background-size: 200% 100%; animation: shimmer 3s infinite; pointer-events: none;
+}
+
+/* ESTILO PARA LOGOS DE CARRIERS */
+.carrier-logo-compare {
+    max-width: 120px;       /* Ancho máximo para que no rompa la columna */
+    height: 45px;           /* Altura fija para alineación perfecta */
+    object-fit: contain;    /* Asegura que el logo se vea completo sin estirarse */
+    display: block;
+    margin: 0 auto 8px auto; /* Centrado y margen inferior */
+}
+
+/* Ajuste específico para móviles si es necesario */
+@media (max-width: 768px) {
+    .carrier-logo-compare { max-width: 90px; height: 35px; }
+}
+
+.btn-action-edit-info{
+    position: absolute; top: 20px; right: 20px;
+    display: flex; 
+    gap: 10px;
+}
+
+/* --- DELETE MODAL STYLES (PREMIUM) --- */
+
+/* --- ESTILOS MODAL DELETE --- */
+
+/* Ajuste de tamaño específico para alertas pequeñas */
+.zlight-card.delete-mode {
+    max-width: 380px;
+    padding: 30px 25px;
+}
+
+/* Icono Rojo con Halo Animado */
+.modal-icon-wrapper.danger-theme {
+    width: 64px; height: 64px;
+    margin: 0 auto 15px auto;
+    background: #FEF2F2; /* Rojo muy pálido */
+    color: #EF4444;       /* Rojo vibrante pero elegante */
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    position: relative;
+}
+
+/* Efecto de onda suave */
+.modal-icon-wrapper.danger-theme .icon-halo {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 50%;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Botones alineados */
+.modal-actions-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+    margin-top: 25px;
+}
+
+/* Botón Cancelar (Discreto) */
+.btn-ghost-gray {
+    background: white; border: 1px solid #E2E8F0; color: #64748B;
+    padding: 10px; border-radius: 10px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-ghost-gray:hover { background: #F8FAFC; color: #0F172A; }
+
+/* Botón Eliminar (Rojo pero no agresivo) */
+.btn-danger-solid {
+    background: #EF4444; color: white; border: none;
+    padding: 10px; border-radius: 10px; font-weight: 600; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); /* Sombra roja suave */
+    transition: all 0.2s;
+}
+.btn-danger-solid:hover {
+    background: #DC2626; transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(239, 68, 68, 0.4);
+}
+
+/* Overlay (Base) - Reutiliza tu lógica de 'active' */
+#custom-modal {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px);
+    z-index: 10000; justify-content: center; align-items: center;
+    opacity: 0; transition: opacity 0.3s;
+}
+#custom-modal.active { display: flex; opacity: 1; }
+
+.delete-mode {
+    background: white; padding: 30px; border-radius: 20px;
+    max-width: 400px; width: 90%; text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2); transform: scale(0.95); transition: transform 0.3s;
+}
+#custom-modal.active .delete-mode { transform: scale(1); }
+
+/* Icono Rojo Animado */
+.modal-icon-wrapper.danger-theme {
+    width: 70px; height: 70px; margin: 0 auto 15px;
+    background: #FEF2F2; color: #EF4444; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+    position: relative;
+}
+.icon-halo {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 50%; border: 1px solid rgba(239, 68, 68, 0.2);
+    animation: pulse-red 2s infinite;
+}
+@keyframes pulse-red { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+
+/* Botones */
+.modal-actions-row { display: flex; gap: 15px; margin-top: 25px; justify-content: center; }
+
+.btn-ghost-gray {
+    background: #F1F5F9; color: #64748B; border: none; padding: 10px 20px;
+    border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s;
+}
+.btn-ghost-gray:hover { background: #E2E8F0; color: #334155; }
+
+.btn-danger-solid {
+    background: #EF4444; color: white; border: none; padding: 10px 20px;
+    border-radius: 8px; font-weight: 600; cursor: pointer;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); transition: 0.2s;
+}
+.btn-danger-solid:hover { background: #DC2626; transform: translateY(-2px); }
+
+/* --- PREMIUM DELETE MODAL STYLES --- */
+
+/* Ajustes de la Tarjeta */
+.delete-premium-card {
+    max-width: 360px !important;
+    padding: 35px 25px 25px !important;
+    border-radius: 24px !important;
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.25) !important;
+    overflow: visible !important; /* Para que la animación del icono no se corte */
+}
+
+/* --- 1. ICONO ANIMADO (El factor "Wow") --- */
+.danger-icon-container {
+    position: relative;
+    width: 72px; height: 72px;
+    margin: -10px auto 20px auto; /* Un poco más arriba */
+    display: flex; align-items: center; justify-content: center;
+}
+
+.danger-circle {
+    width: 100%; height: 100%;
+    background: #FEF2F2; color: #DC2626;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 10px 20px rgba(220, 38, 38, 0.15);
+}
+
+.danger-ripple {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 50%;
+    background: rgba(254, 202, 202, 0.5);
+    z-index: 1;
+    animation: danger-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@keyframes danger-pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* --- 2. TIPOGRAFÍA Y CAPSULA --- */
+.warning-capsule {
+    display: inline-block;
+    background: #FFF7ED; color: #C2410C; /* Naranja alerta suave */
+    font-size: 0.75rem; font-weight: 700;
+    padding: 6px 12px; border-radius: 20px;
+    margin-top: 15px;
+    border: 1px solid #FFEDD5;
+}
+
+/* --- 3. BOTONES DE ALTA GAMA --- */
+.modal-actions-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+    margin-top: 10px;
+}
+
+/* Cancelar: Sutil pero táctil */
+.btn-premium-ghost {
+    background: white;
+    border: 1px solid #E2E8F0;
+    color: #64748B;
+    font-weight: 600; padding: 12px;
+    border-radius: 12px; cursor: pointer;
+    transition: all 0.2s ease;
+}
+.btn-premium-ghost:hover {
+    background: #F8FAFC; color: #1E293B; border-color: #CBD5E1;
+}
+
+/* Eliminar: Gradiente y Sombra (Glow) */
+.btn-premium-danger {
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+    color: white; border: none;
+    font-weight: 600; padding: 12px;
+    border-radius: 12px; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3); /* Sombra roja brillante */
+    transition: all 0.2s ease;
+}
+.btn-premium-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
+}
+.btn-premium-danger:active {
+    transform: translateY(0);
+}
+
+/* Overlay Base (Asegurando que funcione con tu JS) */
+#custom-modal {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(6px);
+    z-index: 10000; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s;
+}
+#custom-modal.active { display: flex; opacity: 1; }
