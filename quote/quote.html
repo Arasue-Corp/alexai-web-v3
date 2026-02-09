@@ -7,6 +7,8 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="../css/style.css"> 
     <link rel="stylesheet" href="../css/style-quote.css"> 
@@ -598,6 +600,115 @@
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
 
+    <div id="alexOnboarding" class="crystal-overlay active">
+        
+        <div class="crystal-card">
+            <button class="skip-link" onclick="closeWelcomeOnboarding()">SKIP INTRO</button>
+
+            <div class="c-body">
+
+                <div class="c-slide active" data-step="0">
+                    <div class="tech-icon-stack">
+                        <div class="tech-icon-bg"></div>
+                        <i class="fa-solid fa-microchip tech-icon-main"></i>
+                        <div class="tech-icon-badge"><i class="fa-solid fa-bolt"></i></div>
+                    </div>
+
+                    <h2 class="c-title">Welcome to the <br><span class="shimmer-text">Alex AI System</span></h2>
+                    
+                    <div class="c-copy">
+                        <p>You have accessed a next-generation insurance platform. We combine <strong>artificial intelligence</strong> with premium carrier networks to find what others miss.</p>
+                        <p>Our process is designed for speed. In less than <strong>5 minutes</strong>, we will analyze your profile and present a range of optimized coverage options.</p>
+                    </div>
+                </div>
+
+                <div class="c-slide" data-step="1">
+                    <div class="tech-icon-stack">
+                        <div class="tech-icon-bg"></div>
+                        <i class="fa-solid fa-file-contract tech-icon-main"></i>
+                        <div class="tech-icon-badge"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    </div>
+
+                    <h2 class="c-title">Precision <br><span class="shimmer-text">Prerequisites</span></h2>
+                    
+                    <div class="c-copy">
+                        <p>To guarantee a binding rate (not just an estimate), our algorithm requires accurate data inputs:</p>
+                    </div>
+
+                    <div class="info-group">
+                        
+                        <div class="info-card-row">
+                            <div class="ic-icon"><i class="fa-solid fa-id-card"></i></div>
+                            <div class="ic-content">
+                                <h4>Valid Identification</h4>
+                                <p>US License, Foreign License, Passport, or Matricula.</p>
+                            </div>
+                        </div>
+
+                        <div class="info-card-row" style="border-color: #009cff33; background: #f0f9ff;">
+                            <div class="ic-icon" style="background:white; color:#009cff;"><i class="fa-solid fa-file-invoice"></i></div>
+                            <div class="ic-content">
+                                <h4>Currently Insured?</h4>
+                                <p>Please use your <span class="highlight-doc">Declaration Page</span> to match limits and secure a transfer discount.</p>
+                            </div>
+                        </div>
+
+                        <div class="info-card-row">
+                            <div class="ic-icon"><i class="fa-solid fa-car-side"></i></div>
+                            <div class="ic-content">
+                                <h4>Vehicle VIN</h4>
+                                <p>Required for exact safety feature valuation.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="c-slide" data-step="2">
+                    <div class="tech-icon-stack">
+                        <div class="tech-icon-bg"></div>
+                        <i class="fa-solid fa-hand-holding-heart tech-icon-main"></i>
+                        <div class="tech-icon-badge"><i class="fa-solid fa-check"></i></div>
+                    </div>
+
+                    <h2 class="c-title">Your Journey, <br><span class="shimmer-text">Your Choice</span></h2>
+                    
+                    <div class="c-copy">
+                        <p>At the end of this analysis, you will be presented with a customized dashboard. You maintain full control to <strong>purchase instantly</strong> or request a consultation with an <strong>Alex Agent</strong>.</p>
+                        <p>Thank you for trusting us with your protection.</p>
+                    </div>
+
+                    <div class="alex-signature-container">
+                        <div class="alex-logo-mark icon-image-mode">
+                            <img src="../assets/img/logo-alex-heart-white.png" alt="Alex AI Logo">
+                        </div>
+                    
+                        <div class="sig-text-block">
+                            <span class="sig-label">Sincerely,</span>
+                            <span class="sig-name">The Alex AI Team</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="c-footer">
+                <button class="btn-back" id="btnWelcomeBack" onclick="prevWelcomeSlide()" disabled>
+                    <i class="fa-solid fa-arrow-left"></i> Back
+                </button>
+                
+                <div class="dots-nav" id="welcomeDots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+                <button class="btn-primary-shimmer" id="btnWelcomeNext" onclick="nextWelcomeSlide()">
+                    CONTINUE
+                </button>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

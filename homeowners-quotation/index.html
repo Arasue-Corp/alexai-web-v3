@@ -195,7 +195,7 @@
      <main class="page-wrapper" style="padding-bottom: 80px;">
 
         <div class="container">
-            <div class="wizard-container">
+            <div class="wizard-container" id="tour-home-header">
                 <div class="wizard-top">
                     <div class="wizard-title"><i class="fa-solid fa-house-chimney"></i> Home Coverage</div>
                     <div class="wizard-title"><i class="fa-solid fa-flag-checkered"></i></div>
@@ -249,13 +249,13 @@
                                         <div class="inp-rich-group"><label class="lbl-premium">Employer</label><div class="input-rich-wrapper compact-premium theme-blue"><div class="icon-slot"><i class="fa-solid fa-building"></i></div><input type="text" name="employer1" class="rich-input validate-req" placeholder="Company Inc."></div></div>
                                     </div>
                                 </div>
-                                <div class="premium-group compact-group mt-4" style="border: 2px dashed #E2E8F0; background: #F8FAFC; padding: 20px; border-radius: 16px;">
+                                <div class="premium-group compact-group mt-4" style="border: 2px dashed #E2E8F0; background: #F8FAFC; padding: 20px; border-radius: 16px;" id="tour-co-app-action">
                                     <div class="pg-header">
                                         <div class="pg-header-badge teal"><i class="fa-solid fa-user-group"></i> CO-APPLICANT</div>
                                         <div class="pg-header-line"></div>
                                     </div>
 
-                                    <div class="action-header" style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px 20px; border-radius: 12px; border: 1px solid #E2E8F0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); margin-top: 20px;">
+                                    <div class="action-header" id="tour-co-app-btn" style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px 20px; border-radius: 12px; border: 1px solid #E2E8F0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); margin-top: 20px;">
                                         
                                         <div style="display: flex; align-items: center; gap: 12px;">
                                             <div style="width: 40px; height: 40px; background: #EFF6FF; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #3B82F6; font-size: 1.1rem;">
@@ -433,7 +433,7 @@
                                         <div class="pg-header-badge blue"><i class="fa-solid fa-shield-halved"></i> SAFETY FEATURES</div>
                                         <div class="pg-header-line"></div>
                                     </div>
-                                    <div class="premium-safety-grid">
+                                    <div class="premium-safety-grid" id="tour-safety-grid">
                                         
                                         <label class="safety-card-label">
                                             <input type="checkbox" name="fire-dept">
@@ -504,7 +504,7 @@
                                         Report any losses in the last 5 years.
                                     </p>
 
-                                    <div class="inp-rich-group mb-4">
+                                    <div class="inp-rich-group mb-4" id="tour-loss-input">
                                         <label class="lbl-premium">Number of Losses</label>
                                         <div class="input-rich-wrapper compact-premium theme-warning">
                                             <div class="icon-slot"><i class="fa-solid fa-list-ol"></i></div>
@@ -530,7 +530,7 @@
                                         <div class="pg-header-line"></div>
                                     </div>
 
-                                    <div class="grid-2-tight mb-4">
+                                    <div class="grid-2-tight mb-4" id="tour-curr-policy">
                                         <div class="inp-rich-group">
                                             <label class="lbl-premium">Current Carrier</label>
                                             <div class="input-rich-wrapper compact-premium theme-blue">
@@ -572,7 +572,7 @@
                                         Select items to add specific coverage.
                                     </p>
 
-                                    <div class="jewelry-hero-card">
+                                    <div class="jewelry-hero-card" id="tour-jewelry-card">
                                         <div class="j-header">
                                             <div class="j-icon"><i class="fa-regular fa-gem"></i></div>
                                             <div class="j-title">
@@ -729,7 +729,7 @@
                                 <li><i class="fa-regular fa-circle"></i> Current Policy</li>
                                 <li><i class="fa-regular fa-circle"></i> Valuables</li>
                             </ul>
-                            <div class="discount-box-vibrant">
+                            <div class="discount-box-vibrant" id="tour-bundle-box">
                                 <i class="fa-solid fa-ticket bg-icon"></i>
                                 <div class="db-title"><strong>Bundle & Save</strong></div>
                                 <div class="db-msg">Crunching the numbers...</div>
@@ -999,6 +999,27 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
+
+    <div id="tourFocusRing">
+        <div class="scan-line"></div>
+        <div class="focus-label" id="focusLabel">SCANNING</div>
+    </div>
+
+    <div id="tourCard" class="tour-card-holo">
+        <div class="holo-header">
+            <span class="holo-badge">PROPERTY BLUEPRINT <span id="tcCurrent">1</span>/<span id="tcTotal">3</span></span>
+            <button class="holo-skip" onclick="endHomeTour()">Skip Guide</button>
+        </div>
+        <div class="holo-body">
+            <div class="graphic-stage" id="graphicStage"></div>
+            <h3 class="holo-title" id="tcTitle">Title</h3>
+            <p class="holo-desc" id="tcDesc">Desc</p>
+        </div>
+        <div class="holo-footer">
+            <button class="btn-holo-prev" id="btnHomePrev" onclick="prevHomeStep()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button class="btn-holo-next" id="btnHomeNext" onclick="nextHomeStep()">Next <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
 
 </body>
 </html>

@@ -239,7 +239,7 @@
                                     <div class="pg-header-line"></div>
                                 </div>
 
-                                <div class="inp-rich-group mb-4">
+                                <div class="inp-rich-group mb-4" id="tour-vin-section">
                                     <label class="cov-label">Vehicle Identification Number (VIN)
                                         <i class="fa-solid fa-circle-info tooltip-icon" onclick="showRichInfo('vehicle-vin')"></i>
                                     </label>
@@ -313,7 +313,7 @@
                                 </div>
                             </div>
 
-                            <div class="premium-group">
+                            <div class="premium-group" id="tour-coverage-config">
                                 <div class="pg-header">
                                     <div class="pg-header-badge teal">
                                         <i class="fa-solid fa-shield-halved"></i> COVERAGE CONFIGURATION
@@ -680,6 +680,33 @@
             <div class="rich-footer">
                 <button class="btn-rich-action" onclick="closeRichInfo()">Got it</button>
             </div>
+        </div>
+    </div>
+
+    <div id="tourFocusRing">
+        <div class="scan-line"></div>
+        <div class="focus-label" id="focusLabel">SCANNING</div>
+    </div>
+
+    <div id="tourCard" class="tour-card-holo">
+        <div class="holo-header">
+            <span class="holo-badge">ASSETS <span id="tcCurrent">1</span>/<span id="tcTotal">3</span></span>
+            <button class="holo-skip" onclick="endVehicleTour()">Skip Guide</button>
+        </div>
+
+        <div class="holo-body">
+            <div class="graphic-stage" id="graphicStage"></div>
+            <h3 class="holo-title" id="tcTitle">Title</h3>
+            <p class="holo-desc" id="tcDesc">Desc</p>
+        </div>
+
+        <div class="holo-footer">
+            <button class="btn-holo-prev" id="btnVehPrev" onclick="prevVehicleStep()">
+                <i class="fa-solid fa-arrow-left"></i> Back
+            </button>
+            <button class="btn-holo-next" id="btnVehNext" onclick="nextVehicleStep()">
+                Next <i class="fa-solid fa-arrow-right"></i>
+            </button>
         </div>
     </div>
 

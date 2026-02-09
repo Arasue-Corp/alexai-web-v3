@@ -226,7 +226,7 @@
                     
                     <div id="panel-car-1" class="car-panel active" data-id="1">
                         
-                        <div class="premium-group">
+                        <div class="premium-group" id="tour-finance-group">
                                 <div class="pg-header">
                                     <div class="pg-header-badge blue">
                                         <i class="fa-solid fa-sack-dollar"></i> DO YOU FINANCE OR LEASE YOUR VEHICLE? 
@@ -497,7 +497,7 @@
                         <div class="db-msg">Multi-Car applied!</div>
                     </div>
 
-                    <div class="tip-box-vibrant" style="margin-top: 20px;">
+                    <div class="tip-box-vibrant" id="tour-gap-tip" style="margin-top: 20px;">
                         <i class="fa-regular fa-lightbulb tip-icon"></i>
                         <div>
                             <strong>Alex Tip:</strong> If you have a loan, Gap Coverage (offered in specs) is highly recommended.
@@ -716,6 +716,26 @@
             <div class="rich-footer">
                 <button class="btn-rich-action" onclick="closeRichInfo()">Got it</button>
             </div>
+        </div>
+    </div>
+
+    <div id="tourFocusRing">
+        <div class="scan-line"></div>
+        <div class="focus-label" id="focusLabel">SCANNING</div>
+    </div>
+    <div id="tourCard" class="tour-card-holo">
+        <div class="holo-header">
+            <span class="holo-badge">FINANCE 101 <span id="tcCurrent">1</span>/<span id="tcTotal">2</span></span>
+            <button class="holo-skip" onclick="endFinTour()">Skip Guide</button>
+        </div>
+        <div class="holo-body">
+            <div class="graphic-stage" id="graphicStage"></div>
+            <h3 class="holo-title" id="tcTitle">Title</h3>
+            <p class="holo-desc" id="tcDesc">Desc</p>
+        </div>
+        <div class="holo-footer">
+            <button class="btn-holo-prev" id="btnFinPrev" onclick="prevFinStep()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button class="btn-holo-next" id="btnFinNext" onclick="nextFinStep()">Next <i class="fa-solid fa-arrow-right"></i></button>
         </div>
     </div>
 

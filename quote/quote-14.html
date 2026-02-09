@@ -209,7 +209,7 @@
         </div>
 
         <div class="mobile-filter-bar">
-            <button class="btn-mobile-filter" onclick="toggleFilters()">
+            <button id="btnMobileFilter" class="btn-mobile-filter" onclick="toggleFilters()">
                 <i class="fa-solid fa-sliders"></i> Edit Coverage & Filters
             </button>
         </div>
@@ -400,7 +400,7 @@
                 </div>
             </div>
 
-            <aside class="organic-panel summary-sidebar">
+            <aside class="organic-panel summary-sidebar" id="tour-summary-panel">
                 <div class="sidebar-title">Quote Summary</div>
                 
                 <div class="summary-list">
@@ -419,9 +419,9 @@
                 </div>
 
                 <div class="desktop-btns action-btns">
-                    <button class="btn-action btn-next js-btn-next">PROCEED TO CHECKOUT <i class="fa-solid fa-arrow-right"></i></button>
-                    <button class="btn-action btn-compare js-btn-compare">COMPARE SELECTED <i class="fa-solid fa-scale-balanced"></i></button>
-                    <button class="btn-action btn-update js-btn-update"><i class="fa-solid fa-pen"></i> Edit Information</button>
+                    <button id="btnCheckoutSidebar" class="btn-action btn-next js-btn-next">PROCEED TO CHECKOUT <i class="fa-solid fa-arrow-right"></i></button>
+                    <button id="btnCompareSidebar" class="btn-action btn-compare js-btn-compare">COMPARE SELECTED <i class="fa-solid fa-scale-balanced"></i></button>
+                    <button id="btnEditSidebar" class="btn-action btn-update js-btn-update"><i class="fa-solid fa-pen"></i> Edit Information</button>
                 </div>
             </aside>
 
@@ -430,10 +430,10 @@
 
     <div class="mobile-dock">
         <div class="mobile-dock-row">
-            <button class="btn-action btn-next js-btn-next">NEXT STEP <i class="fa-solid fa-arrow-right"></i></button>
+            <button id="btnMobileCheckout" class="btn-action btn-next js-btn-next">PROCEED TO CHECKOUT <i class="fa-solid fa-arrow-right"></i></button>
             <div class="mobile-dock-sub">
-                <button class="btn-action btn-compare js-btn-compare" style="flex:1;">COMPARE</button>
-                <button class="btn-action btn-update js-btn-update" onclick="alert('Redirecting...')" style="flex:1;">EDIT</button>
+                <button id="btnMobileCompare" class="btn-action btn-compare js-btn-compare" style="flex:1;">COMPARE</button>
+                <button id="btnMobileEdit" class="btn-action btn-update js-btn-update" onclick="alert('Redirecting...')" style="flex:1;">EDIT</button>
             </div>
         </div>
     </div>
@@ -847,6 +847,33 @@
             <div class="rich-footer">
                 <button class="btn-rich-action" onclick="closeRichInfo()">Got it</button>
             </div>
+        </div>
+    </div>
+
+    <div id="tourFocusRing">
+        <div class="scan-line"></div>
+        <div class="focus-label" id="focusLabel">SCANNING</div>
+    </div>
+
+    <div id="tourCard" class="tour-card-holo">
+        <div class="holo-header">
+            <span class="holo-badge">MARKETPLACE <span id="tcCurrent">1</span>/<span id="tcTotal">3</span></span>
+            <button class="holo-skip" onclick="endReviewTour()">Skip Guide</button>
+        </div>
+
+        <div class="holo-body">
+            <div class="graphic-stage" id="graphicStage"></div>
+            <h3 class="holo-title" id="tcTitle">Title</h3>
+            <p class="holo-desc" id="tcDesc">Desc</p>
+        </div>
+
+        <div class="holo-footer">
+            <button class="btn-holo-prev" id="btnRevPrev" onclick="prevReviewStep()">
+                <i class="fa-solid fa-arrow-left"></i> Back
+            </button>
+            <button class="btn-holo-next" id="btnRevNext" onclick="nextReviewStep()">
+                Next <i class="fa-solid fa-arrow-right"></i>
+            </button>
         </div>
     </div>
 

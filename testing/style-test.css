@@ -13533,3 +13533,68 @@ body.hovering .ai-cursor {
 }
 
 
+/* ============================================== */
+/* --- TOUR SYSTEM STYLES --- */
+
+/* 1. El Fondo Oscuro (Backdrop) */
+.tour-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.7); /* Azul oscuro semi-transparente */
+    backdrop-filter: blur(4px);         /* Efecto borroso elegante */
+    z-index: 9998;
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+}
+.tour-overlay.active { opacity: 1; pointer-events: auto; }
+
+/* 2. El Elemento Resaltado (Spotlight) */
+.tour-highlight {
+    position: relative;
+    z-index: 9999 !important; /* Por encima del overlay */
+    background: white;        /* Asegura que el fondo no sea transparente */
+    border-radius: 12px;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5), /* Halo Azul */
+                0 0 30px rgba(0,0,0,0.5);          /* Sombra Profunda */
+    transition: all 0.3s ease;
+}
+
+/* 3. La Tarjeta de Explicación (Popover) */
+.tour-card {
+    position: absolute; top: 0; left: 0;
+    width: 320px;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 20px 40px -5px rgba(0,0,0,0.3);
+    z-index: 10000;
+    opacity: 0; pointer-events: none; transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, top 0.4s ease, left 0.4s ease;
+}
+.tour-card.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+/* Contenido del Tour */
+.tour-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.tour-step-badge { 
+    background: #EFF6FF; color: #2563EB; font-size: 0.75rem; font-weight: 700; 
+    padding: 4px 10px; border-radius: 20px; letter-spacing: 0.5px; text-transform: uppercase;
+}
+.tour-close-btn { background: none; border: none; font-size: 1.2rem; color: #94A3B8; cursor: pointer; }
+
+.tour-title { margin: 0 0 5px 0; font-size: 1.1rem; font-weight: 800; color: #0F172A; }
+.tour-desc { margin: 0 0 20px 0; font-size: 0.9rem; color: #64748B; line-height: 1.5; }
+
+/* Botones */
+.tour-footer { display: flex; justify-content: space-between; align-items: center; }
+.tour-nav { display: flex; gap: 8px; }
+
+.btn-tour-primary {
+    background: #0F172A; color: white; border: none; padding: 8px 16px;
+    border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.85rem;
+}
+.btn-tour-secondary {
+    background: white; border: 1px solid #E2E8F0; color: #475569; padding: 8px 14px;
+    border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.85rem;
+}
+.btn-tour-ghost {
+    background: none; border: none; color: #94A3B8; cursor: pointer; font-size: 0.85rem; font-weight: 500;
+}
+.btn-tour-ghost:hover { color: #64748B; }

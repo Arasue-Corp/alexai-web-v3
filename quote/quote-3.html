@@ -233,7 +233,7 @@
                                 </div>
                             </div>
 
-                            <div class="premium-group anim-entry delay-1">
+                            <div class="premium-group anim-entry delay-1" id="tour-mandatory">
                                 <div class="pg-header">
                                     <div class="pg-header-badge blue">
                                         <i class="fa-solid fa-scale-balanced"></i> MANDATORY
@@ -290,7 +290,7 @@
                                 </div>
                             </div>
 
-                            <div class="premium-group anim-entry delay-2">
+                            <div class="premium-group anim-entry delay-2" id="tour-protection">
                                 <div class="pg-header">
                                     <div class="pg-header-badge teal">
                                         <i class="fa-solid fa-shield-halved"></i> YOUR PROTECTION
@@ -410,7 +410,7 @@
                 </div>
             </div>
 
-            <aside class="config-sidebar">
+            <aside class="config-sidebar" id="tour-sidebar">
                 <div class="organic-panel">
                     <div class="sidebar-title">Coverage Path</div>
                     <ul class="aurora-list">
@@ -693,6 +693,34 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
+
+    <div id="tourFocusRing">
+        <div class="scan-line"></div> <div class="focus-label" id="focusLabel">ANALYZING</div>
+    </div>
+
+    <div id="tourCard" class="tour-card-holo">
+        <div class="holo-header">
+            <span class="holo-badge">STEP <span id="tcCurrent">1</span> OF <span id="tcTotal">3</span></span>
+            <button class="holo-skip" onclick="endHoloTour()">Skip Guide</button>
+        </div>
+
+        <div class="holo-body">
+            <div class="graphic-stage" id="graphicStage">
+                </div>
+            
+            <h3 class="holo-title" id="tcTitle">Title</h3>
+            <p class="holo-desc" id="tcDesc">Desc</p>
+        </div>
+
+        <div class="holo-footer">
+            <button class="btn-holo-prev" id="btnTourPrev" onclick="prevHoloStep()">
+                <i class="fa-solid fa-arrow-left"></i> Back
+            </button>
+            <button class="btn-holo-next" id="btnTourNext" onclick="nextHoloStep()">
+                Next Step <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
 
 </body>
 </html>

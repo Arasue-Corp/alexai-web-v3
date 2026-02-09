@@ -195,7 +195,7 @@
     <main class="page-wrapper" style="padding-bottom: 80px;">
         <div class="container">
             
-            <div class="wizard-container">
+            <div class="wizard-container" id="tour-renters-intro">
                 <div class="wizard-top">
                     <div class="wizard-title"><i class="fa-solid fa-key"></i> Renters Coverage</div>
                     <div class="wizard-title"><i class="fa-solid fa-flag-checkered"></i></div>
@@ -364,10 +364,10 @@
                             <div class="form-tab-panel" data-step="3">
                                 <div class="premium-group anim-entry">
                                     <div class="pg-header"><div class="pg-header-badge warning"><i class="fa-solid fa-shield-cat"></i> COVERAGE</div><div class="pg-header-line"></div></div>
-                                    <div class="inp-rich-group mb-4"><label class="lbl-premium">Content Limit</label><div class="input-rich-wrapper compact-premium theme-warning"><div class="icon-slot"><i class="fa-solid fa-couch"></i></div><select name="content-limit" class="rich-input premium-select validate-req"><option value="" disabled selected>Select...</option><option value="5000">$5,000</option><option value="10000">$10,000</option><option value="15000">$15,000</option><option value="20000">$20,000</option></select></div></div>
+                                    <div class="inp-rich-group mb-4" id="tour-content-limit"><label class="lbl-premium">Content Limit</label><div class="input-rich-wrapper compact-premium theme-warning"><div class="icon-slot"><i class="fa-solid fa-couch"></i></div><select name="content-limit" class="rich-input premium-select validate-req"><option value="" disabled selected>Select...</option><option value="5000">$5,000</option><option value="10000">$10,000</option><option value="15000">$15,000</option><option value="20000">$20,000</option></select></div></div>
                                     <div class="inp-rich-group mb-4"><label class="lbl-premium">Deductible</label><div class="input-rich-wrapper compact-premium theme-warning"><div class="icon-slot"><i class="fa-solid fa-wallet"></i></div><select name="content-deductible" class="rich-input premium-select validate-req"><option value="" disabled selected>Select...</option><option value="250|500">$250 | $500</option><option value="250|1000">$250 | $1,000</option><option value="500|500">$500 | $500</option><option value="500|1000">$500 | $1,000</option><option value="1000|1000">$1,000 | $1,000</option></select></div></div>
                                     <div class="inp-rich-group mb-4"><label class="lbl-premium">Liability Limit</label><div class="input-rich-wrapper compact-premium theme-warning"><div class="icon-slot"><i class="fa-solid fa-gavel"></i></div><select name="liability-limit" class="rich-input premium-select validate-req"><option value="" disabled selected>Select...</option><option value="50000">$50,000</option><option value="100000">$100,000</option></select></div></div>
-                                    <div class="vault-switch-row">
+                                    <div class="vault-switch-row" id="tour-water-backup">
                                         <div class="vs-label"><i class="fa-solid fa-faucet-drip" style="color: #3B82F6;"></i> Include Water Backup Coverage?</div>
                                         <div class="aurora-toggle-segment small"><input type="radio" name="water-backup" id="wb_yes" value="yes"><label for="wb_yes">Yes</label><input type="radio" name="water-backup" id="wb_no" value="no" checked><label for="wb_no">No</label><div class="segment-highlight"></div></div>
                                     </div>
@@ -708,6 +708,26 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="../js/script.js"></script>
     <script src="../js/script-quote.js"></script>
+
+    <div id="tourFocusRing">
+        <div class="scan-line"></div>
+        <div class="focus-label" id="focusLabel">SCANNING</div>
+    </div>
+    <div id="tourCard" class="tour-card-holo">
+        <div class="holo-header">
+            <span class="holo-badge">RENTERS GUIDE <span id="tcCurrent">1</span>/<span id="tcTotal">3</span></span>
+            <button class="holo-skip" onclick="endHomeTour()">Skip Guide</button>
+        </div>
+        <div class="holo-body">
+            <div class="graphic-stage" id="graphicStage"></div>
+            <h3 class="holo-title" id="tcTitle">Title</h3>
+            <p class="holo-desc" id="tcDesc">Desc</p>
+        </div>
+        <div class="holo-footer">
+            <button class="btn-holo-prev" id="btnHomePrev" onclick="prevHomeStep()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button class="btn-holo-next" id="btnHomeNext" onclick="nextHomeStep()">Next <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>    
 
 </body>
 </html>

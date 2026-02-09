@@ -239,7 +239,7 @@
                                 <div class="pg-header-line"></div>
                             </div>
 
-                            <div class="row-switch-container">
+                            <div class="row-switch-container" id="tour-history-switch">
                                 <div class="switch-label-group">
                                     <div class="sl-icon"><i class="fa-solid fa-car-on"></i></div>
                                     <div class="sl-text">
@@ -558,7 +558,7 @@
                         <li><i class="fa-regular fa-circle"></i> Vehicle</li>
                     </ul>
 
-                    <div class="discount-box-vibrant">
+                    <div class="discount-box-vibrant" id="tour-transfer-box">
                         <i class="fa-solid fa-tags bg-icon"></i>
                         <div class="db-title">Potential Discounts</div>
                         <div class="db-val">3</div>
@@ -785,6 +785,33 @@
             <div class="rich-footer">
                 <button class="btn-rich-action" onclick="closeRichInfo()">Got it</button>
             </div>
+        </div>
+    </div>
+
+    <div id="tourFocusRing">
+        <div class="scan-line"></div>
+        <div class="focus-label" id="focusLabel">SCANNING</div>
+    </div>
+
+    <div id="tourCard" class="tour-card-holo">
+        <div class="holo-header">
+            <span class="holo-badge">CONTINUITY <span id="tcCurrent">1</span>/<span id="tcTotal">2</span></span>
+            <button class="holo-skip" onclick="endHistoryTour()">Skip Guide</button>
+        </div>
+
+        <div class="holo-body">
+            <div class="graphic-stage" id="graphicStage"></div>
+            <h3 class="holo-title" id="tcTitle">Title</h3>
+            <p class="holo-desc" id="tcDesc">Desc</p>
+        </div>
+
+        <div class="holo-footer">
+            <button class="btn-holo-prev" id="btnHistPrev" onclick="prevHistoryStep()">
+                <i class="fa-solid fa-arrow-left"></i> Back
+            </button>
+            <button class="btn-holo-next" id="btnHistNext" onclick="nextHistoryStep()">
+                Next <i class="fa-solid fa-arrow-right"></i>
+            </button>
         </div>
     </div>
 

@@ -10,6 +10,7 @@
     --color-gray: #64748B;          /* Slate 500 (Subtext) */
     --color-success: #10B981;       /* Emerald */
     --degradado-aurora: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-indigo) 100%);
+    --aurora-corp-text:linear-gradient(135deg, #10B981, #3B82F6);
 
     
     /* Surfaces */
@@ -4828,3 +4829,1603 @@ h3.tech-title.warning-text {
 }
 .btn-rich-action:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
+/* --- SIGNATURE ONBOARDING STYLES --- */
+
+/* --- ALEX AI CRYSTAL ONBOARDING --- */
+
+:root {
+    --alex-grad: linear-gradient(135deg, #009cff 0%, #514690 100%);
+    --alex-text-dark: #1e293b;
+    --alex-text-gray: #475569;
+}
+
+/* 1. EL OVERLAY (Fondo Difuminado Luminoso) */
+.crystal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 20000;
+    /* Fondo claro semi-transparente */
+    background: rgba(255, 255, 255, 0.4); 
+    /* El efecto clave: Desenfoca el cotizador detrás */
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.crystal-overlay.active { opacity: 1; pointer-events: auto; }
+
+/* 2. LA TARJETA (Blanca, Elevada, Premium) */
+.crystal-card {
+    position: relative;
+    width: 90%; max-width: 580px; /* Más ancho para que quepa el copy largo */
+    background: #FFFFFF;
+    border-radius: 24px;
+    box-shadow: 0 25px 80px -20px rgba(81, 70, 144, 0.25); /* Sombra con tinte morado sutil */
+    padding: 0;
+    overflow: hidden;
+    transform: translateY(30px) scale(0.96); 
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid rgba(255,255,255,0.6);
+}
+.crystal-overlay.active .crystal-card { transform: translateY(0) scale(1); }
+
+/* Borde superior decorativo con el degradado */
+.crystal-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px;
+    background: var(--alex-grad); z-index: 5;
+}
+
+/* 3. CONTENIDO VISUAL & TEXTO */
+.c-body { padding: 50px 40px 30px; }
+
+.c-slide { display: none; animation: slideInUp 0.6s ease; }
+.c-slide.active { display: block; }
+
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Icon Stage */
+.icon-stage {
+    margin-bottom: 25px; height: 80px; display: flex; align-items: center; justify-content: flex-start;
+}
+.main-icon {
+    font-size: 3.5rem;
+    background: var(--alex-grad);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 10px 15px rgba(0, 156, 255, 0.2));
+}
+
+/* Títulos con Shimmer */
+.c-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.8rem; font-weight: 800; color: var(--alex-text-dark);
+    margin: 0 0 20px; line-height: 1.2; letter-spacing: -0.5px;
+}
+.shimmer-text {
+    background: linear-gradient(90deg, #009cff 0%, #514690 50%, #009cff 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: textShimmer 4s linear infinite;
+}
+@keyframes textShimmer { to { background-position: 200% center; } }
+
+/* Copy Largo y Explicativo */
+.c-copy {
+    font-size: 1.05rem; line-height: 1.7; color: var(--alex-text-gray);
+    margin-bottom: 25px; font-weight: 400;
+}
+.c-copy strong { color: #514690; font-weight: 600; }
+
+/* Listas de Detalles (Slide 2) */
+.info-grid {
+    display: grid; grid-template-columns: 1fr; gap: 15px;
+    margin-top: 10px; background: #F8FAFC;
+    padding: 20px; border-radius: 12px; border: 1px solid #F1F5F9;
+}
+.info-item { display: flex; gap: 12px; align-items: flex-start; }
+.info-item i { 
+    color: #009cff; margin-top: 4px; font-size: 1.1rem; 
+    background: rgba(0, 156, 255, 0.1); padding: 5px; border-radius: 50%;
+}
+.info-text h4 { margin: 0 0 4px; font-size: 0.95rem; color: #1e293b; }
+.info-text p { margin: 0; font-size: 0.9rem; color: #64748b; line-height: 1.4; }
+
+/* Firma (Slide 3) */
+.signature-box { margin-top: 30px; padding-top: 20px; border-top: 1px solid #F1F5F9; }
+.sig-img {
+    font-family: 'Dancing Script', cursive; font-size: 2rem; color: #514690;
+    transform: rotate(-2deg); display: inline-block; margin-top: 5px;
+}
+
+/* 4. FOOTER CONTROLS */
+.c-footer {
+    padding: 20px 40px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+}
+
+.btn-back {
+    background: none; border: none; cursor: pointer;
+    color: #94a3b8; font-weight: 600; font-size: 0.95rem;
+    display: flex; align-items: center; gap: 8px; transition: 0.2s;
+}
+.btn-back:hover { color: #514690; }
+.btn-back:disabled { opacity: 0; pointer-events: none; }
+
+/* BOTÓN SHIMMER PRINCIPAL */
+.btn-primary-shimmer {
+    position: relative;
+    background: var(--alex-grad);
+    color: white; border: none;
+    padding: 16px 36px; border-radius: 50px; /* Redondo = Moderno */
+    font-size: 1rem; font-weight: 700; letter-spacing: 0.5px;
+    cursor: pointer; overflow: hidden;
+    box-shadow: 0 10px 25px -5px rgba(0, 156, 255, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary-shimmer:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px -5px rgba(81, 70, 144, 0.5);
+}
+
+/* Efecto de brillo que pasa por el botón */
+.btn-primary-shimmer::after {
+    content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: btnShine 3s infinite;
+}
+@keyframes btnShine {
+    0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; }
+}
+
+/* Dots */
+.dots-nav { display: flex; gap: 8px; }
+.dot { width: 8px; height: 8px; background: #e2e8f0; border-radius: 50%; transition: 0.3s; }
+.dot.active { background: #009cff; width: 24px; border-radius: 20px; }
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+    .crystal-card { width: 100%; height: 100%; border-radius: 0; max-width: none; border: none; }
+    .c-body { padding: 40px 25px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .c-footer { padding: 20px 25px 40px; }
+    .c-title { font-size: 1.6rem; }
+    .btn-primary-shimmer { width: 100%; justify-content: center; }
+    .c-footer { flex-direction: column-reverse; gap: 20px; }
+    .btn-back { align-self: flex-start; }
+}
+
+/* --- ALEX AI CRYSTAL TECH STYLES --- */
+
+/* Variables de la Marca */
+:root {
+    --alex-grad: linear-gradient(135deg, #009cff 0%, #514690 100%);
+    --alex-glow: rgba(0, 156, 255, 0.4);
+}
+
+/* 1. ICONOS AVANZADOS (Composiciones) */
+.tech-icon-stack {
+    position: relative; width: 80px; height: 80px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 25px;
+}
+
+/* Fondo del icono (Círculo de cristal) */
+.tech-icon-bg {
+    position: absolute; width: 100%; height: 100%;
+    background: rgba(241, 245, 249, 0.5); /* Gris muy claro */
+    border: 1px solid rgba(255,255,255, 0.8);
+    border-radius: 20px;
+    box-shadow: 0 10px 25px -5px rgba(0, 156, 255, 0.15);
+    transform: rotate(45deg); /* Rombo */
+    z-index: 1; transition: transform 0.4s ease;
+}
+.c-slide.active .tech-icon-bg { transform: rotate(45deg) scale(1.1); }
+
+/* El Icono Principal */
+.tech-icon-main {
+    font-size: 2.8rem; z-index: 2;
+    background: var(--alex-grad);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 5px 10px rgba(81, 70, 144, 0.3));
+}
+
+/* Badge pequeño flotante (Detalle extra) */
+.tech-icon-badge {
+    position: absolute; bottom: -5px; right: -5px;
+    width: 30px; height: 30px;
+    background: #FFFFFF; border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; color: #514690; z-index: 3;
+    border: 2px solid #F8FAFC;
+}
+
+/* 2. LOGO ESTILIZADO (Para la firma) */
+.alex-signature-container {
+    margin-top: 30px; padding-top: 20px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    display: flex; align-items: center; gap: 15px;
+}
+
+/* Logo hecho con CSS (Una 'A' abstracta tech) */
+.alex-logo-mark {
+    width: 45px; height: 45px;
+    background: var(--alex-grad);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; color: white; font-size: 1.5rem;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 5px 15px rgba(0, 156, 255, 0.3);
+    position: relative; overflow: hidden;
+}
+/* Brillo sobre el logo */
+.alex-logo-mark::after {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+    transform: rotate(30deg); animation: logoShine 4s infinite;
+}
+@keyframes logoShine { 0% { transform: translateX(-100%) rotate(30deg); } 100% { transform: translateX(100%) rotate(30deg); } }
+
+.sig-text-block { display: flex; flex-direction: column; text-align: left; }
+.sig-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 600; }
+.sig-name { font-family: 'Dancing Script', cursive; font-size: 1.6rem; color: #1e293b; }
+
+/* 3. MEJORAS EN TIPOGRAFÍA Y LISTAS */
+.highlight-doc {
+    background: #F0F9FF; border: 1px solid #BAE6FD; color: #0369A1;
+    padding: 2px 6px; border-radius: 4px; font-weight: 600; font-size: 0.9em;
+}
+
+/* Ajustes al Grid de Info */
+.info-card-row {
+    background: white; border: 1px solid #E2E8F0; border-radius: 12px;
+    padding: 15px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 15px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.info-card-row:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05); border-color: #cbd5e1; }
+
+.ic-icon {
+    width: 40px; height: 40px; border-radius: 10px; background: #F1F5F9;
+    color: #009cff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+}
+.ic-content h4 { margin: 0; font-size: 0.95rem; color: #1e293b; font-weight: 700; }
+.ic-content p { margin: 0; font-size: 0.85rem; color: #64748b; }
+
+/* --- ALEX AI: HOLOGRAPHIC TOUR --- */
+
+:root {
+    --overlay-dark: rgba(5, 10, 20, 0.92);
+    --neon-blue: #009cff;
+    --neon-purple: #514690;
+    --glass-bg: rgba(255, 255, 255, 0.98);
+}
+
+/* 1. EL FOCO DE RECORTE (Con efecto Escáner) */
+#tourFocusRing {
+    position: fixed; border-radius: 12px; pointer-events: none; z-index: 99998;
+    /* La sombra masiva oscurece todo */
+    box-shadow: 0 0 0 4px var(--neon-blue), 0 0 0 9999px var(--overlay-dark);
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    opacity: 0; overflow: hidden; /* Para contener el láser */
+}
+#tourFocusRing.active { opacity: 1; }
+
+/* El Láser de Escaneo (Novedad Visual) */
+.scan-line {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(0, 156, 255, 0.2), transparent);
+    transform: translateY(-100%);
+    animation: scanning 2s infinite linear;
+}
+@keyframes scanning { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+
+/* Etiqueta flotante pegada al foco */
+.focus-label {
+    position: absolute; top: -35px; left: 0;
+    background: var(--neon-blue); color: white;
+    padding: 4px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* 2. LA TARJETA HOLOGRÁFICA */
+.tour-card-holo {
+    position: fixed; width: 380px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    box-shadow: 0 30px 90px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.8);
+    z-index: 99999;
+    opacity: 0; pointer-events: auto;
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    display: flex; flex-direction: column; overflow: hidden;
+    transform: translateY(20px);
+}
+.tour-card-holo.active { opacity: 1; transform: translateY(0); }
+
+/* Header */
+.holo-header {
+    padding: 20px 30px 0; display: flex; justify-content: space-between; align-items: center;
+}
+.holo-badge {
+    color: #64748B; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;
+}
+.holo-skip {
+    background: none; border: none; cursor: pointer;
+    font-size: 0.8rem; font-weight: 600; color: #94A3B8; text-transform: uppercase;
+    transition: color 0.2s;
+}
+.holo-skip:hover { color: var(--neon-purple); }
+
+/* Botón Skip (Esquina superior derecha) */
+.skip-link {
+    position: absolute; top: 25px; right: 25px;
+    background: none; border: none;
+    color: #94a3b8; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+    z-index: 20; transition: color 0.2s;
+    text-transform: uppercase;
+}
+.skip-link:hover { color: var(--neon-purple); }
+
+/* Body */
+.holo-body { padding: 10px 30px 20px; }
+
+/* --- MICRO-ESCENAS GRÁFICAS (CSS PURE ART) --- */
+.graphic-stage {
+    height: 100px; width: 100%;
+    background: #F8FAFC; border-radius: 16px; border: 1px solid #E2E8F0;
+    margin-bottom: 20px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* Escena 1: Niveles (Barras) */
+.scene-levels { display: flex; align-items: flex-end; gap: 8px; height: 50px; }
+.bar { width: 12px; background: #CBD5E1; border-radius: 4px; transition: 0.3s; }
+.bar.b1 { height: 30%; animation: barUp 1s infinite alternate 0s; }
+.bar.b2 { height: 50%; animation: barUp 1s infinite alternate 0.2s; }
+.bar.b3 { height: 100%; background: linear-gradient(to top, var(--neon-blue), var(--neon-purple)); animation: barUp 1s infinite alternate 0.4s; }
+@keyframes barUp { to { transform: scaleY(1.1); } }
+
+/* Escena 2: Escudo (Shield) */
+.scene-shield { 
+    font-size: 3rem; color: var(--neon-blue); 
+    filter: drop-shadow(0 5px 15px rgba(0,156,255,0.3));
+    animation: shieldPulse 2s infinite;
+}
+@keyframes shieldPulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+/* Escena 3: Path (Nodos) */
+.scene-path { display: flex; align-items: center; gap: 5px; }
+.node { width: 12px; height: 12px; border-radius: 50%; background: #CBD5E1; }
+.line { width: 20px; height: 2px; background: #CBD5E1; }
+.node.active { background: #10B981; box-shadow: 0 0 10px #10B981; }
+.line.active { background: #10B981; }
+
+/* Títulos y Texto */
+.holo-title {
+    font-size: 1.3rem; font-weight: 800; color: var(--aurora-corp-text); margin: 0 0 10px;
+    font-family: 'Poppins', sans-serif; letter-spacing: -0.5px;
+
+}
+.holo-desc { font-size: 0.95rem; line-height: 1.6; color: #475569; margin: 0; }
+.holo-desc strong { color: var(--neon-purple); font-weight: 600; }
+
+/* Footer */
+.holo-footer {
+    padding: 20px 30px 25px; border-top: 1px solid #F1F5F9;
+    display: flex; align-items: center; justify-content: space-between;
+    background: #fff; border-radius: 0 0 24px 24px;
+}
+
+/* Botones */
+.btn-holo-prev {
+    background: none; border: none; cursor: pointer; color: #64748B;
+    font-weight: 600; display: flex; align-items: center; gap: 8px;
+}
+.btn-holo-prev:disabled { opacity: 0; pointer-events: none; }
+
+.btn-holo-next {
+    background: var(--alex-grad); color: white; border: none;
+    padding: 12px 30px; border-radius: 12px; font-weight: 700;
+    cursor: pointer; box-shadow: 0 8px 20px -5px rgba(15, 23, 42, 0.4);
+    display: flex; align-items: center; gap: 8px; transition: 0.2s;
+}
+.btn-holo-next:hover { transform: translateY(-2px); box-shadow: 0 12px 25px -5px rgba(15, 23, 42, 0.5); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .tour-card-holo {
+        width: 90% !important; left: 5% !important; bottom: 30px !important; top: auto !important;
+    }
+    #tourFocusRing { scroll-margin-block: 150px; }
+}
+
+/* --- VIOLATION TOUR GRAPHICS (Solo para quote-5) --- */
+
+/* Escena 1: El Switch Holográfico */
+.scene-toggle {
+    position: relative; width: 64px; height: 34px;
+    background: #E2E8F0; border-radius: 50px;
+    border: 2px solid #CBD5E1;
+    display: flex; align-items: center; padding: 2px;
+}
+.toggle-knob {
+    width: 26px; height: 26px; background: white; border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    animation: toggleAnim 3s infinite ease-in-out;
+}
+@keyframes toggleAnim {
+    0%, 10% { transform: translateX(0); background: white; }
+    40% { transform: translateX(30px); background: #009cff; box-shadow: 0 0 10px #009cff; }
+    60% { transform: translateX(30px); background: #009cff; }
+    90%, 100% { transform: translateX(0); background: white; }
+}
+
+/* Escena 2: El Radar de Integridad */
+.scene-radar {
+    position: relative; width: 80px; height: 80px;
+    border: 1px solid rgba(0, 156, 255, 0.3); border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,156,255,0.05) 0%, transparent 70%);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+}
+.radar-line {
+    position: absolute; width: 50%; height: 2px;
+    background: linear-gradient(90deg, transparent, #009cff);
+    top: 50%; left: 50%; transform-origin: left center;
+    animation: radarScan 2s infinite linear;
+    box-shadow: 0 0 8px #009cff;
+}
+.radar-blip {
+    position: absolute; width: 6px; height: 6px; background: #EF4444; border-radius: 50%;
+    opacity: 0; box-shadow: 0 0 5px #EF4444;
+}
+.blip-1 { top: 20px; right: 20px; animation: blipAnim 2s infinite 0.5s; }
+.blip-2 { bottom: 25px; left: 25px; animation: blipAnim 2s infinite 1.2s; }
+
+@keyframes radarScan { to { transform: rotate(360deg); } }
+@keyframes blipAnim { 0% { opacity: 0; transform: scale(0); } 50% { opacity: 1; transform: scale(1.5); } 100% { opacity: 0; } }
+
+/* --- HISTORY TOUR GRAPHICS (Solo para quote-6) --- */
+
+/* Escena 1: Señal Activa (Connectivity) */
+.scene-signal {
+    display: flex; align-items: center; justify-content: center; gap: 20px;
+    height: 60px; width: 100%;
+}
+.signal-tower {
+    width: 4px; height: 30px; background: #CBD5E1; border-radius: 2px; position: relative;
+}
+.signal-tower::before {
+    content: ''; position: absolute; bottom: 0; left: -6px; width: 16px; height: 2px; background: #94A3B8;
+}
+.signal-dot {
+    width: 12px; height: 12px; border-radius: 50%; background: #10B981;
+    box-shadow: 0 0 10px #10B981;
+    animation: signalPulse 1.5s infinite;
+}
+.signal-wave {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 30px; height: 30px; border: 2px solid #10B981; border-radius: 50%;
+    opacity: 0; animation: waveOut 1.5s infinite;
+}
+@keyframes signalPulse { 0% { scale: 0.8; opacity: 0.7; } 50% { scale: 1.2; opacity: 1; } 100% { scale: 0.8; opacity: 0.7; } }
+@keyframes waveOut { 0% { width: 10px; height: 10px; opacity: 1; } 100% { width: 50px; height: 50px; opacity: 0; } }
+
+/* Escena 2: Transferencia de Valor (Descuento) */
+.scene-transfer {
+    position: relative; width: 100%; height: 60px;
+    display: flex; align-items: center; justify-content: center;
+}
+.transfer-path {
+    width: 120px; height: 4px; background: #E2E8F0; border-radius: 4px; position: relative;
+}
+.transfer-icon {
+    position: absolute; top: -14px; left: 0;
+    width: 32px; height: 32px; background: white; border: 1px solid #E2E8F0;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: #F59E0B; font-size: 0.9rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    animation: moveTransfer 2.5s infinite ease-in-out;
+}
+.transfer-target {
+    position: absolute; right: -5px; top: -8px;
+    width: 20px; height: 20px; background: #009cff; border-radius: 4px;
+    animation: targetGlow 2.5s infinite ease-in-out;
+}
+@keyframes moveTransfer { 
+    0% { left: 0; opacity: 0; transform: scale(0.8); } 
+    20% { opacity: 1; transform: scale(1); }
+    80% { left: 100px; opacity: 1; transform: scale(1); } 
+    100% { left: 100px; opacity: 0; transform: scale(0.8); } 
+}
+@keyframes targetGlow { 0%, 70% { box-shadow: 0 0 0 rgba(0,0,0,0); } 85% { box-shadow: 0 0 15px #009cff; } }
+
+/* --- DRIVER TOUR GRAPHICS (Solo para quote-4) --- */
+
+/* Escena 1: Multiplicación de Usuarios */
+.scene-users {
+    position: relative; width: 100%; height: 60px;
+    display: flex; align-items: center; justify-content: center;
+}
+.user-main {
+    width: 30px; height: 30px; background: #009cff; border-radius: 50%;
+    position: absolute; z-index: 2; display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 0.8rem; box-shadow: 0 5px 15px rgba(0, 156, 255, 0.4);
+}
+.user-clone {
+    width: 30px; height: 30px; background: #94A3B8; border-radius: 50%;
+    position: absolute; z-index: 1; opacity: 0;
+    animation: clonePop 2s infinite ease-in-out;
+}
+@keyframes clonePop {
+    0% { transform: translateX(0) scale(0.5); opacity: 0; }
+    40% { transform: translateX(25px) scale(1); opacity: 1; background: #514690; }
+    80% { transform: translateX(25px) scale(1); opacity: 1; background: #514690; }
+    100% { transform: translateX(35px) scale(0); opacity: 0; }
+}
+
+/* Escena 2: Filtro de Estado (Exclusión) */
+.scene-filter {
+    display: flex; gap: 15px; align-items: center; justify-content: center; height: 60px;
+}
+.filter-card {
+    width: 40px; height: 50px; border-radius: 8px; border: 2px solid #E2E8F0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    transition: 0.3s;
+}
+.fc-head { width: 12px; height: 12px; background: #CBD5E1; border-radius: 50%; }
+.fc-body { width: 20px; height: 12px; background: #CBD5E1; border-radius: 4px; }
+.fc-status { font-size: 0.6rem; font-weight: 800; margin-top: 2px; }
+
+/* Animación del estado */
+.filter-card.active-driver {
+    border-color: #10B981; background: #ECFDF5;
+    animation: pulseGreen 3s infinite;
+}
+.filter-card.active-driver .fc-head, .filter-card.active-driver .fc-body { background: #10B981; }
+.filter-card.active-driver .fc-status { color: #10B981; content: "ON"; }
+
+.filter-card.excluded-driver {
+    border-color: #94A3B8; background: #F1F5F9; opacity: 0.5;
+    animation: fadeGray 3s infinite;
+}
+.filter-card.excluded-driver .fc-head, .filter-card.excluded-driver .fc-body { background: #94A3B8; }
+.filter-card.excluded-driver .fc-status { color: #94A3B8; }
+
+@keyframes pulseGreen { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+@keyframes fadeGray { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; border-color: #EF4444; } }
+
+/* --- ACTUALIZACIÓN CSS PARA SCROLL --- */
+
+.tour-target-active {
+    position: relative !important;
+    z-index: 99995 !important;
+    background: #FFFFFF !important;
+    border-radius: 12px;
+    box-shadow: 0 0 0 4px #009cff, 0 0 60px rgba(0, 156, 255, 0.6);
+    pointer-events: none;
+    transition: all 0.3s ease;
+
+    /* LA CLAVE DEL SCROLL PERFECTO */
+    scroll-margin-top: 150px;    /* Deja espacio arriba (para el header) */
+    scroll-margin-bottom: 250px; /* Empuja el elemento hacia arriba desde el fondo */
+}
+
+/* Asegura que la tarjeta siempre esté encima del anillo y del elemento */
+.tour-card-holo, .tour-card-premium {
+    z-index: 99999 !important; /* Capa más alta */
+    transition: left 0.3s ease, top 0.3s ease, opacity 0.3s, transform 0.3s;
+}
+
+/* El elemento resaltado se queda un nivel abajo */
+.tour-target-active {
+    z-index: 99995 !important;
+}
+
+/* --- NUEVA ESCENA: TABS SWITCHING --- */
+.scene-tabs {
+    position: relative; width: 100%; height: 60px;
+    display: flex; gap: 12px; justify-content: center; align-items: center;
+}
+.tab-mini {
+    width: 45px; height: 28px; background: #F8FAFC; 
+    border-radius: 6px; border: 1px solid #E2E8F0;
+    position: relative; display: flex; align-items: center; justify-content: center;
+}
+/* Línea de estado activo simulada */
+.tab-mini::after { 
+    content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; 
+    background: #CBD5E1; transition: 0.3s; 
+}
+.tab-mini.active { background: white; border-color: #BAE6FD; }
+.tab-mini.active::after { background: #009cff; }
+
+/* Icono de usuario pequeñito dentro del tab */
+.tab-mini i { font-size: 0.7rem; color: #94A3B8; }
+
+/* La mano animada */
+.hand-pointer {
+    position: absolute; font-size: 1.4rem; color: #514690;
+    bottom: -10px; right: 20px; z-index: 10;
+    filter: drop-shadow(0 5px 10px rgba(81, 70, 144, 0.3));
+    animation: clickTabs 2.5s infinite ease-in-out;
+}
+
+@keyframes clickTabs {
+    0%, 10% { transform: translate(0, 0); } /* En reposo */
+    40% { transform: translate(-60px, -5px); } /* Mueve al otro tab */
+    50% { transform: translate(-60px, -2px) scale(0.9); } /* Clic (presiona) */
+    60% { transform: translate(-60px, -5px); } /* Suelta */
+    100% { transform: translate(0, 0); } /* Vuelve */
+}
+
+/* --- VEHICLE TOUR GRAPHICS (Solo para quote-10) --- */
+
+/* Escena 1: Escáner de VIN */
+.scene-vin {
+    position: relative; width: 100%; height: 60px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+}
+.barcode-lines {
+    display: flex; gap: 3px; height: 30px; align-items: flex-end;
+}
+.bc-line { width: 3px; background: #CBD5E1; border-radius: 2px; }
+.bc-line:nth-child(even) { height: 20px; }
+.bc-line:nth-child(odd) { height: 30px; }
+.bc-line:nth-child(3n) { width: 5px; }
+
+.laser-beam {
+    position: absolute; top: 15px; left: 20%; width: 60%; height: 2px;
+    background: #EF4444; box-shadow: 0 0 8px #EF4444;
+    animation: scanMove 2s infinite alternate ease-in-out;
+}
+@keyframes scanMove { from { top: 10px; } to { top: 50px; } }
+
+/* Escena 2: Balanza Financiera (Deducible vs Precio) */
+.scene-balance {
+    display: flex; align-items: center; justify-content: center; gap: 30px; height: 60px;
+}
+.balance-item {
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    transition: 0.5s;
+}
+.bi-icon { 
+    font-size: 1.5rem; width: 40px; height: 40px; 
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.bi-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; }
+
+/* Animación de sube y baja */
+.b-deductible { animation: floatUp 3s infinite ease-in-out; }
+.b-deductible .bi-icon { background: #E0F2FE; color: #0284C7; }
+
+.b-price { animation: floatDown 3s infinite ease-in-out; }
+.b-price .bi-icon { background: #DCFCE7; color: #16A34A; }
+
+@keyframes floatUp { 0%, 100% { transform: translateY(5px); } 50% { transform: translateY(-5px); } }
+@keyframes floatDown { 0%, 100% { transform: translateY(-5px); } 50% { transform: translateY(5px); } }
+
+/* Escena 3: Garaje Multi-Car */
+.scene-garage {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: flex-end; gap: 5px;
+}
+.car-mini {
+    width: 30px; height: 20px; background: #CBD5E1; 
+    border-radius: 6px 6px 0 0; position: relative;
+    box-shadow: 0 -2px 0 rgba(0,0,0,0.1) inset;
+}
+.car-mini.c1 { background: #009cff; animation: parkIn 1s ease-out forwards; z-index: 2; }
+.car-mini.c2 { background: #514690; animation: parkIn 1s ease-out 0.5s forwards; opacity: 0; transform: translateX(20px); }
+
+@keyframes parkIn { 
+    from { opacity: 0; transform: translateX(30px); } 
+    to { opacity: 1; transform: translateX(0); } 
+}
+
+/* --- ASSET TOUR GRAPHICS (Solo para quote-13) --- */
+
+/* Escena 1: Driver Match (Asignación) */
+.scene-match {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: center; gap: 30px;
+}
+.match-car { font-size: 1.8rem; color: #514690; }
+.match-user { font-size: 1.5rem; color: #009cff; position: relative; }
+.match-link {
+    position: absolute; height: 2px; background: #CBD5E1; top: 50%; left: 50%;
+    transform: translate(-50%, -50%); width: 0; z-index: -1;
+    animation: linkConnect 2s infinite;
+}
+.match-badge {
+    position: absolute; top: -10px; right: -10px; width: 18px; height: 18px;
+    background: #10B981; border-radius: 50%; border: 2px solid white;
+    opacity: 0; animation: badgePop 2s infinite;
+}
+@keyframes linkConnect { 0% { width: 0; opacity: 0.5; } 50% { width: 60px; opacity: 1; background: #10B981; } 100% { width: 60px; opacity: 0; } }
+@keyframes badgePop { 50% { opacity: 0; transform: scale(0.5); } 60% { opacity: 1; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
+
+/* Escena 2: Gauge (Kilometraje) */
+.scene-gauge {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: flex-end; padding-bottom: 5px;
+}
+.gauge-body {
+    width: 80px; height: 40px; background: linear-gradient(90deg, #10B981 0%, #F59E0B 50%, #EF4444 100%);
+    border-radius: 40px 40px 0 0; position: relative; mask-image: radial-gradient(circle at 50% 100%, transparent 25px, black 26px);
+    -webkit-mask-image: radial-gradient(circle at 50% 100%, transparent 25px, black 26px);
+}
+.gauge-needle {
+    position: absolute; bottom: 0; left: 50%; width: 4px; height: 35px;
+    background: #1E293B; border-radius: 2px; transform-origin: bottom center;
+    transform: rotate(-60deg); animation: gaugeMove 3s infinite ease-in-out;
+}
+@keyframes gaugeMove { 0% { transform: rotate(-60deg); } 50% { transform: rotate(20deg); } 100% { transform: rotate(-60deg); } }
+
+/* Escena 3: Toggles Scan (Estado) */
+.scene-toggles {
+    display: flex; gap: 10px; justify-content: center; align-items: center; height: 60px;
+}
+.mini-toggle {
+    width: 30px; height: 16px; background: #E2E8F0; border-radius: 20px; position: relative;
+}
+.mini-toggle::after {
+    content: ''; position: absolute; top: 2px; left: 2px; width: 12px; height: 12px;
+    background: white; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+.mt-active { background: #009cff; }
+.mt-active::after { transform: translateX(14px); }
+.mt-warn { background: #F59E0B; }
+.mt-warn::after { transform: translateX(14px); }
+
+/* Mano interactuando */
+.finger-tap {
+    position: absolute; font-size: 1.2rem; color: #514690;
+    top: 50%; left: 50%; transform: translate(-50%, 10px);
+    animation: tapToggle 2s infinite;
+}
+@keyframes tapToggle { 0% { transform: translate(-20px, 10px); opacity: 0; } 20% { opacity: 1; } 40% { transform: translate(-20px, -5px) scale(0.9); } 80% { transform: translate(-20px, 10px); opacity: 0; } }
+
+/* --- REVIEW TOUR GRAPHICS (Solo para quote-14) --- */
+
+/* Escena 1: Ecualizador (Ajuste en vivo) */
+.scene-eq {
+    display: flex; gap: 6px; align-items: flex-end; justify-content: center; height: 60px;
+}
+.eq-bar {
+    width: 8px; background: #CBD5E1; border-radius: 4px;
+    animation: eqMove 1.5s infinite ease-in-out alternate;
+}
+.eq-bar:nth-child(1) { height: 30%; animation-delay: 0s; background: #009cff; }
+.eq-bar:nth-child(2) { height: 60%; animation-delay: 0.2s; }
+.eq-bar:nth-child(3) { height: 40%; animation-delay: 0.4s; }
+.eq-bar:nth-child(4) { height: 80%; animation-delay: 0.1s; background: #514690; }
+.eq-bar:nth-child(5) { height: 50%; animation-delay: 0.3s; }
+
+@keyframes eqMove { 
+    0% { transform: scaleY(1); } 
+    100% { transform: scaleY(1.5); } 
+}
+
+/* Escena 2: Red de Mercado (AI Matching) */
+.scene-network {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: center;
+}
+.net-hub {
+    width: 16px; height: 16px; background: white; border: 3px solid #009cff;
+    border-radius: 50%; z-index: 2; box-shadow: 0 0 15px rgba(0,156,255,0.5);
+}
+.net-node {
+    position: absolute; width: 8px; height: 8px; background: #94A3B8; border-radius: 50%;
+    animation: pulseNode 2s infinite;
+}
+.n1 { top: 15px; left: 30%; animation-delay: 0s; }
+.n2 { bottom: 20px; right: 30%; animation-delay: 0.5s; }
+.n3 { top: 20px; right: 20%; animation-delay: 1s; }
+.net-line {
+    position: absolute; top: 50%; left: 50%; height: 1px; background: #CBD5E1;
+    transform-origin: 0 0; width: 0; animation: linkHub 2s infinite;
+}
+.l1 { transform: rotate(145deg); }
+.l2 { transform: rotate(-45deg); }
+.l3 { transform: rotate(20deg); }
+
+@keyframes pulseNode { 0% { scale: 1; background: #94A3B8; } 50% { scale: 1.5; background: #10B981; } 100% { scale: 1; } }
+@keyframes linkHub { 0% { width: 0; opacity: 0; } 50% { width: 40px; opacity: 1; } 100% { width: 40px; opacity: 0; } }
+
+/* Escena 3: Decisión (Balanza/Check) */
+.scene-decision {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: center; gap: 20px;
+}
+.decision-card {
+    width: 35px; height: 45px; background: white; border: 1px solid #E2E8F0;
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05); transform: translateY(5px);
+    transition: 0.5s;
+}
+.decision-card.winner {
+    border-color: #009cff; transform: translateY(-10px) scale(1.1); z-index: 2;
+    box-shadow: 0 10px 20px rgba(0,156,255,0.2);
+}
+.decision-check {
+    width: 18px; height: 18px; background: #009cff; color: white; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 0.6rem;
+    position: absolute; bottom: -8px; opacity: 0; animation: showCheck 2s infinite;
+}
+@keyframes showCheck { 0%, 40% { opacity: 0; transform: scale(0); } 50%, 100% { opacity: 1; transform: scale(1); } }
+
+/* --- ESCENAS ADICIONALES PARA REVIEW TOUR --- */
+
+/* Escena: Comparación (Dos tarjetas uniéndose) */
+.scene-compare {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: center;
+}
+.card-mini {
+    width: 30px; height: 40px; border-radius: 4px; border: 1px solid #CBD5E1;
+    background: white; position: absolute; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.cm-left { 
+    transform: translateX(-15px) rotate(-5deg); border-top: 3px solid #009cff; 
+    animation: mergeLeft 2s infinite ease-in-out;
+}
+.cm-right { 
+    transform: translateX(15px) rotate(5deg); border-top: 3px solid #514690; z-index: 2;
+    animation: mergeRight 2s infinite ease-in-out;
+}
+.vs-badge {
+    position: absolute; width: 20px; height: 20px; background: #1E293B; color: white;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem; font-weight: 800; z-index: 3; box-shadow: 0 0 0 2px white;
+}
+
+@keyframes mergeLeft { 0%, 100% { transform: translateX(-15px) rotate(-5deg); } 50% { transform: translateX(-5px) rotate(0deg); } }
+@keyframes mergeRight { 0%, 100% { transform: translateX(15px) rotate(5deg); } 50% { transform: translateX(5px) rotate(0deg); } }
+
+/* Escena: Detalles (Lupa escaneando) */
+.scene-details {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: center;
+}
+.doc-lines {
+    width: 40px; display: flex; flex-direction: column; gap: 4px;
+}
+.dl-line { height: 3px; background: #E2E8F0; border-radius: 2px; width: 100%; }
+.dl-line:nth-child(2) { width: 70%; }
+.dl-line:nth-child(4) { width: 50%; }
+
+.magnifier {
+    position: absolute; font-size: 1.8rem; color: #009cff;
+    animation: scanDoc 2.5s infinite linear;
+    filter: drop-shadow(0 4px 6px rgba(0, 156, 255, 0.3));
+}
+@keyframes scanDoc { 
+    0% { transform: translate(-20px, -15px); } 
+    25% { transform: translate(20px, -15px); }
+    50% { transform: translate(20px, 15px); }
+    75% { transform: translate(-20px, 15px); }
+    100% { transform: translate(-20px, -15px); }
+}
+
+/* Escena: Checkout (Carrito/Compra) */
+.scene-checkout {
+    display: flex; justify-content: center; align-items: center; height: 60px;
+}
+.cart-icon {
+    font-size: 2rem; color: #10B981;
+    animation: cartBounce 1.5s infinite;
+}
+.check-float {
+    position: absolute; top: 10px; right: 40%; font-size: 1rem; color: #009cff;
+    opacity: 0; animation: checkFloat 1.5s infinite 0.5s;
+}
+@keyframes cartBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+@keyframes checkFloat { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-20px); opacity: 0; } }
+
+/* Escena: Edición Inteligente */
+.scene-edit {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: center;
+}
+.edit-doc {
+    width: 40px; height: 50px; background: white; border: 1px solid #CBD5E1;
+    border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    padding: 8px; display: flex; flex-direction: column; gap: 5px;
+}
+.ed-line { height: 3px; background: #E2E8F0; border-radius: 2px; width: 100%; }
+.ed-line.focus { background: #38BDF8; width: 70%; animation: linePulse 1.5s infinite; }
+
+.edit-pencil {
+    position: absolute; font-size: 1.4rem; color: #514690;
+    bottom: 12px; right: 35%;
+    filter: drop-shadow(2px 4px 6px rgba(81, 70, 144, 0.2));
+    animation: writeAction 2s infinite ease-in-out;
+}
+
+@keyframes writeAction {
+    0% { transform: translate(0,0) rotate(0deg); }
+    20% { transform: translate(5px, -5px) rotate(-15deg); } /* Escribe */
+    40% { transform: translate(2px, -2px) rotate(-5deg); }
+    60% { transform: translate(0,0) rotate(0deg); } /* Pausa */
+    100% { transform: translate(0,0) rotate(0deg); }
+}
+@keyframes linePulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+/* --- EDIT PAGE TOUR GRAPHICS (Solo para quote-16) --- */
+
+/* Escena 1: Lock vs Pen (Quick Edit) */
+.scene-lock-pen {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: center; gap: 20px;
+}
+.icon-state {
+    width: 40px; height: 40px; border-radius: 8px; 
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.5s;
+}
+.is-locked { background: #F1F5F9; color: #94A3B8; animation: shakeLock 3s infinite; }
+.is-edit { background: white; border: 1px solid #009cff; color: #009cff; animation: writePen 2s infinite ease-in-out; }
+
+@keyframes shakeLock { 0%, 90% { transform: rotate(0); } 92% { transform: rotate(-10deg); } 94% { transform: rotate(10deg); } 96% { transform: rotate(-10deg); } 98% { transform: rotate(10deg); } }
+@keyframes writePen { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px) rotate(-10deg); } }
+
+/* Escena 2: Warp Jump (Deep Edit) */
+.scene-warp {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: center;
+}
+.warp-hole {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: radial-gradient(circle, #514690 0%, #1E293B 100%);
+    animation: warpSpin 3s infinite linear;
+}
+.warp-arrow {
+    position: absolute; font-size: 1.5rem; color: #009cff;
+    animation: jumpIn 1.5s infinite ease-in;
+}
+@keyframes warpSpin { to { transform: rotate(360deg); } }
+@keyframes jumpIn { 0% { transform: scale(0) translate(-50px, 50px); opacity: 0; } 50% { opacity: 1; } 100% { transform: scale(1) translate(0, 0); opacity: 0; } }
+
+/* Escena 3: Recalculate (Processor) */
+.scene-recalc {
+    display: flex; justify-content: center; align-items: center; height: 60px; gap: 10px;
+}
+.chip {
+    width: 30px; height: 30px; border: 2px solid #10B981; border-radius: 6px;
+    display: flex; flex-wrap: wrap; gap: 2px; padding: 2px;
+    animation: chipPulse 2s infinite;
+}
+.chip span { width: 4px; height: 4px; background: #10B981; border-radius: 50%; opacity: 0.5; }
+.refresh-arr {
+    font-size: 1.5rem; color: #009cff;
+    animation: spinRecalc 2s infinite linear;
+}
+@keyframes chipPulse { 0% { box-shadow: 0 0 0 rgba(16, 185, 129, 0); } 50% { box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); } }
+@keyframes spinRecalc { to { transform: rotate(360deg); } }
+
+/* --- ACTUALIZACIÓN RESPONSIVE PREMIUM --- */
+
+@media (max-width: 768px) {
+    .tour-card-holo {
+        width: 94% !important; 
+        left: 3% !important;
+        /* Quitamos posiciones fijas por defecto */
+        bottom: auto !important; 
+        top: auto !important;
+        transform: none !important;
+        
+        /* Reducir tamaño visual */
+        padding-bottom: 15px; 
+    }
+
+    /* POSICIÓN 1: Tarjeta pegada ABAJO (Default) */
+    .tour-card-holo.mobile-bottom {
+        bottom: 20px !important;
+        top: auto !important;
+        animation: slideUpMobile 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    /* POSICIÓN 2: Tarjeta pegada ARRIBA (Cuando el elemento está abajo) */
+    .tour-card-holo.mobile-top {
+        top: 80px !important; /* Debajo del Header fijo */
+        bottom: auto !important;
+        animation: slideDownMobile 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    /* Animaciones de entrada móvil */
+    @keyframes slideUpMobile { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes slideDownMobile { from { transform: translateY(-100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* MODO COMPACTO: Ahorrar espacio vertical */
+    .tour-card-holo .graphic-stage {
+        height: 50px; /* Reducir altura del gráfico */
+        margin-bottom: 10px;
+    }
+    .tour-card-holo .holo-header { padding: 15px 20px 0; }
+    .tour-card-holo .holo-body { padding: 10px 20px 10px; }
+    .tour-card-holo .holo-footer { padding: 10px 20px 15px; }
+    
+    .holo-title { font-size: 1.1rem; margin-bottom: 5px; }
+    .holo-desc { font-size: 0.85rem; line-height: 1.4; }
+    
+    /* Ajuste del scroll-margin para móviles */
+    .tour-target-active {
+        /* Un poco menos de margen en móvil para no empujar demasiado */
+        scroll-margin-top: 100px; 
+        scroll-margin-bottom: 150px;
+    }
+}
+
+/* --- HOMEOWNERS TOUR GRAPHICS --- */
+
+/* Escena 1: Blueprint House (La casa construyéndose) */
+.scene-house {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: flex-end; padding-bottom: 5px;
+}
+.house-frame {
+    width: 40px; height: 30px; border: 2px solid #009cff; border-top: none;
+    position: relative; 
+    animation: drawFrame 1.5s ease-out forwards;
+    clip-path: inset(0 0 100% 0);
+}
+.house-roof {
+    position: absolute; top: -15px; left: -5px; width: 50px; height: 15px;
+    border-top: 2px solid #009cff; border-left: 2px solid #009cff; border-right: 2px solid #009cff;
+    border-radius: 20px 20px 0 0; opacity: 0;
+    animation: fadeRoof 0.5s ease-out 1.2s forwards;
+}
+.blueprint-grid {
+    position: absolute; width: 100%; height: 100%; top: 0; left: 0;
+    background-image: radial-gradient(#009cff 1px, transparent 1px);
+    background-size: 6px 6px; opacity: 0.3;
+}
+@keyframes drawFrame { 100% { clip-path: inset(0 0 0 0); } }
+@keyframes fadeRoof { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* Escena 2: Partners (Co-Applicant) */
+.scene-partners {
+    display: flex; justify-content: center; align-items: center; height: 60px; gap: 10px;
+}
+.p-node {
+    width: 34px; height: 34px; border-radius: 50%; background: white;
+    border: 1px solid #CBD5E1; display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; color: #64748B; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    position: relative;
+}
+.p-main { z-index: 2; border-color: #009cff; color: #009cff; }
+.p-co { 
+    opacity: 0; transform: translateX(-20px);
+    animation: partnerJoin 2s infinite ease-in-out;
+}
+.link-line {
+    position: absolute; height: 2px; background: #009cff; top: 50%; left: 34px; width: 0;
+    animation: linkGrow 2s infinite ease-in-out;
+}
+@keyframes partnerJoin { 
+    0% { opacity: 0; transform: translateX(-20px); } 
+    40% { opacity: 1; transform: translateX(0); } 
+    80% { opacity: 1; transform: translateX(0); } 
+    100% { opacity: 0; transform: translateX(-20px); } 
+}
+
+/* Escena 3: Bundle (Puzzle) */
+.scene-bundle {
+    display: flex; justify-content: center; align-items: center; height: 60px;
+}
+.puzzle-p {
+    width: 30px; height: 30px; background: #009cff; color: white;
+    display: flex; align-items: center; justify-content: center; font-size: 0.8rem;
+    position: absolute; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.pp-left { 
+    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 70% 70%, 70% 100%, 0% 100%);
+    background: #009cff; animation: mergeL 2s infinite ease-in-out;
+}
+.pp-right { 
+    clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 30%, 30% 30%);
+    background: #10B981; animation: mergeR 2s infinite ease-in-out;
+}
+@keyframes mergeL { 0%, 100% { transform: translate(-10px, -5px); } 50% { transform: translate(-2px, 0); } }
+@keyframes mergeR { 0%, 100% { transform: translate(10px, 5px); } 50% { transform: translate(2px, 0); } }
+
+/* --- PROGRESSIVE HOME TOUR GRAPHICS --- */
+
+/* Escena: Satélite (Location) */
+.scene-sat {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: center;
+}
+.sat-dish {
+    font-size: 1.5rem; color: #514690; position: absolute; top: 5px; left: 20%;
+    animation: floatSat 3s infinite ease-in-out;
+}
+.sat-beam {
+    position: absolute; top: 25px; left: 28%; width: 40px; height: 30px;
+    background: linear-gradient(180deg, rgba(0,156,255,0.5), transparent);
+    clip-path: polygon(40% 0, 60% 0, 100% 100%, 0% 100%);
+    opacity: 0; animation: beamPulse 2s infinite;
+}
+.sat-target {
+    width: 30px; height: 10px; background: #009cff; border-radius: 50%;
+    position: absolute; bottom: 5px; left: 40%; transform: scaleX(0);
+    animation: targetGrow 2s infinite;
+}
+@keyframes floatSat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes beamPulse { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+@keyframes targetGrow { 0%, 100% { transform: scaleX(0); opacity: 0; } 50% { transform: scaleX(1); opacity: 1; } }
+
+/* Escena: Escudo de Seguridad (Safety) */
+.scene-shield-scan {
+    display: flex; justify-content: center; align-items: center; height: 60px;
+}
+.shield-main {
+    font-size: 2rem; color: #10B981; position: relative; z-index: 2;
+}
+.shield-ring {
+    position: absolute; width: 50px; height: 50px; border: 2px solid #10B981;
+    border-radius: 50%; opacity: 0; animation: rippleOut 2s infinite;
+}
+@keyframes rippleOut { 0% { transform: scale(0.8); opacity: 1; border-width: 3px; } 100% { transform: scale(1.5); opacity: 0; border-width: 0px; } }
+
+/* Escena: Cofre (Valuables) */
+.scene-chest {
+    display: flex; justify-content: center; align-items: flex-end; height: 60px; padding-bottom: 5px;
+}
+.chest-icon {
+    font-size: 2rem; color: #F59E0B; animation: chestBounce 2s infinite;
+}
+.shine {
+    position: absolute; top: 10px; right: 40%; color: #FEF3C7; font-size: 1rem;
+    animation: twinkle 1.5s infinite;
+}
+@keyframes chestBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+@keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.2); } }
+
+/* --- NUEVAS ESCENAS (Losses & Policy) --- */
+
+/* Escena: Historial de Pérdidas (Tormenta/Radar) */
+.scene-storm {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: center;
+}
+.cloud-icon {
+    font-size: 1.8rem; color: #64748B; z-index: 2;
+    animation: floatCloud 3s infinite ease-in-out;
+}
+.rain-drop {
+    position: absolute; width: 2px; height: 8px; background: #009cff;
+    opacity: 0; animation: rainFall 1.5s infinite linear;
+}
+.r1 { left: 45%; top: 30px; animation-delay: 0s; }
+.r2 { left: 50%; top: 35px; animation-delay: 0.5s; }
+.r3 { left: 55%; top: 28px; animation-delay: 0.2s; }
+
+.alert-triangle {
+    position: absolute; top: -5px; right: 35%; font-size: 0.8rem; color: #F59E0B;
+    animation: pulseAlert 2s infinite;
+}
+
+@keyframes floatCloud { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes rainFall { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(15px); opacity: 0; } }
+@keyframes pulseAlert { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } }
+
+/* Escena: Cambio de Póliza (Document Switch) */
+.scene-switch {
+    display: flex; justify-content: center; align-items: center; height: 60px; gap: 15px;
+}
+.doc-old {
+    width: 25px; height: 35px; background: #E2E8F0; border-radius: 4px;
+    transform: rotate(-10deg); opacity: 0.7;
+}
+.doc-new {
+    width: 25px; height: 35px; background: white; border: 1px solid #009cff; border-radius: 4px;
+    transform: rotate(5deg); position: relative; z-index: 2;
+    box-shadow: 0 4px 10px rgba(0, 156, 255, 0.2);
+}
+.arrow-switch {
+    font-size: 1.2rem; color: #10B981; animation: spinSwitch 2s infinite ease-in-out;
+}
+@keyframes spinSwitch { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
+
+/* --- RENTERS TOUR GRAPHICS --- */
+
+/* Escena 1: Living Room (Tus cosas) */
+.scene-living {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: flex-end;
+}
+.sofa-icon {
+    font-size: 2rem; color: #514690; z-index: 2;
+    animation: bounceIn 1s ease-out;
+}
+.lamp-icon {
+    position: absolute; right: 25%; bottom: 0; font-size: 1.5rem; color: #F59E0B;
+    animation: lightOn 2s infinite alternate;
+}
+@keyframes bounceIn { 0% { transform: scale(0); } 60% { transform: scale(1.1); } 100% { transform: scale(1); } }
+@keyframes lightOn { 0% { opacity: 0.5; filter: drop-shadow(0 0 0 transparent); } 100% { opacity: 1; filter: drop-shadow(0 0 10px #F59E0B); } }
+
+/* Escena 2: Water Backup (Tubería) */
+.scene-pipe {
+    display: flex; justify-content: center; align-items: center; height: 60px; position: relative;
+}
+.pipe-shape {
+    width: 60px; height: 10px; background: #64748B; border-radius: 5px; position: relative;
+}
+.pipe-leak {
+    position: absolute; width: 6px; height: 6px; background: #009cff; border-radius: 50%;
+    top: 5px; left: 50%; animation: drip 1.5s infinite linear;
+}
+.shield-mini {
+    position: absolute; font-size: 1.2rem; color: #10B981; bottom: -15px; left: 45%;
+    opacity: 0; animation: shieldCatch 1.5s infinite;
+}
+@keyframes drip { 0% { top: 5px; opacity: 1; } 100% { top: 25px; opacity: 0; } }
+@keyframes shieldCatch { 0%, 50% { opacity: 0; transform: scale(0.5); } 80% { opacity: 1; transform: scale(1.2); } 100% { opacity: 0; transform: scale(1); } }
+
+/* Escena 3: Roommates (Grupo) */
+.scene-roommates {
+    display: flex; justify-content: center; align-items: center; height: 60px; gap: -10px;
+}
+.rm-avatar {
+    width: 30px; height: 30px; border-radius: 50%; border: 2px solid white;
+    display: flex; align-items: center; justify-content: center; color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-size: 0.8rem;
+}
+.rm-1 { background: #009cff; z-index: 3; }
+.rm-2 { background: #514690; z-index: 2; animation: slideInRm 1s ease-out; }
+.rm-plus { 
+    width: 25px; height: 25px; background: #10B981; z-index: 1; 
+    animation: popInRm 1.5s infinite; font-size: 0.7rem;
+}
+@keyframes slideInRm { from { transform: translateX(-20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes popInRm { 0%, 50% { transform: scale(0); } 70% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+/* --- RENTERS TOUR FINAL GRAPHICS --- */
+
+/* Escena 5: Verificación (Sello de calidad) */
+.scene-verify {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: center;
+}
+.doc-flat {
+    width: 35px; height: 45px; background: white; border: 1px solid #CBD5E1;
+    border-radius: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    display: flex; flex-direction: column; gap: 4px; padding: 6px;
+}
+.df-line { height: 3px; background: #E2E8F0; width: 100%; border-radius: 2px; }
+.df-line.short { width: 60%; }
+
+.stamp-mark-renters {
+    position: absolute; width: 24px; height: 24px; background: #10B981;
+    border-radius: 50%; border: 2px solid white; color: white;
+    display: flex; align-items: center; justify-content: center; font-size: 0.8rem;
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
+    animation: stampHit 2s infinite ease-in-out;
+}
+@keyframes stampHit {
+    0% { transform: scale(2); opacity: 0; }
+    40% { transform: scale(1); opacity: 1; }
+    45% { transform: scale(1.1); }
+    50% { transform: scale(1); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Escena 6: Building (Interested Party) */
+.scene-building {
+    display: flex; justify-content: center; align-items: center; height: 60px; gap: 15px;
+}
+.bld-icon {
+    font-size: 1.8rem; color: #514690; position: relative;
+}
+.bld-badge {
+    position: absolute; top: -5px; right: -5px; width: 14px; height: 14px;
+    background: #F59E0B; border-radius: 50%; border: 2px solid white;
+}
+.mail-fly {
+    font-size: 1.2rem; color: #009cff;
+    animation: flyMail 2s infinite ease-in-out;
+}
+@keyframes flyMail {
+    0% { transform: translateX(-10px) scale(0.8); opacity: 0; }
+    50% { transform: translateX(0) scale(1); opacity: 1; }
+    100% { transform: translateX(10px) scale(0.8); opacity: 0; }
+}
+
+/* --- FINANCIAL INTERESTS TOUR GRAPHICS --- */
+
+/* Escena 1: Bank Chain (Propiedad Compartida) */
+.scene-bank-chain {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: center; gap: 20px;
+}
+.bank-icon {
+    font-size: 1.8rem; color: #514690; z-index: 2;
+}
+.car-icon-sm {
+    font-size: 1.4rem; color: #009cff; z-index: 2;
+}
+.chain-link {
+    position: absolute; height: 4px; background: repeating-linear-gradient(90deg, #94A3B8 0, #94A3B8 5px, transparent 5px, transparent 8px);
+    width: 0; top: 50%; left: 35%; transform: translateY(-50%);
+    animation: linkBank 2s ease-out forwards;
+}
+.lock-mini {
+    position: absolute; font-size: 0.8rem; color: #F59E0B; top: 40%; left: 48%;
+    opacity: 0; animation: lockShow 0.5s ease-out 1.5s forwards;
+}
+@keyframes linkBank { to { width: 30%; } }
+@keyframes lockShow { from { transform: scale(2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* Escena 2: Gap Graph (Valor vs Deuda) */
+.scene-gap-graph {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: flex-end; gap: 15px; padding-bottom: 5px;
+}
+.bar-car {
+    width: 30px; height: 30px; background: #10B981; border-radius: 4px 4px 0 0; position: relative;
+    animation: growBar1 1s ease-out forwards;
+}
+.bar-loan {
+    width: 30px; height: 50px; background: #EF4444; border-radius: 4px 4px 0 0; position: relative;
+    animation: growBar2 1s ease-out 0.5s forwards;
+}
+.gap-arrow {
+    position: absolute; right: -10px; top: 5px; height: 20px; border-right: 2px dashed #F59E0B;
+    display: flex; align-items: center; padding-right: 5px; font-size: 0.7rem; color: #F59E0B; font-weight: 800;
+    opacity: 0; animation: showGap 1s ease-out 1.5s forwards;
+}
+.bar-label { position: absolute; bottom: -15px; font-size: 0.6rem; width: 100%; text-align: center; color: #64748B; }
+
+@keyframes growBar1 { from { height: 0; } to { height: 30px; } }
+@keyframes growBar2 { from { height: 0; } to { height: 50px; } }
+@keyframes showGap { from { opacity: 0; } to { opacity: 1; } }
+
+/* Contenedor del Dropdown */
+.dp-selector-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Alineado a la derecha junto al precio */
+    gap: 8px;
+    margin-bottom: 5px;
+    background: #F1F5F9; /* Fondo gris muy claro */
+    padding: 4px 8px;
+    border-radius: 6px;
+    width: fit-content;
+    align-self: flex-end; /* Importante si usas flex column */
+}
+
+/* Texto "Down Pmt" */
+.dp-selector-row label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #64748B;
+    text-transform: uppercase;
+}
+
+/* El Selector en sí */
+.dp-dropdown {
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0F172A; /* Color oscuro */
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+}
+
+.dp-dropdown:hover {
+    color: #2563EB; /* Azul al pasar el mouse */
+}
+
+/* ==================================================
+DROPDOWN DOWNPAYMENT */
+
+/* Contenedor principal */
+.custom-dropdown-wrapper {
+    position: relative; /* Necesario para que el absolute funcione respecto a esto */
+    display: inline-block;
+    width: 140px;
+    font-family: inherit;
+    margin-bottom: 5px;
+}
+
+/* El botón que abre el menú */
+.custom-trigger {
+    background: #F1F5F9;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0F172A;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+}
+
+.custom-trigger:hover {
+    background: #E2E8F0;
+    color: #2563EB;
+}
+
+.custom-trigger i {
+    font-size: 0.7rem;
+    color: #64748B;
+    margin-left: 8px;
+}
+
+/* --- AQUÍ ESTÁ TU ESTILO PERSONALIZADO --- */
+.custom-options {
+/* CAMBIO CLAVE: Usamos fixed para escapar del overflow:hidden */
+    position: fixed !important; 
+    z-index: 99999 !important; /* Capa más alta posible */
+    
+    background: #ffffff;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.25);
+    padding: 5px 0;
+    
+    /* Inicialmente oculto */
+    display: none;
+    opacity: 0;
+    /* Quitamos transformaciones de movimiento para simplificar el cálculo */
+    transition: opacity 0.2s ease; 
+    
+    max-height: 250px;
+    overflow-y: auto;
+    
+    /* Ancho mínimo */
+    min-width: 140px;
+}
+
+/* Clase para mostrar el menú (Activada por JS) */
+.custom-options.open {
+    display: block;
+    opacity: 1;
+}
+
+/* Estilo de cada opción individual */
+.custom-option {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;
+    transition: background 0.2s;
+}
+
+.custom-option:hover {
+    background: #F8FAFC;
+    color: #2563EB;
+}
+
+.custom-option.selected {
+    background: #EFF6FF;
+    color: #2563EB;
+    font-weight: 700;
+}
+
+/* --- BOTÓN ACTIVADOR (Dentro de la tarjeta) --- */
+.dropdown-trigger-btn {
+    background: #EFF6FF; /* Fondo azul muy suave */
+    color: #2563EB;      /* Texto Azul fuerte */
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #DBEAFE;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-width: 130px;
+    transition: all 0.2s;
+}
+
+.dropdown-trigger-btn:hover {
+    background: #DBEAFE;
+    border-color: #2563EB;
+}
+
+/* --- MENÚ FLOTANTE GLOBAL (Fuera de la tarjeta) --- */
+#global-dropdown-portal {
+    position: fixed; /* Flota respecto a la pantalla */
+    z-index: 999999 !important; /* Encima de TODO */
+    background: #ffffff;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.2);
+    padding: 5px 0;
+    min-width: 140px;
+    
+    /* Animación de entrada */
+    display: none;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#global-dropdown-portal.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.portal-option {
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;
+    transition: background 0.1s;
+    display: flex;
+    justify-content: space-between;
+}
+
+.portal-option:hover {
+    background: #F8FAFC;
+    color: #2563EB;
+}
+
+.portal-option.selected {
+    background: #EFF6FF;
+    color: #2563EB;
+    font-weight: 700;
+}
+
+/* --- SCENE: DOWN PAYMENT SELECTOR --- */
+.scene-percent {
+    position: relative; width: 100%; height: 60px;
+    display: flex; justify-content: center; align-items: center; gap: 15px;
+}
+.coin-stack {
+    display: flex; flex-direction: column-reverse; align-items: center; gap: 2px;
+}
+.coin {
+    width: 20px; height: 6px; background: #F59E0B; border-radius: 4px;
+    border: 1px solid #B45309; animation: stackUp 2s infinite; opacity: 0;
+}
+.coin:nth-child(1) { animation-delay: 0s; }
+.coin:nth-child(2) { animation-delay: 0.2s; }
+.coin:nth-child(3) { animation-delay: 0.4s; }
+
+.arrow-exchange {
+    font-size: 1.2rem; color: #64748B;
+    animation: rotateExchange 2s infinite ease-in-out;
+}
+
+.bill-mini {
+    width: 25px; height: 35px; background: white; border: 1px solid #CBD5E1;
+    border-radius: 3px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.3s;
+    animation: shrinkBill 2s infinite;
+}
+.bill-line { width: 60%; height: 2px; background: #CBD5E1; margin: 2px 0; }
+
+@keyframes stackUp { 
+    0% { opacity: 0; transform: translateY(10px); } 
+    20% { opacity: 1; transform: translateY(0); } 
+    80% { opacity: 1; } 
+    100% { opacity: 0; } 
+}
+@keyframes shrinkBill { 
+    0% { transform: scale(1.1); border-color: #EF4444; } 
+    50% { transform: scale(0.9); border-color: #10B981; } 
+    100% { transform: scale(1.1); border-color: #EF4444; } 
+}
+@keyframes rotateExchange { 0% { transform: rotate(0); } 50% { transform: rotate(180deg); } 100% { transform: rotate(360deg); } }

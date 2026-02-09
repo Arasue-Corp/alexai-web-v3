@@ -2329,3 +2329,140 @@ document.addEventListener("DOMContentLoaded", () => {
     initPremiumSelects();
 });
 
+
+/* =========================================
+   PREMIUM TOUR SYSTEM (ONBOARDING)
+   ========================================= */
+
+let currentTourStep = 0;
+let tourData = [];
+
+// 1. CONFIGURACIÓN DEL TOUR (Aquí defines tus pasos)
+// Puedes crear diferentes configs para diferentes pantallas (Vehicle, Drivers, etc.)
+const VEHICLE_TOUR_STEPS = [
+    {
+        targetId: 'vehicle-vin-group', // ID del elemento HTML a resaltar
+        title: "Start with the VIN",
+        desc: "Entering your VIN is the fastest way to get an accurate quote. We pull all the specs automatically.",
+        position: 'bottom' // Donde sale el popover: top, bottom, left, right
+    },
+    {
+        targetId: 'odometer-group', 
+        title: "Exact Mileage",
+        desc: "Be precise here. Lower annual mileage often qualifies for the 'Low Usage' discount.",
+        position: 'bottom'
+    },
+    {
+        targetId: 'anti-theft-group',
+        title: "Security Discounts",
+        desc: "Does your car have a chip key or GPS tracker? Select the highest level applicable for better rates.",
+        position: 'top'
+    },
+    {
+        targetId: 'vehicle-status-group', 
+        title: "Status Flags",
+        desc: "Only check these if they apply. 'Monitoring Device' usually gives you an immediate discount.",
+        position: 'top'
+    }
+];
+
+// 2. INICIAR TOUR
+window.startTour = function(stepsConfig) {
+    tourData = stepsConfig;
+    currentTourStep = 0;
+    
+    // Mostrar Overlay
+    document.getElementById('tourOverlay').classList.add('active');
+    document.getElementById('tourPopover').classList.add('active');
+    
+    renderStep();
+};
+
+// 3. RENDERIZAR PASO
+function renderStep() {
+    const step = tourData[currentTourStep];
+    const target = document.getElementById(step.targetId); // Usar el ID del HTML
+
+    if (!target) {
+        console.warn('Tour target not found:', step.targetId);
+        nextStep(); // Saltar si no existe el elemento
+        return;
+    }
+
+    // A. Limpiar highlights anteriores
+    document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
+    
+    // B. Resaltar nuevo target
+    target.classList.add('tour-highlight');
+    
+    // C. Scroll suave hacia el elemento
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // D. Llenar Contenido
+    document.getElementById('tourStepNum').innerText = currentTourStep + 1;
+    document.getElementById('tourTitle').innerText = step.title;
+    document.getElementById('tourDesc').innerText = step.desc;
+
+    // E. Gestionar Botones
+    const nextBtn = document.getElementById('btnTourNext');
+    const prevBtn = document.getElementById('btnTourPrev');
+    
+    prevBtn.style.display = currentTourStep === 0 ? 'none' : 'block';
+    nextBtn.innerText = currentTourStep === tourData.length - 1 ? 'Finish' : 'Next';
+
+    // F. Posicionar Popover (Matemática simple)
+    setTimeout(() => { // Pequeño delay para asegurar que el scroll terminó
+        positionPopover(target, step.position);
+    }, 300);
+}
+
+// 4. POSICIONAMIENTO
+function positionPopover(target, position) {
+    const popover = document.getElementById('tourPopover');
+    const rect = target.getBoundingClientRect(); // Posición del elemento relativo al viewport
+    const popRect = popover.getBoundingClientRect();
+    
+    let top, left;
+    const gap = 15; // Espacio entre elemento y popover
+
+    // Lógica básica de posición (puedes mejorarla con librerías como Popper.js)
+    if (position === 'bottom') {
+        top = rect.bottom + window.scrollY + gap;
+        left = rect.left + window.scrollX + (rect.width / 2) - (popRect.width / 2);
+    } else if (position === 'top') {
+        top = rect.top + window.scrollY - popRect.height - gap;
+        left = rect.left + window.scrollX + (rect.width / 2) - (popRect.width / 2);
+    }
+    
+    // Corrección para que no se salga de la pantalla (izq/der)
+    if (left < 10) left = 10;
+    if (left + popRect.width > window.innerWidth) left = window.innerWidth - popRect.width - 10;
+
+    popover.style.top = `${top}px`;
+    popover.style.left = `${left}px`;
+}
+
+// 5. NAVEGACIÓN
+window.nextStep = function() {
+    if (currentTourStep < tourData.length - 1) {
+        currentTourStep++;
+        renderStep();
+    } else {
+        endTour();
+    }
+};
+
+window.prevStep = function() {
+    if (currentTourStep > 0) {
+        currentTourStep--;
+        renderStep();
+    }
+};
+
+window.endTour = function() {
+    // Ocultar UI
+    document.getElementById('tourOverlay').classList.remove('active');
+    document.getElementById('tourPopover').classList.remove('active');
+    // Limpiar highlights
+    document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
+};

@@ -143,15 +143,26 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="liability-tag">Liability: $100k / $300k / $50k</div>
                     </div>
                     <div class="price-col">
-                        <div class="down-row">Down Payment: <strong>$${o.down}</strong></div>
+                        <div style="margin-bottom: 8px;">
+                            <button class="dropdown-trigger-btn" onclick="openGlobalMenu(this)">
+                                <span>25% (Rec)</span>
+                                <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i>
+                            </button>
+                        </div>
+
+                        <div class="down-row">
+                            Down Payment: <strong>$<span class="js-down-val">${o.down}</span></strong>
+                        </div>
+
                         <div class="monthly-row">
                             <div class="highlight-bg">
-                                <span class="price-big">$${o.monthly}</span>
+                                <span class="price-big">$<span class="js-month-val">${o.monthly}</span></span>
                             </div>
                             <span class="per-mo">Per Month</span>
                         </div>
                     </div>
                 </div>
+
 
                 <div class="card-actions">
                     <button class="action-btn" onclick="toggleDetails(${o.id})">View Details</button>
@@ -3468,3 +3479,2135 @@ window.closeRichInfo = function() {
 document.getElementById('richInfoModal')?.addEventListener('click', (e) => {
     if(e.target.id === 'richInfoModal') closeRichInfo();
 });
+
+/* =========================================
+   GLOBAL UTILITIES (POSICIONAMIENTO ROBUSTO)
+   ========================================= */
+function updateTourPosition(target, ring, card, stepPadding) {
+    const rect = target.getBoundingClientRect();
+    const cRect = card.getBoundingClientRect();
+    const pad = stepPadding || 10;
+    const gap = 20; // Separación entre elemento y tarjeta
+    const headerHeight = 90; // Respetar el menú superior
+    const viewportW = window.innerWidth;
+    const viewportH = window.innerHeight;
+
+    // 1. POSICIONAR EL ANILLO DE FOCO (Siempre sobre el elemento)
+    ring.style.width = (rect.width + (pad * 2)) + 'px';
+    ring.style.height = (rect.height + (pad * 2)) + 'px';
+    ring.style.top = (rect.top - pad) + 'px';
+    ring.style.left = (rect.left - pad) + 'px';
+
+    // 2. POSICIONAR LA TARJETA (Solo Desktop)
+    if (viewportW <= 768) {
+        card.style.top = ''; card.style.left = ''; // Móvil: Usa CSS bottom-sheet
+        return;
+    }
+
+    // Calcular espacios disponibles alrededor del elemento
+    const spaceRight = viewportW - (rect.right + pad + gap);
+    const spaceLeft = rect.left - pad - gap;
+    const spaceTop = rect.top - pad - gap - headerHeight;
+    const spaceBottom = viewportH - (rect.bottom + pad + gap);
+
+    let left = 0;
+    let top = 0;
+    let placed = false;
+
+    // --- ESTRATEGIA PARA ELEMENTOS ALTOS (Sidebar / Paneles) ---
+    // Si el elemento mide más de 150px de alto, FORZAR a los lados.
+    // Esto evita que la tarjeta intente ponerse "arriba" o "abajo" y tape el contenido.
+    const isTall = rect.height > 150;
+
+    if (isTall) {
+        // Preferencia: Izquierda (Ideal para Sidebar derecha)
+        if (spaceLeft > cRect.width) {
+            left = rect.left - pad - gap - cRect.width;
+            top = rect.top; // Alinear con el inicio del elemento
+            placed = true;
+        } 
+        // Si no, Derecha
+        else if (spaceRight > cRect.width) {
+            left = rect.right + pad + gap;
+            top = rect.top;
+            placed = true;
+        }
+    }
+
+    // --- ESTRATEGIA ESTÁNDAR (Botones / Inputs) ---
+    if (!placed) {
+        // 1. Intentar Derecha
+        if (spaceRight > cRect.width) {
+            left = rect.right + pad + gap;
+            top = rect.top + (rect.height / 2) - (cRect.height / 2); // Centrado vertical
+            placed = true;
+        }
+        // 2. Intentar Izquierda
+        else if (spaceLeft > cRect.width) {
+            left = rect.left - pad - gap - cRect.width;
+            top = rect.top + (rect.height / 2) - (cRect.height / 2);
+            placed = true;
+        }
+        // 3. Intentar Arriba (Ideal para botones al final de la página)
+        else if (spaceTop > cRect.height) {
+            top = rect.top - pad - gap - cRect.height;
+            left = rect.left + (rect.width / 2) - (cRect.width / 2); // Centrado horizontal
+            placed = true;
+        }
+        // 4. Intentar Abajo
+        else if (spaceBottom > cRect.height) {
+            top = rect.bottom + pad + gap;
+            left = rect.left + (rect.width / 2) - (cRect.width / 2);
+            placed = true;
+        }
+    }
+
+    // --- FALLBACK (Si no cabe en ningún lado) ---
+    if (!placed) {
+        // Si es el Sidebar (muy a la derecha), forzar izquierda aunque quede justo
+        if (rect.left > viewportW / 2) {
+             left = rect.left - pad - gap - cRect.width;
+             top = headerHeight + 10;
+        } else {
+             // Centrar en pantalla (Último recurso)
+             left = (viewportW / 2) - (cRect.width / 2);
+             top = (viewportH / 2) - (cRect.height / 2);
+        }
+    }
+
+    // --- AJUSTES FINALES (Clamping) ---
+    // Asegurar que la tarjeta nunca se salga de la pantalla verticalmente
+    if (top < headerHeight + 10) top = headerHeight + 10;
+    if (top + cRect.height > viewportH - 10) top = viewportH - cRect.height - 10;
+    
+    // Asegurar horizontal
+    if (left < 10) left = 10;
+    if (left + cRect.width > viewportW - 10) left = viewportW - cRect.width - 10;
+
+    card.style.left = `${left}px`;
+    card.style.top = `${top}px`;
+}
+
+
+/* =========================================
+   0. WELCOME ONBOARDING (Global Intro)
+   ========================================= */
+
+let welcomeStep = 0;
+const welcomeTotalSteps = 3;
+
+// Lanzar al inicio (Solo si existe el elemento en la página)
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('alexOnboarding')) {
+        setTimeout(() => {
+            document.getElementById('alexOnboarding').classList.add('active');
+        }, 600);
+    }
+});
+
+// Navegación Siguiente
+window.nextWelcomeSlide = function() {
+    if (welcomeStep < welcomeTotalSteps - 1) {
+        welcomeStep++;
+        updateWelcomeInterface();
+    } else {
+        closeWelcomeOnboarding();
+    }
+};
+
+// Navegación Atrás
+window.prevWelcomeSlide = function() {
+    if (welcomeStep > 0) {
+        welcomeStep--;
+        updateWelcomeInterface();
+    }
+};
+
+// Cerrar
+window.closeWelcomeOnboarding = function() {
+    const overlay = document.getElementById('alexOnboarding');
+    if (overlay) overlay.classList.remove('active');
+    
+    // Opcional: Aquí podrías iniciar el siguiente tour automáticamente
+    // if (typeof startDriverTour === 'function') startDriverTour();
+};
+
+// Actualizar UI
+function updateWelcomeInterface() {
+    // 1. Slides
+    const slides = document.querySelectorAll('#alexOnboarding .c-slide');
+    slides.forEach((s, idx) => {
+        if (idx === welcomeStep) s.classList.add('active');
+        else s.classList.remove('active');
+    });
+
+    // 2. Dots
+    const dots = document.querySelectorAll('#welcomeDots .dot');
+    dots.forEach((d, idx) => {
+        if (idx === welcomeStep) d.classList.add('active');
+        else d.classList.remove('active');
+    });
+
+    // 3. Botones
+    const btnBack = document.getElementById('btnWelcomeBack');
+    const btnNext = document.getElementById('btnWelcomeNext');
+
+    if (btnBack) btnBack.disabled = (welcomeStep === 0);
+
+    if (btnNext) {
+        if (welcomeStep === welcomeTotalSteps - 1) {
+            btnNext.innerText = "START QUOTE";
+        } else {
+            btnNext.innerText = "CONTINUE";
+        }
+    }
+}
+
+
+/* =========================================
+   1. ALEX HOLOGRAPHIC TOUR (Quote 3)
+   ========================================= */
+
+const holoSteps = [
+    {
+        targetId: 'tour-mandatory', 
+        label: 'STATE LIMITS',
+        graphicHTML: `<div class="scene-levels"><div class="bar b1"></div><div class="bar b2"></div><div class="bar b3"></div></div>`,
+        title: 'Adjust Your Liability Limits',
+        desc: 'This dropdown controls your coverage level. While Arizona requires a minimum of <strong>25k/50k/15k</strong>, you are not stuck there. Click here to compare higher tiers—increasing these limits offers better protection for your assets.'
+    },
+    {
+        targetId: 'tour-protection', 
+        label: 'YOUR SAFETY',
+        graphicHTML: `<div class="scene-shield"><i class="fa-solid fa-user-shield"></i></div>`,
+        title: 'Customize Your Personal Shield',
+        desc: 'This section is about <strong>protecting YOU</strong>. Use these options to define how much the insurance pays for <em>your</em> medical bills if an uninsured driver hits you. Don\'t just accept the default—choose what makes you safe.'
+    },
+    {
+        targetId: 'tour-sidebar',
+        label: 'NAVIGATION',
+        graphicHTML: `<div class="scene-path"><div class="node active"></div><div class="line active"></div><div class="node"></div></div>`,
+        title: 'Interactive Quote Path',
+        desc: 'This sidebar is your map. As you complete sections, they turn <strong>Green</strong>. Did you miss something? Simply click on any completed step here to instantly jump back and edit your details.'
+    }
+];
+
+let holoIndex = 0;
+let holoTracker = null;
+
+function startHoloTour() {
+    // Verificar si existe el elemento inicial
+    if (!document.getElementById('tour-mandatory')) return;
+
+    document.getElementById('tourFocusRing').classList.add('active');
+    document.getElementById('tourCard').classList.add('active');
+    document.getElementById('tcTotal').innerText = holoSteps.length;
+    renderHoloStep(0);
+}
+
+function renderHoloStep(index) {
+    if (holoTracker) clearInterval(holoTracker); // Limpiar tracker anterior
+    
+    holoIndex = index;
+    const step = holoSteps[index];
+    const target = document.getElementById(step.targetId);
+
+    if (!target) { endHoloTour(); return; }
+
+    // UI Setup
+    const ring = document.getElementById('tourFocusRing');
+    const label = document.getElementById('focusLabel');
+    const card = document.getElementById('tourCard');
+    
+    label.innerText = step.label;
+    document.getElementById('tcCurrent').innerText = index + 1;
+    document.getElementById('tcTitle').innerText = step.title;
+    document.getElementById('tcDesc').innerHTML = step.desc;
+    document.getElementById('graphicStage').innerHTML = step.graphicHTML;
+
+    const btnNext = document.getElementById('btnTourNext');
+    const btnPrev = document.getElementById('btnTourPrev');
+    if (btnPrev) btnPrev.disabled = (index === 0);
+    
+    if (index === holoSteps.length - 1) {
+        btnNext.innerHTML = 'Finish Setup <i class="fa-solid fa-check"></i>';
+    } else {
+        btnNext.innerHTML = 'Next Option <i class="fa-solid fa-arrow-right"></i>';
+    }
+
+    // Scroll & Track
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    // Iniciar rastreo de posición (cada 20ms)
+    const runUpdate = () => updateTourPosition(target, ring, card, 10);
+    runUpdate();
+    
+    let ticks = 0;
+    holoTracker = setInterval(() => {
+        runUpdate();
+        ticks++;
+        if (ticks > 100) clearInterval(holoTracker); 
+    }, 20);
+    window.addEventListener('resize', runUpdate, { once: true });
+}
+
+window.nextHoloStep = function() {
+    if (holoIndex < holoSteps.length - 1) renderHoloStep(holoIndex + 1);
+    else endHoloTour();
+};
+
+window.prevHoloStep = function() {
+    if (holoIndex > 0) renderHoloStep(holoIndex - 1);
+};
+
+window.endHoloTour = function() {
+    if (holoTracker) clearInterval(holoTracker);
+    document.getElementById('tourFocusRing').classList.remove('active');
+    document.getElementById('tourCard').classList.remove('active');
+};
+
+// Auto-Launch Quote 3
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(startHoloTour, 1000);
+});
+
+
+/* =========================================
+   2. VIOLATION PAGE TOUR (Quote 5)
+   ========================================= */
+
+const violationSteps = [
+    {
+        targetId: 'tour-incident-toggle',
+        label: 'DATA ENTRY',
+        padding: 5,
+        graphicHTML: `<div class="scene-toggle"><div class="toggle-knob"></div></div>`,
+        title: 'Instant Incident Log',
+        desc: 'Do you have a ticket or accident? Toggle this switch to <strong>"Yes"</strong>. This will instantly unlock the detailed entry form where you can securely input the specifics.'
+    },
+    {
+        targetId: 'tour-incident-toggle',
+        label: 'INTEGRITY SCAN',
+        padding: 5,
+        graphicHTML: `<div class="scene-radar"><div class="radar-line"></div><div class="radar-blip blip-1"></div></div>`,
+        title: 'The Trust Algorithm',
+        desc: '<strong>Smart Tip:</strong> Carriers run Motor Vehicle Reports automatically. Disclosing incidents now prevents "Rate Shock" at checkout. Transparency ensures your final price remains locked.'
+    },
+    {
+        targetId: 'driverTabs', // El ID de tus pestañas (ya existe en tu HTML)
+        label: 'CHECK ALL',
+        padding: 8,
+        // Gráfico: Mano cambiando tabs
+        graphicHTML: `
+            <div class="scene-tabs">
+                <div class="tab-mini"><i class="fa-solid fa-user"></i></div>
+                <div class="tab-mini active"><i class="fa-solid fa-user-group"></i></div>
+                <div class="hand-pointer"><i class="fa-solid fa-hand-pointer"></i></div>
+            </div>`,
+        title: 'Don\'t Forget the Others!',
+        desc: '<strong>Crucial Step:</strong> Unless a driver is marked as "Excluded", you <strong>must click these tabs</strong> to switch profiles and enter their history too. Leaving a driver\'s history blank causes errors.'
+    }
+];
+
+let violIndex = 0;
+let violTracker = null;
+
+function startViolTour() {
+    if (!document.getElementById('tour-incident-toggle')) return;
+
+    document.getElementById('tourFocusRing').classList.add('active');
+    document.getElementById('tourCard').classList.add('active');
+    document.getElementById('tcTotal').innerText = violationSteps.length;
+    renderViolStep(0);
+}
+
+function renderViolStep(index) {
+    if (violTracker) clearInterval(violTracker);
+
+    violIndex = index;
+    const step = violationSteps[index];
+    const target = document.getElementById(step.targetId);
+
+    if (!target) { endViolTour(); return; }
+
+    const ring = document.getElementById('tourFocusRing');
+    const label = document.getElementById('focusLabel');
+    const card = document.getElementById('tourCard');
+
+    label.innerText = step.label;
+    document.getElementById('tcCurrent').innerText = index + 1;
+    document.getElementById('tcTitle').innerText = step.title;
+    document.getElementById('tcDesc').innerHTML = step.desc;
+    document.getElementById('graphicStage').innerHTML = step.graphicHTML;
+
+    const btnNext = document.getElementById('btnViolNext');
+    const btnPrev = document.getElementById('btnViolPrev');
+    if (btnPrev) btnPrev.disabled = (index === 0);
+
+    if (index === violationSteps.length - 1) {
+        btnNext.innerHTML = 'I Understand <i class="fa-solid fa-check"></i>';
+    } else {
+        btnNext.innerHTML = 'Next Point <i class="fa-solid fa-arrow-right"></i>';
+    }
+
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    const runUpdate = () => updateTourPosition(target, ring, card, step.padding || 10);
+    runUpdate();
+
+    let ticks = 0;
+    violTracker = setInterval(() => {
+        runUpdate();
+        ticks++;
+        if (ticks > 100) clearInterval(violTracker);
+    }, 20);
+    window.addEventListener('resize', runUpdate, { once: true });
+}
+
+window.nextViolStep = function() {
+    if (violIndex < violationSteps.length - 1) renderViolStep(violIndex + 1);
+    else endViolTour();
+};
+
+window.prevViolStep = function() {
+    if (violIndex > 0) renderViolStep(violIndex - 1);
+};
+
+window.endViolTour = function() {
+    if (violTracker) clearInterval(violTracker);
+    document.getElementById('tourFocusRing').classList.remove('active');
+    document.getElementById('tourCard').classList.remove('active');
+};
+
+// Auto-Launch Quote 5
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('tour-incident-toggle')) {
+        setTimeout(startViolTour, 1000);
+    }
+});
+
+
+/* =========================================
+   3. HISTORY PAGE TOUR (Quote 6)
+   ========================================= */
+
+const historySteps = [
+    {
+        targetId: 'tour-history-switch',
+        label: 'STATUS CHECK',
+        padding: 5,
+        graphicHTML: `<div class="scene-signal"><div class="signal-tower"><div class="signal-dot"><div class="signal-wave"></div></div></div><div style="font-size:0.8rem; font-weight:600; color:#10B981;">ACTIVE</div></div>`,
+        title: 'The Continuity Factor',
+        desc: 'Do you have an active policy right now? Toggle this to <strong>"Yes"</strong>. Insurers love consistency. Proving you have no gaps in coverage unlocks the massive <strong>"Continuous Insurance Discount"</strong>.'
+    },
+    {
+        targetId: 'tour-transfer-box',
+        label: 'VALUE TRANSFER',
+        graphicHTML: `<div class="scene-transfer"><div class="transfer-path"><div class="transfer-icon"><i class="fa-solid fa-star"></i></div><div class="transfer-target"></div></div></div>`,
+        title: 'Loyalty Rewards Transfer',
+        desc: 'We respect your history. By verifying your prior limits, we don\'t just match your coverage—we <strong>transfer your loyalty status</strong>. Watch this discount box update automatically.'
+    }
+];
+
+let histIndex = 0;
+let histTracker = null;
+
+function startHistoryTour() {
+    if (!document.getElementById('tour-history-switch')) return;
+
+    document.getElementById('tourFocusRing').classList.add('active');
+    document.getElementById('tourCard').classList.add('active');
+    document.getElementById('tcTotal').innerText = historySteps.length;
+    renderHistoryStep(0);
+}
+
+function renderHistoryStep(index) {
+    if (histTracker) clearInterval(histTracker);
+
+    histIndex = index;
+    const step = historySteps[index];
+    const target = document.getElementById(step.targetId);
+
+    if (!target) { endHistoryTour(); return; }
+
+    const ring = document.getElementById('tourFocusRing');
+    const label = document.getElementById('focusLabel');
+    const card = document.getElementById('tourCard');
+
+    label.innerText = step.label;
+    document.getElementById('tcCurrent').innerText = index + 1;
+    document.getElementById('tcTitle').innerText = step.title;
+    document.getElementById('tcDesc').innerHTML = step.desc;
+    document.getElementById('graphicStage').innerHTML = step.graphicHTML;
+
+    const btnNext = document.getElementById('btnHistNext');
+    const btnPrev = document.getElementById('btnHistPrev');
+    if (btnPrev) btnPrev.disabled = (index === 0);
+
+    if (index === historySteps.length - 1) {
+        btnNext.innerHTML = 'Unlock Discounts <i class="fa-solid fa-bolt"></i>';
+    } else {
+        btnNext.innerHTML = 'See Rewards <i class="fa-solid fa-arrow-right"></i>';
+    }
+
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    const runUpdate = () => updateTourPosition(target, ring, card, step.padding || 10);
+    runUpdate();
+
+    let ticks = 0;
+    histTracker = setInterval(() => {
+        runUpdate();
+        ticks++;
+        if (ticks > 100) clearInterval(histTracker);
+    }, 20);
+    window.addEventListener('resize', runUpdate, { once: true });
+}
+
+window.nextHistoryStep = function() {
+    if (histIndex < historySteps.length - 1) renderHistoryStep(histIndex + 1);
+    else endHistoryTour();
+};
+
+window.prevHistoryStep = function() {
+    if (histIndex > 0) renderHistoryStep(histIndex - 1);
+};
+
+window.endHistoryTour = function() {
+    if (histTracker) clearInterval(histTracker);
+    document.getElementById('tourFocusRing').classList.remove('active');
+    document.getElementById('tourCard').classList.remove('active');
+};
+
+// Auto-Launch Quote 6
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('tour-history-switch')) {
+        setTimeout(startHistoryTour, 1000);
+    }
+});
+
+
+/* =========================================
+   4. DRIVER PAGE TOUR (Quote 4)
+   ========================================= */
+
+const driverSteps = [
+    {
+        targetId: 'btnAddDriverTop',
+        label: 'QUICK ADD',
+        padding: 4, 
+        graphicHTML: `<div class="scene-users"><div class="user-main"><i class="fa-solid fa-user"></i></div><div class="user-clone"></div></div>`,
+        title: 'Household Management',
+        desc: 'Need to add a spouse or teenager? Use this button to quickly create profiles. You can switch between driver tabs instantly to edit details.'
+    },
+    {
+        targetId: 'tour-relationship-area',
+        label: 'RISK CONTROL',
+        padding: 15,
+        graphicHTML: `<div class="scene-filter"><div class="filter-card active-driver"><div class="fc-head"></div><div class="fc-body"></div><div class="fc-status">IN</div></div><div class="filter-card excluded-driver"><div class="fc-head"></div><div class="fc-body"></div><div class="fc-status">EX</div></div></div>`,
+        title: 'The 15+ Household Rule',
+        desc: '<strong>Crucial:</strong> List everyone aged 15+. For additional drivers who shouldn\'t affect your rate, simply use the <strong>"Excluded" Toggle</strong> located inside their tab.'
+    },
+    {
+        targetId: 'tour-add-bottom',
+        label: 'WORKFLOW',
+        padding: 8,
+        graphicHTML: `<div style="font-size:2rem; color:#009cff; animation: bounceRight 1.5s infinite;"><i class="fa-solid fa-circle-down"></i></div><style>@keyframes bounceRight { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }</style>`,
+        title: 'Continue Building',
+        desc: 'Once you have filled in the details for the current driver, use this button to add the next person.'
+    }
+];
+
+let drvIndex = 0;
+let drvTracker = null;
+
+function startDriverTour() {
+    if (!document.getElementById('btnAddDriverTop')) return;
+
+    document.getElementById('tourFocusRing').classList.add('active');
+    document.getElementById('tourCard').classList.add('active');
+    document.getElementById('tcTotal').innerText = driverSteps.length;
+    renderDriverStep(0);
+}
+
+function renderDriverStep(index) {
+    if (drvTracker) clearInterval(drvTracker);
+
+    drvIndex = index;
+    const step = driverSteps[index];
+    const target = document.getElementById(step.targetId);
+
+    if (!target) { endDriverTour(); return; }
+
+    const ring = document.getElementById('tourFocusRing');
+    const label = document.getElementById('focusLabel');
+    const card = document.getElementById('tourCard');
+
+    label.innerText = step.label;
+    document.getElementById('tcCurrent').innerText = index + 1;
+    document.getElementById('tcTitle').innerText = step.title;
+    document.getElementById('tcDesc').innerHTML = step.desc;
+    document.getElementById('graphicStage').innerHTML = step.graphicHTML;
+
+    const btnNext = document.getElementById('btnDrvNext');
+    const btnPrev = document.getElementById('btnDrvPrev');
+    if (btnPrev) btnPrev.disabled = (index === 0);
+
+    if (index === driverSteps.length - 1) {
+        btnNext.innerHTML = 'Got it <i class="fa-solid fa-check"></i>';
+    } else {
+        btnNext.innerHTML = 'Next Tip <i class="fa-solid fa-arrow-right"></i>';
+    }
+
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    const runUpdate = () => updateTourPosition(target, ring, card, step.padding || 10);
+    runUpdate();
+
+    let ticks = 0;
+    drvTracker = setInterval(() => {
+        runUpdate();
+        ticks++;
+        if (ticks > 100) clearInterval(drvTracker);
+    }, 20);
+    window.addEventListener('resize', runUpdate, { once: true });
+}
+
+window.nextDriverStep = function() {
+    if (drvIndex < driverSteps.length - 1) renderDriverStep(drvIndex + 1);
+    else endDriverTour();
+};
+
+window.prevDriverStep = function() {
+    if (drvIndex > 0) renderDriverStep(drvIndex - 1);
+};
+
+window.endDriverTour = function() {
+    if (drvTracker) clearInterval(drvTracker);
+    document.getElementById('tourFocusRing').classList.remove('active');
+    document.getElementById('tourCard').classList.remove('active');
+};
+
+// Auto-Launch Quote 4
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('btnAddDriverTop')) {
+        setTimeout(startDriverTour, 1000);
+    }
+});
+
+/* =========================================
+   5. VEHICLE PAGE TOUR (Quote 10)
+   ========================================= */
+
+const vehicleSteps = [
+    {
+        targetId: 'tour-vin-section',
+        label: 'PRECISION',
+        padding: 10,
+        // Gráfico: Escáner
+        graphicHTML: `
+            <div class="scene-vin">
+                <div class="laser-beam"></div>
+                <div class="barcode-lines">
+                    <div class="bc-line"></div><div class="bc-line"></div><div class="bc-line"></div>
+                    <div class="bc-line"></div><div class="bc-line"></div><div class="bc-line"></div>
+                    <div class="bc-line"></div><div class="bc-line"></div><div class="bc-line"></div>
+                </div>
+            </div>`,
+        title: 'The Car\'s Fingerprint',
+        desc: 'Enter the <strong>VIN (Vehicle Identification Number)</strong> for the most accurate quote. This unlocks specific discounts for safety features (like anti-theft or airbags) that generic Model/Year selection might miss.'
+    },
+    {
+        targetId: 'tour-coverage-config',
+        label: 'STRATEGY',
+        padding: 10,
+        // Gráfico: Balanza Deducible vs Precio
+        graphicHTML: `
+            <div class="scene-balance">
+                <div class="balance-item b-deductible">
+                    <div class="bi-icon"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                    <span class="bi-label">Deductible</span>
+                </div>
+                <div class="balance-item b-price">
+                    <div class="bi-icon"><i class="fa-solid fa-dollar-sign"></i></div>
+                    <span class="bi-label">Monthly Rate</span>
+                </div>
+            </div>`,
+        title: 'The Deductible Strategy',
+        desc: '<strong>Alex Tip:</strong> Your deductible is what you pay <em>only</em> if you have a claim. Increasing it (e.g., from $500 to $1,000) significantly lowers your monthly payment. Use this slider to find your financial sweet spot.'
+    },
+    {
+        targetId: 'carTabs',
+        label: 'FLEET',
+        padding: 5,
+        // Gráfico: Garaje
+        graphicHTML: `
+            <div class="scene-garage">
+                <div class="car-mini c1"></div>
+                <div class="car-mini c2"></div>
+                <div class="car-mini"></div>
+            </div>`,
+        title: 'Multi-Car Discount',
+        desc: 'Insuring more than one vehicle? Use the <strong>"Add"</strong> button to list your entire household fleet. The Multi-Car discount is substantial and applies to <em>all</em> vehicles on the policy.'
+    }
+];
+
+let vehIndex = 0;
+let vehTracker = null;
+
+function startVehicleTour() {
+    // Solo iniciar si estamos en la página correcta
+    if (!document.getElementById('tour-vin-section')) return;
+
+    document.getElementById('tourFocusRing').classList.add('active');
+    document.getElementById('tourCard').classList.add('active');
+    document.getElementById('tcTotal').innerText = vehicleSteps.length;
+    renderVehicleStep(0);
+}
+
+function renderVehicleStep(index) {
+    if (vehTracker) clearInterval(vehTracker);
+
+    vehIndex = index;
+    const step = vehicleSteps[index];
+    const target = document.getElementById(step.targetId);
+
+    if (!target) { endVehicleTour(); return; }
+
+    // UI Setup
+    const ring = document.getElementById('tourFocusRing');
+    const label = document.getElementById('focusLabel');
+    const card = document.getElementById('tourCard');
+
+    label.innerText = step.label;
+    document.getElementById('tcCurrent').innerText = index + 1;
+    document.getElementById('tcTitle').innerText = step.title;
+    document.getElementById('tcDesc').innerHTML = step.desc;
+    document.getElementById('graphicStage').innerHTML = step.graphicHTML;
+
+    // Botones
+    const btnNext = document.getElementById('btnVehNext');
+    const btnPrev = document.getElementById('btnVehPrev');
+    if (btnPrev) btnPrev.disabled = (index === 0);
+
+    if (index === vehicleSteps.length - 1) {
+        btnNext.innerHTML = 'Finish <i class="fa-solid fa-check"></i>';
+    } else {
+        btnNext.innerHTML = 'Next Tip <i class="fa-solid fa-arrow-right"></i>';
+    }
+
+    // Scroll & Track
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    const runUpdate = () => updateTourPosition(target, ring, card, step.padding || 10);
+    runUpdate();
+
+    let ticks = 0;
+    vehTracker = setInterval(() => {
+        runUpdate();
+        ticks++;
+        if (ticks > 100) clearInterval(vehTracker);
+    }, 20);
+    window.addEventListener('resize', runUpdate, { once: true });
+}
+
+window.nextVehicleStep = function() {
+    if (vehIndex < vehicleSteps.length - 1) renderVehicleStep(vehIndex + 1);
+    else endVehicleTour();
+};
+
+window.prevVehicleStep = function() {
+    if (vehIndex > 0) renderVehicleStep(vehIndex - 1);
+};
+
+window.endVehicleTour = function() {
+    if (vehTracker) clearInterval(vehTracker);
+    document.getElementById('tourFocusRing').classList.remove('active');
+    document.getElementById('tourCard').classList.remove('active');
+};
+
+// Auto-Launch Quote 10
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('tour-vin-section')) {
+        setTimeout(startVehicleTour, 1000);
+    }
+});
+
+/* =========================================
+   6. ASSET DETAILS TOUR (Quote 13)
+   ========================================= */
+
+const assetSteps = [
+    {
+        targetId: 'tour-op-group',
+        label: 'ASSIGNMENT',
+        padding: 10,
+        // Gráfico: Driver Match
+        graphicHTML: `
+            <div class="scene-match">
+                <div class="match-car"><i class="fa-solid fa-car"></i></div>
+                <div class="match-link"></div>
+                <div class="match-user">
+                    <i class="fa-solid fa-user"></i>
+                    <div class="match-badge"><i class="fa-solid fa-check" style="font-size:0.6rem; color:white; display:block; text-align:center; line-height:16px;"></i></div>
+                </div>
+            </div>`,
+        title: 'Strategic Assignment',
+        desc: '<strong>Alex Tip:</strong> Assign the primary operator carefully. Placing an experienced driver (clean record) on your most expensive vehicle can help optimize your overall premium rating.'
+    },
+    {
+        targetId: 'tour-mileage-group',
+        label: 'USAGE',
+        padding: 10,
+        // Gráfico: Velocímetro
+        graphicHTML: `
+            <div class="scene-gauge">
+                <div class="gauge-body"></div>
+                <div class="gauge-needle"></div>
+            </div>`,
+        title: 'Mileage Sensitivity',
+        desc: 'Insurance rates are heavily influenced by usage. Be precise with your "Annual Miles". Lower mileage often qualifies for the <strong>Low Usage Discount</strong>. Don\'t overestimate if you work from home!'
+    },
+    {
+        targetId: 'tour-status-group',
+        label: 'STATUS',
+        padding: 10,
+        // Gráfico: Toggles
+        graphicHTML: `
+            <div class="scene-toggles">
+                <div class="mini-toggle mt-active"></div>
+                <div class="mini-toggle"></div>
+                <div class="mini-toggle mt-warn"></div>
+                <div class="finger-tap"><i class="fa-solid fa-hand-pointer"></i></div>
+            </div>`,
+        title: 'Critical Status Flags',
+        desc: 'These toggles affect eligibility. "Leased" requires higher liability limits. "Salvaged Title" typically limits you to Liability-Only coverage (no collision). Ensure these are accurate to avoid policy cancellation.'
+    }
+];
+
+let assetIndex = 0;
+let assetTracker = null;
+
+function startAssetTour() {
+    // Solo iniciar si estamos en la página correcta
+    if (!document.getElementById('tour-op-group')) return;
+
+    document.getElementById('tourFocusRing').classList.add('active');
+    document.getElementById('tourCard').classList.add('active');
+    document.getElementById('tcTotal').innerText = assetSteps.length;
+    renderAssetStep(0);
+}
+
+function renderAssetStep(index) {
+    if (assetTracker) clearInterval(assetTracker);
+
+    assetIndex = index;
+    const step = assetSteps[index];
+    const target = document.getElementById(step.targetId);
+
+    if (!target) { endAssetTour(); return; }
+
+    // UI Setup
+    const ring = document.getElementById('tourFocusRing');
+    const label = document.getElementById('focusLabel');
+    const card = document.getElementById('tourCard');
+
+    label.innerText = step.label;
+    document.getElementById('tcCurrent').innerText = index + 1;
+    document.getElementById('tcTitle').innerText = step.title;
+    document.getElementById('tcDesc').innerHTML = step.desc;
+    document.getElementById('graphicStage').innerHTML = step.graphicHTML;
+
+    // Botones
+    const btnNext = document.getElementById('btnAssetNext');
+    const btnPrev = document.getElementById('btnAssetPrev');
+    if (btnPrev) btnPrev.disabled = (index === 0);
+
+    if (index === assetSteps.length - 1) {
+        btnNext.innerHTML = 'Finish <i class="fa-solid fa-check"></i>';
+    } else {
+        btnNext.innerHTML = 'Next Tip <i class="fa-solid fa-arrow-right"></i>';
+    }
+
+    // Scroll & Track
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    const runUpdate = () => updateTourPosition(target, ring, card, step.padding || 10);
+    runUpdate();
+
+    let ticks = 0;
+    assetTracker = setInterval(() => {
+        runUpdate();
+        ticks++;
+        if (ticks > 100) clearInterval(assetTracker);
+    }, 20);
+    window.addEventListener('resize', runUpdate, { once: true });
+}
+
+window.nextAssetStep = function() {
+    if (assetIndex < assetSteps.length - 1) renderAssetStep(assetIndex + 1);
+    else endAssetTour();
+};
+
+window.prevAssetStep = function() {
+    if (assetIndex > 0) renderAssetStep(assetIndex - 1);
+};
+
+window.endAssetTour = function() {
+    if (assetTracker) clearInterval(assetTracker);
+    document.getElementById('tourFocusRing').classList.remove('active');
+    document.getElementById('tourCard').classList.remove('active');
+};
+
+// Auto-Launch Quote 13
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('tour-op-group')) {
+        setTimeout(startAssetTour, 1000);
+    }
+});
+
+
+/* =========================================
+   7. FINAL REVIEW TOUR (RESPONSIVE FIX)
+   ========================================= */
+
+const reviewSteps = [
+    // ... Paso 0 (Control Panel) se queda igual ...
+    {
+        targetId: 'configSidebar',
+        mobileTargetId: 'btnMobileFilter', 
+        label: 'CONTROL',
+        padding: 5,
+        graphicHTML: `<div class="scene-eq"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>`,
+        title: 'Live Coverage Tuning',
+        desc: 'Want to adjust prices? Use this panel to tweak deductibles and limits. The AI will instantly recalculate quotes from all carriers.'
+    },
+    // ... Paso 1 (Marketplace) se queda igual ...
+    {
+        targetId: 'offersContainer',
+        label: 'MARKETPLACE',
+        padding: 10,
+        graphicHTML: `<div class="scene-network"><div class="net-hub"></div><div class="net-node n1"></div><div class="net-line l1"></div><div class="net-node n2"></div><div class="net-line l2"></div><div class="net-node n3"></div><div class="net-line l3"></div></div>`,
+        title: 'AI-Curated Matches',
+        desc: 'We scanned 30+ carriers. These are your best matches based on value and coverage quality. Look for the <strong>"Alex Choice"</strong> badge.'
+    },
+    
+    /* --- NUEVO PASO: DOWN PAYMENT --- */
+    {
+        targetId: 'tour-down-btn', // ID temporal que inyectaremos
+        label: 'CASH FLOW',
+        padding: 5,
+        graphicHTML: `
+            <div class="scene-percent">
+                <div class="coin-stack"><div class="coin"></div><div class="coin"></div><div class="coin"></div></div>
+                <div class="arrow-exchange"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+                <div class="bill-mini"><div class="bill-line"></div><div class="bill-line"></div></div>
+            </div>`,
+        title: 'Payment Flexibility',
+        desc: '<strong>You are in control.</strong> Use this dropdown to adjust your Down Payment. Paying a bit more upfront (e.g., 25%) can drastically lower your monthly installments.'
+    },
+    /* -------------------------------- */
+
+    // ... Resto de pasos (Compare, Details, Edit, Finalize) ...
+    {
+        targetId: 'btnCompareSidebar',
+        mobileTargetId: 'btnMobileCompare',
+        label: 'COMPARE',
+        padding: 5,
+        graphicHTML: `<div class="scene-compare"><div class="card-mini cm-left"></div><div class="vs-badge">VS</div><div class="card-mini cm-right"></div></div>`,
+        title: 'Side-by-Side Analysis',
+        desc: 'Can\'t decide? Select 2 or more quotes and tap <strong>"Compare"</strong> to see a detailed feature-by-feature breakdown.'
+    },
+    {
+        targetId: 'offersContainer',
+        label: 'DEEP DIVE',
+        padding: 10,
+        graphicHTML: `<div class="scene-details"><div class="doc-lines"><div class="dl-line"></div><div class="dl-line"></div><div class="dl-line"></div><div class="dl-line"></div></div><div class="magnifier"><i class="fa-solid fa-magnifying-glass"></i></div></div>`,
+        title: 'X-Ray Vision',
+        desc: 'Tap <strong>"View Details"</strong> on any card to reveal the fine print: payment schedules, policy fees, and specific inclusions.'
+    },
+    {
+        targetId: 'btnEditSidebar',
+        mobileTargetId: 'btnMobileEdit',
+        label: 'REFINE',
+        padding: 5,
+        graphicHTML: `<div class="scene-edit"><div class="edit-doc"><div class="ed-line"></div><div class="ed-line focus"></div><div class="ed-line"></div></div><div class="edit-pencil"><i class="fa-solid fa-pen"></i></div></div>`,
+        title: 'Smart Correction',
+        desc: 'Need to fix a typo or swap a driver? Use <strong>"Edit"</strong> to jump to specific sections without restarting the whole process.'
+    },
+    {
+        targetId: 'btnCheckoutSidebar',
+        mobileTargetId: 'btnMobileCheckout',
+        label: 'FINALIZE',
+        padding: 5,
+        graphicHTML: `<div class="scene-checkout"><div class="cart-icon"><i class="fa-solid fa-cart-arrow-down"></i></div><div class="check-float"><i class="fa-solid fa-check"></i></div></div>`,
+        title: 'Secure & Bind',
+        desc: 'Found the winner? Select the plan and tap <strong>"Proceed"</strong> to lock in this rate and get your proof of insurance.'
+    }
+];
+
+let revIndex = 0;
+let revTracker = null;
+
+function startReviewTour() {
+    // 1. Verificar si existen ofertas
+    if (!document.getElementById('offersContainer')) return;
+
+    // 2. INYECCIÓN INTELIGENTE: Buscar el primer botón de dropdown y ponerle ID
+    // Esto es necesario porque las tarjetas se crean dinámicamente
+    const firstDropdownBtn = document.querySelector('.dropdown-trigger-btn');
+    if (firstDropdownBtn) {
+        firstDropdownBtn.id = 'tour-down-btn';
+    } else {
+        // Si no hay botón (raro, pero posible), quitamos el paso del array temporalmente
+        // o dejamos que la lógica de render salte el paso si no encuentra el ID.
+        console.log("Tour: No down payment button found yet.");
+    }
+
+    // 3. Iniciar Tour
+    document.getElementById('tourFocusRing').classList.add('active');
+    document.getElementById('tourCard').classList.add('active');
+    document.getElementById('tcTotal').innerText = reviewSteps.length;
+    
+    // Pequeño delay para asegurar renderizado
+    setTimeout(() => renderReviewStep(0), 500);
+}
+
+function renderReviewStep(index) {
+    if (revTracker) clearInterval(revTracker);
+
+    revIndex = index;
+    const step = reviewSteps[index];
+    
+    // --- LÓGICA DE DETECCIÓN RESPONSIVE ---
+    const isMobile = window.innerWidth <= 768; // Punto de quiebre estándar
+    let targetId = step.targetId;
+
+    // Si es móvil y el paso tiene un target móvil específico, úsalo
+    if (isMobile && step.mobileTargetId) {
+        targetId = step.mobileTargetId;
+    }
+
+    const target = document.getElementById(targetId);
+
+    // Si no encuentra el target (ej: escondido), intenta saltar o salir
+    if (!target || target.offsetParent === null) { 
+        console.warn('Tour target not visible:', targetId);
+        // Opcional: Intentar saltar al siguiente si falla este
+        // if (index < reviewSteps.length - 1) renderReviewStep(index + 1); else endReviewTour();
+        // Por ahora, cerramos para evitar errores visuales
+        endReviewTour(); 
+        return; 
+    }
+    // --------------------------------------
+
+    // UI Content
+    const ring = document.getElementById('tourFocusRing');
+    const label = document.getElementById('focusLabel');
+    const card = document.getElementById('tourCard');
+
+    label.innerText = step.label;
+    document.getElementById('tcCurrent').innerText = index + 1;
+    document.getElementById('tcTitle').innerText = step.title;
+    document.getElementById('tcDesc').innerHTML = step.desc;
+    document.getElementById('graphicStage').innerHTML = step.graphicHTML;
+
+    // Botones
+    const btnNext = document.getElementById('btnRevNext');
+    const btnPrev = document.getElementById('btnRevPrev');
+    if (btnPrev) btnPrev.disabled = (index === 0);
+
+    if (index === reviewSteps.length - 1) {
+        btnNext.innerHTML = 'Start Saving <i class="fa-solid fa-check"></i>';
+    } else {
+        btnNext.innerHTML = 'Next Feature <i class="fa-solid fa-arrow-right"></i>';
+    }
+
+    // Scroll & Track
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    const runUpdate = () => {
+        // Usamos la función global que ya maneja la gravedad inversa en móvil
+        if (typeof updateTourPosition === 'function') {
+            updateTourPosition(target, ring, card, step.padding || 10);
+        }
+    };
+
+    runUpdate();
+    let ticks = 0;
+    revTracker = setInterval(() => {
+        runUpdate();
+        ticks++;
+        if (ticks > 100) clearInterval(revTracker);
+    }, 20);
+    window.addEventListener('resize', runUpdate, { once: true });
+}
+
+window.nextReviewStep = function() {
+    if (revIndex < reviewSteps.length - 1) renderReviewStep(revIndex + 1);
+    else endReviewTour();
+};
+
+window.prevReviewStep = function() {
+    if (revIndex > 0) renderReviewStep(revIndex - 1);
+};
+
+window.endReviewTour = function() {
+    if (revTracker) clearInterval(revTracker);
+    document.getElementById('tourFocusRing').classList.remove('active');
+    document.getElementById('tourCard').classList.remove('active');
+};
+
+// Auto-Launch Quote 14
+document.addEventListener('DOMContentLoaded', () => {
+    // Esperamos a que el sidebar o el dock existan
+    if (document.getElementById('configSidebar') || document.querySelector('.mobile-dock')) {
+        setTimeout(startReviewTour, 1500); 
+    }
+});
+
+
+/* =========================================
+   8. SMART EDIT TOUR (Quote 16)
+   ========================================= */
+
+const editSteps = [
+    {
+        targetId: 'tour-quick-fields',
+        label: 'HYBRID MODE',
+        padding: 10,
+        // Gráfico: Lock vs Pen
+        graphicHTML: `
+            <div class="scene-lock-pen">
+                <div class="icon-state is-edit"><i class="fa-solid fa-pen"></i></div>
+                <div class="icon-state is-locked"><i class="fa-solid fa-lock"></i></div>
+            </div>`,
+        title: 'Rapid Revision Dashboard',
+        desc: 'This screen is optimized for speed. <strong>White fields</strong> (like names) are editable instantly. <strong>Grey fields</strong> (like Age) are locked to maintain data integrity until recalculated.'
+    },
+    {
+        targetId: 'tour-deep-edit-btn',
+        label: 'DEEP DIVE',
+        padding: 5,
+        // Gráfico: Warp
+        graphicHTML: `
+            <div class="scene-warp">
+                <div class="warp-hole"></div>
+                <div class="warp-arrow"><i class="fa-solid fa-share"></i></div>
+            </div>`,
+        title: 'Need Deeper Changes?',
+        desc: 'If you need to change a locked field (e.g., Drivers License or Date of Birth), click this <strong>Edit Icon</strong>. Our Smart Router will jump you back to the specific form section, allow the fix, and return you here.'
+    },
+    {
+        targetId: 'tour-action-dock',
+        label: 'EXECUTE',
+        padding: 5,
+        // Gráfico: Recalc
+        graphicHTML: `
+            <div class="scene-recalc">
+                <div class="chip"><span></span><span></span><span></span><span></span></div>
+                <div class="refresh-arr"><i class="fa-solid fa-arrows-rotate"></i></div>
+            </div>`,
+        title: 'Action Command Center',
+        desc: '<ul><li><strong style="color:#64748B">Restart:</strong> Wipes all data to start fresh.</li><li><strong style="color:#64748B">Back:</strong> Return to quotes without saving changes.</li><li><strong style="color:#009cff">Save & Re-Quote:</strong> The most important button. It processes your edits and fetches new, accurate prices.</li></ul>'
+    }
+];
+
+let editIndex = 0;
+let editTracker = null;
+
+function startEditTour() {
+    // Verificar si estamos en la página de review
+    if (!document.getElementById('tour-action-dock')) return;
+
+    document.getElementById('tourFocusRing').classList.add('active');
+    document.getElementById('tourCard').classList.add('active');
+    document.getElementById('tcTotal').innerText = editSteps.length;
+    renderEditStep(0);
+}
+
+function renderEditStep(index) {
+    if (editTracker) clearInterval(editTracker);
+
+    editIndex = index;
+    const step = editSteps[index];
+    const target = document.getElementById(step.targetId);
+
+    if (!target) { endEditTour(); return; }
+
+    // UI Setup
+    const ring = document.getElementById('tourFocusRing');
+    const label = document.getElementById('focusLabel');
+    const card = document.getElementById('tourCard');
+
+    label.innerText = step.label;
+    document.getElementById('tcCurrent').innerText = index + 1;
+    document.getElementById('tcTitle').innerText = step.title;
+    document.getElementById('tcDesc').innerHTML = step.desc;
+    document.getElementById('graphicStage').innerHTML = step.graphicHTML;
+
+    // Botones
+    const btnNext = document.getElementById('btnEditNext');
+    const btnPrev = document.getElementById('btnEditPrev');
+    if (btnPrev) btnPrev.disabled = (index === 0);
+
+    if (index === editSteps.length - 1) {
+        btnNext.innerHTML = 'Get New Price <i class="fa-solid fa-check"></i>';
+    } else {
+        btnNext.innerHTML = 'Next Feature <i class="fa-solid fa-arrow-right"></i>';
+    }
+
+    // Scroll & Track
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    const runUpdate = () => updateTourPosition(target, ring, card, step.padding || 10);
+    runUpdate();
+
+    let ticks = 0;
+    editTracker = setInterval(() => {
+        runUpdate();
+        ticks++;
+        if (ticks > 100) clearInterval(editTracker);
+    }, 20);
+    window.addEventListener('resize', runUpdate, { once: true });
+}
+
+window.nextEditStep = function() {
+    if (editIndex < editSteps.length - 1) renderEditStep(editIndex + 1);
+    else endEditTour();
+};
+
+window.prevEditStep = function() {
+    if (editIndex > 0) renderEditStep(editIndex - 1);
+};
+
+window.endEditTour = function() {
+    if (editTracker) clearInterval(editTracker);
+    document.getElementById('tourFocusRing').classList.remove('active');
+    document.getElementById('tourCard').classList.remove('active');
+};
+
+// Auto-Launch Quote 16
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('tour-action-dock')) {
+        setTimeout(startEditTour, 1000);
+    }
+});
+
+/* =========================================
+   GLOBAL UTILITIES (CON SMART MOBILE FLIP)
+   ========================================= */
+function updateTourPosition(target, ring, card, stepPadding) {
+    const rect = target.getBoundingClientRect();
+    const pad = stepPadding || 10;
+    const viewportW = window.innerWidth;
+    const viewportH = window.innerHeight;
+
+    // 1. POSICIONAR EL ANILLO (Siempre igual)
+    ring.style.width = (rect.width + (pad * 2)) + 'px';
+    ring.style.height = (rect.height + (pad * 2)) + 'px';
+    ring.style.top = (rect.top - pad) + 'px';
+    ring.style.left = (rect.left - pad) + 'px';
+
+    // 2. LÓGICA RESPONSIVE
+    if (viewportW <= 768) {
+        // --- MÓVIL: GRAVEDAD INVERSA ---
+        
+        // Limpiar estilos inline de desktop para que usen las clases CSS
+        card.style.top = ''; 
+        card.style.left = '';
+        
+        // Calcular el centro vertical del elemento
+        const elementCenterY = rect.top + (rect.height / 2);
+        const screenCenterY = viewportH / 2;
+
+        // Decisión: ¿Está el elemento en la mitad inferior?
+        if (elementCenterY > screenCenterY) {
+            // Elemento ABAJO -> Tarjeta ARRIBA
+            card.classList.remove('mobile-bottom');
+            card.classList.add('mobile-top');
+        } else {
+            // Elemento ARRIBA -> Tarjeta ABAJO
+            card.classList.remove('mobile-top');
+            card.classList.add('mobile-bottom');
+        }
+        return; // Salir, ya terminamos con móvil
+    }
+
+    // --- DESKTOP (Lógica Lateral Original) ---
+    
+    // Asegurar que no tenga clases móviles residuales
+    card.classList.remove('mobile-top', 'mobile-bottom');
+
+    const cRect = card.getBoundingClientRect();
+    const gap = 25;
+    const headerHeight = 90;
+
+    const spaceRight = viewportW - (rect.right + pad + gap);
+    const spaceLeft = rect.left - pad - gap;
+    const spaceTop = rect.top - pad - gap - headerHeight;
+    const spaceBottom = viewportH - (rect.bottom + pad + gap);
+
+    let left = 0;
+    let top = 0;
+    let placed = false;
+
+    // Lógica Desktop (igual que antes) ...
+    const isTall = rect.height > 150;
+
+    if (isTall) {
+        if (spaceLeft > cRect.width) {
+            left = rect.left - pad - gap - cRect.width;
+            top = rect.top; placed = true;
+        } else if (spaceRight > cRect.width) {
+            left = rect.right + pad + gap;
+            top = rect.top; placed = true;
+        }
+    }
+
+    if (!placed) {
+        if (spaceRight > cRect.width) {
+            left = rect.right + pad + gap;
+            top = rect.top + (rect.height / 2) - (cRect.height / 2);
+            placed = true;
+        } else if (spaceLeft > cRect.width) {
+            left = rect.left - pad - gap - cRect.width;
+            top = rect.top + (rect.height / 2) - (cRect.height / 2);
+            placed = true;
+        } else if (spaceTop > cRect.height) {
+            top = rect.top - pad - gap - cRect.height;
+            left = rect.left + (rect.width / 2) - (cRect.width / 2);
+            placed = true;
+        } else if (spaceBottom > cRect.height) {
+            top = rect.bottom + pad + gap;
+            left = rect.left + (rect.width / 2) - (cRect.width / 2);
+            placed = true;
+        }
+    }
+
+    if (!placed) {
+        left = (viewportW / 2) - (cRect.width / 2);
+        top = (viewportH / 2) - (cRect.height / 2);
+    }
+
+    // Clamping Desktop
+    if (top < headerHeight + 10) top = headerHeight + 10;
+    if (top + cRect.height > viewportH - 10) top = viewportH - cRect.height - 10;
+    if (left < 10) left = 10;
+    if (left + cRect.width > viewportW - 10) left = viewportW - cRect.width - 10;
+
+    card.style.left = `${left}px`;
+    card.style.top = `${top}px`;
+}
+
+/* =========================================
+   9. HOMEOWNERS PROGRESSIVE TOUR ENGINE
+   ========================================= */
+
+// Configuración de Pasos por ID del Panel (Tab)
+/* =========================================
+   9. HOMEOWNERS PROGRESSIVE TOUR ENGINE (REFINADO)
+   ========================================= */
+
+const tourConfig = {
+    'tab-0': [ // CLIENT DETAILS
+        {
+            targetId: 'tour-home-header',
+            label: 'BLUEPRINT',
+            padding: 10,
+            graphicHTML: `<div class="scene-house"><div class="house-roof"></div><div class="house-frame"><div class="blueprint-grid"></div></div></div>`,
+            title: 'Your Property Blueprint',
+            desc: 'Welcome to the <strong>Home Protection Builder</strong>. We use satellite data to pre-fill property details, but your input is the final authority.'
+        },
+        {
+            targetId: 'tour-co-app-btn', // Apunta a la barra completa
+            label: 'JOINT PROTECTION',
+            padding: 0, // Padding 0 para un ajuste perfecto al borde de la tarjeta
+            graphicHTML: `<div class="scene-partners"><div class="p-node p-main"><i class="fa-solid fa-user"></i><div class="link-line"></div></div><div class="p-node p-co"><i class="fa-solid fa-user-plus"></i></div></div>`,
+            title: 'Adding a Co-Applicant',
+            desc: '<strong>Buying with a partner?</strong> Activate this section to add them instantly. Listing both owners ensures full legal coverage for the asset and satisfies mortgage lender requirements.'
+        }
+    ],
+    // Tab 1 (Location) y Tab 2 (Specs) eliminados del tour por solicitud.
+    
+    'tab-3': [ // SAFETY FEATURES (Mantenemos porque da descuentos)
+        {
+            targetId: 'tour-safety-grid',
+            label: 'DISCOUNTS',
+            padding: 10,
+            graphicHTML: `<div class="scene-shield-scan"><div class="shield-main"><i class="fa-solid fa-shield-halved"></i></div><div class="shield-ring"></div></div>`,
+            title: 'Protective Device Credits',
+            desc: 'Don\'t skip this! Monitored alarms, smoke detectors, and deadbolts trigger the <strong>"Protective Device Discount"</strong>. Check all that apply.'
+        }
+    ],
+    'tab-4': [ // LOSS HISTORY (Nuevo)
+        {
+            targetId: 'tour-loss-input',
+            label: 'RISK CHECK',
+            padding: 10,
+            graphicHTML: `<div class="scene-storm"><div class="cloud-icon"><i class="fa-solid fa-cloud-bolt"></i></div><div class="alert-triangle"><i class="fa-solid fa-exclamation"></i></div><div class="rain-drop r1"></div><div class="rain-drop r2"></div><div class="rain-drop r3"></div></div>`,
+            title: 'The Claims Factor',
+            desc: '<strong>Honesty saves time.</strong> Carriers run a CLUE report (claims history) automatically. Disclosing prior losses now prevents a rate increase (re-rating) right before you buy.'
+        }
+    ],
+    'tab-5': [ // CURRENT POLICY (Nuevo)
+        {
+            targetId: 'tour-curr-policy',
+            label: 'SWITCHING',
+            padding: 10,
+            graphicHTML: `<div class="scene-switch"><div class="doc-old"></div><div class="arrow-switch"><i class="fa-solid fa-rotate"></i></div><div class="doc-new"></div></div>`,
+            title: 'Continuous Coverage',
+            desc: 'Do you have active home insurance? Entering your current limits helps us match or beat your coverage. It also qualifies you for the <strong>"Transfer Discount"</strong>.'
+        }
+    ],
+    'tab-6': [ // VALUABLES (Mantenemos)
+        {
+            targetId: 'tour-jewelry-card',
+            label: 'SCHEDULE',
+            padding: 10,
+            graphicHTML: `<div class="scene-chest"><div class="shine"><i class="fa-solid fa-star"></i></div><div class="chest-icon"><i class="fa-solid fa-box-open"></i></div></div>`,
+            title: 'Scheduled Personal Property',
+            desc: 'Standard policies have limits on jewelry (usually $1,500). Use this section to "Schedule" specific high-value items for full coverage against theft or loss.'
+        }
+    ]
+};
+
+// ... (El resto del código: launchSectionTour, observer, etc. se mantiene igual)
+
+// Estado del Tour
+let activeTourSteps = [];
+let tourStepIndex = 0;
+let completedTours = new Set(); // Para no repetir tours ya vistos
+
+// --- MOTOR DEL TOUR ---
+
+function launchSectionTour(panelId) {
+    // 1. Validar si existe config, si ya se vio, o si el elemento target existe visible
+    if (!tourConfig[panelId] || completedTours.has(panelId)) return;
+    
+    // Check de seguridad: ¿Existe el primer target en el DOM?
+    const firstTarget = document.getElementById(tourConfig[panelId][0].targetId);
+    if (!firstTarget || firstTarget.offsetParent === null) return;
+
+    // 2. Iniciar Tour
+    activeTourSteps = tourConfig[panelId];
+    tourStepIndex = 0;
+    
+    // Marcar como visto para no repetir
+    completedTours.add(panelId);
+
+    // UI Activación
+    document.getElementById('tourFocusRing').classList.add('active');
+    document.getElementById('tourCard').classList.add('active');
+    document.getElementById('tcTotal').innerText = activeTourSteps.length;
+    
+    renderProgressiveStep(0);
+}
+
+/* --- VARIABLE GLOBAL PARA EL RASTREO --- */
+let progressiveTracker = null;
+
+function renderProgressiveStep(index) {
+    // 1. Limpiar rastreador anterior si existe
+    if (progressiveTracker) clearInterval(progressiveTracker);
+
+    tourStepIndex = index;
+    const step = activeTourSteps[index];
+    const target = document.getElementById(step.targetId);
+
+    if (!target) { endHomeTour(); return; }
+
+    // 2. Configurar UI (Textos y Gráficos)
+    const ring = document.getElementById('tourFocusRing');
+    const label = document.getElementById('focusLabel');
+    const card = document.getElementById('tourCard');
+
+    label.innerText = step.label;
+    document.getElementById('tcCurrent').innerText = index + 1;
+    document.getElementById('tcTitle').innerText = step.title;
+    document.getElementById('tcDesc').innerHTML = step.desc;
+    document.getElementById('graphicStage').innerHTML = step.graphicHTML;
+
+    // 3. Botones
+    const btnNext = document.getElementById('btnHomeNext');
+    const btnPrev = document.getElementById('btnHomePrev');
+    if (btnPrev) btnPrev.disabled = (index === 0);
+
+    if (index === activeTourSteps.length - 1) {
+        btnNext.innerHTML = 'Got it <i class="fa-solid fa-check"></i>';
+    } else {
+        btnNext.innerHTML = 'Next Tip <i class="fa-solid fa-arrow-right"></i>';
+    }
+
+    // 4. INICIAR SCROLL Y RASTREO (La Corrección Clave)
+    
+    // A. Iniciar el desplazamiento suave
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    // B. Función que actualiza la posición una vez
+    const runUpdate = () => {
+        // Usamos tu función global updateTourPosition que ya maneja responsive
+        updateTourPosition(target, ring, card, step.padding || 0); 
+    };
+
+    // C. Ejecutar inmediatamente por si acaso
+    runUpdate();
+
+    // D. "Imán": Ejecutar repetidamente durante la animación de scroll (cada 15ms)
+    let ticks = 0;
+    progressiveTracker = setInterval(() => {
+        runUpdate();
+        ticks++;
+        // Detener después de 100 ciclos (aprox 1.5 segundos, suficiente para cualquier scroll)
+        if (ticks > 100) clearInterval(progressiveTracker); 
+    }, 15);
+
+    // E. Actualizar una vez más si se redimensiona la ventana
+    window.addEventListener('resize', runUpdate, { once: true });
+}
+
+// Asegúrate de limpiar el tracker también al cerrar
+const originalEndHomeTour = window.endHomeTour;
+window.endHomeTour = function() {
+    if (progressiveTracker) clearInterval(progressiveTracker);
+    document.getElementById('tourFocusRing').classList.remove('active');
+    document.getElementById('tourCard').classList.remove('active');
+};
+
+// Navegación
+window.nextHomeStep = function() {
+    if (tourStepIndex < activeTourSteps.length - 1) renderProgressiveStep(tourStepIndex + 1);
+    else endHomeTour();
+};
+
+window.prevHomeStep = function() {
+    if (tourStepIndex > 0) renderProgressiveStep(tourStepIndex - 1);
+};
+
+window.endHomeTour = function() {
+    document.getElementById('tourFocusRing').classList.remove('active');
+    document.getElementById('tourCard').classList.remove('active');
+};
+
+
+// --- OBSERVER: LA MAGIA QUE DETECTA EL CAMBIO DE TABS ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Iniciar Tab 0 (Inmediato)
+    setTimeout(() => launchSectionTour('tab-0'), 1500);
+
+    // 2. Configurar Observador para futuros cambios
+    const formContainer = document.querySelector('form'); // O el contenedor de los tabs
+    if (!formContainer) return;
+
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                const target = mutation.target;
+                // Si el elemento es un panel y ahora tiene la clase 'active'
+                if (target.classList.contains('form-tab-panel') && target.classList.contains('active')) {
+                    const panelId = target.id;
+                    // Pequeño delay para dejar que la animación CSS del tab termine
+                    setTimeout(() => launchSectionTour(panelId), 600);
+                }
+            }
+        });
+    });
+
+    // Observar todos los paneles de tab
+    const panels = document.querySelectorAll('.form-tab-panel');
+    panels.forEach(panel => {
+        observer.observe(panel, { attributes: true }); // Vigilar cambios de atributos (clases)
+    });
+});
+
+/* =========================================
+   RENTERS PROGRESSIVE TOUR ENGINE
+   ========================================= */
+
+// Configuración específica para Renters
+const rentersTourConfig = {
+    'step-0': [ // INTRO
+        {
+            targetId: 'tour-renters-intro',
+            label: 'RENTERS 101',
+            padding: 10,
+            graphicHTML: `<div class="scene-living"><div class="sofa-icon"><i class="fa-solid fa-couch"></i></div><div class="lamp-icon"><i class="fa-solid fa-lightbulb"></i></div></div>`,
+            title: 'Coverage for YOU',
+            desc: 'Your landlord insures the building, but <strong>not your stuff</strong>. This policy protects your electronics, clothes, and furniture from theft, fire, and damage.'
+        }
+    ],
+    'step-3': [ // COVERAGE
+        {
+            targetId: 'tour-content-limit',
+            label: 'VALUATION',
+            padding: 10,
+            graphicHTML: `<div class="scene-living"><div class="sofa-icon" style="font-size:1.5rem;"><i class="fa-solid fa-laptop"></i></div><div class="lamp-icon" style="right:40%; animation-delay:0.5s;"><i class="fa-solid fa-camera"></i></div></div>`,
+            title: 'Don\'t Undervalue',
+            desc: '<strong>Pro Tip:</strong> Most people underestimate what they own. If you had to replace your wardrobe and tech brand new today, would $5,000 be enough? Consider $15k+ for safety.'
+        },
+        {
+            targetId: 'tour-water-backup',
+            label: 'SMART ADD-ON',
+            padding: 5,
+            graphicHTML: `<div class="scene-pipe"><div class="pipe-shape"></div><div class="pipe-leak"></div><div class="shield-mini"><i class="fa-solid fa-shield-halved"></i></div></div>`,
+            title: 'The "Hidden" Risk',
+            desc: 'Standard policies often exclude water backup (e.g., a clogged toilet overflowing). Adding this coverage is inexpensive and saves you from a messy, costly disaster.'
+        }
+    ],
+    'step-4': [ // ROOMMATES
+        {
+            targetId: 'btn-add-insured',
+            label: 'ROOMMATES',
+            padding: 5,
+            graphicHTML: `<div class="scene-roommates"><div class="rm-avatar rm-1"><i class="fa-solid fa-user"></i></div><div class="rm-avatar rm-2"><i class="fa-solid fa-user"></i></div><div class="rm-avatar rm-plus"><i class="fa-solid fa-plus"></i></div></div>`,
+            title: 'Joint Coverage?',
+            desc: 'Living with roommates? You can add them as "Additional Insured" to share one policy. Check with your landlord if they require everyone to be listed.'
+        }
+    ],
+    'step-5': [ // PRIOR INSURANCE (Texto Modificado)
+        {
+            targetId: 'dec-upload-zone',
+            label: 'VALIDATE',
+            padding: 10,
+            // Nueva escena: Sello de Verificación
+            graphicHTML: `
+                <div class="scene-verify">
+                    <div class="doc-flat"><div class="df-line"></div><div class="df-line"></div><div class="df-line short"></div></div>
+                    <div class="stamp-mark"><i class="fa-solid fa-check"></i></div>
+                </div>`,
+            title: 'Verify Best Coverage',
+            desc: 'Uploading your current policy declaration helps us <strong>back up the information you entered</strong>. It ensures we are matching or beating your current limits with 100% accuracy.'
+        }
+    ],
+    'step-6': [ // INTERESTED PARTY (Nuevo)
+        {
+            targetId: 'btn-add-interest', // Apunta al botón de agregar
+            label: 'LANDLORD',
+            padding: 5,
+            // Nueva escena: Edificio + Notificación
+            graphicHTML: `
+                <div class="scene-building">
+                    <div class="bld-icon"><i class="fa-regular fa-building"></i><div class="bld-badge"></div></div>
+                    <div class="mail-fly"><i class="fa-solid fa-envelope-circle-check"></i></div>
+                </div>`,
+            title: 'Leasing Requirement?',
+            desc: 'Most apartments require you to list them as an <strong>"Interested Party"</strong>. This automatically notifies them that you have active insurance, so you don\'t get fined.'
+        }
+    ]
+};
+
+// --- LÓGICA DEL MOTOR (Reutilizando variables globales) ---
+
+function launchRentersTour(stepKey) {
+    // 1. Validaciones de seguridad
+    if (typeof completedTours === 'undefined') window.completedTours = new Set();
+    
+    // Si no hay configuración para este paso o ya se completó, salir
+    if (!rentersTourConfig[stepKey] || completedTours.has(stepKey)) return;
+    
+    // Si el elemento objetivo no existe en el DOM, salir
+    const firstTarget = document.getElementById(rentersTourConfig[stepKey][0].targetId);
+    if (!firstTarget || firstTarget.offsetParent === null) return;
+
+    // 2. Asignar estado a las variables globales existentes
+    activeTourSteps = rentersTourConfig[stepKey];
+    tourStepIndex = 0;
+    completedTours.add(stepKey);
+
+    // 3. Activar UI
+    const ring = document.getElementById('tourFocusRing');
+    const card = document.getElementById('tourCard');
+    
+    if (ring) ring.classList.add('active');
+    if (card) card.classList.add('active');
+    
+    if (document.getElementById('tcTotal')) {
+        document.getElementById('tcTotal').innerText = activeTourSteps.length;
+    }
+    
+    // 4. Renderizar
+    renderProgressiveStep(0);
+}
+
+// Nota: Asumimos que la función renderProgressiveStep ya existe globalmente 
+// (del ejercicio anterior). Si no, avísame para incluirla sin variables duplicadas.
+
+// --- OBSERVER PARA RENTERS (index.html) ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Verificar que estamos en la página de Renters antes de ejecutar
+    if (!document.getElementById('renters-quote-form')) return;
+
+    // 1. Lanzar Intro (Step 0)
+    setTimeout(() => launchRentersTour('step-0'), 1500);
+
+    // 2. Observar cambios en los paneles
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                const target = mutation.target;
+                // Detectar si el panel ahora es 'active'
+                if (target.classList.contains('form-tab-panel') && target.classList.contains('active')) {
+                    const stepIndex = target.getAttribute('data-step');
+                    if (stepIndex) {
+                        setTimeout(() => launchRentersTour('step-' + stepIndex), 600);
+                    }
+                }
+            }
+        });
+    });
+
+    // Conectar observador
+    document.querySelectorAll('.form-tab-panel').forEach(panel => {
+        observer.observe(panel, { attributes: true });
+    });
+});
+
+/* =========================================
+   10. FINANCIAL INTERESTS TOUR (Quote 11)
+   ========================================= */
+
+const financialSteps = [
+    {
+        targetId: 'tour-finance-group',
+        label: 'LIENHOLDER 101',
+        padding: 10,
+        // Gráfico: Banco conectado al auto
+        graphicHTML: `
+            <div class="scene-bank-chain">
+                <div class="bank-icon"><i class="fa-solid fa-building-columns"></i></div>
+                <div class="chain-link"></div>
+                <div class="lock-mini"><i class="fa-solid fa-lock"></i></div>
+                <div class="car-icon-sm"><i class="fa-solid fa-car"></i></div>
+            </div>`,
+        title: 'What is a "Lienholder"?',
+        desc: 'It is just a fancy word for the <strong>Bank or Leasing Company</strong>. Since they lent you the money, they technically co-own the car. You MUST list them here so they are protected in case of a total loss.'
+    },
+    {
+        targetId: 'tour-gap-tip',
+        label: 'THE GAP TRAP',
+        padding: 10,
+        // Gráfico: Barras de Valor vs Deuda
+        graphicHTML: `
+            <div class="scene-gap-graph">
+                <div class="bar-car"><span class="bar-label">Value</span></div>
+                <div class="bar-loan">
+                    <span class="bar-label">Loan</span>
+                    <div class="gap-arrow">GAP</div>
+                </div>
+            </div>`,
+        title: 'Do you owe more than it\'s worth?',
+        desc: 'If you have a loan, read this tip! <strong>Gap Coverage</strong> pays the difference if your car is totaled but the insurance check is smaller than your remaining loan balance.'
+    }
+];
+
+let finIndex = 0;
+let finTracker = null;
+
+function startFinTour() {
+    if (!document.getElementById('tour-finance-group')) return;
+
+    const ring = document.getElementById('tourFocusRing');
+    const card = document.getElementById('tourCard');
+    
+    if(ring) ring.classList.add('active');
+    if(card) card.classList.add('active');
+    
+    if(document.getElementById('tcTotal')) {
+        document.getElementById('tcTotal').innerText = financialSteps.length;
+    }
+    
+    renderFinStep(0);
+}
+
+function renderFinStep(index) {
+    if (finTracker) clearInterval(finTracker);
+
+    finIndex = index;
+    const step = financialSteps[index];
+    const target = document.getElementById(step.targetId);
+
+    if (!target) { endFinTour(); return; }
+
+    // UI Content
+    document.getElementById('focusLabel').innerText = step.label;
+    document.getElementById('tcCurrent').innerText = index + 1;
+    document.getElementById('tcTitle').innerText = step.title;
+    document.getElementById('tcDesc').innerHTML = step.desc;
+    document.getElementById('graphicStage').innerHTML = step.graphicHTML;
+
+    // Botones
+    const btnNext = document.getElementById('btnFinNext');
+    const btnPrev = document.getElementById('btnFinPrev');
+    if (btnPrev) btnPrev.disabled = (index === 0);
+
+    if (index === financialSteps.length - 1) {
+        btnNext.innerHTML = 'Got it <i class="fa-solid fa-check"></i>';
+    } else {
+        btnNext.innerHTML = 'Next Tip <i class="fa-solid fa-arrow-right"></i>';
+    }
+
+    // Scroll & Track (Usando tu función global responsive)
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    const runUpdate = () => {
+        if (typeof updateTourPosition === 'function') {
+            updateTourPosition(target, document.getElementById('tourFocusRing'), document.getElementById('tourCard'), step.padding || 10);
+        }
+    };
+
+    runUpdate();
+    let ticks = 0;
+    finTracker = setInterval(() => {
+        runUpdate();
+        ticks++;
+        if (ticks > 100) clearInterval(finTracker);
+    }, 20);
+    window.addEventListener('resize', runUpdate, { once: true });
+}
+
+window.nextFinStep = function() {
+    if (finIndex < financialSteps.length - 1) renderFinStep(finIndex + 1);
+    else endFinTour();
+};
+
+window.prevFinStep = function() {
+    if (finIndex > 0) renderFinStep(finIndex - 1);
+};
+
+window.endFinTour = function() {
+    if (finTracker) clearInterval(finTracker);
+    document.getElementById('tourFocusRing').classList.remove('active');
+    document.getElementById('tourCard').classList.remove('active');
+};
+
+// Auto-Launch Quote 11
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('tour-finance-group')) {
+        setTimeout(startFinTour, 1000);
+    }
+});
+
+// --- LÓGICA DEL DROPDOWN (Cálculo Automático) ---
+window.updatePriceFromDropdown = function(selectElement) {
+    // 1. Ubicar la tarjeta correspondiente
+    const card = selectElement.closest('.offer-card');
+    
+    // 2. Elementos de texto a actualizar
+    const downDisplay = card.querySelector('.js-down-val');
+    const monthDisplay = card.querySelector('.js-month-val');
+    const termDisplay = card.querySelector('.per-mo'); // Opcional, para cambiar texto "Per Month"
+
+    // 3. Obtener o Calcular el Precio TOTAL del contrato (Solo la primera vez)
+    let totalPremium = parseFloat(card.getAttribute('data-calculated-total'));
+
+    if (isNaN(totalPremium)) {
+        // Si no tenemos el total guardado, lo calculamos revertiendo los números actuales
+        // Fórmula: Down Payment Actual + (Mensualidad Actual * 5 Pagos)
+        const currentDown = parseFloat(downDisplay.innerText.replace(/[^0-9.]/g, ''));
+        const currentMonthly = parseFloat(monthDisplay.innerText.replace(/[^0-9.]/g, ''));
+        
+        // Asumimos que el precio mostrado inicialmente corresponde al 25% (o al porcentaje por defecto)
+        // Para ser más exactos, sumamos todo para sacar el total real de la póliza
+        totalPremium = currentDown + (currentMonthly * 5);
+        
+        // Guardamos este total en la tarjeta para futuros cálculos
+        card.setAttribute('data-calculated-total', totalPremium.toFixed(2));
+    }
+
+    // 4. Calcular nuevos valores basados en el porcentaje seleccionado
+    const percent = parseFloat(selectElement.value);
+    
+    let newDown = totalPremium * percent;
+    let newMonthly = 0;
+
+    if (percent === 1.00) {
+        // Pago Completo
+        newMonthly = 0;
+        if(termDisplay) termDisplay.innerText = "Paid in Full";
+    } else {
+        // Financiamiento (Restante / 5 cuotas)
+        newMonthly = (totalPremium - newDown) / 5;
+        if(termDisplay) termDisplay.innerText = "Per Month";
+    }
+
+    // 5. Actualizar el HTML (con animación simple de color)
+    downDisplay.innerText = newDown.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    monthDisplay.innerText = newMonthly.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    // Efecto visual
+    downDisplay.style.color = '#2563EB';
+    monthDisplay.style.color = '#2563EB';
+    setTimeout(() => {
+        downDisplay.style.color = '';
+        monthDisplay.style.color = '';
+    }, 400);
+};
+
+/**
+ * Abre o cierra el menú dropdown
+ */
+/**
+ * Abre/Cierra el menú usando coordenadas FIJAS (Bypassea overflow:hidden)
+ */
+window.toggleCustomDropdown = function(trigger) {
+    const menu = trigger.nextElementSibling;
+    const isOpen = menu.classList.contains('open');
+
+    // 1. Cerrar cualquier otro menú abierto
+    document.querySelectorAll('.custom-options').forEach(el => el.classList.remove('open'));
+
+    if (!isOpen) {
+        // 2. OBTENER COORDENADAS DEL BOTÓN EN PANTALLA
+        const rect = trigger.getBoundingClientRect();
+        
+        // 3. APLICAR COORDENADAS AL MENÚ (Forzamos posición fija)
+        menu.style.top = (rect.bottom + 5) + 'px'; // 5px debajo del botón
+        menu.style.left = (rect.right - 150) + 'px'; // Alineado a la derecha (150px es el ancho aprox del menú)
+        // O si prefieres alineado a la izquierda del botón:
+        // menu.style.left = rect.left + 'px';
+        
+        // Aseguramos que el ancho sea consistente
+        menu.style.width = Math.max(rect.width, 150) + 'px'; 
+
+        // 4. Mostrar
+        menu.classList.add('open');
+    }
+};
+
+// CERRAR AL HACER SCROLL (Importante con position:fixed)
+// Como el menú es "fijo", si haces scroll se quedaría flotando. 
+// Esto lo cierra automáticamente al mover la pantalla para evitar glitches visuales.
+window.addEventListener('scroll', function() {
+    document.querySelectorAll('.custom-options.open').forEach(el => el.classList.remove('open'));
+}, true);
+
+// SELECT OPTION (Tu función existente, asegúrate de mantenerla)
+window.selectOption = function(optionElement, percentValue) {
+    const wrapper = optionElement.closest('.custom-dropdown-wrapper'); // Buscar wrapper original es más difícil con fixed, usamos lógica DOM
+    // Truco: Como el menú ahora es fixed, usamos el elemento previo en el DOM original para hallar el trigger
+    const menu = optionElement.parentElement;
+    const trigger = menu.previousElementSibling; 
+    const wrapperReal = menu.parentElement;
+    const card = wrapperReal.closest('.offer-card');
+    
+    // Actualizar texto
+    trigger.querySelector('.selected-text').innerText = optionElement.innerText;
+    
+    // Marcar visualmente
+    menu.querySelectorAll('.custom-option').forEach(el => el.classList.remove('selected'));
+    optionElement.classList.add('selected');
+    
+    menu.classList.remove('open');
+    
+    // --- LÓGICA MATEMÁTICA (Igual que antes) ---
+    const downDisplay = card.querySelector('.js-down-val'); 
+    const monthDisplay = card.querySelector('.js-month-val');
+    const termDisplay = card.querySelector('.per-mo'); 
+
+    if(downDisplay && monthDisplay) {
+        let totalPremium = parseFloat(card.getAttribute('data-calc-total'));
+        if (isNaN(totalPremium)) {
+            const currentDown = parseFloat(downDisplay.innerText.replace(/[^0-9.]/g, ''));
+            const currentMonthly = parseFloat(monthDisplay.innerText.replace(/[^0-9.]/g, ''));
+            totalPremium = currentDown + (currentMonthly * 5);
+            card.setAttribute('data-calc-total', totalPremium);
+        }
+
+        let newDown = totalPremium * percentValue;
+        let newMonthly = 0;
+
+        if (percentValue >= 0.99) {
+            newMonthly = 0;
+            if(termDisplay) termDisplay.innerText = "Paid in Full";
+        } else {
+            newMonthly = (totalPremium - newDown) / 5;
+            if(termDisplay) termDisplay.innerText = "Per Month";
+        }
+
+        downDisplay.innerText = Math.round(newDown).toLocaleString('en-US');
+        monthDisplay.innerText = newMonthly.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    }
+};
+
+/**
+ * Maneja la selección de una opción
+ */
+function selectOption(optionElement, value) {
+    const wrapper = optionElement.closest('.custom-dropdown-wrapper');
+    const triggerText = wrapper.querySelector('.selected-text');
+    const menu = optionElement.parentElement;
+    
+    // 1. Actualizar texto visual del botón
+    triggerText.innerText = optionElement.innerText;
+    
+    // 2. Marcar visualmente la opción seleccionada
+    menu.querySelectorAll('.custom-option').forEach(el => el.classList.remove('selected'));
+    optionElement.classList.add('selected');
+    
+    // 3. Cerrar menú
+    menu.classList.remove('open');
+    
+    // 4. EJECUTAR EL CÁLCULO MATEMÁTICO
+    calculateCustomPrice(wrapper, value);
+}
+
+/**
+ * Lógica matemática adaptada para el Custom Dropdown
+ */
+function calculateCustomPrice(wrapperElement, percentValue) {
+    const card = wrapperElement.closest('.offer-card');
+    
+    // Textos a actualizar
+    const downDisplay = card.querySelector('.js-down-val');
+    const monthDisplay = card.querySelector('.js-month-val');
+    const termDisplay = card.querySelector('.per-mo');
+
+    // Recuperar o calcular el total
+    let totalPremium = parseFloat(card.getAttribute('data-calculated-total'));
+
+    if (isNaN(totalPremium)) {
+        const currentDown = parseFloat(downDisplay.innerText.replace(/[^0-9.]/g, ''));
+        const currentMonthly = parseFloat(monthDisplay.innerText.replace(/[^0-9.]/g, ''));
+        // Asumimos base inicial (puedes ajustar si tu inicial no es 25%)
+        totalPremium = currentDown + (currentMonthly * 5);
+        card.setAttribute('data-calculated-total', totalPremium.toFixed(2));
+    }
+
+    // Calcular
+    let newDown = totalPremium * percentValue;
+    let newMonthly = 0;
+
+    if (percentValue === 1.00) {
+        newMonthly = 0;
+        if(termDisplay) termDisplay.innerText = "Paid in Full";
+    } else {
+        newMonthly = (totalPremium - newDown) / 5;
+        if(termDisplay) termDisplay.innerText = "Per Month";
+    }
+
+    // Actualizar DOM
+    downDisplay.innerText = newDown.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    monthDisplay.innerText = newMonthly.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    
+    // Efecto Color
+    downDisplay.style.color = '#2563EB';
+    monthDisplay.style.color = '#2563EB';
+    setTimeout(() => {
+        downDisplay.style.color = '';
+        monthDisplay.style.color = '';
+    }, 300);
+}
+
+// CERRAR AL HACER CLIC FUERA
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.custom-dropdown-wrapper')) {
+        document.querySelectorAll('.custom-options').forEach(el => el.classList.remove('open'));
+    }
+});
+
+/* ==============================================
+   LÓGICA DEL "PORTAL" DROPDOWN (Global)
+   ============================================== */
+
+let activeCardContext = null; // Recuerda qué tarjeta abrió el menú
+let activeTriggerBtn = null;  // Recuerda qué botón se pulsó
+
+// 1. INICIALIZAR EL MENÚ GLOBAL (Se ejecuta una vez)
+document.addEventListener('DOMContentLoaded', () => {
+    if (!document.getElementById('global-dropdown-portal')) {
+        const menu = document.createElement('div');
+        menu.id = 'global-dropdown-portal';
+        menu.innerHTML = `
+            <div class="portal-option" onclick="selectGlobalOption(0.1666, '16% (Low)')">16% (Low)</div>
+            <div class="portal-option" onclick="selectGlobalOption(0.20, '20% (Std)')">20% (Std)</div>
+            <div class="portal-option selected" onclick="selectGlobalOption(0.25, '25% (Rec)')">25% (Rec) <i class="fa-solid fa-check"></i></div>
+            <div class="portal-option" onclick="selectGlobalOption(0.30, '30% (High)')">30% (High)</div>
+            <div class="portal-option" onclick="selectGlobalOption(1.00, 'Pay Full')">Pay Full</div>
+        `;
+        document.body.appendChild(menu);
+        
+        // Cerrar al hacer clic fuera o scroll
+        window.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown-trigger-btn')) closeGlobalMenu();
+        });
+        window.addEventListener('scroll', closeGlobalMenu, true);
+    }
+});
+
+// 2. FUNCIÓN PARA ABRIR EL MENÚ
+window.openGlobalMenu = function(btnElement) {
+    const menu = document.getElementById('global-dropdown-portal');
+    
+    // Guardamos contexto
+    activeTriggerBtn = btnElement;
+    activeCardContext = btnElement.closest('.offer-card');
+    
+    // Calcular Posición Exacta
+    const rect = btnElement.getBoundingClientRect();
+    
+    // Posicionar el menú justo debajo del botón
+    menu.style.top = (rect.bottom + 5) + 'px';
+    menu.style.left = rect.left + 'px';
+    menu.style.width = rect.width + 'px'; // Mismo ancho que el botón
+    
+    // Mostrar
+    menu.classList.add('active');
+};
+
+// 3. FUNCIÓN AL SELECCIONAR UNA OPCIÓN
+window.selectGlobalOption = function(percentValue, textLabel) {
+    if (!activeCardContext || !activeTriggerBtn) return;
+
+    // A. Actualizar texto del botón
+    const spanText = activeTriggerBtn.querySelector('span');
+    if(spanText) spanText.innerText = textLabel;
+
+    // B. Lógica Matemática (Recalcular Precio)
+    const card = activeCardContext;
+    const downDisplay = card.querySelector('.js-down-val');
+    const monthDisplay = card.querySelector('.js-month-val');
+    const termDisplay = card.querySelector('.per-mo');
+
+    // Recuperar total base
+    let totalPremium = parseFloat(card.getAttribute('data-calc-total'));
+    if (isNaN(totalPremium)) {
+        // Fallback: Si no existe, calcúlalo de los datos visibles actuales
+        const d = parseFloat(downDisplay.innerText.replace(/[^0-9.]/g, ''));
+        const m = parseFloat(monthDisplay.innerText.replace(/[^0-9.]/g, ''));
+        totalPremium = d + (m * 5); // Asumiendo base actual era válida
+        card.setAttribute('data-calc-total', totalPremium);
+    }
+
+    // Calcular nuevos montos
+    let newDown = totalPremium * percentValue;
+    let newMonthly = 0;
+
+    if (percentValue >= 0.99) {
+        newMonthly = 0;
+        if(termDisplay) termDisplay.innerText = "Paid in Full";
+    } else {
+        newMonthly = (totalPremium - newDown) / 5;
+        if(termDisplay) termDisplay.innerText = "Per Month";
+    }
+
+    // Actualizar HTML
+    downDisplay.innerText = Math.round(newDown).toLocaleString('en-US');
+    monthDisplay.innerText = newMonthly.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    // Efecto visual azul
+    downDisplay.style.color = '#2563EB';
+    monthDisplay.style.color = '#2563EB';
+    setTimeout(() => {
+        downDisplay.style.color = '';
+        monthDisplay.style.color = '';
+    }, 300);
+
+    closeGlobalMenu();
+};
+
+function closeGlobalMenu() {
+    const menu = document.getElementById('global-dropdown-portal');
+    if(menu) menu.classList.remove('active');
+}
