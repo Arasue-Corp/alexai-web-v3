@@ -232,7 +232,7 @@
                                             <div class="pg-header-line"></div>
                                         </div>
                                         
-                                        <div class="download-zone-premium">
+                                        <div class="download-zone-premium" id="tour-amb-download">
                                             <div class="dz-content">
                                                 <div class="dz-icon-circle">
                                                     <i class="fa-solid fa-cloud-arrow-down"></i>
@@ -263,7 +263,7 @@
 
                                 <div class="form-section">
                                     
-                                    <div class="premium-group">
+                                    <div class="premium-group" id="tour-amb-info">
                                         <div class="pg-header">
                                             <div class="pg-header-badge teal">
                                                 <i class="fa-solid fa-user"></i> 2. Your Information
@@ -331,7 +331,7 @@
                                         </div>
                                     <p class="text-sm mb-4">Supported formats: PDF, JPG, PNG. Max size 10MB.</p>
 
-                                    <div class="upload-zones-grid">
+                                    <div class="upload-zones-grid" id="tour-amb-upload">
                                         
                                         <div class="file-drop-zone-premium" id="zone-agreement">
                                             <input type="file" id="file-agreement" accept=".pdf, .png, .jpg, .jpeg" required class="file-input-hidden">
@@ -651,6 +651,27 @@
             });
         });
     </script>
+
+
+    <div id="tourFocusRing">
+        <div class="scan-line"></div>
+        <div class="focus-label" id="focusLabel">GUIDE</div>
+    </div>
+    <div id="tourCard" class="tour-card-holo">
+        <div class="holo-header">
+            <span class="holo-badge">AMBASSADOR START <span id="tcCurrent">1</span>/<span id="tcTotal">4</span></span>
+            <button class="holo-skip" onclick="endAmbTour()">Skip Guide</button>
+        </div>
+        <div class="holo-body">
+            <div class="graphic-stage" id="graphicStage"></div>
+            <h3 class="holo-title" id="tcTitle">Title</h3>
+            <p class="holo-desc" id="tcDesc">Desc</p>
+        </div>
+        <div class="holo-footer">
+            <button class="btn-holo-prev" id="btnAmbPrev" onclick="prevAmbStep()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button class="btn-holo-next" id="btnAmbNext" onclick="nextAmbStep()">Next <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
     
 </body>
 </html>

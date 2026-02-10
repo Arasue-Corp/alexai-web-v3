@@ -3481,109 +3481,139 @@ document.getElementById('richInfoModal')?.addEventListener('click', (e) => {
 });
 
 /* =========================================
-   GLOBAL UTILITIES (POSICIONAMIENTO ROBUSTO)
+   GLOBAL UTILITIES (FORCE SIDE MODE v5.0)
+   Corrigiendo el problema de espacio en 720p
    ========================================= */
-function updateTourPosition(target, ring, card, stepPadding) {
+
+/* =================================================================================
+   MASTER POSITIONING ENGINE v4 (AGGRESSIVE HD FIX)
+   Soluciona: Homeowners/Renters en 1280x720 (Centrado indeseado)
+   Soluciona: Sidebar de Embajadores (Posición manual)
+   ================================================================================= */
+
+function updateTourPosition(target, ring, card, stepPadding, forceSide) {
+    if (!target || !ring || !card) return;
+
     const rect = target.getBoundingClientRect();
     const cRect = card.getBoundingClientRect();
-    const pad = stepPadding || 10;
-    const gap = 20; // Separación entre elemento y tarjeta
-    const headerHeight = 90; // Respetar el menú superior
+    const pad = stepPadding !== undefined ? stepPadding : 10;
+    
+    // 1. Detección de Entorno
     const viewportW = window.innerWidth;
     const viewportH = window.innerHeight;
+    const headerHeight = 85; 
+    const gap = 15;
+    
+    const isMobile = viewportW <= 768;
+    // Detectar Pantalla HD (Laptop común 1366x768 o 1280x720)
+    // Condición: Ancho de escritorio (>900) pero altura escasa (<850)
+    const isLandscapeShort = viewportW > 900 && viewportH < 850; 
 
-    // 1. POSICIONAR EL ANILLO DE FOCO (Siempre sobre el elemento)
+    // 2. POSICIONAR ANILLO (Siempre igual)
     ring.style.width = (rect.width + (pad * 2)) + 'px';
     ring.style.height = (rect.height + (pad * 2)) + 'px';
     ring.style.top = (rect.top - pad) + 'px';
     ring.style.left = (rect.left - pad) + 'px';
 
-    // 2. POSICIONAR LA TARJETA (Solo Desktop)
-    if (viewportW <= 768) {
-        card.style.top = ''; card.style.left = ''; // Móvil: Usa CSS bottom-sheet
-        return;
+    // 3. MÓVIL (Gravedad Inversa)
+    if (isMobile) {
+        card.style.top = ''; card.style.left = ''; 
+        const elementCenterY = rect.top + (rect.height / 2);
+        if (elementCenterY > viewportH / 2) {
+            card.classList.remove('mobile-bottom'); card.classList.add('mobile-top');
+        } else {
+            card.classList.remove('mobile-top'); card.classList.add('mobile-bottom');
+        }
+        return; 
     }
 
-    // Calcular espacios disponibles alrededor del elemento
+    // 4. ESCRITORIO
+    card.classList.remove('mobile-top', 'mobile-bottom'); 
+    let left = 0;
+    let top = 0;
+    let placed = false;
+
+    // Espacios teóricos disponibles
     const spaceRight = viewportW - (rect.right + pad + gap);
     const spaceLeft = rect.left - pad - gap;
     const spaceTop = rect.top - pad - gap - headerHeight;
     const spaceBottom = viewportH - (rect.bottom + pad + gap);
 
-    let left = 0;
-    let top = 0;
-    let placed = false;
+    // --- PRIORIDAD A: FUERZA MANUAL (Para Embajadores Sidebar) ---
+    if (forceSide === 'left') {
+        left = rect.left - pad - gap - cRect.width;
+        top = rect.top; 
+        placed = true;
+    } else if (forceSide === 'right') {
+        left = rect.right + pad + gap;
+        top = rect.top;
+        placed = true;
+    }
 
-    // --- ESTRATEGIA PARA ELEMENTOS ALTOS (Sidebar / Paneles) ---
-    // Si el elemento mide más de 150px de alto, FORZAR a los lados.
-    // Esto evita que la tarjeta intente ponerse "arriba" o "abajo" y tape el contenido.
-    const isTall = rect.height > 150;
-
-    if (isTall) {
-        // Preferencia: Izquierda (Ideal para Sidebar derecha)
-        if (spaceLeft > cRect.width) {
-            left = rect.left - pad - gap - cRect.width;
-            top = rect.top; // Alinear con el inicio del elemento
-            placed = true;
-        } 
-        // Si no, Derecha
-        else if (spaceRight > cRect.width) {
+    // --- PRIORIDAD B: MODO AGRESIVO HD (Para Homeowners/Renters en 720p) ---
+    // AQUÍ ESTÁ EL ARREGLO:
+    // Si la pantalla es bajita, NO verificamos si "cRect.width" cabe entero.
+    // Simplemente verificamos que haya un mínimo de espacio (50px) y lo forzamos ahí.
+    // El "Clamping" al final se encargará de que no se salga de la pantalla.
+    
+    if (!placed && isLandscapeShort) {
+        // Intentar Derecha (Preferido)
+        if (spaceRight > 50) { // Solo pedimos 50px libres, no todo el ancho de la tarjeta
             left = rect.right + pad + gap;
+            // Alineación vertical: Top-to-Top para aprovechar espacio hacia abajo
+            top = rect.top; 
+            placed = true;
+        }
+        // Intentar Izquierda
+        else if (spaceLeft > 50) {
+            left = rect.left - pad - gap - cRect.width;
             top = rect.top;
             placed = true;
         }
     }
 
-    // --- ESTRATEGIA ESTÁNDAR (Botones / Inputs) ---
+    // --- PRIORIDAD C: ESTÁNDAR (Monitores Grandes) ---
     if (!placed) {
-        // 1. Intentar Derecha
         if (spaceRight > cRect.width) {
             left = rect.right + pad + gap;
-            top = rect.top + (rect.height / 2) - (cRect.height / 2); // Centrado vertical
+            top = rect.top + (rect.height / 2) - (cRect.height / 2);
             placed = true;
-        }
-        // 2. Intentar Izquierda
-        else if (spaceLeft > cRect.width) {
+        } else if (spaceLeft > cRect.width) {
             left = rect.left - pad - gap - cRect.width;
             top = rect.top + (rect.height / 2) - (cRect.height / 2);
             placed = true;
-        }
-        // 3. Intentar Arriba (Ideal para botones al final de la página)
-        else if (spaceTop > cRect.height) {
+        } else if (spaceTop > cRect.height) {
             top = rect.top - pad - gap - cRect.height;
-            left = rect.left + (rect.width / 2) - (cRect.width / 2); // Centrado horizontal
+            left = rect.left + (rect.width / 2) - (cRect.width / 2);
             placed = true;
-        }
-        // 4. Intentar Abajo
-        else if (spaceBottom > cRect.height) {
+        } else if (spaceBottom > cRect.height) {
             top = rect.bottom + pad + gap;
             left = rect.left + (rect.width / 2) - (cRect.width / 2);
             placed = true;
         }
     }
 
-    // --- FALLBACK (Si no cabe en ningún lado) ---
+    // --- FALLBACK (Solo si todo falla catastróficamente) ---
     if (!placed) {
-        // Si es el Sidebar (muy a la derecha), forzar izquierda aunque quede justo
-        if (rect.left > viewportW / 2) {
-             left = rect.left - pad - gap - cRect.width;
-             top = headerHeight + 10;
-        } else {
-             // Centrar en pantalla (Último recurso)
-             left = (viewportW / 2) - (cRect.width / 2);
-             top = (viewportH / 2) - (cRect.height / 2);
-        }
+        left = (viewportW / 2) - (cRect.width / 2);
+        top = (viewportH / 2) - (cRect.height / 2);
     }
 
-    // --- AJUSTES FINALES (Clamping) ---
-    // Asegurar que la tarjeta nunca se salga de la pantalla verticalmente
-    if (top < headerHeight + 10) top = headerHeight + 10;
-    if (top + cRect.height > viewportH - 10) top = viewportH - cRect.height - 10;
+    // --- CLAMPING (LA MAGIA QUE LO ARREGLA) ---
+    // Esto empuja la tarjeta hacia adentro si la "Prioridad B" la sacó de la pantalla.
     
-    // Asegurar horizontal
+    // Vertical
+    if (top < headerHeight + 10) top = headerHeight + 10;
+    if (top + cRect.height > viewportH - 10) {
+        top = viewportH - cRect.height - 10;
+        if (top < headerHeight) top = headerHeight + 5;
+    }
+
+    // Horizontal
     if (left < 10) left = 10;
     if (left + cRect.width > viewportW - 10) left = viewportW - cRect.width - 10;
 
+    // Aplicar
     card.style.left = `${left}px`;
     card.style.top = `${top}px`;
 }
@@ -4367,34 +4397,46 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-/* =========================================
-   7. FINAL REVIEW TOUR (RESPONSIVE FIX)
-   ========================================= */
+/* =================================================================================
+   7. FINAL REVIEW TOUR (QUOTE 14) - CORREGIDO V2
+   Agregada la función faltante: prevReviewStep
+   ================================================================================= */
 
-const reviewSteps = [
-    // ... Paso 0 (Control Panel) se queda igual ...
+// 1. Declaración de Variables Globales
+var reviewTracker = null;
+var revIndex = 0;
+
+// 2. Configuración de Pasos
+var reviewSteps = [
     {
         targetId: 'configSidebar',
         mobileTargetId: 'btnMobileFilter', 
         label: 'CONTROL',
         padding: 5,
-        graphicHTML: `<div class="scene-eq"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>`,
+        graphicHTML: `
+            <div class="scene-eq">
+                <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+                <div class="eq-bar"></div><div class="eq-bar"></div>
+            </div>`,
         title: 'Live Coverage Tuning',
         desc: 'Want to adjust prices? Use this panel to tweak deductibles and limits. The AI will instantly recalculate quotes from all carriers.'
     },
-    // ... Paso 1 (Marketplace) se queda igual ...
     {
         targetId: 'offersContainer',
         label: 'MARKETPLACE',
         padding: 10,
-        graphicHTML: `<div class="scene-network"><div class="net-hub"></div><div class="net-node n1"></div><div class="net-line l1"></div><div class="net-node n2"></div><div class="net-line l2"></div><div class="net-node n3"></div><div class="net-line l3"></div></div>`,
+        graphicHTML: `
+            <div class="scene-network">
+                <div class="net-hub"></div>
+                <div class="net-node n1"></div><div class="net-line l1"></div>
+                <div class="net-node n2"></div><div class="net-line l2"></div>
+                <div class="net-node n3"></div><div class="net-line l3"></div>
+            </div>`,
         title: 'AI-Curated Matches',
         desc: 'We scanned 30+ carriers. These are your best matches based on value and coverage quality. Look for the <strong>"Alex Choice"</strong> badge.'
     },
-    
-    /* --- NUEVO PASO: DOWN PAYMENT --- */
     {
-        targetId: 'tour-down-btn', // ID temporal que inyectaremos
+        targetId: 'tour-down-btn', 
         label: 'CASH FLOW',
         padding: 5,
         graphicHTML: `
@@ -4406,15 +4448,17 @@ const reviewSteps = [
         title: 'Payment Flexibility',
         desc: '<strong>You are in control.</strong> Use this dropdown to adjust your Down Payment. Paying a bit more upfront (e.g., 25%) can drastically lower your monthly installments.'
     },
-    /* -------------------------------- */
-
-    // ... Resto de pasos (Compare, Details, Edit, Finalize) ...
     {
         targetId: 'btnCompareSidebar',
         mobileTargetId: 'btnMobileCompare',
         label: 'COMPARE',
         padding: 5,
-        graphicHTML: `<div class="scene-compare"><div class="card-mini cm-left"></div><div class="vs-badge">VS</div><div class="card-mini cm-right"></div></div>`,
+        graphicHTML: `
+            <div class="scene-compare">
+                <div class="card-mini cm-left"></div>
+                <div class="vs-badge">VS</div>
+                <div class="card-mini cm-right"></div>
+            </div>`,
         title: 'Side-by-Side Analysis',
         desc: 'Can\'t decide? Select 2 or more quotes and tap <strong>"Compare"</strong> to see a detailed feature-by-feature breakdown.'
     },
@@ -4422,7 +4466,11 @@ const reviewSteps = [
         targetId: 'offersContainer',
         label: 'DEEP DIVE',
         padding: 10,
-        graphicHTML: `<div class="scene-details"><div class="doc-lines"><div class="dl-line"></div><div class="dl-line"></div><div class="dl-line"></div><div class="dl-line"></div></div><div class="magnifier"><i class="fa-solid fa-magnifying-glass"></i></div></div>`,
+        graphicHTML: `
+            <div class="scene-details">
+                <div class="doc-lines"><div class="dl-line"></div><div class="dl-line"></div><div class="dl-line"></div><div class="dl-line"></div></div>
+                <div class="magnifier"><i class="fa-solid fa-magnifying-glass"></i></div>
+            </div>`,
         title: 'X-Ray Vision',
         desc: 'Tap <strong>"View Details"</strong> on any card to reveal the fine print: payment schedules, policy fees, and specific inclusions.'
     },
@@ -4431,7 +4479,14 @@ const reviewSteps = [
         mobileTargetId: 'btnMobileEdit',
         label: 'REFINE',
         padding: 5,
-        graphicHTML: `<div class="scene-edit"><div class="edit-doc"><div class="ed-line"></div><div class="ed-line focus"></div><div class="ed-line"></div></div><div class="edit-pencil"><i class="fa-solid fa-pen"></i></div></div>`,
+        graphicHTML: `
+            <div class="scene-edit">
+                <div class="edit-doc">
+                    <div class="ed-line"></div><div class="ed-line focus"></div>
+                    <div class="ed-line"></div>
+                </div>
+                <div class="edit-pencil"><i class="fa-solid fa-pen"></i></div>
+            </div>`,
         title: 'Smart Correction',
         desc: 'Need to fix a typo or swap a driver? Use <strong>"Edit"</strong> to jump to specific sections without restarting the whole process.'
     },
@@ -4440,129 +4495,153 @@ const reviewSteps = [
         mobileTargetId: 'btnMobileCheckout',
         label: 'FINALIZE',
         padding: 5,
-        graphicHTML: `<div class="scene-checkout"><div class="cart-icon"><i class="fa-solid fa-cart-arrow-down"></i></div><div class="check-float"><i class="fa-solid fa-check"></i></div></div>`,
+        graphicHTML: `
+            <div class="scene-checkout">
+                <div class="cart-icon"><i class="fa-solid fa-cart-arrow-down"></i></div>
+                <div class="check-float"><i class="fa-solid fa-check"></i></div>
+            </div>`,
         title: 'Secure & Bind',
         desc: 'Found the winner? Select the plan and tap <strong>"Proceed"</strong> to lock in this rate and get your proof of insurance.'
     }
 ];
 
-let revIndex = 0;
-let revTracker = null;
+// 3. Funciones de Control
 
 function startReviewTour() {
-    // 1. Verificar si existen ofertas
     if (!document.getElementById('offersContainer')) return;
 
-    // 2. INYECCIÓN INTELIGENTE: Buscar el primer botón de dropdown y ponerle ID
-    // Esto es necesario porque las tarjetas se crean dinámicamente
+    // Inyección ID Down Payment
     const firstDropdownBtn = document.querySelector('.dropdown-trigger-btn');
     if (firstDropdownBtn) {
         firstDropdownBtn.id = 'tour-down-btn';
-    } else {
-        // Si no hay botón (raro, pero posible), quitamos el paso del array temporalmente
-        // o dejamos que la lógica de render salte el paso si no encuentra el ID.
-        console.log("Tour: No down payment button found yet.");
     }
 
-    // 3. Iniciar Tour
-    document.getElementById('tourFocusRing').classList.add('active');
-    document.getElementById('tourCard').classList.add('active');
-    document.getElementById('tcTotal').innerText = reviewSteps.length;
+    const ring = document.getElementById('tourFocusRing');
+    const card = document.getElementById('tourCard');
     
-    // Pequeño delay para asegurar renderizado
-    setTimeout(() => renderReviewStep(0), 500);
+    if (ring && card) {
+        ring.classList.add('active');
+        card.classList.add('active');
+        card.style.zIndex = "2147483647"; 
+
+        if (document.getElementById('tcTotal')) {
+            document.getElementById('tcTotal').innerText = reviewSteps.length;
+        }
+
+        renderReviewStep(0);
+    }
 }
 
 function renderReviewStep(index) {
-    if (revTracker) clearInterval(revTracker);
+    if (reviewTracker) clearInterval(reviewTracker);
 
     revIndex = index;
     const step = reviewSteps[index];
-    
-    // --- LÓGICA DE DETECCIÓN RESPONSIVE ---
-    const isMobile = window.innerWidth <= 768; // Punto de quiebre estándar
-    let targetId = step.targetId;
 
-    // Si es móvil y el paso tiene un target móvil específico, úsalo
-    if (isMobile && step.mobileTargetId) {
-        targetId = step.mobileTargetId;
+    // Detección Inteligente de Objetivo (Tablet/Mobile)
+    let targetId = step.targetId;
+    if (step.mobileTargetId) {
+        const mobileEl = document.getElementById(step.mobileTargetId);
+        if (mobileEl && mobileEl.offsetParent !== null) {
+            targetId = step.mobileTargetId;
+        }
     }
 
     const target = document.getElementById(targetId);
 
-    // Si no encuentra el target (ej: escondido), intenta saltar o salir
-    if (!target || target.offsetParent === null) { 
-        console.warn('Tour target not visible:', targetId);
-        // Opcional: Intentar saltar al siguiente si falla este
-        // if (index < reviewSteps.length - 1) renderReviewStep(index + 1); else endReviewTour();
-        // Por ahora, cerramos para evitar errores visuales
-        endReviewTour(); 
-        return; 
-    }
-    // --------------------------------------
-
-    // UI Content
-    const ring = document.getElementById('tourFocusRing');
-    const label = document.getElementById('focusLabel');
-    const card = document.getElementById('tourCard');
-
-    label.innerText = step.label;
-    document.getElementById('tcCurrent').innerText = index + 1;
-    document.getElementById('tcTitle').innerText = step.title;
-    document.getElementById('tcDesc').innerHTML = step.desc;
-    document.getElementById('graphicStage').innerHTML = step.graphicHTML;
-
-    // Botones
-    const btnNext = document.getElementById('btnRevNext');
-    const btnPrev = document.getElementById('btnRevPrev');
-    if (btnPrev) btnPrev.disabled = (index === 0);
-
-    if (index === reviewSteps.length - 1) {
-        btnNext.innerHTML = 'Start Saving <i class="fa-solid fa-check"></i>';
-    } else {
-        btnNext.innerHTML = 'Next Feature <i class="fa-solid fa-arrow-right"></i>';
+    if (!target || target.offsetParent === null) {
+        console.warn('Tour: Target hidden or missing (' + targetId + '). Ending tour.');
+        endReviewTour();
+        return;
     }
 
-    // Scroll & Track
+    // Llenar Textos
+    const setText = (id, txt) => { 
+        const el = document.getElementById(id); 
+        if(el) el.innerHTML = txt; 
+    };
+
+    setText('focusLabel', step.label);
+    if(document.getElementById('tcCurrent')) setText('tcCurrent', index + 1);
+    setText('tcTitle', step.title);
+    setText('tcDesc', step.desc);
+    setText('graphicStage', step.graphicHTML);
+
+    // CONFIGURACIÓN DE BOTONES
+    
+    // 1. Botón "Next"
+    const actualBtnNext = document.getElementById('btnRevNext') || document.getElementById('btnHomeNext') || document.getElementById('btnAmbNext'); 
+    
+    if (actualBtnNext) {
+        const newBtn = actualBtnNext.cloneNode(true);
+        actualBtnNext.parentNode.replaceChild(newBtn, actualBtnNext);
+
+        if (index === reviewSteps.length - 1) {
+            newBtn.innerHTML = 'Start Saving <i class="fa-solid fa-check"></i>';
+            newBtn.onclick = endReviewTour;
+        } else {
+            newBtn.innerHTML = 'Next <i class="fa-solid fa-arrow-right"></i>';
+            newBtn.onclick = () => renderReviewStep(index + 1);
+        }
+    }
+
+    // 2. Botón "Back" (Si existe en tu HTML)
+    const btnPrev = document.getElementById('btnRevPrev') || document.getElementById('btnHomePrev');
+    if (btnPrev) {
+        btnPrev.disabled = (index === 0);
+        // Aseguramos que el botón llame a la función correcta
+        btnPrev.onclick = prevReviewStep; 
+    }
+
+    // Scroll
     target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
 
     const runUpdate = () => {
-        // Usamos la función global que ya maneja la gravedad inversa en móvil
         if (typeof updateTourPosition === 'function') {
-            updateTourPosition(target, ring, card, step.padding || 10);
+            updateTourPosition(
+                target, 
+                document.getElementById('tourFocusRing'), 
+                document.getElementById('tourCard'), 
+                step.padding || 10
+            );
         }
     };
 
     runUpdate();
     let ticks = 0;
-    revTracker = setInterval(() => {
+    reviewTracker = setInterval(() => {
         runUpdate();
         ticks++;
-        if (ticks > 100) clearInterval(revTracker);
+        if (ticks > 100) clearInterval(reviewTracker);
     }, 20);
+    
     window.addEventListener('resize', runUpdate, { once: true });
 }
+
+// --- FUNCIONES GLOBALES PARA ONCLICK ---
 
 window.nextReviewStep = function() {
     if (revIndex < reviewSteps.length - 1) renderReviewStep(revIndex + 1);
     else endReviewTour();
 };
 
+// ** ESTA ES LA FUNCIÓN QUE FALTABA **
 window.prevReviewStep = function() {
     if (revIndex > 0) renderReviewStep(revIndex - 1);
 };
 
 window.endReviewTour = function() {
-    if (revTracker) clearInterval(revTracker);
-    document.getElementById('tourFocusRing').classList.remove('active');
-    document.getElementById('tourCard').classList.remove('active');
+    if (reviewTracker) clearInterval(reviewTracker);
+    const ring = document.getElementById('tourFocusRing');
+    const card = document.getElementById('tourCard');
+    if(ring) ring.classList.remove('active');
+    if(card) card.classList.remove('active');
 };
 
-// Auto-Launch Quote 14
+// 4. Inicialización Automática
 document.addEventListener('DOMContentLoaded', () => {
-    // Esperamos a que el sidebar o el dock existan
-    if (document.getElementById('configSidebar') || document.querySelector('.mobile-dock')) {
-        setTimeout(startReviewTour, 1500); 
+    if (document.getElementById('offersContainer')) {
+        setTimeout(startReviewTour, 1500);
     }
 });
 
@@ -4694,115 +4773,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/* =========================================
-   GLOBAL UTILITIES (CON SMART MOBILE FLIP)
-   ========================================= */
-function updateTourPosition(target, ring, card, stepPadding) {
-    const rect = target.getBoundingClientRect();
-    const pad = stepPadding || 10;
-    const viewportW = window.innerWidth;
-    const viewportH = window.innerHeight;
 
-    // 1. POSICIONAR EL ANILLO (Siempre igual)
-    ring.style.width = (rect.width + (pad * 2)) + 'px';
-    ring.style.height = (rect.height + (pad * 2)) + 'px';
-    ring.style.top = (rect.top - pad) + 'px';
-    ring.style.left = (rect.left - pad) + 'px';
-
-    // 2. LÓGICA RESPONSIVE
-    if (viewportW <= 768) {
-        // --- MÓVIL: GRAVEDAD INVERSA ---
-        
-        // Limpiar estilos inline de desktop para que usen las clases CSS
-        card.style.top = ''; 
-        card.style.left = '';
-        
-        // Calcular el centro vertical del elemento
-        const elementCenterY = rect.top + (rect.height / 2);
-        const screenCenterY = viewportH / 2;
-
-        // Decisión: ¿Está el elemento en la mitad inferior?
-        if (elementCenterY > screenCenterY) {
-            // Elemento ABAJO -> Tarjeta ARRIBA
-            card.classList.remove('mobile-bottom');
-            card.classList.add('mobile-top');
-        } else {
-            // Elemento ARRIBA -> Tarjeta ABAJO
-            card.classList.remove('mobile-top');
-            card.classList.add('mobile-bottom');
-        }
-        return; // Salir, ya terminamos con móvil
-    }
-
-    // --- DESKTOP (Lógica Lateral Original) ---
-    
-    // Asegurar que no tenga clases móviles residuales
-    card.classList.remove('mobile-top', 'mobile-bottom');
-
-    const cRect = card.getBoundingClientRect();
-    const gap = 25;
-    const headerHeight = 90;
-
-    const spaceRight = viewportW - (rect.right + pad + gap);
-    const spaceLeft = rect.left - pad - gap;
-    const spaceTop = rect.top - pad - gap - headerHeight;
-    const spaceBottom = viewportH - (rect.bottom + pad + gap);
-
-    let left = 0;
-    let top = 0;
-    let placed = false;
-
-    // Lógica Desktop (igual que antes) ...
-    const isTall = rect.height > 150;
-
-    if (isTall) {
-        if (spaceLeft > cRect.width) {
-            left = rect.left - pad - gap - cRect.width;
-            top = rect.top; placed = true;
-        } else if (spaceRight > cRect.width) {
-            left = rect.right + pad + gap;
-            top = rect.top; placed = true;
-        }
-    }
-
-    if (!placed) {
-        if (spaceRight > cRect.width) {
-            left = rect.right + pad + gap;
-            top = rect.top + (rect.height / 2) - (cRect.height / 2);
-            placed = true;
-        } else if (spaceLeft > cRect.width) {
-            left = rect.left - pad - gap - cRect.width;
-            top = rect.top + (rect.height / 2) - (cRect.height / 2);
-            placed = true;
-        } else if (spaceTop > cRect.height) {
-            top = rect.top - pad - gap - cRect.height;
-            left = rect.left + (rect.width / 2) - (cRect.width / 2);
-            placed = true;
-        } else if (spaceBottom > cRect.height) {
-            top = rect.bottom + pad + gap;
-            left = rect.left + (rect.width / 2) - (cRect.width / 2);
-            placed = true;
-        }
-    }
-
-    if (!placed) {
-        left = (viewportW / 2) - (cRect.width / 2);
-        top = (viewportH / 2) - (cRect.height / 2);
-    }
-
-    // Clamping Desktop
-    if (top < headerHeight + 10) top = headerHeight + 10;
-    if (top + cRect.height > viewportH - 10) top = viewportH - cRect.height - 10;
-    if (left < 10) left = 10;
-    if (left + cRect.width > viewportW - 10) left = viewportW - cRect.width - 10;
-
-    card.style.left = `${left}px`;
-    card.style.top = `${top}px`;
-}
-
-/* =========================================
-   9. HOMEOWNERS PROGRESSIVE TOUR ENGINE
-   ========================================= */
 
 // Configuración de Pasos por ID del Panel (Tab)
 /* =========================================
@@ -5611,3 +5582,449 @@ function closeGlobalMenu() {
     const menu = document.getElementById('global-dropdown-portal');
     if(menu) menu.classList.remove('active');
 }
+
+/* =========================================
+   AMBASSADOR ONBOARDING (documents.html)
+   ========================================= */
+
+const ambSteps = [
+    {
+        targetId: 'tour-amb-download',
+        label: 'STEP 1',
+        padding: 10,
+        graphicHTML: `
+            <div class="scene-contract">
+                <div class="paper-sheet"><div class="paper-lines"></div><div class="paper-lines"></div></div>
+                <div class="arrow-dl-anim"><i class="fa-solid fa-arrow-down"></i></div>
+            </div>`,
+        title: 'The Toolkit',
+        desc: 'Start here. Download the <strong>Agreement and Annex</strong>. You can sign them digitally (e.g., DocuSign) or print, sign, and scan them. You will need these files for Step 3.'
+    },
+    {
+        targetId: 'tour-amb-info',
+        label: 'STEP 2',
+        padding: 10,
+        graphicHTML: `
+            <div class="scene-id">
+                <div class="id-card-icon">
+                    <div class="id-photo"></div>
+                    <div class="id-lines"><div class="id-line"></div><div class="id-line" style="width:15px;"></div></div>
+                </div>
+                <div class="check-float-lg"><i class="fa-solid fa-circle-check"></i></div>
+            </div>`,
+        title: 'Legal Identity',
+        desc: 'Please enter your details exactly as they appear on your government ID. We use this to set up your <strong>Ambassador Wallet</strong> for automated commission payments.'
+    },
+    {
+        targetId: 'tour-amb-upload',
+        label: 'STEP 3',
+        padding: 10,
+        graphicHTML: `
+            <div class="scene-switch">
+                <div class="doc-old" style="background:#0F172A; border:none;"><i class="fa-solid fa-file-signature" style="color:white;"></i></div>
+                <div class="arrow-switch" style="color:#10B981;"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            </div>`,
+        title: 'The Digital Handshake',
+        desc: 'Upload your signed PDFs here. Our system will check the file format. Once the boxes turn <strong>Green</strong>, you are ready to submit.'
+    },
+    {
+        targetId: 'submit-btn',
+        label: 'FINISH',
+        padding: 5,
+        graphicHTML: `
+            <div class="scene-human">
+                <div class="headset-icon"><i class="fa-solid fa-headset"></i></div>
+                <div class="wave-lines"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+            </div>`,
+        title: 'What Happens Next?',
+        desc: 'After you click Submit, our team will review your application. Expect a <strong>Welcome Call</strong> within 24 hours to activate your account and give you access to the dashboard.'
+    }
+];
+
+let ambIndex = 0;
+let ambTracker = null;
+
+function startAmbTour() {
+    if (!document.getElementById('tour-amb-download')) return;
+
+    // Iniciar UI
+    document.getElementById('tourFocusRing').classList.add('active');
+    document.getElementById('tourCard').classList.add('active');
+    document.getElementById('tcTotal').innerText = ambSteps.length;
+    
+    renderAmbStep(0);
+}
+
+function renderAmbStep(index) {
+    if (ambTracker) clearInterval(ambTracker);
+
+    ambIndex = index;
+    const step = ambSteps[index];
+    const target = document.getElementById(step.targetId);
+
+    if (!target) { endAmbTour(); return; }
+
+    // UI Content
+    document.getElementById('focusLabel').innerText = step.label;
+    document.getElementById('tcCurrent').innerText = index + 1;
+    document.getElementById('tcTitle').innerText = step.title;
+    document.getElementById('tcDesc').innerHTML = step.desc;
+    document.getElementById('graphicStage').innerHTML = step.graphicHTML;
+
+    // Botones
+    const btnNext = document.getElementById('btnAmbNext');
+    const btnPrev = document.getElementById('btnAmbPrev');
+    if (btnPrev) btnPrev.disabled = (index === 0);
+
+    if (index === ambSteps.length - 1) {
+        btnNext.innerHTML = 'Ready to Start <i class="fa-solid fa-rocket"></i>';
+    } else {
+        btnNext.innerHTML = 'Next Step <i class="fa-solid fa-arrow-right"></i>';
+    }
+
+    // Scroll suave
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    // Rastreo de posición (usando tu función maestra updateTourPosition)
+    const runUpdate = () => {
+        if (typeof updateTourPosition === 'function') {
+            updateTourPosition(target, document.getElementById('tourFocusRing'), document.getElementById('tourCard'), step.padding || 10);
+        }
+    };
+
+    runUpdate();
+    let ticks = 0;
+    ambTracker = setInterval(() => {
+        runUpdate();
+        ticks++;
+        if (ticks > 100) clearInterval(ambTracker);
+    }, 20);
+    window.addEventListener('resize', runUpdate, { once: true });
+}
+
+window.nextAmbStep = function() {
+    if (ambIndex < ambSteps.length - 1) renderAmbStep(ambIndex + 1);
+    else endAmbTour();
+};
+
+window.prevAmbStep = function() {
+    if (ambIndex > 0) renderAmbStep(ambIndex - 1);
+};
+
+window.endAmbTour = function() {
+    if (ambTracker) clearInterval(ambTracker);
+    document.getElementById('tourFocusRing').classList.remove('active');
+    document.getElementById('tourCard').classList.remove('active');
+};
+
+// Iniciar automáticamente
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('tour-amb-download')) {
+        setTimeout(startAmbTour, 1000);
+    }
+});
+
+
+
+/* ========================================================================
+   AMBASSADOR TOUR - CÓDIGO MAESTRO (CONSOLIDADO Y CORREGIDO)
+   Incluye: Configuración, Motor de Renderizado y Posicionamiento Lateral
+   ======================================================================== */
+
+(function() { // Encapsulamos para evitar conflictos con otras variables
+
+    // 1. CONFIGURACIÓN DEL TOUR
+    const ambConfig = {
+        'step-1': [ 
+            {
+                targetId: '#step-1 .premium-group', 
+                label: 'IDENTITY',
+                padding: 10,
+                graphicHTML: `
+                    <div class="scene-profile-build">
+                        <div class="card-base"><div class="card-photo"></div><div class="card-lines"></div></div>
+                        <div class="magic-pen"><i class="fa-solid fa-pen-fancy"></i></div>
+                    </div>`,
+                title: 'Official Partner ID',
+                desc: 'Start here. Enter your legal name exactly as it appears on your government ID. We use this to generate your unique <strong>Ambassador Tracking Code</strong>.'
+            },
+            {
+                targetId: '#tour-amb-benefits',
+                label: 'EARNINGS',
+                padding: 10,
+                forceSide: 'left', // <--- AQUÍ ESTÁ EL ARREGLO DE POSICIÓN
+                graphicHTML: `
+                    <div class="scene-growth">
+                        <div class="bar-g b1"></div><div class="bar-g b2"></div>
+                        <div class="bar-g b3"><div class="coin-top"><i class="fa-solid fa-dollar-sign"></i></div></div>
+                    </div>`,
+                title: 'Why do this?',
+                desc: '<strong>$25 Cash per Referral.</strong> No caps, no limits. Your first 5 referrals usually come from close friends, earning you a quick $125 this week.'
+            }
+        ],
+        'step-2': [
+            {
+                targetId: '#tour-amb-wallet',
+                label: 'PAYOUTS',
+                padding: 10,
+                graphicHTML: `
+                    <div class="scene-wallet-link">
+                        <div class="coin-bag"><i class="fa-solid fa-sack-dollar"></i></div>
+                        <div class="wifi-link"><div class="wl-dot"></div><div class="wl-dot"></div><div class="wl-dot"></div></div>
+                        <div class="phone-device"><i class="fa-brands fa-paypal" style="font-size:0.8rem; color:#003087;"></i></div>
+                    </div>`,
+                title: 'Instant Monetization',
+                desc: 'Connect your <strong>PayPal</strong> now. We automate deposits so you get paid immediately after every successful referral. No waiting for monthly checks.'
+            }
+        ],
+        'step-3': [
+            {
+                targetId: '#quizContainer',
+                label: 'CERTIFY',
+                padding: 10,
+                graphicHTML: `
+                    <div class="scene-quiz-brain">
+                        <div class="brain-icon"><i class="fa-solid fa-brain"></i></div>
+                        <div class="idea-bulb"><i class="fa-solid fa-lightbulb"></i></div>
+                        <div class="check-badge-sm">5/5</div>
+                    </div>`,
+                title: 'The Quality Gate',
+                desc: 'To protect the brand, you must pass this 5-question certification with a <strong>Perfect Score (5/5)</strong>. Don\'t worry, it is just common sense!'
+            }
+        ],
+        'step-4': [
+            {
+                targetId: '#tour-amb-activate',
+                label: 'LAUNCH',
+                padding: 5,
+                graphicHTML: `
+                    <div class="scene-launch">
+                        <div class="rocket-ship"><i class="fa-solid fa-shuttle-space"></i></div>
+                        <div class="exhaust"></div>
+                    </div>`,
+                title: 'Ready for Liftoff',
+                desc: 'You are approved! Click <strong>Activate My Account</strong> to enter your dashboard, grab your referral link, and start earning today.'
+            }
+        ]
+    };
+
+    // Variables de Estado
+    let activeSteps = [];
+    let stepIndex = 0;
+    let tourTracker = null;
+
+    // 2. FUNCIÓN DE POSICIONAMIENTO (INCLUIDA AQUÍ PARA EVITAR ERRORES)
+    function updateTourPos(target, ring, card, stepPadding, forceSide) {
+        if (!target || !ring || !card) return;
+
+        const rect = target.getBoundingClientRect();
+        const cRect = card.getBoundingClientRect();
+        const pad = stepPadding !== undefined ? stepPadding : 10;
+        
+        const viewportW = window.innerWidth;
+        const viewportH = window.innerHeight;
+        const headerHeight = 85; 
+        const gap = 15;
+        const isMobile = viewportW <= 768;
+
+        // A. Posicionar Anillo
+        ring.style.width = (rect.width + (pad * 2)) + 'px';
+        ring.style.height = (rect.height + (pad * 2)) + 'px';
+        ring.style.top = (rect.top - pad) + 'px';
+        ring.style.left = (rect.left - pad) + 'px';
+
+        // B. Posicionar Tarjeta (Móvil)
+        if (isMobile) {
+            card.style.top = ''; card.style.left = ''; 
+            const elementCenterY = rect.top + (rect.height / 2);
+            if (elementCenterY > viewportH / 2) {
+                card.classList.remove('mobile-bottom'); card.classList.add('mobile-top');
+            } else {
+                card.classList.remove('mobile-top'); card.classList.add('mobile-bottom');
+            }
+            return; 
+        }
+
+        // C. Posicionar Tarjeta (Escritorio)
+        card.classList.remove('mobile-top', 'mobile-bottom'); 
+        let left = 0;
+        let top = 0;
+        let placed = false;
+
+        const spaceRight = viewportW - (rect.right + pad + gap);
+        const spaceLeft = rect.left - pad - gap;
+
+        // --- LÓGICA DE FUERZA (SOLUCIÓN AL PROBLEMA VISUAL) ---
+        if (forceSide === 'left' && spaceLeft > cRect.width) {
+            left = rect.left - pad - gap - cRect.width;
+            top = rect.top; 
+            placed = true;
+        } else if (forceSide === 'right' && spaceRight > cRect.width) {
+            left = rect.right + pad + gap;
+            top = rect.top;
+            placed = true;
+        }
+
+        // --- LÓGICA ESTÁNDAR ---
+        if (!placed) {
+            if (rect.left > viewportW / 2 && spaceLeft > cRect.width) {
+                left = rect.left - pad - gap - cRect.width;
+                top = rect.top;
+                placed = true;
+            } else if (spaceRight > cRect.width) {
+                left = rect.right + pad + gap;
+                top = rect.top + (rect.height / 2) - (cRect.height / 2);
+                placed = true;
+            } else if (spaceLeft > cRect.width) {
+                left = rect.left - pad - gap - cRect.width;
+                top = rect.top + (rect.height / 2) - (cRect.height / 2);
+                placed = true;
+            }
+        }
+
+        // Fallback
+        if (!placed) {
+            left = (viewportW / 2) - (cRect.width / 2);
+            top = (viewportH / 2) - (cRect.height / 2);
+        }
+
+        // Clamping
+        if (top < headerHeight + 10) top = headerHeight + 10;
+        if (top + cRect.height > viewportH - 10) top = viewportH - cRect.height - 10;
+        if (left < 10) left = 10;
+        if (left + cRect.width > viewportW - 10) left = viewportW - cRect.width - 10;
+
+        card.style.left = `${left}px`;
+        card.style.top = `${top}px`;
+    }
+
+// 3. MOTOR DEL TOUR (CON FILTRO DE VISIBILIDAD)
+    function launchAmbStep(stepKey) {
+        if (!ambConfig[stepKey]) return;
+
+        // --- CORRECCIÓN CRÍTICA ---
+        // Filtramos los pasos antes de iniciar.
+        // Si el elemento (ej: Sidebar) está oculto en móvil, lo sacamos de la lista.
+        activeSteps = ambConfig[stepKey].filter(step => {
+            const el = document.querySelector(step.targetId);
+            // Verificamos que exista, que sea visible y que tenga dimensiones reales (> 0)
+            return el && el.offsetParent !== null && el.getBoundingClientRect().height > 0;
+        });
+
+        // Si no quedó ningún paso visible (raro, pero posible), no hacemos nada
+        if (activeSteps.length === 0) {
+            console.log(`Tour: All targets for ${stepKey} are hidden. Skipping.`);
+            return;
+        }
+
+        stepIndex = 0;
+        
+        // Activar UI
+        const ring = document.getElementById('tourFocusRing');
+        const card = document.getElementById('tourCard');
+        if (!ring || !card) return;
+
+        ring.classList.add('active');
+        card.classList.add('active');
+        
+        // Actualizar contador total con los pasos REALES visibles
+        if (document.getElementById('tcTotal')) {
+            document.getElementById('tcTotal').innerText = activeSteps.length;
+        }
+        
+        renderSequence(0);
+    }
+
+    function renderSequence(index) {
+        if (tourTracker) clearInterval(tourTracker);
+
+        stepIndex = index;
+        const step = activeSteps[index];
+        const target = document.querySelector(step.targetId);
+
+        if (!target) { endTour(); return; }
+
+        // Llenar Textos
+        const setText = (id, txt) => { const el = document.getElementById(id); if(el) el.innerHTML = txt; };
+        setText('focusLabel', step.label);
+        setText('tcCurrent', index + 1);
+        setText('tcTitle', step.title);
+        setText('tcDesc', step.desc);
+        setText('graphicStage', step.graphicHTML);
+
+        // Botones
+        const btnNext = document.getElementById('btnAmbNext');
+        if (btnNext) {
+            // Clonar nodo para limpiar eventos anteriores
+            const newBtn = btnNext.cloneNode(true);
+            btnNext.parentNode.replaceChild(newBtn, btnNext);
+            
+            if (index === activeSteps.length - 1) {
+                newBtn.innerHTML = 'Got it <i class="fa-solid fa-check"></i>';
+                newBtn.onclick = endTour;
+            } else {
+                newBtn.innerHTML = 'Next <i class="fa-solid fa-arrow-right"></i>';
+                newBtn.onclick = () => renderSequence(index + 1);
+            }
+        }
+
+        // Scroll y Posición
+        target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+        const runUpdate = () => {
+            updateTourPos(
+                target, 
+                document.getElementById('tourFocusRing'), 
+                document.getElementById('tourCard'), 
+                step.padding || 10,
+                step.forceSide // Pasamos la instrucción de lado forzado
+            );
+        };
+
+        runUpdate();
+        let ticks = 0;
+        tourTracker = setInterval(() => {
+            runUpdate();
+            ticks++;
+            if (ticks > 100) clearInterval(tourTracker);
+        }, 20);
+        
+        window.addEventListener('resize', runUpdate, { once: true });
+    }
+
+    function endTour() {
+        if (tourTracker) clearInterval(tourTracker);
+        const ring = document.getElementById('tourFocusRing');
+        const card = document.getElementById('tourCard');
+        if(ring) ring.classList.remove('active');
+        if(card) card.classList.remove('active');
+    }
+
+    // 4. INICIALIZADOR (Observer)
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log("Tour System: Initialized");
+
+        // Iniciar Step 1 con retraso
+        setTimeout(() => launchAmbStep('step-1'), 1500);
+
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    const target = mutation.target;
+                    if (target.classList.contains('panel-step') && target.classList.contains('active')) {
+                        const stepId = target.id; 
+                        setTimeout(() => launchAmbStep(stepId), 600);
+                    }
+                }
+            });
+        });
+
+        const panels = document.querySelectorAll('.panel-step');
+        if (panels.length > 0) {
+            panels.forEach(step => observer.observe(step, { attributes: true }));
+        } else {
+            console.warn("Tour: No .panel-step elements found to observe.");
+        }
+    });
+
+})();

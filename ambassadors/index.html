@@ -237,7 +237,7 @@
                                         <p>Fill in your details to create your secure ambassador ID.</p>
                                     </div>
                             
-                                        <div class="premium-group">
+                                        <div class="premium-group" id="tour-amb-profile">
 
                                             <div class="pg-header">
                                                 <div class="pg-header-badge blue">
@@ -305,7 +305,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="download-zone-premium text-center" style="background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(239,246,255,0.5) 100%); border-radius: 16px; padding: 40px 20px; border: 1px solid rgba(255,255,255,0.6);">
+                                            <div class="download-zone-premium text-center" id="tour-amb-wallet" style="background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(239,246,255,0.5) 100%); border-radius: 16px; padding: 40px 20px; border: 1px solid rgba(255,255,255,0.6);">
                                                 <div class="dz-content d-block">
                                                     
                                                     <div class="dz-icon-circle pulse-icon-lg" style="margin: 0 auto 20px auto; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; background: white; color: #003087; box-shadow: 0 15px 35px -5px rgba(0, 48, 135, 0.2);">
@@ -531,7 +531,7 @@
 
                                             <div class="action-dock-center">
                                                 <p class="ready-text">Your professional dashboard is ready.</p>
-                                                <a href="https://rater.alexai.cloud/login" class="btn-fintech-primary shimmer-btn-effect">
+                                                <a href="https://rater.alexai.cloud/login" class="btn-fintech-primary shimmer-btn-effect" id="tour-amb-activate">
                                                     Activate My Account <i class="fa-solid fa-arrow-right"></i>
                                                     <div class="btn-shimmer-pass"></div>
                                                 </a>
@@ -557,21 +557,22 @@
                                 <li><i class="fa-regular fa-circle"></i> Activation</li>
                             </ul>
                             <div class="sidebar-title">Highlights</div>
-                            <div style="display:flex; gap:10px; margin-bottom:12px; font-size:0.9rem; color:#514690;"><i class="fa-solid fa-check-circle" style="color: #10B981;"></i>
-                                <span>
-                                    <strong>$25 Per Referral</strong>
-                                    <br>
-                                    Earn everytime someone buys.
-                                </span>
+                            <div id="tour-amb-benefits">
+                                <div style="display:flex; gap:10px; margin-bottom:12px; font-size:0.9rem; color:#514690;"><i class="fa-solid fa-check-circle" style="color: #10B981;"></i>
+                                    <span>
+                                        <strong>$25 Per Referral</strong>
+                                        <br>
+                                        Earn everytime someone buys.
+                                    </span>
+                                </div>
+                                <div style="display:flex; gap:10px; margin-bottom:12px; font-size:0.9rem; color:#514690;"><i class="fa-solid fa-check-circle" style="color: #10B981;"></i>
+                                    <span>
+                                        <strong>Unlimited Cap</strong>
+                                        <br>
+                                        No limit to your earnings.
+                                    </span>
+                                </div>
                             </div>
-                            <div style="display:flex; gap:10px; margin-bottom:12px; font-size:0.9rem; color:#514690;"><i class="fa-solid fa-check-circle" style="color: #10B981;"></i>
-                                <span>
-                                    <strong>Unlimited Cap</strong>
-                                    <br>
-                                    No limit to your earnings.
-                                </span>
-                            </div>
-                            <div></div>
 
 
                             <div class="tip-box-vibrant" style="margin-top: 20px;">
@@ -771,5 +772,26 @@
     <script src="../js/script-quote.js"></script>
     <script src="../js/ambassador.js"></script>
     
+    <div id="tourFocusRing">
+        <div class="scan-line"></div>
+        <div class="focus-label" id="focusLabel">GUIDE</div>
+    </div>
+    <div id="tourCard" class="tour-card-holo">
+        <div class="holo-header">
+            <span class="holo-badge">AMBASSADOR PROGRAM <span id="tcCurrent">1</span>/<span id="tcTotal">1</span></span>            
+            <button class="holo-skip" onclick="endAmbTour()">Skip</button>
+        </div>
+        <div class="holo-body">
+            <div class="graphic-stage" id="graphicStage"></div>
+            <h3 class="holo-title" id="tcTitle">Title</h3>
+            <p class="holo-desc" id="tcDesc">Desc</p>
+        </div>
+        <div class="holo-footer">
+            <button class="btn-holo-next" id="btnAmbNext" onclick="endAmbTour()">
+                Got it <i class="fa-solid fa-check"></i>
+            </button>
+        </div>
+    </div>
+
 </body>
 </html>

@@ -1241,3 +1241,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
