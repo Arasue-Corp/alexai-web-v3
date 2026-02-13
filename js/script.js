@@ -1190,7 +1190,7 @@ window.addEventListener("load", function() {
     const chat = document.getElementById('floating-chat-container');
     const menu = document.getElementById('floating-menu-container');
 
-    const commonStyle = "position: fixed !important; z-index: 2147483647 !important; display: flex !important; transform: none !important; top: auto !important; left: auto !important;";
+    const commonStyle = "position: fixed !important; z-index: 999 !important; display: flex !important; transform: none !important; top: auto !important; left: auto !important;";
 
     if (chat) {
         if (chat.parentElement !== document.body) document.body.appendChild(chat);

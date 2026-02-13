@@ -3725,66 +3725,6 @@ const holoSteps = [
 let holoIndex = 0;
 let holoTracker = null;
 
-function startHoloTour() {
-    // Verificar si existe el elemento inicial
-    if (!document.getElementById('tour-mandatory')) return;
-
-    document.getElementById('tourFocusRing').classList.add('active');
-    document.getElementById('tourCard').classList.add('active');
-    document.getElementById('tcTotal').innerText = holoSteps.length;
-    renderHoloStep(0);
-}
-
-function renderHoloStep(index) {
-    if (holoTracker) clearInterval(holoTracker); // Limpiar tracker anterior
-    
-    holoIndex = index;
-    const step = holoSteps[index];
-    const target = document.getElementById(step.targetId);
-
-    if (!target) { endHoloTour(); return; }
-
-    // UI Setup
-    const ring = document.getElementById('tourFocusRing');
-    const label = document.getElementById('focusLabel');
-    const card = document.getElementById('tourCard');
-    
-    label.innerText = step.label;
-    document.getElementById('tcCurrent').innerText = index + 1;
-    document.getElementById('tcTitle').innerText = step.title;
-    document.getElementById('tcDesc').innerHTML = step.desc;
-    document.getElementById('graphicStage').innerHTML = step.graphicHTML;
-
-    const btnNext = document.getElementById('btnTourNext');
-    const btnPrev = document.getElementById('btnTourPrev');
-    if (btnPrev) btnPrev.disabled = (index === 0);
-    
-    if (index === holoSteps.length - 1) {
-        btnNext.innerHTML = 'Finish Setup <i class="fa-solid fa-check"></i>';
-    } else {
-        btnNext.innerHTML = 'Next Option <i class="fa-solid fa-arrow-right"></i>';
-    }
-
-    // Scroll & Track
-    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
-
-    // Iniciar rastreo de posición (cada 20ms)
-    const runUpdate = () => updateTourPosition(target, ring, card, 10);
-    runUpdate();
-    
-    let ticks = 0;
-    holoTracker = setInterval(() => {
-        runUpdate();
-        ticks++;
-        if (ticks > 100) clearInterval(holoTracker); 
-    }, 20);
-    window.addEventListener('resize', runUpdate, { once: true });
-}
-
-window.nextHoloStep = function() {
-    if (holoIndex < holoSteps.length - 1) renderHoloStep(holoIndex + 1);
-    else endHoloTour();
-};
 
 window.prevHoloStep = function() {
     if (holoIndex > 0) renderHoloStep(holoIndex - 1);
@@ -4185,15 +4125,6 @@ const vehicleSteps = [
 let vehIndex = 0;
 let vehTracker = null;
 
-function startVehicleTour() {
-    // Solo iniciar si estamos en la página correcta
-    if (!document.getElementById('tour-vin-section')) return;
-
-    document.getElementById('tourFocusRing').classList.add('active');
-    document.getElementById('tourCard').classList.add('active');
-    document.getElementById('tcTotal').innerText = vehicleSteps.length;
-    renderVehicleStep(0);
-}
 
 function renderVehicleStep(index) {
     if (vehTracker) clearInterval(vehTracker);
@@ -4433,7 +4364,7 @@ var reviewSteps = [
                 <div class="net-node n3"></div><div class="net-line l3"></div>
             </div>`,
         title: 'AI-Curated Matches',
-        desc: 'We scanned 30+ carriers. These are your best matches based on value and coverage quality. Look for the <strong>"Alex Choice"</strong> badge.'
+        desc: 'We scanned 10+ carriers. These are your best matches based on value and coverage quality. Look for the <strong>"Alex Choice"</strong> badge.'
     },
     {
         targetId: 'tour-down-btn', 
@@ -5139,12 +5070,11 @@ document.addEventListener('DOMContentLoaded', () => {
    10. FINANCIAL INTERESTS TOUR (Quote 11)
    ========================================= */
 
-const financialSteps = [
+var financialSteps = [
     {
         targetId: 'tour-finance-group',
-        label: 'LIENHOLDER 101',
+        label: 'LIENHOLDER',
         padding: 10,
-        // Gráfico: Banco conectado al auto
         graphicHTML: `
             <div class="scene-bank-chain">
                 <div class="bank-icon"><i class="fa-solid fa-building-columns"></i></div>
@@ -5152,14 +5082,14 @@ const financialSteps = [
                 <div class="lock-mini"><i class="fa-solid fa-lock"></i></div>
                 <div class="car-icon-sm"><i class="fa-solid fa-car"></i></div>
             </div>`,
-        title: 'What is a "Lienholder"?',
-        desc: 'It is just a fancy word for the <strong>Bank or Leasing Company</strong>. Since they lent you the money, they technically co-own the car. You MUST list them here so they are protected in case of a total loss.'
+        title: 'Who Owns What?',
+        desc: 'If you have a loan or lease, the bank technically co-owns the vehicle. You MUST list them here.'
     },
     {
-        targetId: 'tour-gap-tip',
-        label: 'THE GAP TRAP',
+        targetId: 'tour-gap-tip', 
+        label: 'GAP TRAP',
         padding: 10,
-        // Gráfico: Barras de Valor vs Deuda
+        forceSide: 'left',  // <--- ¡ESTA ES LA SOLUCIÓN!
         graphicHTML: `
             <div class="scene-gap-graph">
                 <div class="bar-car"><span class="bar-label">Value</span></div>
@@ -5168,8 +5098,8 @@ const financialSteps = [
                     <div class="gap-arrow">GAP</div>
                 </div>
             </div>`,
-        title: 'Do you owe more than it\'s worth?',
-        desc: 'If you have a loan, read this tip! <strong>Gap Coverage</strong> pays the difference if your car is totaled but the insurance check is smaller than your remaining loan balance.'
+        title: 'The "Gap" Danger',
+        desc: '<strong>Alex Tip:</strong> If you owe more than the car is worth, standard insurance won\'t pay off your whole loan. Gap Coverage covers that difference.'
     }
 ];
 
@@ -5613,7 +5543,7 @@ const ambSteps = [
                 <div class="check-float-lg"><i class="fa-solid fa-circle-check"></i></div>
             </div>`,
         title: 'Legal Identity',
-        desc: 'Please enter your details exactly as they appear on your government ID. We use this to set up your <strong>Ambassador Wallet</strong> for automated commission payments.'
+        desc: 'Please enter your details exactly as they appear on your government ID. We use this to set up your <strong>Affiliate Wallet</strong> for automated commission payments.'
     },
     {
         targetId: 'tour-amb-upload',
@@ -5746,7 +5676,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="magic-pen"><i class="fa-solid fa-pen-fancy"></i></div>
                     </div>`,
                 title: 'Official Partner ID',
-                desc: 'Start here. Enter your legal name exactly as it appears on your government ID. We use this to generate your unique <strong>Ambassador Tracking Code</strong>.'
+                desc: 'Start here. Enter your legal name exactly as it appears on your government ID. We use this to generate your unique <strong>Affiliate Tracking Code</strong>.'
             },
             {
                 targetId: '#tour-amb-benefits',
@@ -6028,3 +5958,429 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 })();
+
+/* =================================================================================
+   UNIVERSAL SMART TOUR ENGINE (V14 - DIRECT KILL SWITCH)
+   - Fix: El último paso no se cerraba.
+   - Solución: El botón "Got it" ahora llama directamente a la función de cerrar.
+   - Mejora: Cierre forzado con display:none para evitar fantasmas visuales.
+   ================================================================================= */
+
+// --- 1. VARIABLES Y ESTILOS DE SEGURIDAD ---
+var currentTourSteps = [];
+var currentStepIndex = 0;
+var tourScrollTimer = null;
+var tourTracker = null;
+
+(function injectSafetyStyles() {
+    const styleId = 'tour-direct-styles';
+    if (!document.getElementById(styleId)) {
+        const css = `
+            #tourFocusRing { pointer-events: none !important; }
+            #tourCard { 
+                pointer-events: auto !important; 
+                z-index: 2147483647 !important; 
+                transform: translate3d(0,0,10px);
+                transition: opacity 0.3s ease, top 0.3s ease, left 0.3s ease;
+            }
+            #tourCard.hidden {
+                display: none !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+            }
+            #tourCard button { 
+                cursor: pointer !important; 
+                touch-action: manipulation !important;
+                pointer-events: auto !important;
+                position: relative;
+                z-index: 10;
+            }
+            #tourCard button i, #tourCard button span {
+                pointer-events: none !important;
+            }
+        `;
+        const style = document.createElement('style');
+        style.id = styleId;
+        style.appendChild(document.createTextNode(css));
+        document.head.appendChild(style);
+    }
+})();
+
+// --- 2. FUNCIONES GLOBALES (INDESTRUCTIBLES) ---
+
+window.tourActionNext = function() {
+    if (currentStepIndex < currentTourSteps.length - 1) {
+        renderSmartStep(currentStepIndex + 1);
+    } else {
+        window.tourActionEnd();
+    }
+};
+
+window.tourActionPrev = function() {
+    if (currentStepIndex > 0) {
+        renderSmartStep(currentStepIndex - 1);
+    }
+};
+
+window.tourActionEnd = function() {
+    // 1. Matar timers inmediatamente
+    if (tourTracker) clearInterval(tourTracker);
+    if (tourScrollTimer) clearTimeout(tourScrollTimer);
+
+    const ring = document.getElementById('tourFocusRing');
+    const card = document.getElementById('tourCard');
+    
+    // 2. Apagar Anillo
+    if(ring) ring.classList.remove('active');
+
+    // 3. MATAR TARJETA (Force Hide)
+    if(card) {
+        card.classList.remove('active');
+        card.classList.add('hidden'); // Clase CSS forzada
+        card.style.opacity = '0';
+        card.style.display = 'none'; // Doble seguridad
+        
+        // Mover al inframundo por si acaso
+        card.style.top = '-9999px';
+        card.style.left = '-9999px';
+    }
+};
+
+// --- 3. HELPERS ---
+function getTourTarget(targetId) {
+    if (!targetId) return null;
+    let el = document.getElementById(targetId);
+    if (!el) {
+        try { el = document.querySelector(targetId); } catch(e) { }
+    }
+    return el;
+}
+
+function isElementVisible(el) {
+    if (!el) return false;
+    const style = window.getComputedStyle(el);
+    const rect = el.getBoundingClientRect();
+    return style.display !== 'none' && 
+           style.visibility !== 'hidden' && 
+           style.opacity !== '0' &&
+           rect.width > 0 && 
+           rect.height > 0;
+}
+
+function getVisibleSteps(steps) {
+    if (!steps || steps.length === 0) return [];
+    
+    return steps.map(step => {
+        const activeStep = { ...step };
+        // Móvil
+        const mobileEl = getTourTarget(step.mobileTargetId);
+        if (isElementVisible(mobileEl)) {
+            activeStep.targetId = step.mobileTargetId; 
+            return activeStep;
+        }
+        // Escritorio
+        const desktopEl = getTourTarget(step.targetId);
+        if (isElementVisible(desktopEl)) {
+            return activeStep;
+        }
+        return null; 
+    }).filter(step => step !== null);
+}
+
+// --- 4. LANZADOR ---
+function launchSmartTour(stepsConfig) {
+    const activeSteps = getVisibleSteps(stepsConfig);
+    if (activeSteps.length === 0) return;
+
+    currentTourSteps = activeSteps;
+    currentStepIndex = 0;
+
+    const ring = document.getElementById('tourFocusRing');
+    const card = document.getElementById('tourCard');
+    
+    if (ring && card) {
+        // Asegurar que esté visible antes de empezar
+        window.tourActionEnd(); // Limpieza previa
+        card.classList.remove('hidden');
+        card.style.display = 'block'; // Reactivar display
+
+        ring.classList.add('active');
+        card.classList.add('active');
+        
+        if(document.getElementById('tcTotal')) {
+            document.getElementById('tcTotal').innerText = activeSteps.length;
+        }
+
+        setTimeout(() => {
+            renderSmartStep(0);
+        }, 100);
+    }
+}
+
+// --- 5. RENDERIZADOR ---
+function renderSmartStep(index) {
+    currentStepIndex = index;
+    const step = currentTourSteps[index];
+
+    if (tourTracker) clearInterval(tourTracker);
+    if (tourScrollTimer) clearTimeout(tourScrollTimer);
+
+    const target = getTourTarget(step.targetId);
+    if (!isElementVisible(target)) {
+        window.tourActionEnd();
+        return;
+    }
+
+    const ring = document.getElementById('tourFocusRing');
+    const card = document.getElementById('tourCard');
+
+    // Asegurar visibilidad (por si venimos de un estado cerrado)
+    if(card) {
+        card.classList.remove('hidden');
+        card.style.display = 'block';
+        card.style.opacity = '0'; // Ninja fade start
+    }
+
+    // Datos
+    const setText = (id, txt) => { const el = document.getElementById(id); if(el) el.innerHTML = txt; };
+    setText('focusLabel', step.label);
+    if(document.getElementById('tcCurrent')) setText('tcCurrent', index + 1);
+    setText('tcTitle', step.title);
+    setText('tcDesc', step.desc);
+    setText('graphicStage', step.graphicHTML);
+
+    // --- LOGICA DE BOTONES (HARDCODED) ---
+    
+    const nextBtn = card.querySelector('.btn-holo-next') || card.querySelector('.btn-next');
+    const prevBtn = card.querySelector('.btn-holo-prev') || card.querySelector('.btn-prev');
+    const skipBtn = card.querySelector('.holo-skip') || card.querySelector('.tour-close-btn');
+
+    if (nextBtn) {
+        // CAMBIO CRÍTICO: Si es el último paso, inyectamos DIRECTAMENTE la función de cierre
+        if (index === currentTourSteps.length - 1) {
+            nextBtn.innerHTML = 'Got it <i class="fa-solid fa-check"></i>';
+            nextBtn.setAttribute('onclick', 'window.tourActionEnd()'); // <--- AQUI ESTA LA MAGIA
+        } else {
+            nextBtn.innerHTML = 'Next <i class="fa-solid fa-arrow-right"></i>';
+            nextBtn.setAttribute('onclick', 'window.tourActionNext()');
+        }
+    }
+
+    if (prevBtn) {
+        if (index === 0) {
+            prevBtn.removeAttribute('onclick');
+            prevBtn.style.opacity = '0.5';
+            prevBtn.style.cursor = 'default';
+        } else {
+            prevBtn.setAttribute('onclick', 'window.tourActionPrev()');
+            prevBtn.style.opacity = '1';
+            prevBtn.style.cursor = 'pointer';
+        }
+    }
+
+    if (skipBtn) {
+        skipBtn.setAttribute('onclick', 'window.tourActionEnd()');
+    }
+
+    // Scroll
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    // Posicionamiento
+    const runUpdate = () => {
+        if (typeof updateTourPosition === 'function') {
+            updateTourPosition(target, ring, card, step.padding || 10, step.forceSide);
+            
+            // Header Evasion
+            const cardRect = card.getBoundingClientRect();
+            if (cardRect.top < 85) card.style.top = '90px'; 
+        }
+    };
+
+    runUpdate();
+
+    // Revelar
+    tourScrollTimer = setTimeout(() => {
+        if (!card.classList.contains('active')) return;
+        runUpdate(); 
+        card.style.opacity = '1';
+
+        let ticks = 0;
+        tourTracker = setInterval(() => {
+            runUpdate();
+            ticks++;
+            if (ticks > 200) clearInterval(tourTracker); 
+        }, 20);
+        
+    }, 450);
+
+    window.addEventListener('resize', () => {
+        if(card.classList.contains('active')) runUpdate();
+    }, { once: true });
+}
+
+// --- 6. INICIALIZADOR ---
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const progressiveObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                const target = mutation.target;
+                if (target.classList.contains('panel-step') && target.classList.contains('active')) {
+                    const stepId = target.id; 
+                    if (typeof ambConfig !== 'undefined' && ambConfig[stepId]) {
+                        setTimeout(() => launchSmartTour(ambConfig[stepId]), 800);
+                    }
+                }
+            }
+        });
+    });
+    document.querySelectorAll('.panel-step').forEach(step => progressiveObserver.observe(step, { attributes: true }));
+
+    const activeStep = document.querySelector('.panel-step.active');
+    if (activeStep && typeof ambConfig !== 'undefined' && ambConfig[activeStep.id]) {
+        setTimeout(() => launchSmartTour(ambConfig[activeStep.id]), 1500);
+    }
+
+    if (document.getElementById('tour-mandatory') && typeof holoSteps !== 'undefined') {
+        setTimeout(() => launchSmartTour(holoSteps), 1000);
+    }
+    if (document.getElementById('btnAddDriverTop') && typeof driverSteps !== 'undefined') {
+        setTimeout(() => launchSmartTour(driverSteps), 1000);
+    }
+    if (document.getElementById('tour-incident-toggle') && typeof violationSteps !== 'undefined') {
+        setTimeout(() => launchSmartTour(violationSteps), 1000);
+    }
+    if (document.getElementById('tour-history-switch') && typeof historySteps !== 'undefined') {
+        setTimeout(() => launchSmartTour(historySteps), 1000);
+    }
+    if (document.getElementById('tour-vin-section') && typeof vehicleSteps !== 'undefined') {
+        setTimeout(() => launchSmartTour(vehicleSteps), 1000);
+    }
+    if (document.getElementById('tour-finance-group') && typeof financialSteps !== 'undefined') {
+        setTimeout(() => launchSmartTour(financialSteps), 1000);
+    }
+    if (document.getElementById('tour-op-group') && typeof assetSteps !== 'undefined') {
+        setTimeout(() => launchSmartTour(assetSteps), 1000);
+    }
+    if (document.getElementById('offersContainer') && typeof reviewSteps !== 'undefined') {
+        const firstDropdownBtn = document.querySelector('.dropdown-trigger-btn');
+        if (firstDropdownBtn) firstDropdownBtn.id = 'tour-down-btn';
+        setTimeout(() => launchSmartTour(reviewSteps), 1500);
+    }
+    if (document.getElementById('tour-action-dock') && typeof editSteps !== 'undefined') {
+        setTimeout(() => launchSmartTour(editSteps), 1000);
+    }
+});
+
+function startHoloTour() {
+    // Verificar si existe el elemento inicial
+    if (!document.getElementById('tour-mandatory')) return;
+
+    document.getElementById('tourFocusRing').classList.add('active');
+    document.getElementById('tourCard').classList.add('active');
+    document.getElementById('tcTotal').innerText = holoSteps.length;
+    renderHoloStep(0);
+}
+
+function renderHoloStep(index) {
+    if (holoTracker) clearInterval(holoTracker); // Limpiar tracker anterior
+    
+    holoIndex = index;
+    const step = holoSteps[index];
+    const target = document.getElementById(step.targetId);
+
+    if (!target) { endHoloTour(); return; }
+
+    // UI Setup
+    const ring = document.getElementById('tourFocusRing');
+    const label = document.getElementById('focusLabel');
+    const card = document.getElementById('tourCard');
+    
+    label.innerText = step.label;
+    document.getElementById('tcCurrent').innerText = index + 1;
+    document.getElementById('tcTitle').innerText = step.title;
+    document.getElementById('tcDesc').innerHTML = step.desc;
+    document.getElementById('graphicStage').innerHTML = step.graphicHTML;
+
+    const btnNext = document.getElementById('btnTourNext');
+    const btnPrev = document.getElementById('btnTourPrev');
+    if (btnPrev) btnPrev.disabled = (index === 0);
+    
+    if (index === holoSteps.length - 1) {
+        btnNext.innerHTML = 'Finish Setup <i class="fa-solid fa-check"></i>';
+    } else {
+        btnNext.innerHTML = 'Next Option <i class="fa-solid fa-arrow-right"></i>';
+    }
+
+    // Scroll & Track
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+    // Iniciar rastreo de posición (cada 20ms)
+    const runUpdate = () => updateTourPosition(target, ring, card, 10);
+    runUpdate();
+    
+    let ticks = 0;
+    holoTracker = setInterval(() => {
+        runUpdate();
+        ticks++;
+        if (ticks > 100) clearInterval(holoTracker); 
+    }, 20);
+    window.addEventListener('resize', runUpdate, { once: true });
+}
+
+window.nextHoloStep = function() {
+    if (holoIndex < holoSteps.length - 1) renderHoloStep(holoIndex + 1);
+    else endHoloTour();
+};
+
+function startVehicleTour() {
+    // Solo iniciar si estamos en la página correcta
+    if (!document.getElementById('tour-vin-section')) return;
+
+    document.getElementById('tourFocusRing').classList.add('active');
+    document.getElementById('tourCard').classList.add('active');
+    document.getElementById('tcTotal').innerText = vehicleSteps.length;
+    renderVehicleStep(0);
+}
+
+/* =========================================
+   FIX: RESTAURAR BOTONES DE NAVEGACIÓN (QUOTE 14)
+   Recupera la función de los botones que perdieron su lógica al actualizar.
+   ========================================= */
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Función para manejar la edición (Volver al inicio o paso específico)
+    function handleEditClick(e) {
+        e.preventDefault(); // Evita que salga el mensaje "Redirecting..."
+        
+        // OPCIÓN A: Si usas el sistema de pasos (goToStep)
+        if (typeof goToStep === 'function') {
+            goToStep(1); // <--- Cambia el '1' por el número de paso al que quieres volver
+        } 
+        // OPCIÓN B: Si necesitas redirigir a otra página
+        else {
+            window.location.href = '../quote/quote.html'; 
+        }
+    }
+
+    // 1. Botón Editar Escritorio (Sidebar)
+    const btnEdit = document.getElementById('btnEditSidebar');
+    if (btnEdit) {
+        btnEdit.onclick = handleEditClick;
+    }
+
+    // 2. Botón Editar Móvil
+    const btnMobileEdit = document.getElementById('btnMobileEdit');
+    if (btnMobileEdit) {
+        btnMobileEdit.onclick = handleEditClick;
+    }
+    
+    // 3. Botón Filtros (Si también dejó de funcionar)
+    const btnFilter = document.getElementById('btnMobileFilter');
+    if (btnFilter && typeof toggleFilters === 'function') {
+        btnFilter.onclick = function(e) {
+            e.preventDefault();
+            toggleFilters();
+        };
+    }
+});

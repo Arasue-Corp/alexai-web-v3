@@ -499,7 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 cursorY += 20;
                 doc.setFontSize(13); doc.setTextColor(cDark); doc.setFont("helvetica", "normal");
                 doc.text("For demonstrating excellence and officially joining the", centerX, cursorY, { align: 'center' });
-                doc.text("Alex AI Insurtech Ambassador Network.", centerX, cursorY + 7, { align: 'center' });
+                doc.text("Alex AI Insurtech Affiliate Network.", centerX, cursorY + 7, { align: 'center' });
 
                 // Footer
                 const footerY = H - 45;

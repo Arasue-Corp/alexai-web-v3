@@ -10,6 +10,8 @@
     --aurora-deep: #1e1b4b; /* Indigo 950 */
     --text-white-dim: rgba(255, 255, 255, 0.85);
     --degradado-aurora: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-indigo) 100%);
+    --aurora-corp-text:linear-gradient(135deg, #10B981, #3B82F6);
+
 
 
     --font-main: 'Poppins', sans-serif; 
@@ -3136,12 +3138,12 @@ position: absolute;
 /* --- LAYOUT GENERAL --- */
 #floating-menu-container,
 #floating-chat-container {
-    position: fixed !important; right: 25px; z-index: 1200 !important;
+    position: fixed !important; right: 25px; z-index: 999 !important;
     display: flex; flex-direction: column; align-items: flex-end;
 }
 
 #floating-chat-container { bottom: 30px; }
-#floating-menu-container { bottom: 110px; z-index: 1100; }
+#floating-menu-container { bottom: 110px; z-index: 999; }
 
 /* Ajuste Móvil */
 @media (max-width: 900px) {
@@ -5186,6 +5188,11 @@ p { font-size: 1rem; line-height: 1.7; color: #475569; margin-bottom: 15px; text
         flex-direction: column !important;
         padding: 20px;
     }
+
+    .main-spec-col {
+    min-width: 0; /* Evita desbordamientos */
+    width: 100% !important;
+    }
 }
 
 /* 2. ARREGLO DE PASOS QUE SE APILAN (Step Logic) */
@@ -5355,7 +5362,7 @@ p { font-size: 1rem; line-height: 1.7; color: #475569; margin-bottom: 15px; text
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 12px;
+    font-size: 30px;
     opacity: 0;
     transform: scale(0);
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -8795,7 +8802,7 @@ span.flatpickr-weekday {
    ========================================= */
 .fintech-title {
     font-family: 'Poppins', sans-serif;
-    font-size: 2rem; font-weight: 800; color: #1e293b;
+    font-size: 2rem; font-weight: 800;
     margin-bottom: 10px;
     letter-spacing: -0.5px;
 }
@@ -8902,7 +8909,7 @@ span.flatpickr-weekday {
 
 .btn-fintech-primary {
     position: relative; overflow: hidden;
-    background: #0f172a; /* Azul Noche */
+    background: var(--degradado-aurora);
     color: white; text-decoration: none;
     padding: 16px 45px; border-radius: 50px;
     font-weight: 600; font-size: 1.05rem;
